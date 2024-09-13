@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0zlmhci" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1jeyecu" name="CONTEXT" />
+  <decision id="Decision_1lhnkp3" name="EXPRESSIONS" />
+  <textAnnotation id="TextAnnotation_15lroz6">
+    <text>{"A":[[1,0],[0,1]],
+ "B":[[3,1,0],[1,1,1]],
+ "X":[[1,2,3],[4,5,6]],
+ "Y":[[7,8],[9,10],[11,12]],
+ "V1":[1,2,3,4,5,6],
+ "V2":[2,4,6,8,10,12],
+  "M1":[
+  [1,0,0],
+  [1,1,0],
+  [0,1,0]
+ ],
+  "M2":[
+  [1,1,1],
+  [2,4,6],
+  [3,6,9]
+  ],
+  "M1T":
+[
+  [1,1,0],
+  [0,1,1],
+  [0,0,0]
+ ],
+  "M2T":[
+  [1,2,3],
+  [1,4,6],
+  [1,6,9]
+  ],
+  "M3":
+  [
+  [ 2,3,3],
+  [ 1,5,7],
+  [1,6,9]
+],
+  "M4":
+  [
+  [2,1,1 ],
+  [3,5,6],
+  [3,7,9]
+]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0nyr1uq">
+    <text>//scaled columns: for col in columns return for i in col return (col-mean(V))/stddev(V)
+//transpose: for i in count(M[1]) return for j in count(M) return M[j][i]
+//normalize: for row in M return for col in row return decimal(col/magnitude(row),3)
+//for col in V return (col-mean(V))/stddev(V)
+//for row in M1 return for col in row return (col-mean(row))/stddev(row)/decimal(sqrt(sum(for x in row return x*x)),3)
+//scale(i,mean(row),std(row))
+//for row in M2 return for col in row return decimal(col/(decimal(sqrt(sum(for x in row return x*x)),3)),3) // normalize
+for col in 1..count(V1) return V1[col]*V2[col]
+//decimal(sqrt(sum(for x in M2[1] return x*x)),3) // magnitude of a vector
+
+
+//for row in 1..count(M3) return for col in 1..count(M3[2]) return M3[row][col] - M4[row][col]
+//for row in A return for col in B return row[3]*col[3]
+//for row in A return A[row]
+//count(A) + count(B)
+//for i in 1..count(A) return for j in 1..count(A[1]) return A[i][j]*B[j][i]
+//for row in 1..count(A) return for col in 1..count(A[1]) return A[col][row]
+//distinct cars[count(cars[make=distinct make and model= distinct model])]
+//sort( list: [3,1,4,5,2], precedes: function(x,y) x &lt; y ) = [1,2,3,4,5]
+//sort( list:alist, precedes: function(x,y) x &lt; y )
+//distinct values (
+// for car in cars
+// return {make:car.make, model:car.model})
+
+
+//distinct cars[count(cars[list contains(distinct values (cars.make),make) and list contains(distinct values (cars.model),model)])=count(distinct values (cars.group))]
+//count(distinct values (cars.group))
+//distinct values (cars.group)
+//distinct values (cars.make)
+//list contains(distinct values (cars.make),make)
+//count(cars[list contains(distinct values (cars.make),make)])
+
+
+//cars[make=distinct make and model= distinct model]
+//cars[make=distinct cars.make and model = distinct cars.model]
+//cars[make=distinct (cars.make) and model = distinct (cars.model)]
+//cars[list contains(distinct values (cars.make),make) and list contains(distinct values (cars.model),model)]</text>
+  </textAnnotation>
+  <association id="Association_05bs1xy">
+    <sourceRef href="#Decision_1jeyecu" />
+    <targetRef href="#TextAnnotation_15lroz6" />
+  </association>
+  <association id="Association_0cwgp2s">
+    <sourceRef href="#Decision_1lhnkp3" />
+    <targetRef href="#TextAnnotation_0nyr1uq" />
+  </association>
+  <textAnnotation id="TextAnnotation_0lhoh2a">
+    <text>//count(persons[age&gt;65] ) &gt; 0 = true and // Is there any person over 65? returns T or F
+//persons[age in [13..19]]=[] = true and // Are there no persons between 13 and 19? expression returns an empty list
+//count(persons[age in [20..65]])&gt;2 = true and // Are there more than 2 persons between 20 and 65?
+//count(persons[age in [20..65]])=5 = true and // count the number of persons between 20 and 65
+//persons[gender="male" and age&lt;13] = 
+// [{"name": "Jerry","age": 12,"salary": 180000,"gender": "male"}] and // list all the male persons under 13
+//count(persons[age&gt;65]) = count(persons[age&gt;65 and gender="female"]) // Are all the people over 65 female?
+//count(persons[age&gt;65 and gender!="female"])&gt;0 // Are there any non-females over 65
+//max(persons[age&gt;30 and gender="male"].salary) //What is the highest income for males over 30?
+//min(persons[age&gt;65 and gender="female"].age) = min(persons[age&gt;65].age) //Is the youngest person over 65 a female?
+//sum(persons[age&gt;65].salary) = 280000 //What is the sum of incomes for people over 65
+for p in persons return { age:function(birthday) (today() - birthday).years, name:"fred"}
+//persons[age in [21..45]] // What is the average age of the oldest 3 persons between 21 and 45?
+//sort( list:[3,1,4,5,2], precedes: function(x,y) x &lt; y )
+// function(birthday) (today() - birthday).years
+/* 
+// list contains([1,2,3], 2)
+Is the lowest income for over 65s greater than zero? {p in Person where age&gt;65}.income.min &gt;0 returns T or F
+What is the average age of the oldest 3 males between 21 and 45? avgAge={p in Person where age in [20..65],gender='male'}.sortedBy(age).first(3).age.avg returns a number
+Which are the oldest 3 males between 21 and 45? oldest={p in Person where age in [20..65],gender='male'}.sortedBy(age).first(3) collection saved for later use
+What is the sum of the incomes for the oldest N males? incomeSum={p in Person where gender='male'}.sortedByDesc(age).first(N).income.sum returns a number
+What state does the youngest person over 65 live in? state={p in Person where age&gt;65}.sortedBy(age).first.state 
+Find all the males over 65. seniorMales={p in Person where age&gt;65,gender='male'} collection saved for further use
+Then find their average income. seniorMaleAvgIncome=seniorMales.income.avg result is a value
+Is the highest income of the oldest 5 persons greater than 10000? {p in Person}.sortedBy(age).first(5).sortedByDesc(income).first.income&gt;10000 
+Is person with the lowest income over parm.x a parm.gender {p in Person where income&gt;parm.x}.sortedBy(income).first.gender=parm.gender 
+Is there a male over 65? {p in Person where age&gt;65}.exists(gender='male') returns true or false
+or alternatively {p in Person}.exists(gender='male',age&gt;65) returns true or false
+or alternatively {p in Person where gender='male',age&gt;65}.size&gt;0 returns true or false
+.  
+Find the sum of the two lowest book prices lowest_two=Books.sortedBy(price).at(1).price+Books.sortedBy(price).at(2).price returns a number 
+or lowest_two=Books.sortedBy(price).first(2).price.sum 
+or lowest_two=Books.sortedBy(price).subSequence(1,2).price.sum
+*/</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0tcxaux">
+    <text>{
+  "persons":
+[
+  {"name":"Tom","age":57,"salary":100000,"gender":"male"},
+  {"name":"Dick","age":26,"salary":80000,"gender":"male"},
+  {"name":"Harry","age":37,"salary":160000,"gender":"male"},
+  {"name":"Jane","age":42,"salary":120000,"gender":"female"},
+  {"name":"Mary","age":26,"salary":180000,"gender":"female"},
+  {"name":"Jenny","age":66,"salary":180000,"gender":"female"},
+  {"name":"Jerry","age":12,"salary":180000,"gender":"male"},
+  {"name":"Ruth","age":72,"salary":100000,"gender":"female"}
+]
+}</text>
+  </textAnnotation>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1axri4l" dmnElementRef="TextAnnotation_15lroz6">
+        <dc:Bounds height="590" width="150" x="395" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0i4uhrg" dmnElementRef="TextAnnotation_0nyr1uq">
+        <dc:Bounds height="600" width="710" x="785" y="105" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_046lqlm" dmnElementRef="Decision_1jeyecu">
+        <dc:Bounds height="80" width="180" x="160" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_13x3uy9" dmnElementRef="Association_05bs1xy">
+        <di:waypoint x="340" y="380" />
+        <di:waypoint x="395" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_08yk50e" dmnElementRef="Decision_1lhnkp3">
+        <dc:Bounds height="80" width="180" x="530" y="350" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1c569l4" dmnElementRef="Association_0cwgp2s">
+        <di:waypoint x="710" y="395" />
+        <di:waypoint x="785" y="398" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_07lovj0" dmnElementRef="TextAnnotation_0lhoh2a">
+        <dc:Bounds height="680" width="670" x="1470" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1mf60ia" dmnElementRef="TextAnnotation_0tcxaux">
+        <dc:Bounds height="590" width="520" x="2160" y="70" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

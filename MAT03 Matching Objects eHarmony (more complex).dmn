@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1rt6dmb" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1skvxu2" name="eHarmony summary">
+    <informationRequirement id="InformationRequirement_085y8n2">
+      <requiredDecision href="#Decision_1xl6lp2" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0jkrdvs">
+      <requiredDecision href="#Decision_13m5h79" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_06tm1ki">
+      <input id="InputClause_17n53i9" label="how many M2?">
+        <inputExpression id="LiteralExpression_1fd09b9" typeRef="string">
+          <text>count(M2)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_03nwib7" label="how many M3?">
+        <inputExpression id="LiteralExpression_1d46yto" typeRef="string">
+          <text>count(M3)</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="result" typeRef="string" />
+      <rule id="DecisionRule_1jjmm2c">
+        <inputEntry id="UnaryTests_0k5h8v3">
+          <text>3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_009plra">
+          <text>2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pw8uw6">
+          <text>"PASS M2 and M3"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tw694p">
+        <inputEntry id="UnaryTests_1jr0fyi">
+          <text>not 3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1yodgcd">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1f1ggx4">
+          <text>"FAIL M2"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vyj3wl">
+        <inputEntry id="UnaryTests_0gbq82g">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_157f10l">
+          <text>not 2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00as4vq">
+          <text>"FAIL M3"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0prcegr">
+        <inputEntry id="UnaryTests_1dk4lha">
+          <text>not 3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08ki2dh">
+          <text>not 2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0mijujx">
+          <text>"FAIL M2 and M3"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1xl6lp2" name="M3&#10;filter then match">
+    <variable id="InformationItem_00c9t0f" name="M3" typeRef="list" />
+    <informationRequirement id="InformationRequirement_15ya7ov">
+      <requiredDecision href="#Decision_0lvp25e" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0dnx133">
+      <text>for male   in persons [gender="male"] , 
+    female in persons [gender="female"]
+
+return {match:[male,female]}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1f57j21" name="M1&#10;match then filter">
+    <variable id="InformationItem_1ehmuz3" name="matches" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0rlec60">
+      <requiredDecision href="#Decision_0lvp25e" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_19qnomo">
+      <text>
+for p1 in persons, p2 in persons 
+return 
+  if p1.gender="male" and p2.gender="female" 
+  then {match:[p1,p2]}
+  else {}
+
+//don;t put comments at the very beginning or everything will be treated as a comemnt</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_13m5h79" name="M2&#10;find all pairs of different persons">
+    <variable id="InformationItem_1em3ja4" name="M2" typeRef="list" />
+    <informationRequirement id="InformationRequirement_1qsivnz">
+      <requiredDecision href="#Decision_0lvp25e" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1kj6s4g">
+      <text>for p1 in persons, p2 in persons
+return  if p1.id &lt; p2.id then  {match :[p1,p2]} else {}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0lvp25e" name="INTERNAL&#10;define a collection of persons">
+    <variable id="InformationItem_0qdu01e" name="persons" typeRef="list" />
+    <literalExpression id="LiteralExpression_0nya4fe">
+      <text>[
+    {name: "Dick",gender: "male",age: 35},
+    {name: "Jane",gender: "female",age: 27},
+    {name: "Harry",gender: "male",age: 22 }
+]
+
+// note the output variable name "persons" will become part of this object</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1cvqpxg" name="MAT01&#10;DOCUMENTATION">
+    <variable id="InformationItem_0ric04x" name="null" typeRef="string" />
+    <literalExpression id="LiteralExpression_03v4l9g">
+      <text>{} 
+// null value necessary for syntax correctness
+
+/*
+This model illustrates three different ways to match two objects from the same collection
+M1 Selects every pair of objects from the collections of persons and then tries to select a male-female pair (DOES NOT WORK)
+M2 Selects pairs of different persons (WORKS)
+M3 Filters persons into two collections (male, female) and then generate every pairing of male-female (WORKS) returns 
+M4 same as M3 but returns null when no match
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1r7ne5f" name="M4&#10;M2 using null">
+    <variable id="InformationItem_0uauez1" name="M4" typeRef="list" />
+    <informationRequirement id="InformationRequirement_09ca5tz">
+      <requiredDecision href="#Decision_0lvp25e" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_08f9qo5">
+      <text>for p1 in persons, p2 in persons
+return 
+  if p1.id &lt; p2.id then 
+  {match :[p1,p2]}
+  else null</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_18cbr70" name="persons" />
+  <textAnnotation id="TextAnnotation_1t0pdk8">
+    <text>INTERNAL TEST DATA  SHOULD LOOK LIKE THIS
+
+ [
+    {name: "Dick",gender: "male",age: 35},
+    {name: "Jane",gender: "female",age: 27},
+    {name: "Harry",gender: "male",age: 22 }
+]
+
+the output variable name "persons" will be added so it looks like the context</text>
+  </textAnnotation>
+  <association id="Association_0h9n1q4">
+    <sourceRef href="#TextAnnotation_1t0pdk8" />
+    <targetRef href="#Decision_0lvp25e" />
+  </association>
+  <textAnnotation id="TextAnnotation_0pxj3kr">
+    <text>Does not work</text>
+  </textAnnotation>
+  <association id="Association_1bx3y22">
+    <sourceRef href="#TextAnnotation_0pxj3kr" />
+    <targetRef href="#Decision_1f57j21" />
+  </association>
+  <textAnnotation id="TextAnnotation_0jvdn0t">
+    <text>M2 EXPECTED VALUE
+[{},
+ {"pairs":[{"name":"Jane","id":1,"gender":"female"},{"name":"Dick","id":2,"gender":"male"}]},
+ {"pairs":[{"name":"Jane","id":1,"gender":"female"},{"name":"Harry","id":3,"gender":"male"}]},
+ {},
+ {},
+ {"pairs":[{"name":"Dick","id":2,"gender":"male"},{"name":"Harry","id":3,"gender":"male"}]},
+ {},
+ {},
+{}]</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_1j1kd7s">
+    <text>[null,
+ {"pairs":[{"name":"Jane","id":1,"gender":"female"},{"name":"Dick","id":2,"gender":"male"}]},
+ {"pairs":[{"name":"Jane","id":1,"gender":"female"},{"name":"Harry","id":3,"gender":"male"}]},
+ null,
+ null,
+ {"pairs":[{"name":"Dick","id":2,"gender":"male"},{"name":"Harry","id":3,"gender":"male"}]},
+ null,
+ null,
+ null]</text>
+  </textAnnotation>
+  <association id="Association_01vb00h">
+    <sourceRef href="#TextAnnotation_1j1kd7s" />
+    <targetRef href="#Decision_1r7ne5f" />
+  </association>
+  <textAnnotation id="TextAnnotation_1mhxpwk">
+    <text>EXPECTED RESULTS
+result = "PASS M2 and M3"</text>
+  </textAnnotation>
+  <association id="Association_176wtav">
+    <sourceRef href="#TextAnnotation_1mhxpwk" />
+    <targetRef href="#Decision_1skvxu2" />
+  </association>
+  <textAnnotation id="TextAnnotation_17e558e">
+    <text>M3 EXPECTED VALUE
+[{"match":[{"name":"Dick","id":2,"gender":"male"} ,{"name":"Jane","id":1,"gender":"female"}]},
+ {"match":[{"name":"Harry","id":3,"gender":"male"},{"name":"Jane","id":1,"gender":"female"}]}]</text>
+  </textAnnotation>
+  <association id="Association_0rgtzkd">
+    <sourceRef href="#TextAnnotation_17e558e" />
+    <targetRef href="#Decision_1xl6lp2" />
+  </association>
+  <association id="Association_0b8njr2">
+    <sourceRef href="#TextAnnotation_0jvdn0t" />
+    <targetRef href="#Decision_13m5h79" />
+  </association>
+  <textAnnotation id="TextAnnotation_0179njs">
+    <text>CONTEXT SHOULD LOOK LIKE THIS
+{
+  "persons": 
+  [ {"name":"Jane","id":1,"gender":"female"},
+    {"name":"Dick","id":2,"gender":"male"} ,
+    {"name":"Harry","id":3,"gender":"male"}  
+  ]
+}</text>
+  </textAnnotation>
+  <association id="Association_0c02tc7">
+    <sourceRef href="#InputData_18cbr70" />
+    <targetRef href="#TextAnnotation_0179njs" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1skvxu2">
+        <dc:Bounds height="80" width="180" x="790" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0dytuxr" dmnElementRef="Decision_1xl6lp2">
+        <dc:Bounds height="80" width="180" x="910" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1rvumee" dmnElementRef="Decision_1f57j21">
+        <dc:Bounds height="80" width="180" x="410" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_19cdppm" dmnElementRef="Decision_13m5h79">
+        <dc:Bounds height="80" width="180" x="660" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0x0y921" dmnElementRef="Decision_0lvp25e">
+        <dc:Bounds height="80" width="180" x="770" y="580" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0dyogz6" dmnElementRef="InformationRequirement_1qsivnz">
+        <di:waypoint x="860" y="580" />
+        <di:waypoint x="750" y="500" />
+        <di:waypoint x="750" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gtkhv2" dmnElementRef="InformationRequirement_15ya7ov">
+        <di:waypoint x="860" y="580" />
+        <di:waypoint x="1000" y="500" />
+        <di:waypoint x="1000" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gltoag" dmnElementRef="InformationRequirement_085y8n2">
+        <di:waypoint x="1000" y="400" />
+        <di:waypoint x="910" y="330" />
+        <di:waypoint x="910" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0zxacg9" dmnElementRef="InformationRequirement_0jkrdvs">
+        <di:waypoint x="750" y="400" />
+        <di:waypoint x="850" y="330" />
+        <di:waypoint x="850" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0sq3fs8" dmnElementRef="InformationRequirement_0rlec60">
+        <di:waypoint x="860" y="580" />
+        <di:waypoint x="500" y="500" />
+        <di:waypoint x="500" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_12ihrij" dmnElementRef="TextAnnotation_1t0pdk8">
+        <dc:Bounds height="140" width="515" x="1392" y="580" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0rloepx" dmnElementRef="Association_0h9n1q4">
+        <di:waypoint x="1392" y="620" />
+        <di:waypoint x="950" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_08d0q5b" dmnElementRef="Decision_1cvqpxg">
+        <dc:Bounds height="80" width="180" x="790" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1nlqq8i" dmnElementRef="TextAnnotation_0pxj3kr">
+        <dc:Bounds height="30" width="100" x="420" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_07qwz2v" dmnElementRef="Association_1bx3y22">
+        <di:waypoint x="474" y="540" />
+        <di:waypoint x="490" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0433p2a" dmnElementRef="TextAnnotation_0jvdn0t">
+        <dc:Bounds height="155" width="515" x="152" y="192" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_09jn675" dmnElementRef="Decision_1r7ne5f">
+        <dc:Bounds height="80" width="180" x="1130" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0vn9ddb" dmnElementRef="InformationRequirement_09ca5tz">
+        <di:waypoint x="860" y="580" />
+        <di:waypoint x="1220" y="500" />
+        <di:waypoint x="1220" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1a2y31i" dmnElementRef="TextAnnotation_1j1kd7s">
+        <dc:Bounds height="140" width="517" x="1391" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0q7v22p" dmnElementRef="Association_01vb00h">
+        <di:waypoint x="1391" y="440" />
+        <di:waypoint x="1310" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1a1rbai" dmnElementRef="TextAnnotation_1mhxpwk">
+        <dc:Bounds height="40" width="200" x="1110" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xd57jl" dmnElementRef="Association_176wtav">
+        <di:waypoint x="1160" y="140" />
+        <di:waypoint x="966" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1i8lil4" dmnElementRef="TextAnnotation_17e558e">
+        <dc:Bounds height="60" width="535" x="1105" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0sttcrk" dmnElementRef="Association_0rgtzkd">
+        <di:waypoint x="1137" y="290" />
+        <di:waypoint x="1036" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_11m1c8m" dmnElementRef="Association_0b8njr2">
+        <di:waypoint x="522" y="347" />
+        <di:waypoint x="660" y="442" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1ecrmjk" dmnElementRef="TextAnnotation_0179njs">
+        <dc:Bounds height="130" width="340" x="1000" y="755" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0h7lo2t" dmnElementRef="InputData_18cbr70">
+        <dc:Bounds height="45" width="125" x="797" y="787" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xdi7pw" dmnElementRef="Association_0c02tc7">
+        <di:waypoint x="922" y="805" />
+        <di:waypoint x="1000" y="811" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

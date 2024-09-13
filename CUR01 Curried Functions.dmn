@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0p11vce" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_094k5mj" name="Curried Functions" />
+  <decision id="Decision_0wv66d5" name="curry">
+    <variable id="InformationItem_01bm8j8" name="curriedResult" typeRef="any" />
+    <literalExpression id="LiteralExpression_1ebhcy6">
+      <text>
+{ 
+f : function(a) function(b) a + b, 
+ r : f(1)(2) 
+}
+
+
+
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0jtwmys" name="curry partial">
+    <variable id="InformationItem_129h0p7" name="curryPartial" typeRef="number" />
+    <literalExpression id="LiteralExpression_062zaui">
+      <text>{ add : function(a) function(b) a + b, 
+ add1 : add(1),  // partial functions
+ r2: add1(2)
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_16dfun2" name="multiple partial functions">
+    <variable id="InformationItem_0u4orvi" />
+    <literalExpression id="LiteralExpression_0p02lbn">
+      <text>{ add : function(a) function(b) a + b, 
+ add1 : add(1),  // partial functions
+ add9 : add(9),  // partial functions
+ add10: add(9)(1),
+ r2: add1(2),
+ r9: add9(r2),
+ r10: add(10)
+}</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_1pnrnkl">
+    <text>We defined a feel context with 2 entries:
+The first entry is a function named “f”
+It defines a curried function: a function of one parameter “a”
+Once f is invoked, it will return a function of one parameter “b” once
+When invoked it will return the sum of a+b
+The entry named “r” invokes the curried function with a=1 and b=2.</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0ua21w6">
+    <text>RESULT
+{
+  "f": {    "parameterNames": [  "a"  ]  },
+  "r": 3
+}</text>
+  </textAnnotation>
+  <association id="Association_1ldkktn">
+    <sourceRef href="#TextAnnotation_0ua21w6" />
+    <targetRef href="#Decision_0wv66d5" />
+  </association>
+  <textAnnotation id="TextAnnotation_1awfslt">
+    <text>{ f : function(a) function(b) a + b,     // function definition
+
+ r : f(1),                                             // r is now a function (not a value) that will accept the b parameter 
+
+ r2: r(2)                                             // we now invoke r with parameter b
+                                                         // the result should be 3
+}</text>
+  </textAnnotation>
+  <association id="Association_0kx70q3">
+    <sourceRef href="#TextAnnotation_1awfslt" />
+    <targetRef href="#Decision_0jtwmys" />
+  </association>
+  <textAnnotation id="TextAnnotation_0vvd91h">
+    <text>{
+  "add":  {    "parameterNames": [      "a"    ]  },
+  "add1": {   "parameterNames": [      "b"   ]  },
+  "add9": {   "parameterNames": [      "b"   ]  },
+  "r2": 3,
+  "r9": 12
+}</text>
+  </textAnnotation>
+  <association id="Association_0exc2zt">
+    <sourceRef href="#Decision_16dfun2" />
+    <targetRef href="#TextAnnotation_0vvd91h" />
+  </association>
+  <textAnnotation id="TextAnnotation_1pdbi21">
+    <text>{ add : function(a) function(b) a + b,  // function definition
+
+ add1 : add(1),                                   // partial functions
+ add9 : add(9),                                   // partial functions
+
+ r2: add1(2),                                       // invoke
+ r9: add9(r2)                                       // invoke
+}</text>
+  </textAnnotation>
+  <association id="Association_1l3xtpm">
+    <sourceRef href="#TextAnnotation_1pdbi21" />
+    <targetRef href="#Decision_16dfun2" />
+  </association>
+  <textAnnotation id="TextAnnotation_1on81b0">
+    <text>{
+  "add":   {    "parameterNames": [      "a"    ]  },
+  "add1": {    "parameterNames": [      "b"    ]  },
+
+  "r2": 3
+}</text>
+  </textAnnotation>
+  <association id="Association_17rin82">
+    <sourceRef href="#TextAnnotation_1on81b0" />
+    <targetRef href="#Decision_0jtwmys" />
+  </association>
+  <textAnnotation id="TextAnnotation_0qxsjj4">
+    <text>{ 
+f : function(a) function(b) a + b,   // function definition
+ r : f(1)(2)                                     // invoke function with both arguments
+}</text>
+  </textAnnotation>
+  <association id="Association_051q5me">
+    <sourceRef href="#TextAnnotation_0qxsjj4" />
+    <targetRef href="#Decision_0wv66d5" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_07j5guf" dmnElementRef="Decision_094k5mj">
+        <dc:Bounds height="80" width="180" x="170" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_012l1zd" dmnElementRef="Decision_0wv66d5">
+        <dc:Bounds height="80" width="180" x="520" y="225" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1nfb07w" dmnElementRef="TextAnnotation_1pnrnkl">
+        <dc:Bounds height="110" width="410" x="595" y="65" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_05znx8v" dmnElementRef="TextAnnotation_0ua21w6">
+        <dc:Bounds height="95" width="245" x="167" y="217" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09mgk48" dmnElementRef="Association_1ldkktn">
+        <di:waypoint x="412" y="253" />
+        <di:waypoint x="520" y="281" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0pgprxm" dmnElementRef="Decision_0jtwmys">
+        <dc:Bounds height="80" width="180" x="530" y="370" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ofwuw0" dmnElementRef="TextAnnotation_1awfslt">
+        <dc:Bounds height="110" width="800" x="780" y="355" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_125ygg6" dmnElementRef="Association_0kx70q3">
+        <di:waypoint x="780" y="395" />
+        <di:waypoint x="710" y="410" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1hidwo7" dmnElementRef="TextAnnotation_0vvd91h">
+        <dc:Bounds height="120" width="260" x="160" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zv3wk0" dmnElementRef="Decision_16dfun2">
+        <dc:Bounds height="80" width="180" x="530" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0y98shd" dmnElementRef="Association_0exc2zt">
+        <di:waypoint x="530" y="595" />
+        <di:waypoint x="420" y="575" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1iockt5" dmnElementRef="TextAnnotation_1pdbi21">
+        <dc:Bounds height="130" width="340" x="800" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0y4iwxv" dmnElementRef="Association_1l3xtpm">
+        <di:waypoint x="800" y="570" />
+        <di:waypoint x="710" y="570" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_07kkbi5" dmnElementRef="TextAnnotation_1on81b0">
+        <dc:Bounds height="120" width="270" x="170" y="350" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09ilzcx" dmnElementRef="Association_17rin82">
+        <di:waypoint x="440" y="385" />
+        <di:waypoint x="530" y="413" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_07zu0n3" dmnElementRef="TextAnnotation_0qxsjj4">
+        <dc:Bounds height="80" width="390" x="780" y="225" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0e5n65q" dmnElementRef="Association_051q5me">
+        <di:waypoint x="780" y="265" />
+        <di:waypoint x="700" y="265" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

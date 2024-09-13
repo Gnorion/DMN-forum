@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_1rt6dmb" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1skvxu2" name="eHarmony summary">
+    <informationRequirement id="InformationRequirement_085y8n2">
+      <requiredDecision href="#Decision_1xl6lp2" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_06tm1ki">
+      <input id="InputClause_03nwib7" label="count the number of matching persons" biodi:width="192">
+        <inputExpression id="LiteralExpression_1d46yto" typeRef="number">
+          <text>count(matches[match=true])</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="result" typeRef="string" />
+      <rule id="DecisionRule_1jjmm2c">
+        <inputEntry id="UnaryTests_009plra">
+          <text>1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pw8uw6">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vyj3wl">
+        <inputEntry id="UnaryTests_157f10l">
+          <text>not 1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00as4vq">
+          <text>"FAIL"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1xl6lp2" name="match male to female">
+    <variable id="InformationItem_00c9t0f" name="matches" typeRef="list" />
+    <informationRequirement id="InformationRequirement_15ya7ov">
+      <requiredDecision href="#Decision_0lvp25e" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1oso345">
+      <requiredInput href="#InputData_1i7fvri" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0dnx133">
+      <text>for m in persons [gender="male"], f in persons [gender="female"]
+return 
+  if m.age in [f.age-5..f.age+5] // age within 5 years
+then
+     {male:m,
+      female:f,
+      match:true,
+      comment:"match between [" + m.name + ", " + string(m.age) + 
+              "] and  [" + f.name + ", " + string(f.age) +
+              "] age difference [" + string(abs(m.age-f.age)) + "] within 5 years" }
+else
+     {male:m,
+      female:f,
+      match:false,
+      comment:"no match between [" + m.name + ", " + string(m.age) + 
+              "] and  [" + f.name + ", " + string(f.age) +
+              "] age difference [" + string(abs(m.age-f.age)) + "] exceeds 5 years" }</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0lvp25e" name="define a collection of persons">
+    <variable id="InformationItem_0qdu01e" name="persons" typeRef="list" />
+    <literalExpression id="LiteralExpression_0nya4fe">
+      <text>// internally generated test data
+
+[
+    {name: "Dick",gender: "male",age: 35},
+    {name: "Jane",gender: "female",age: 27},
+    {name: "Harry",gender: "male",age: 22 }
+]
+</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_1i7fvri" name="persons" />
+  <textAnnotation id="TextAnnotation_11neudt">
+    <text>INTERNAL DATA
+[
+    {name: "Dick",gender: "male",age: 35},
+    {name: "Jane",gender: "female",age: 27},
+    {name: "Harry",gender: "male",age: 22 }
+]</text>
+  </textAnnotation>
+  <association id="Association_1imeeg6">
+    <sourceRef href="#TextAnnotation_11neudt" />
+    <targetRef href="#Decision_0lvp25e" />
+  </association>
+  <textAnnotation id="TextAnnotation_02i0kr6">
+    <text>for m in persons [gender="male"], f in persons [gender="female"]
+return 
+  if m.age in [f.age-5..f.age+5] // age within 5 years
+then
+     {male:m,
+      female:f,
+      match:true,
+      comment:"match between [" + m.name + ", " + string(m.age) + 
+              "] and [" + f.name + ", " + string(f.age) +
+              "] age difference [" + string(abs(m.age-f.age)) + "] within 5 years" }
+else
+     {male:m,
+      female:f,
+      match:false,
+      comment:"no match between [" + m.name + ", " + string(m.age) + 
+              "] and [" + f.name + ", " + string(f.age) +
+              "] age difference [" + string(abs(m.age-f.age)) + "] exceeds 5 years" }</text>
+  </textAnnotation>
+  <association id="Association_0ffhldk">
+    <sourceRef href="#TextAnnotation_02i0kr6" />
+    <targetRef href="#Decision_1xl6lp2" />
+  </association>
+  <textAnnotation id="TextAnnotation_055t37c">
+    <text>Expected result "PASS"</text>
+  </textAnnotation>
+  <association id="Association_1upxo4y">
+    <sourceRef href="#TextAnnotation_055t37c" />
+    <targetRef href="#Decision_1skvxu2" />
+  </association>
+  <textAnnotation id="TextAnnotation_0s7dltp">
+    <text>EXTERNAL DATA
+{"persons":
+[
+    {"name": "Dick","gender": "male","age": 35},
+    {"name": "Jane","gender": "female","age": 27},
+    {"name": "Harry","gender": "male","age": 22 }
+]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_14gvcwk">
+    <text>NOTES 9/11/2024
+
+Internally generated data does not have the property names in quotes
+the property name for the entire object is the expression output variable name
+
+External data (provides in the context) needs to be valid json. i.e the property names need to be in quotes</text>
+  </textAnnotation>
+  <association id="Association_0nqkqo1">
+    <sourceRef href="#InputData_1i7fvri" />
+    <targetRef href="#TextAnnotation_0s7dltp" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1skvxu2">
+        <dc:Bounds height="80" width="180" x="360" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0dytuxr" dmnElementRef="Decision_1xl6lp2">
+        <dc:Bounds height="80" width="180" x="360" y="290" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0x0y921" dmnElementRef="Decision_0lvp25e">
+        <dc:Bounds height="80" width="180" x="480" y="450" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gtkhv2" dmnElementRef="InformationRequirement_15ya7ov">
+        <di:waypoint x="570" y="450" />
+        <di:waypoint x="480" y="390" />
+        <di:waypoint x="480" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gltoag" dmnElementRef="InformationRequirement_085y8n2">
+        <di:waypoint x="450" y="290" />
+        <di:waypoint x="450" y="260" />
+        <di:waypoint x="450" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1is8c5o" dmnElementRef="TextAnnotation_11neudt">
+        <dc:Bounds height="100" width="270" x="485" y="570" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0g2b9xs" dmnElementRef="Association_1imeeg6">
+        <di:waypoint x="590" y="570" />
+        <di:waypoint x="590" y="530" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0iqnmvf" dmnElementRef="TextAnnotation_02i0kr6">
+        <dc:Bounds height="260" width="430" x="755" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_07k6f6x" dmnElementRef="Association_0ffhldk">
+        <di:waypoint x="755" y="330" />
+        <di:waypoint x="540" y="330" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0id8xyy" dmnElementRef="TextAnnotation_055t37c">
+        <dc:Bounds height="50" width="155" x="565" y="175" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0uod0x3" dmnElementRef="Association_1upxo4y">
+        <di:waypoint x="565" y="210" />
+        <di:waypoint x="540" y="210" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_14ij958" dmnElementRef="TextAnnotation_0s7dltp">
+        <dc:Bounds height="125" width="290" x="165" y="557" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1g2a058" dmnElementRef="TextAnnotation_14gvcwk">
+        <dc:Bounds height="280" width="480" x="1170" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_11rgia5" dmnElementRef="InputData_1i7fvri">
+        <dc:Bounds height="45" width="125" x="177" y="467" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1r3xu56" dmnElementRef="Association_0nqkqo1">
+        <di:waypoint x="225" y="512" />
+        <di:waypoint x="220" y="557" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1v0u2hn" dmnElementRef="InformationRequirement_1oso345">
+        <di:waypoint x="240" y="467" />
+        <di:waypoint x="420" y="390" />
+        <di:waypoint x="420" y="370" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

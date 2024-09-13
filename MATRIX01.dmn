@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_1er8ft6" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1dkzfp7" name="check Result">
+    <informationRequirement id="InformationRequirement_1ps3nkw">
+      <requiredDecision href="#Decision_05a2bg7" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1endyk6">
+      <input id="Input_1" label="is M5 correct?" biodi:width="152">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="result" typeRef="string" />
+      <rule id="DecisionRule_1g8aael">
+        <inputEntry id="UnaryTests_16jtdbi">
+          <text>M5=[
+  [0,2,2 ],
+  [-2,0,1 ],
+  [-2,-1,0]
+]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mf2us8">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_03u97m3" name="define matrix M1">
+    <variable id="InformationItem_182nu5c" name="M1" typeRef="matrix" />
+    <literalExpression id="LiteralExpression_1vigoqi">
+      <text>[
+  [1,0,0],
+  [1,1,1],
+  [0,1,0]
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0t97kdi" name="define matrix M2">
+    <variable id="InformationItem_0a9ely2" name="M2" typeRef="matrix" />
+    <literalExpression id="LiteralExpression_1sf94ob">
+      <text>[
+  [1,0,0],
+  [0,1,0],
+  [0,0,1]
+]
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1tvxxvs" name="M1T=transpose M1">
+    <variable id="InformationItem_06c4b54" name="M1T" typeRef="matrix" />
+    <informationRequirement id="InformationRequirement_0a5hzg0">
+      <requiredDecision href="#Decision_03u97m3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0zrdz8b">
+      <requiredInput href="#InputData_0zup0a1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0hkorv6">
+      <text>for row in 1..count(M1) return for col in 1..count(M1[1]) return  M1[col][row]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0bcio6v" name="M2T=transpose M2">
+    <variable id="InformationItem_0p7ol2z" name="M2T" typeRef="matrix" />
+    <informationRequirement id="InformationRequirement_1oqga52">
+      <requiredDecision href="#Decision_0t97kdi" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0de6n5r">
+      <requiredInput href="#InputData_0mafpxn" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_177c3p5">
+      <text>for row in 1..count(M2) return for col in 1..count(M[2]) return  M2[col][row]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0xiot3s" name="M3=M2T+M1T">
+    <variable id="InformationItem_0567aya" name="M3" typeRef="matrix" />
+    <informationRequirement id="InformationRequirement_1tbjzcu">
+      <requiredDecision href="#Decision_0bcio6v" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1u9kkuh">
+      <requiredDecision href="#Decision_1tvxxvs" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_16anab3">
+      <text>for row in 1..count(M1T) return for col in 1..count(M1T[1]) return  M1T[row][col] + M2T[row][col]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_19rwo3q" name="M4=M1+M2">
+    <variable id="InformationItem_1tatkow" name="M4" typeRef="matrix" />
+    <informationRequirement id="InformationRequirement_0m3lbb7">
+      <requiredDecision href="#Decision_0t97kdi" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1qxp3yv">
+      <requiredDecision href="#Decision_03u97m3" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_04chqtd">
+      <text>for row in 1..count(M1) return for col in 1..count(M1[1]) return  M1[row][col] + M2[row][col]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_05a2bg7" name="M5=M3-M4">
+    <variable id="InformationItem_1ajc5g9" name="M5" typeRef="matrix" />
+    <informationRequirement id="InformationRequirement_1advopk">
+      <requiredDecision href="#Decision_19rwo3q" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_022ltdj">
+      <requiredDecision href="#Decision_0xiot3s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1bgnzfx">
+      <text>for row in 1..count(M3) return for col in 1..count(M3[1]) return  M3[row][col] - M4[row][col]</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0mafpxn" name="M2" />
+  <inputData id="InputData_0zup0a1" name="M1" />
+  <textAnnotation id="TextAnnotation_10jubf6">
+    <text>[
+  [1,0,0],
+  [1,1,0],
+  [0,1,0]
+ ]</text>
+  </textAnnotation>
+  <association id="Association_18v8uwv">
+    <sourceRef href="#TextAnnotation_10jubf6" />
+    <targetRef href="#Decision_03u97m3" />
+  </association>
+  <textAnnotation id="TextAnnotation_1779y5b">
+    <text>[
+  [1,1,1],
+  [2,4,6],
+  [3,6,9]
+  ]</text>
+  </textAnnotation>
+  <association id="Association_1cxefv1">
+    <sourceRef href="#TextAnnotation_1779y5b" />
+    <targetRef href="#Decision_0t97kdi" />
+  </association>
+  <textAnnotation id="TextAnnotation_1rjklik">
+    <text>[
+ [1,2,3],
+  1,4,6],
+  1,6,9]
+  ]</text>
+  </textAnnotation>
+  <association id="Association_0o6nnfb">
+    <sourceRef href="#TextAnnotation_1rjklik" />
+    <targetRef href="#Decision_0bcio6v" />
+  </association>
+  <textAnnotation id="TextAnnotation_0j3x66q">
+    <text>[
+  [1,1,0],
+  [0,1,1],
+  [0,0,0]
+ ]</text>
+  </textAnnotation>
+  <association id="Association_0rgojma">
+    <sourceRef href="#TextAnnotation_0j3x66q" />
+    <targetRef href="#Decision_1tvxxvs" />
+  </association>
+  <textAnnotation id="TextAnnotation_060ebvj">
+    <text>[
+  [2,1,1 ],
+  [3,5,6],
+  [3,7,9]
+]</text>
+  </textAnnotation>
+  <association id="Association_1cvzztj">
+    <sourceRef href="#TextAnnotation_060ebvj" />
+    <targetRef href="#Decision_19rwo3q" />
+  </association>
+  <textAnnotation id="TextAnnotation_1njjomt">
+    <text>[
+  [ 2,3,3],
+  [ 1,5,7],
+  [1,6,9]
+]</text>
+  </textAnnotation>
+  <association id="Association_147ycqz">
+    <sourceRef href="#TextAnnotation_1njjomt" />
+    <targetRef href="#Decision_0xiot3s" />
+  </association>
+  <textAnnotation id="TextAnnotation_0evqqm4">
+    <text>[
+  [0,   2,2 ],
+  [-2,  0,1 ],
+  [ -2,-1,0 ]
+]</text>
+  </textAnnotation>
+  <association id="Association_0mpygf0">
+    <sourceRef href="#TextAnnotation_0evqqm4" />
+    <targetRef href="#Decision_05a2bg7" />
+  </association>
+  <textAnnotation id="TextAnnotation_09rydg5">
+    <text>{"M2":
+[
+  [1,1,1],
+  [2,4,6],
+  [3,6,9]
+  ]
+}</text>
+  </textAnnotation>
+  <association id="Association_1y7mvgs">
+    <sourceRef href="#TextAnnotation_09rydg5" />
+    <targetRef href="#InputData_0mafpxn" />
+  </association>
+  <textAnnotation id="TextAnnotation_1uuf7z6">
+    <text>{"M1":
+[
+  [1,0,0],
+  [1,1,0],
+  [0,1,0]
+ ]
+}</text>
+  </textAnnotation>
+  <association id="Association_024uaan">
+    <sourceRef href="#TextAnnotation_1uuf7z6" />
+    <targetRef href="#InputData_0zup0a1" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1dkzfp7">
+        <dc:Bounds height="80" width="180" x="530" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1vg1wq9" dmnElementRef="Decision_03u97m3">
+        <dc:Bounds height="80" width="180" x="780" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1j5maxb" dmnElementRef="Decision_0t97kdi">
+        <dc:Bounds height="80" width="180" x="780" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0m9ktzy" dmnElementRef="TextAnnotation_10jubf6">
+        <dc:Bounds height="80" width="100" x="1020" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1g7sdnh" dmnElementRef="Association_18v8uwv">
+        <di:waypoint x="1020" y="600" />
+        <di:waypoint x="960" y="600" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0tgesf3" dmnElementRef="TextAnnotation_1779y5b">
+        <dc:Bounds height="80" width="100" x="1010" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1x14l1m" dmnElementRef="Association_1cxefv1">
+        <di:waypoint x="1010" y="200" />
+        <di:waypoint x="960" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1xewmu0" dmnElementRef="InformationRequirement_0a5hzg0">
+        <di:waypoint x="780" y="600" />
+        <di:waypoint x="500" y="600" />
+        <di:waypoint x="480" y="600" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1q2uxr9" dmnElementRef="Decision_1tvxxvs">
+        <dc:Bounds height="80" width="180" x="300" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_12ic5ty" dmnElementRef="InformationRequirement_1oqga52">
+        <di:waypoint x="780" y="200" />
+        <di:waypoint x="500" y="200" />
+        <di:waypoint x="480" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0ur66iq" dmnElementRef="Decision_0bcio6v">
+        <dc:Bounds height="80" width="180" x="300" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rzuc2j" dmnElementRef="TextAnnotation_1rjklik">
+        <dc:Bounds height="80" width="66" x="167" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lx0d2i" dmnElementRef="Association_0o6nnfb">
+        <di:waypoint x="233" y="200" />
+        <di:waypoint x="300" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_03admi0" dmnElementRef="TextAnnotation_0j3x66q">
+        <dc:Bounds height="80" width="86" x="157" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1b6vrzi" dmnElementRef="Association_0rgojma">
+        <di:waypoint x="243" y="600" />
+        <di:waypoint x="300" y="600" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0d5rk5f" dmnElementRef="InformationRequirement_1tbjzcu">
+        <di:waypoint x="390" y="240" />
+        <di:waypoint x="390" y="370" />
+        <di:waypoint x="390" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ofc5yf" dmnElementRef="InformationRequirement_1u9kkuh">
+        <di:waypoint x="390" y="560" />
+        <di:waypoint x="390" y="490" />
+        <di:waypoint x="390" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1glq1s1" dmnElementRef="Decision_0xiot3s">
+        <dc:Bounds height="80" width="180" x="300" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0j3pojs" dmnElementRef="Decision_19rwo3q">
+        <dc:Bounds height="80" width="180" x="780" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0i9b13e" dmnElementRef="InformationRequirement_0m3lbb7">
+        <di:waypoint x="870" y="240" />
+        <di:waypoint x="870" y="370" />
+        <di:waypoint x="870" y="390" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1c44rsx" dmnElementRef="InformationRequirement_1qxp3yv">
+        <di:waypoint x="870" y="560" />
+        <di:waypoint x="870" y="490" />
+        <di:waypoint x="870" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_02awvi3" dmnElementRef="InformationRequirement_1advopk">
+        <di:waypoint x="780" y="430" />
+        <di:waypoint x="730" y="430" />
+        <di:waypoint x="710" y="430" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_14pb7f9" dmnElementRef="InformationRequirement_022ltdj">
+        <di:waypoint x="480" y="430" />
+        <di:waypoint x="510" y="430" />
+        <di:waypoint x="530" y="430" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1kty8jh" dmnElementRef="Decision_05a2bg7">
+        <dc:Bounds height="80" width="180" x="530" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_09tr12a" dmnElementRef="TextAnnotation_060ebvj">
+        <dc:Bounds height="80" width="100" x="1020" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qrk7jc" dmnElementRef="Association_1cvzztj">
+        <di:waypoint x="1020" y="430" />
+        <di:waypoint x="960" y="430" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1qk2y1z" dmnElementRef="TextAnnotation_1njjomt">
+        <dc:Bounds height="90" width="100" x="157" y="385" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0a9ya7z" dmnElementRef="Association_147ycqz">
+        <di:waypoint x="257" y="426" />
+        <di:waypoint x="300" y="428" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_081oc9s" dmnElementRef="TextAnnotation_0evqqm4">
+        <dc:Bounds height="90" width="90" x="565" y="495" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1h5t0lr" dmnElementRef="Association_0mpygf0">
+        <di:waypoint x="617" y="495" />
+        <di:waypoint x="618" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1cg56tt" dmnElementRef="InformationRequirement_1ps3nkw">
+        <di:waypoint x="620" y="390" />
+        <di:waypoint x="620" y="360" />
+        <di:waypoint x="620" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_03ifmdw" dmnElementRef="TextAnnotation_09rydg5">
+        <dc:Bounds height="110" width="100" x="530" y="46" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rkoszm" dmnElementRef="InputData_0mafpxn">
+        <dc:Bounds height="45" width="125" x="327" y="78" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xw7zz5" dmnElementRef="Association_1y7mvgs">
+        <di:waypoint x="530" y="100" />
+        <di:waypoint x="452" y="100" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1qh1ok4" dmnElementRef="InformationRequirement_0de6n5r">
+        <di:waypoint x="390" y="123" />
+        <di:waypoint x="390" y="140" />
+        <di:waypoint x="390" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_10x8srw" dmnElementRef="InputData_0zup0a1">
+        <dc:Bounds height="45" width="125" x="327" y="678" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cavzw5" dmnElementRef="InformationRequirement_0zrdz8b">
+        <di:waypoint x="390" y="678" />
+        <di:waypoint x="390" y="660" />
+        <di:waypoint x="390" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_147ogz6" dmnElementRef="TextAnnotation_1uuf7z6">
+        <dc:Bounds height="110" width="100" x="530" y="655" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0q787s4" dmnElementRef="Association_024uaan">
+        <di:waypoint x="530" y="699" />
+        <di:waypoint x="452" y="696" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

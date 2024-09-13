@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1er8ft6" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1dkzfp7" name="Decision 1">
+    <decisionTable id="DecisionTable_1endyk6">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <decision id="Decision_18vp7aw" name="define one vector V1">
+    <variable id="InformationItem_1cqg4fr" name="V1" typeRef="vector" />
+    <literalExpression id="LiteralExpression_1i2v990">
+      <text>[1,2,3,4,5,6]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1j3arrz" name="V2=scalar product n*V1">
+    <variable id="InformationItem_0jwny6j" name="V2" typeRef="vector" />
+    <informationRequirement id="InformationRequirement_04swpy5">
+      <requiredDecision href="#Decision_18vp7aw" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1cvq897">
+      <requiredDecision href="#Decision_0tcbeun" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_14hi11o">
+      <requiredInput href="#InputData_0569my8" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0ajfs31">
+      <requiredInput href="#InputData_0kfz9s1" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1y1pfz2">
+      <requiredInput href="#InputData_0nkxsyx" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1onhjy1">
+      <text>for e in V1 return n*e</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0tcbeun" name="define scalar n">
+    <variable id="InformationItem_0wxqqu2" name="n" typeRef="number" />
+    <literalExpression id="LiteralExpression_0qm059s">
+      <text>5</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0569my8" name="n" />
+  <inputData id="InputData_0kfz9s1" name="V1" />
+  <inputData id="InputData_0nkxsyx" name="context" />
+  <decision id="Decision_0ik5aak" name="compute X=sum(V2)-sum(V1)">
+    <variable id="InformationItem_1qj4jko" name="X" typeRef="number" />
+    <informationRequirement id="InformationRequirement_0zkfgyf">
+      <requiredDecision href="#Decision_1j3arrz" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_04pg5uq">
+      <text>{v1sum:sum(V1),v2sum:sum(V2),X:sum(V2)-sum(V1)}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0s0zk80" name="check result">
+    <informationRequirement id="InformationRequirement_0b30bce">
+      <requiredDecision href="#Decision_0ik5aak" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_00vvbkr">
+      <input id="InputClause_0dtrus4" label="sum of elements in V1">
+        <inputExpression id="LiteralExpression_10s0w35" typeRef="string">
+          <text>X.v1sum</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0oc1bqo" label="sum of elements in V2">
+        <inputExpression id="LiteralExpression_0rl3a13" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1o0zw3t" label="difference">
+        <inputExpression id="LiteralExpression_1givieh" typeRef="string">
+          <text>X.v2sum-X.V1sum</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0z2dyyz" typeRef="string" />
+      <rule id="DecisionRule_078zgec">
+        <inputEntry id="UnaryTests_1kfx9f0">
+          <text>21</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1m7wq5v">
+          <text>105</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15iiwv8">
+          <text>84</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0swkv8v">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0p0w86b" name="SCA01&#10;VECTOR ARITHMETIC" />
+  <textAnnotation id="TextAnnotation_114erkk">
+    <text>[1,2,3,4,5,6]</text>
+  </textAnnotation>
+  <association id="Association_1bje5y0">
+    <sourceRef href="#TextAnnotation_114erkk" />
+    <targetRef href="#Decision_18vp7aw" />
+  </association>
+  <textAnnotation id="TextAnnotation_00aipj3">
+    <text>V2=[2,4,6,8,10,12]</text>
+  </textAnnotation>
+  <association id="Association_0b70ydv">
+    <sourceRef href="#TextAnnotation_00aipj3" />
+    <targetRef href="#Decision_1j3arrz" />
+  </association>
+  <textAnnotation id="TextAnnotation_14mnm3a">
+    <text>5</text>
+  </textAnnotation>
+  <association id="Association_1bsmhxw">
+    <sourceRef href="#TextAnnotation_14mnm3a" />
+    <targetRef href="#Decision_0tcbeun" />
+  </association>
+  <textAnnotation id="TextAnnotation_0jwid8l">
+    <text>{"n":5}</text>
+  </textAnnotation>
+  <association id="Association_1sqt86v">
+    <sourceRef href="#TextAnnotation_0jwid8l" />
+    <targetRef href="#InputData_0569my8" />
+  </association>
+  <textAnnotation id="TextAnnotation_1rkr49y">
+    <text>{"V1": [1,2,3,4,5,6]}</text>
+  </textAnnotation>
+  <association id="Association_0qknakc">
+    <sourceRef href="#TextAnnotation_1rkr49y" />
+    <targetRef href="#InputData_0kfz9s1" />
+  </association>
+  <textAnnotation id="TextAnnotation_130y6vb">
+    <text>{"context":{
+  "n":5,
+  "V1":[1,2,3,4,5,6]
+}</text>
+  </textAnnotation>
+  <association id="Association_0om4m9b">
+    <sourceRef href="#TextAnnotation_130y6vb" />
+    <targetRef href="#InputData_0nkxsyx" />
+  </association>
+  <textAnnotation id="TextAnnotation_0x8c0hx">
+    <text>{
+  "v1sum": 21,
+  "v2sum": 105,
+  "X": 84
+}</text>
+  </textAnnotation>
+  <association id="Association_16s0crg">
+    <sourceRef href="#TextAnnotation_0x8c0hx" />
+    <targetRef href="#Decision_0ik5aak" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1dkzfp7">
+        <dc:Bounds height="80" width="180" x="1100" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0f2393f" dmnElementRef="Decision_18vp7aw">
+        <dc:Bounds height="80" width="180" x="830" y="790" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1a8vana" dmnElementRef="InformationRequirement_04swpy5">
+        <di:waypoint x="830" y="830" />
+        <di:waypoint x="670" y="847" />
+        <di:waypoint x="650" y="847" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1j6vy7a" dmnElementRef="Decision_1j3arrz">
+        <dc:Bounds height="80" width="180" x="470" y="820" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_00f2co2" dmnElementRef="TextAnnotation_114erkk">
+        <dc:Bounds height="30" width="100" x="1060" y="815" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_14jbbk0" dmnElementRef="Association_1bje5y0">
+        <di:waypoint x="1060" y="830" />
+        <di:waypoint x="1010" y="830" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1fjgkk9" dmnElementRef="Decision_0tcbeun">
+        <dc:Bounds height="80" width="180" x="830" y="880" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1sjw0w4" dmnElementRef="InformationRequirement_1cvq897">
+        <di:waypoint x="830" y="920" />
+        <di:waypoint x="670" y="873" />
+        <di:waypoint x="650" y="873" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0vfzvw9" dmnElementRef="TextAnnotation_00aipj3">
+        <dc:Bounds height="25" width="130" x="260" y="847" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09f2f8x" dmnElementRef="Association_0b70ydv">
+        <di:waypoint x="390" y="860" />
+        <di:waypoint x="470" y="860" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0lebx8c" dmnElementRef="InputData_0569my8">
+        <dc:Bounds height="45" width="125" x="277" y="957" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ssryc5" dmnElementRef="InformationRequirement_14hi11o">
+        <di:waypoint x="340" y="957" />
+        <di:waypoint x="515" y="920" />
+        <di:waypoint x="515" y="900" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1gy96c9" dmnElementRef="InputData_0kfz9s1">
+        <dc:Bounds height="45" width="125" x="677" y="957" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_14rwwh3" dmnElementRef="InformationRequirement_0ajfs31">
+        <di:waypoint x="740" y="957" />
+        <di:waypoint x="605" y="920" />
+        <di:waypoint x="605" y="900" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_178wiif" dmnElementRef="TextAnnotation_14mnm3a">
+        <dc:Bounds height="30" width="100" x="1060" y="905" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06g0ttg" dmnElementRef="Association_1bsmhxw">
+        <di:waypoint x="1060" y="920" />
+        <di:waypoint x="1010" y="920" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0rfskba" dmnElementRef="TextAnnotation_0jwid8l">
+        <dc:Bounds height="30" width="100" x="290" y="1030" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ylx8bt" dmnElementRef="Association_1sqt86v">
+        <di:waypoint x="340" y="1030" />
+        <di:waypoint x="340" y="1002" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1twrcv2" dmnElementRef="TextAnnotation_1rkr49y">
+        <dc:Bounds height="30" width="128" x="692" y="1030" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0see6rf" dmnElementRef="Association_0qknakc">
+        <di:waypoint x="742" y="1030" />
+        <di:waypoint x="741" y="1002" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0lukf1w" dmnElementRef="InputData_0nkxsyx">
+        <dc:Bounds height="45" width="125" x="497" y="957" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16fpz2c" dmnElementRef="TextAnnotation_130y6vb">
+        <dc:Bounds height="70" width="129" x="501" y="1025" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gx4sb2" dmnElementRef="Association_0om4m9b">
+        <di:waypoint x="555" y="1025" />
+        <di:waypoint x="558" y="1002" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0u30vre" dmnElementRef="InformationRequirement_1y1pfz2">
+        <di:waypoint x="560" y="957" />
+        <di:waypoint x="560" y="920" />
+        <di:waypoint x="560" y="900" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1resr7r" dmnElementRef="Decision_0ik5aak">
+        <dc:Bounds height="80" width="180" x="470" y="690" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_029nudv" dmnElementRef="InformationRequirement_0zkfgyf">
+        <di:waypoint x="560" y="820" />
+        <di:waypoint x="560" y="790" />
+        <di:waypoint x="560" y="770" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1izlwej" dmnElementRef="TextAnnotation_0x8c0hx">
+        <dc:Bounds height="80" width="310" x="715" y="680" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0mfm269" dmnElementRef="Association_16s0crg">
+        <di:waypoint x="710" y="730" />
+        <di:waypoint x="650" y="730" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0quut68" dmnElementRef="Decision_0s0zk80">
+        <dc:Bounds height="80" width="180" x="470" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0c2dzak" dmnElementRef="InformationRequirement_0b30bce">
+        <di:waypoint x="560" y="690" />
+        <di:waypoint x="560" y="660" />
+        <di:waypoint x="560" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_10wibdo" dmnElementRef="Decision_0p0w86b">
+        <dc:Bounds height="80" width="180" x="160" y="560" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

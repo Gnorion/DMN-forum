@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1gu4b85" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0nry17v" name="TABLE: determine the price of toys">
+    <decisionTable id="DecisionTable_0x8u634">
+      <input id="Input_1" label="toy.color">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_14akj6l" label="toy.size">
+        <inputExpression id="LiteralExpression_1hd6blf" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1qhimbh" label="toy.shape">
+        <inputExpression id="LiteralExpression_1xhhc1g" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="toy.price" typeRef="string" />
+      <rule id="DecisionRule_1kbg9ih">
+        <inputEntry id="UnaryTests_0ic9tjk">
+          <text>"red"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0oyhrkv">
+          <text>"large"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ml1nsw">
+          <text>"square"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14tpyzo">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0886fpu">
+        <inputEntry id="UnaryTests_06vu16h">
+          <text>"red"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1oahqwx">
+          <text>"small"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d8vbst">
+          <text>"oval"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wxe2ut">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pw1s43">
+        <inputEntry id="UnaryTests_0j3armr">
+          <text>"green"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03dkkl6">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hpodnr">
+          <text>"oval"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ddsfcc">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13lkzdx">
+        <inputEntry id="UnaryTests_0rzxehe">
+          <text>"green"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ispgf0">
+          <text>"small"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1tolazq">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ac3qna">
+          <text>4</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1eumyuq">
+        <inputEntry id="UnaryTests_00oavx5">
+          <text>"blue"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03uu2jp">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1595p3i">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14543tl">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0xgakjp">
+        <inputEntry id="UnaryTests_1p1cxcn">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16j94eg">
+          <text>"tiny"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10pbb25">
+          <text>"square"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0akocm7">
+          <text>6</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1su3mm3" name="define toy data">
+    <variable id="InformationItem_1juarit" name="toys" typeRef="list" />
+    <literalExpression id="LiteralExpression_1p4y9sl">
+      <text>[
+{color: "red",shape: "square",size: "small"},
+{color: "red",shape: "round",size: "small"},
+{color: "red",shape: "square",size: "large"},
+{color: "red",shape: "round",size: "large"},
+{color: "green",shape: "square",size: "small"},
+{color: "green",shape: "round",size: "small"},
+{color: "green",shape: "square",size: "large"},
+{color: "green",shape: "round",size: "large"}
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_192k7wa" name="EXPRESSION:determine price of toys">
+    <variable id="InformationItem_0mnfjw6" name="toys" typeRef="list" />
+    <informationRequirement id="InformationRequirement_1fnqq4n">
+      <requiredDecision href="#Decision_1su3mm3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1r45bla">
+      <requiredInput href="#InputData_0kxfho5" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_08yk6rw">
+      <text>for toy in toys 
+return 
+if toy.color = "red" and toy.size = "large" and toy.shape = "square" then {toy:toy,price:1} else 
+if toy.color = "red" and toy.size = "small" and toy.shape = "oval" then {toy:toy,price:2} else
+if toy.color = "green" and toy.shape = "oval" then {toy:toy,price:3} else
+if toy.color = "green" and toy.size = "small" then {toy:toy,price:4} else
+if toy.color = "blue" then {toy:toy,price:5} else
+if toy.size = "tiny" and toy.shape = "square" then {toy:toy,price:6} 
+else 
+ {toy:toy,price:0,comment:"no rules for this toy"}</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0kxfho5" name="toys" />
+  <textAnnotation id="TextAnnotation_05gvvxz">
+    <text>CONTEXT
+{"toys":[
+{"color": "red","shape": "square","size": "small"},
+{"color": "red","shape": "round","size": "small"},
+{"color": "red","shape": "square","size": "large"},
+{"color": "red","shape": "round","size": "large"},
+{"color": "green","shape": "square","size": "small"},
+{"color": "green","shape": "round","size": "small"},
+{"color": "green","shape": "square","size": "large"},
+{"color": "green","shape": "round","size": "large"}
+]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0cthay4">
+    <text>INTERNAL
+[
+{color: "red",shape: "square",size: "small"},
+{color: "red",shape: "round",size: "small"},
+{color: "red",shape: "square",size: "large"},
+{color: "red",shape: "round",size: "large"},
+{color: "green",shape: "square",size: "small"},
+{color: "green",shape: "round",size: "small"},
+{color: "green",shape: "square",size: "large"},
+{color: "green",shape: "round",size: "large"}
+]</text>
+  </textAnnotation>
+  <association id="Association_0usqhkd">
+    <sourceRef href="#Decision_1su3mm3" />
+    <targetRef href="#TextAnnotation_0cthay4" />
+  </association>
+  <association id="Association_00e631z">
+    <sourceRef href="#InputData_0kxfho5" />
+    <targetRef href="#TextAnnotation_05gvvxz" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0nry17v">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xj2e5x" dmnElementRef="Decision_1su3mm3">
+        <dc:Bounds height="80" width="180" x="160" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0if3l67" dmnElementRef="TextAnnotation_05gvvxz">
+        <dc:Bounds height="170" width="280" x="640" y="195" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1c65ir1" dmnElementRef="InformationRequirement_1fnqq4n">
+        <di:waypoint x="250" y="400" />
+        <di:waypoint x="250" y="340" />
+        <di:waypoint x="250" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1cw6b1k" dmnElementRef="Decision_192k7wa">
+        <dc:Bounds height="80" width="180" x="160" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1q3x0nb" dmnElementRef="InputData_0kxfho5">
+        <dc:Bounds height="45" width="125" x="407" y="257" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_110i5kn" dmnElementRef="TextAnnotation_0cthay4">
+        <dc:Bounds height="175" width="260" x="460" y="385" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_08kgwlh" dmnElementRef="Association_0usqhkd">
+        <di:waypoint x="340" y="440" />
+        <di:waypoint x="460" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1nq6ksj" dmnElementRef="Association_00e631z">
+        <di:waypoint x="532" y="280" />
+        <di:waypoint x="640" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1k97wrk" dmnElementRef="InformationRequirement_1r45bla">
+        <di:waypoint x="407" y="280" />
+        <di:waypoint x="360" y="280" />
+        <di:waypoint x="340" y="280" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

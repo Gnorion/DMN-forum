@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1knsacz" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1uuf1mz" name="DMC01 Decision Modeling Community Challenge Problems Sept 2017&#10;CLASSIFY EMPLOYEES" />
+  <decision id="Decision_1c16f35" name="compute employee statistics">
+    <variable id="InformationItem_1abwdp4" name="statistics" typeRef="Any" />
+    <informationRequirement id="InformationRequirement_12os0ef">
+      <requiredInput href="#InputData_0bzhp64" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0x8yadd">
+      <requiredDecision href="#Decision_0jty7lv" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1c760gz">
+      <text>{statistics:{
+averageAge : mean(employees.age),
+averageSalary:mean(employees.salary),
+maxSalary:max(employees.salary),
+minSalary:min(employees.salary),
+numberOfFemales: count(employees[gender="female"]),
+numberOfMales: count(employees[gender="male"]),
+averageSalary_females:mean(employees[gender="female"].salary),
+averageSalary_males:mean(employees[gender="male"].salary),
+numberOfHighlyPaid:count(employees[salary &gt; 150000])
+       }}</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0bzhp64" name="employees" />
+  <decision id="Decision_0jty7lv" name="define employees">
+    <variable id="InformationItem_1i4vr3j" name="employees" typeRef="list" />
+    <literalExpression id="LiteralExpression_1kw1auw">
+      <text>[
+  {name:"Tom",age:57,salary:100000,gender:"male"},
+  {name:"Dick",age:26,salary:80000,gender:"male"},
+  {name:"Harry",age:37,salary:160000,gender:"male"},
+  {name:"Jane",age:42,salary:120000,gender:"female"},
+  {name:"Mary",age:26,salary:180000,gender:"female"}
+]
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_04s56kv" name="check results of expressions executed  separately">
+    <informationRequirement id="InformationRequirement_0skt8xq">
+      <requiredDecision href="#Decision_1c16f35" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0yznygr">
+      <input id="InputClause_1whtnd9" label="averageAge">
+        <inputExpression id="LiteralExpression_1are696" typeRef="string" />
+      </input>
+      <input id="InputClause_08wwazc" label="averageSalary">
+        <inputExpression id="LiteralExpression_0v2gji2" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1gxf2lf" label="maxSalary">
+        <inputExpression id="LiteralExpression_0wrgead" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1or5v3r" label="minSalary">
+        <inputExpression id="LiteralExpression_0ct7jib" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_066l0sr" label="numberOfMales">
+        <inputExpression id="LiteralExpression_1q1nic1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1mxo4zp" label="numberOfFemales">
+        <inputExpression id="LiteralExpression_0gbw1oy" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0x60xti" label="averageSalary_females">
+        <inputExpression id="LiteralExpression_0up7kv7" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0bmyfpe" label="averageSalary_males">
+        <inputExpression id="LiteralExpression_1auky7j" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ag5oxu" label="numberOfHighlyPaid">
+        <inputExpression id="LiteralExpression_0hp0iq7" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0ux98h2" label="expression_result" typeRef="string" />
+      <rule id="DecisionRule_1t70aeg">
+        <inputEntry id="UnaryTests_1vyaaqx">
+          <text>37.3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16sqdrx">
+          <text>128000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ojitej">
+          <text>180000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15s6u8y">
+          <text>80000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w3x9t7">
+          <text>3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0psfv81">
+          <text>2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0u78yy6">
+          <text>150000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0450d54">
+          <text>113333.33</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_10ym7xn">
+          <text>2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_139tucd">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1xp2o9f" name="check results using expressions embedded in table conditions">
+    <decisionTable id="DecisionTable_0p44mpm">
+      <input id="InputClause_188iuex" label="average age of all employees">
+        <inputExpression id="LiteralExpression_1d6fv89" typeRef="number">
+          <text>mean(employees.age)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1f835yw" label="average salary of all employees" biodi:width="191.9921875">
+        <inputExpression id="LiteralExpression_1jllipe" typeRef="number">
+          <text>meas(employees.salary)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0fm6xcc" label="maximum salary of all employees">
+        <inputExpression id="LiteralExpression_0li92m2" typeRef="number">
+          <text>max(employees.salary)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0d2u49k" label="minimum salary of all employees">
+        <inputExpression id="LiteralExpression_0je8t46" typeRef="number">
+          <text>max(employees.salary)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_02hs35h" label="number of males">
+        <inputExpression id="LiteralExpression_0hwz0dx" typeRef="number">
+          <text>count(employees[gender="male"])</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0d18uts" label="number of females">
+        <inputExpression id="LiteralExpression_1b3y7i9" typeRef="string">
+          <text>count(employees[gender="female"])</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0hbygvn" label="average salary of females">
+        <inputExpression id="LiteralExpression_1qjd21z" typeRef="number">
+          <text>mean(employees[gender="female"])</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1j3c28k" label="average salary of males">
+        <inputExpression id="LiteralExpression_0mpxfjh" typeRef="number">
+          <text>mean(employees[gender="male"])</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_175iujj" label="number of highly paid employees">
+        <inputExpression id="LiteralExpression_1hs2xye" typeRef="number">
+          <text>count(employees[salary&gt;150000])</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0s9j69f" label="table_result" typeRef="string" />
+      <rule id="DecisionRule_1e8qtkb">
+        <inputEntry id="UnaryTests_096rx1e">
+          <text>37.3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fwl3pd">
+          <text>128000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fz86l9">
+          <text>180000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1j9241t">
+          <text>80000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07a8xes">
+          <text>3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00kj9yu">
+          <text>2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18tity9">
+          <text>150000</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03zvxpc">
+          <text>113333.33</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0arbumq">
+          <text>2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0frte60">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1rf50gj" name="compare results">
+    <informationRequirement id="InformationRequirement_0a1i5ss">
+      <requiredDecision href="#Decision_1xp2o9f" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_11hpjp7">
+      <requiredDecision href="#Decision_04s56kv" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1sdp2hu">
+      <input id="InputClause_0a08fal" label="table_result">
+        <inputExpression id="LiteralExpression_0upb3xl" typeRef="string" />
+      </input>
+      <input id="InputClause_00yk5fl" label="expression_result">
+        <inputExpression id="LiteralExpression_1xk5rsg" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1ufkacp" label="overall_result" typeRef="string" />
+      <rule id="DecisionRule_0u1ej97">
+        <inputEntry id="UnaryTests_0acnpgg">
+          <text>"PASS"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x3ezed">
+          <text>"PASS"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19i8vbn">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_117hryg">
+    <text>EXTERNAL DATA 
+{"employees":
+[
+  {"name":"Tom","age":57,"salary":100000,"gender":"male"},
+  {"name":"Dick","age":26,"salary":80000,"gender":"male"},
+  {"name":"Harry","age":37,"salary":160000,"gender":"male"},
+  {"name":"Jane","age":42,"salary":120000,"gender":"female"},
+  {"name":"Mary","age":26,"salary":180000,"gender":"female"}
+]
+}</text>
+  </textAnnotation>
+  <association id="Association_09hkxe6">
+    <sourceRef href="#TextAnnotation_117hryg" />
+    <targetRef href="#InputData_0bzhp64" />
+  </association>
+  <textAnnotation id="TextAnnotation_11wws2o">
+    <text>INTERNAL DATA
+[
+  {name:"Tom",age:57,salary:100000,gender:"male"},
+  {name:"Dick",age:26,salary:80000,gender:"male"},
+  {name:"Harry",age:37,salary:160000,gender:"male"},
+  {name:"Jane",age:42,salary:120000,gender:"female"},
+  {name:"Mary",age:26,salary:180000,gender:"female"}
+]</text>
+  </textAnnotation>
+  <association id="Association_1vnw23u">
+    <sourceRef href="#TextAnnotation_11wws2o" />
+    <targetRef href="#Decision_0jty7lv" />
+  </association>
+  <textAnnotation id="TextAnnotation_0h5prt8">
+    <text>{statistics:{
+averageAge : mean(employees.age),
+averageSalary:mean(employees.salary),
+maxSalary:max(employees.salary),
+minSalary:min(employees.salary),
+numberOfFemales: count(employees[gender="female"]),
+numberOfMales: count(employees[gender="male"]),
+averageSalary_females:mean(employees[gender="female"].salary),
+averageSalary_males:mean(employees[gender="male"].salary),
+numberOfHighlyPaid:count(employees[salary &gt; 150000])
+       }}</text>
+  </textAnnotation>
+  <association id="Association_0lk47a6">
+    <sourceRef href="#TextAnnotation_0h5prt8" />
+    <targetRef href="#Decision_1c16f35" />
+  </association>
+  <textAnnotation id="TextAnnotation_0tiocv8">
+    <text>EXPECTED RESULTS
+{
+  "department": {
+    "averageAge": 37.6,
+    "averageSalary": 128000,
+    "maxSalary": 180000,
+    "minSalary": 80000,
+    "numberOfFemales": 2,
+    "numberOfMales": 3,
+    "averageSalary_females": 150000,
+    "averageSalary_males": 113333.33333333333,
+    "numberOfHighlyPaid": 2
+  }
+}</text>
+  </textAnnotation>
+  <association id="Association_16l7l9y">
+    <sourceRef href="#TextAnnotation_0tiocv8" />
+    <targetRef href="#Decision_04s56kv" />
+  </association>
+  <textAnnotation id="TextAnnotation_0fsr48k">
+    <text>https://dmcommunity.org/challenge/challenge-sep-2017/</text>
+  </textAnnotation>
+  <association id="Association_19vnpx4">
+    <sourceRef href="#TextAnnotation_0fsr48k" />
+    <targetRef href="#Decision_1uuf1mz" />
+  </association>
+  <textAnnotation id="TextAnnotation_0tkrr88">
+    <text>EXPECTED RESULT
+{"overall_result":"PASS"}</text>
+  </textAnnotation>
+  <association id="Association_088ngb5">
+    <sourceRef href="#TextAnnotation_0tkrr88" />
+    <targetRef href="#Decision_1rf50gj" />
+  </association>
+  <textAnnotation id="TextAnnotation_0ezkb7a">
+    <text>EXPECTED RESULT
+{"table_result":"PASS"}</text>
+  </textAnnotation>
+  <association id="Association_1abfyje">
+    <sourceRef href="#TextAnnotation_0ezkb7a" />
+    <targetRef href="#Decision_1xp2o9f" />
+  </association>
+  <textAnnotation id="TextAnnotation_0w6rzu6">
+    <text>EXPECTED RESULT
+{"expression_result":"PASS"}</text>
+  </textAnnotation>
+  <association id="Association_1iixxpk">
+    <sourceRef href="#TextAnnotation_0w6rzu6" />
+    <targetRef href="#Decision_04s56kv" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1k1r93q" dmnElementRef="Decision_1uuf1mz">
+        <dc:Bounds height="80" width="180" x="240" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0obvd5o" dmnElementRef="Decision_1c16f35">
+        <dc:Bounds height="80" width="180" x="640" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1boajxf" dmnElementRef="InputData_0bzhp64">
+        <dc:Bounds height="45" width="125" x="667" y="497" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_022occz" dmnElementRef="TextAnnotation_117hryg">
+        <dc:Bounds height="150" width="370" x="890" y="480" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nk27v7" dmnElementRef="Association_09hkxe6">
+        <di:waypoint x="890" y="520" />
+        <di:waypoint x="792" y="520" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1c33p11" dmnElementRef="InformationRequirement_12os0ef">
+        <di:waypoint x="730" y="497" />
+        <di:waypoint x="730" y="460" />
+        <di:waypoint x="730" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0szysf0" dmnElementRef="Decision_0jty7lv">
+        <dc:Bounds height="80" width="180" x="900" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0nh8jrj" dmnElementRef="TextAnnotation_11wws2o">
+        <dc:Bounds height="120" width="360" x="1150" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1p96vqy" dmnElementRef="Association_1vnw23u">
+        <di:waypoint x="1150" y="397" />
+        <di:waypoint x="1080" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1swtxqn" dmnElementRef="InformationRequirement_0x8yadd">
+        <di:waypoint x="900" y="400" />
+        <di:waypoint x="840" y="400" />
+        <di:waypoint x="820" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1efnnqp" dmnElementRef="InformationRequirement_0skt8xq">
+        <di:waypoint x="730" y="360" />
+        <di:waypoint x="730" y="320" />
+        <di:waypoint x="730" y="300" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1npc2vb" dmnElementRef="TextAnnotation_0h5prt8">
+        <dc:Bounds height="170" width="410" x="215" y="455" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1jg9taq" dmnElementRef="Association_0lk47a6">
+        <di:waypoint x="536" y="455" />
+        <di:waypoint x="640" y="426" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0fdwzdc" dmnElementRef="TextAnnotation_0tiocv8">
+        <dc:Bounds height="210" width="340" x="1160" y="105" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0zcwsqx" dmnElementRef="Association_16l7l9y">
+        <di:waypoint x="1160" y="168" />
+        <di:waypoint x="820" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1yiiu4f" dmnElementRef="Decision_04s56kv">
+        <dc:Bounds height="80" width="180" x="640" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_01fwla4" dmnElementRef="Decision_1xp2o9f">
+        <dc:Bounds height="80" width="180" x="410" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nf123u" dmnElementRef="InformationRequirement_0a1i5ss">
+        <di:waypoint x="500" y="220" />
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="590" y="170" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0l45z62" dmnElementRef="InformationRequirement_11hpjp7">
+        <di:waypoint x="730" y="220" />
+        <di:waypoint x="650" y="190" />
+        <di:waypoint x="650" y="170" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_012rn3i" dmnElementRef="Decision_1rf50gj">
+        <dc:Bounds height="80" width="180" x="530" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_09iunhk" dmnElementRef="TextAnnotation_0fsr48k">
+        <dc:Bounds height="30" width="320" x="160" y="165" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_15ubjpl" dmnElementRef="Association_19vnpx4">
+        <di:waypoint x="225" y="165" />
+        <di:waypoint x="240" y="159" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_173djfz" dmnElementRef="TextAnnotation_0tkrr88">
+        <dc:Bounds height="40" width="210" x="750" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1b9iec9" dmnElementRef="Association_088ngb5">
+        <di:waypoint x="750" y="130" />
+        <di:waypoint x="710" y="130" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0nje7x3" dmnElementRef="TextAnnotation_0ezkb7a">
+        <dc:Bounds height="50" width="140" x="240" y="225" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1hu5f7t" dmnElementRef="Association_1abfyje">
+        <di:waypoint x="380" y="263" />
+        <di:waypoint x="410" y="262" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0n26ovw" dmnElementRef="TextAnnotation_0w6rzu6">
+        <dc:Bounds height="40" width="180" x="830" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1u9nvf1" dmnElementRef="Association_1iixxpk">
+        <di:waypoint x="880" y="250" />
+        <di:waypoint x="820" y="254" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

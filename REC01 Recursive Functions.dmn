@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0gjoval" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1y3dbqr" name="Recursive Functions in DMN" />
+  <decision id="Decision_19fxlmt" name="factorial recursive">
+    <variable id="InformationItem_0c2l0au" />
+    <literalExpression id="LiteralExpression_0zba3fo">
+      <text>{
+  factorial: function(n) if n&gt;1 then factorial(n-1)*n else 1,
+  n:n,
+  fact:factorial(2)
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1ux0ah3" name="factorial non recursive 1">
+    <variable id="InformationItem_0mlzzs6" />
+    <literalExpression id="LiteralExpression_1rp2tqr">
+      <text>{
+  factorial: function(n) if n=1 then 1 else for i in [1..n] return i,
+  n:3,
+  fact:product(factorial(n))
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_18ljvrb" name="factorial non recursive 2">
+    <variable id="InformationItem_0zbhz7a" name="factorials" typeRef="list" />
+    <literalExpression id="LiteralExpression_0e2i6gc">
+      <text>{
+  factorial: function(n)  product (for i in [1..n] return i),
+  facts: for n in [1..6] return factorial(n),
+  fact:factorial(3)
+}</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_1ucrqmn">
+    <text>{
+  factorial: function(n) if n&gt;1 then factorial(n-1)*n else 1,
+  n:n,
+  fact:factorial(2)
+}</text>
+  </textAnnotation>
+  <association id="Association_04dvm5h">
+    <sourceRef href="#TextAnnotation_1ucrqmn" />
+    <targetRef href="#Decision_19fxlmt" />
+  </association>
+  <textAnnotation id="TextAnnotation_1846kmq">
+    <text>{
+  "factorial": {    "parameterNames": [      "n"    ]  },
+  "facts": [    1,    2,    6,    24,    120,    720  ],
+  "fact": 6
+}</text>
+  </textAnnotation>
+  <association id="Association_0tnmk34">
+    <sourceRef href="#TextAnnotation_1846kmq" />
+    <targetRef href="#Decision_18ljvrb" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_10pjp8v" dmnElementRef="Decision_1y3dbqr">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0fxdnz7" dmnElementRef="Decision_19fxlmt">
+        <dc:Bounds height="80" width="180" x="560" y="200" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0tx1ds5" dmnElementRef="TextAnnotation_1ucrqmn">
+        <dc:Bounds height="80" width="340" x="820" y="200" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1tgx0u4" dmnElementRef="Association_04dvm5h">
+        <di:waypoint x="820" y="240" />
+        <di:waypoint x="740" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0p43jgb" dmnElementRef="Decision_1ux0ah3">
+        <dc:Bounds height="80" width="180" x="560" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_06s9f5h" dmnElementRef="Decision_18ljvrb">
+        <dc:Bounds height="80" width="180" x="560" y="420" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_04nf353" dmnElementRef="TextAnnotation_1846kmq">
+        <dc:Bounds height="90" width="290" x="205" y="415" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1yjs7rv" dmnElementRef="Association_0tnmk34">
+        <di:waypoint x="495" y="458" />
+        <di:waypoint x="560" y="459" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

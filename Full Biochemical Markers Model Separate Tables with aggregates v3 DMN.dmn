@@ -1,0 +1,459 @@
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             xmlns:camunda="http://camunda.org/schema/1.0/dmn"
+             id="Definitions"
+             name="Lab Test Results"
+             namespace="http://camunda.org/examples">
+
+  <!-- Chemistry Group -->
+  <decision id="chemistryTable" name="Chemistry Results">
+    <decisionTable id="chemistryDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputAmmonia" label="Ammonia (μg/dL)">
+        <inputExpression id="ammoniaExpression" typeRef="number">
+          <text>ammonia</text>
+        </inputExpression>
+      </input>
+      <input id="inputCeruloplasmin" label="Ceruloplasmin (mg/dL)">
+        <inputExpression id="ceruloplasminExpression" typeRef="number">
+          <text>ceruloplasmin</text>
+        </inputExpression>
+      </input>
+      <input id="inputChloride" label="Chloride (mmol/L)">
+        <inputExpression id="chlorideExpression" typeRef="number">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <input id="inputCopper" label="Copper (μg/dL)">
+        <inputExpression id="copperExpression" typeRef="number">
+          <text>copper</text>
+        </inputExpression>
+      </input>
+      <input id="inputCreatinine" label="Creatinine (mg/dL)">
+        <inputExpression id="creatinineExpression" typeRef="number">
+          <text>creatinine</text>
+        </inputExpression>
+      </input>
+      <input id="inputBloodUreaNitrogen" label="Blood Urea Nitrogen (mg/dL)">
+        <inputExpression id="bloodUreaNitrogenExpression" typeRef="number">
+          <text>bloodUreaNitrogen</text>
+        </inputExpression>
+      </input>
+      <input id="inputFerritin" label="Ferritin (ng/mL)">
+        <inputExpression id="ferritinExpression" typeRef="number">
+          <text>ferritin</text>
+        </inputExpression>
+      </input>
+      <input id="inputGlucose" label="Glucose (mg/dL)">
+        <inputExpression id="glucoseExpression" typeRef="number">
+          <text>glucose</text>
+        </inputExpression>
+      </input>
+      <input id="inputInorganicPhosphorous" label="Inorganic Phosphorous (mg/dL)">
+        <inputExpression id="inorganicPhosphorousExpression" typeRef="number">
+          <text>inorganicPhosphorous</text>
+        </inputExpression>
+      </input>
+      <input id="inputIonizedCalcium" label="Ionized Calcium (mmol/L)">
+        <inputExpression id="ionizedCalciumExpression" typeRef="number">
+          <text>ionizedCalcium</text>
+        </inputExpression>
+      </input>
+      <input id="inputMagnesium" label="Magnesium (mg/dL)">
+        <inputExpression id="magnesiumExpression" typeRef="number">
+          <text>magnesium</text>
+        </inputExpression>
+      </input>
+      <input id="inputPhosphate" label="Phosphate (mg/dL)">
+        <inputExpression id="phosphateExpression" typeRef="number">
+          <text>phosphate</text>
+        </inputExpression>
+      </input>
+      <input id="inputPotassium" label="Potassium (mEq/L)">
+        <inputExpression id="potassiumExpression" typeRef="number">
+          <text>potassium</text>
+        </inputExpression>
+      </input>
+      <input id="inputPyruvate" label="Pyruvate (mmol/L)">
+        <inputExpression id="pyruvateExpression" typeRef="number">
+          <text>pyruvate</text>
+        </inputExpression>
+      </input>
+      <input id="inputSodium" label="Sodium (mEq/L)">
+        <inputExpression id="sodiumExpression" typeRef="number">
+          <text>sodium</text>
+        </inputExpression>
+      </input>
+      <input id="inputTotalCalcium" label="Total Calcium (mg/dL)">
+        <inputExpression id="totalCalciumExpression" typeRef="number">
+          <text>totalCalcium</text>
+        </inputExpression>
+      </input>
+      <input id="inputTotalIronBindingCapacity" label="Total Iron-Binding Capacity (μg/dL)">
+        <inputExpression id="totalIronBindingCapacityExpression" typeRef="number">
+          <text>totalIronBindingCapacity</text>
+        </inputExpression>
+      </input>
+      <input id="inputTotalSerumIron" label="Total Serum Iron (μg/dL)">
+        <inputExpression id="totalSerumIronExpression" typeRef="number">
+          <text>totalSerumIron</text>
+        </inputExpression>
+      </input>
+      <input id="inputTransferrin" label="Transferrin (mg/dL)">
+        <inputExpression id="transferrinExpression" typeRef="number">
+          <text>transferrin</text>
+        </inputExpression>
+      </input>
+      <input id="inputUrea" label="Urea (mmol/L)">
+        <inputExpression id="ureaExpression" typeRef="number">
+          <text>urea</text>
+        </inputExpression>
+      </input>
+      <input id="inputUricAcid" label="Uric Acid (mmol/L)">
+        <inputExpression id="uricAcidExpression" typeRef="number">
+          <text>uricAcid</text>
+        </inputExpression>
+      </input>
+      <input id="inputZinc" label="Zinc (μg/dL)">
+        <inputExpression id="zincExpression" typeRef="number">
+          <text>zinc</text>
+        </inputExpression>
+      </input>
+      <output id="outputChemistryResult" label="Chemistry-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ammonia &gt;= 40 and ammonia &lt;= 70 and ceruloplasmin &gt;= 25 and ceruloplasmin &lt;= 43 and chloride &gt;= 95 and chloride &lt;= 105 and copper &gt;= 100 and copper &lt;= 200 and creatinine &gt;= 0.8 and creatinine &lt;= 1.3 and bloodUreaNitrogen &gt;= 8 and bloodUreaNitrogen &lt;= 20 and ferritin &gt;= 24 and ferritin &lt;= 307 and glucose &gt;= 70 and glucose &lt;= 99 and inorganicPhosphorous &gt;= 3 and inorganicPhosphorous &lt;= 4.5 and ionizedCalcium &gt;= 1.12 and ionizedCalcium &lt;= 1.23 and magnesium &gt;= 1.6 and magnesium &lt;= 2.6 and phosphate &gt;= 2.5 and phosphate &lt;= 4.5 and potassium &gt;= 3.5 and potassium &lt;= 5.0 and pyruvate &gt;= 0.08 and pyruvate &lt;= 0.16 and sodium &gt;= 136 and sodium &lt;= 145 and totalCalcium &gt;= 2 and totalCalcium &lt;= 2.6 and totalIronBindingCapacity &gt;= 250 and totalIronBindingCapacity &lt;= 310 and totalSerumIron &gt;= 50 and totalSerumIron &lt;= 150 and transferrin &gt;= 200 and transferrin &lt;= 400 and urea &gt;= 1.2 and urea &lt;= 3 and uricAcid &gt;= 0.18 and uricAcid &lt;= 0.48 and zinc &gt;= 75 and zinc &lt;= 140</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ammonia &lt; 40 or ammonia &gt; 70 or ceruloplasmin &lt; 25 or ceruloplasmin &gt; 43 or chloride &lt; 95 or chloride &gt; 105 or copper &lt; 100 or copper &gt; 200 or creatinine &lt; 0.8 or creatinine &gt; 1.3 or bloodUreaNitrogen &lt; 8 or bloodUreaNitrogen &gt; 20 or ferritin &lt; 24 or ferritin &gt; 307 or glucose &lt; 70 or glucose &gt; 99 or inorganicPhosphorous &lt; 3 or inorganicPhosphorous &gt; 4.5 or ionizedCalcium &lt; 1.12 or ionizedCalcium &gt; 1.23 or magnesium &lt; 1.6 or magnesium &gt; 2.6 or phosphate &lt; 2.5 or phosphate &gt; 4.5 or potassium &lt; 3.5 or potassium &gt; 5.0 or pyruvate &lt; 0.08 or pyruvate &gt; 0.16 or sodium &lt; 136 or sodium &gt; 145 or totalCalcium &lt; 2 or totalCalcium &gt; 2.6 or totalIronBindingCapacity &lt; 250 or totalIronBindingCapacity &gt; 310 or totalSerumIron &lt; 50 or totalSerumIron &gt; 150 or transferrin &lt; 200 or transferrin &gt; 400 or urea &lt; 1.2 or urea &gt; 3 or uricAcid &lt; 0.18 or uricAcid &gt; 0.48 or zinc &lt; 75 or zinc &gt; 140</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Hematology Group -->
+  <decision id="hematologyTable" name="Hematology Results">
+    <decisionTable id="hematologyDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputHemoglobin" label="Hemoglobin (g/dL)">
+        <inputExpression id="hemoglobinExpression" typeRef="number">
+          <text>hemoglobin</text>
+        </inputExpression>
+      </input>
+      <input id="inputHematocrit" label="Hematocrit (%)">
+        <inputExpression id="hematocritExpression" typeRef="number">
+          <text>hematocrit</text>
+        </inputExpression>
+      </input>
+      <input id="inputGlycosylatedHemoglobin" label="Glycosylated Hemoglobin (%)">
+        <inputExpression id="glycosylatedHemoglobinExpression" typeRef="number">
+          <text>glycosylatedHemoglobin</text>
+        </inputExpression>
+      </input>
+      <input id="inputMeanCorpuscularVolume" label="Mean Corpuscular Volume (fL)">
+        <inputExpression id="meanCorpuscularVolumeExpression" typeRef="number">
+          <text>meanCorpuscularVolume</text>
+        </inputExpression>
+      </input>
+      <input id="inputRedBloodCellDistributionWidth" label="Red Blood Cell Distribution Width (%)">
+        <inputExpression id="redBloodCellDistributionWidthExpression" typeRef="number">
+          <text>redBloodCellDistributionWidth</text>
+        </inputExpression>
+      </input>
+      <input id="inputMeanCorpuscularHemoglobin" label="Mean Corpuscular Hemoglobin (pg)">
+        <inputExpression id="meanCorpuscularHemoglobinExpression" typeRef="number">
+          <text>meanCorpuscularHemoglobin</text>
+        </inputExpression>
+      </input>
+      <input id="inputMeanCorpuscularHemoglobinConcentration" label="Mean Corpuscular Hemoglobin Concentration (g/dL)">
+        <inputExpression id="meanCorpuscularHemoglobinConcentrationExpression" typeRef="number">
+          <text>meanCorpuscularHemoglobinConcentration</text>
+        </inputExpression>
+      </input>
+      <input id="inputReticulocytes" label="Reticulocytes (%)">
+        <inputExpression id="reticulocytesExpression" typeRef="number">
+          <text>reticulocytes</text>
+        </inputExpression>
+      </input>
+      <input id="inputWhiteBloodCells" label="White Blood Cells (x10^9/L)">
+        <inputExpression id="whiteBloodCellsExpression" typeRef="number">
+          <text>whiteBloodCells</text>
+        </inputExpression>
+      </input>
+      <input id="inputNeutrophils" label="Neutrophils (x10^9/L)">
+        <inputExpression id="neutrophilsExpression" typeRef="number">
+          <text>neutrophils</text>
+        </inputExpression>
+      </input>
+      <input id="inputBands" label="Bands (x10^9/L)">
+        <inputExpression id="bandsExpression" typeRef="number">
+          <text>bands</text>
+        </inputExpression>
+      </input>
+      <input id="inputLymphocytes" label="Lymphocytes (x10^9/L)">
+        <inputExpression id="lymphocytesExpression" typeRef="number">
+          <text>lymphocytes</text>
+        </inputExpression>
+      </input>
+      <input id="inputMonocytes" label="Monocytes (x10^9/L)">
+        <inputExpression id="monocytesExpression" typeRef="number">
+          <text>monocytes</text>
+        </inputExpression>
+      </input>
+      <input id="inputEosinophils" label="Eosinophils (%)">
+        <inputExpression id="eosinophilsExpression" typeRef="number">
+          <text>eosinophils</text>
+        </inputExpression>
+      </input>
+      <input id="inputPlatelets" label="Platelets (x10^9/L)">
+        <inputExpression id="plateletsExpression" typeRef="number">
+          <text>platelets</text>
+        </inputExpression>
+      </input>
+      <input id="inputProthrombinTime" label="Prothrombin Time (seconds)">
+        <inputExpression id="prothrombinTimeExpression" typeRef="number">
+          <text>prothrombinTime</text>
+        </inputExpression>
+      </input>
+      <input id="inputINR" label="International Normalized Ratio (INR)">
+        <inputExpression id="inrExpression" typeRef="number">
+          <text>inr</text>
+        </inputExpression>
+      </input>
+      <input id="inputActivatedPartialThromboplastinTime" label="Activated Partial Thromboplastin Time (aPTT)">
+        <inputExpression id="activatedPartialThromboplastinTimeExpression" typeRef="number">
+          <text>activatedPartialThromboplastinTime</text>
+        </inputExpression>
+      </input>
+      <input id="inputFibrinogen" label="Fibrinogen (mg/dL)">
+        <inputExpression id="fibrinogenExpression" typeRef="number">
+          <text>fibrinogen</text>
+        </inputExpression>
+      </input>
+      <input id="inputBleedingTime" label="Bleeding Time (minutes)">
+        <inputExpression id="bleedingTimeExpression" typeRef="number">
+          <text>bleedingTime</text>
+        </inputExpression>
+      </input>
+      <output id="outputHematologyResult" label="Hematology-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>hemoglobin &gt;= 12 and hemoglobin &lt;= 16 and hematocrit &gt;= 37 and hematocrit &lt;= 47 and glycosylatedHemoglobin &gt;= 4.0 and glycosylatedHemoglobin &lt;= 5.6 and meanCorpuscularVolume &gt;= 80 and meanCorpuscularVolume &lt;= 98 and redBloodCellDistributionWidth &gt;= 9.0 and redBloodCellDistributionWidth &lt;= 14.5 and meanCorpuscularHemoglobin &gt;= 28 and meanCorpuscularHemoglobin &lt;= 32 and meanCorpuscularHemoglobinConcentration &gt;= 33 and meanCorpuscularHemoglobinConcentration &lt;= 36 and reticulocytes &gt;= 0.5 and reticulocytes &lt;= 1.5 and whiteBloodCells &gt;= 4 and whiteBloodCells &lt;= 10 and neutrophils &gt;= 2 and neutrophils &lt;= 8 and bands &lt; 1 and lymphocytes &gt;= 1 and lymphocytes &lt;= 4.8 and monocytes &gt;= 0.2 and monocytes &lt;= 0.8 and eosinophils &gt;= 0 and eosinophils &lt;= 6 and platelets &gt;= 150 and platelets &lt;= 350 and prothrombinTime &gt;= 11 and prothrombinTime &lt;= 13 and inr &gt;= 0.9 and inr &lt;= 1.2 and activatedPartialThromboplastinTime &gt;= 25 and activatedPartialThromboplastinTime &lt;= 35 and fibrinogen &gt;= 150 and fibrinogen &lt;= 350 and bleedingTime &lt; 8</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>hemoglobin &lt; 12 or hemoglobin &gt; 16 or hematocrit &lt; 37 or hematocrit &gt; 47 or glycosylatedHemoglobin &lt; 4.0 or glycosylatedHemoglobin &gt; 5.6 or meanCorpuscularVolume &lt; 80 or meanCorpuscularVolume &gt; 98 or redBloodCellDistributionWidth &lt; 9.0 or redBloodCellDistributionWidth &gt; 14.5 or meanCorpuscularHemoglobin &lt; 28 or meanCorpuscularHemoglobin &gt; 32 or meanCorpuscularHemoglobinConcentration &lt; 33 or meanCorpuscularHemoglobinConcentration &gt; 36 or reticulocytes &lt; 0.5 or reticulocytes &gt; 1.5 or whiteBloodCells &lt; 4 or whiteBloodCells &gt; 10 or neutrophils &lt; 2 or neutrophils &gt; 8 or bands &gt;= 1 or lymphocytes &lt; 1 or lymphocytes &gt; 4.8 or monocytes &lt; 0.2 or monocytes &gt; 0.8 or eosinophils &lt; 0 or eosinophils &gt; 6 or platelets &lt; 150 or platelets &gt; 350 or prothrombinTime &lt; 11 or prothrombinTime &gt; 13 or inr &lt; 0.9 or inr &gt; 1.2 or activatedPartialThromboplastinTime &lt; 25 or activatedPartialThromboplastinTime &gt; 35 or fibrinogen &lt; 150 or fibrinogen &gt; 350 or bleedingTime &gt;= 8</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Lipids Group -->
+  <decision id="lipidsTable" name="Lipids Results">
+    <decisionTable id="lipidsDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputCholesterol" label="Cholesterol (mg/dL)">
+        <inputExpression id="cholesterolExpression" typeRef="number">
+          <text>cholesterol</text>
+        </inputExpression>
+      </input>
+      <input id="inputTriglycerides" label="Triglycerides (mg/dL)">
+        <inputExpression id="triglyceridesExpression" typeRef="number">
+          <text>triglycerides</text>
+        </inputExpression>
+      </input>
+      <input id="inputHDL" label="HDL (mg/dL)">
+        <inputExpression id="hdlExpression" typeRef="number">
+          <text>hdl</text>
+        </inputExpression>
+      </input>
+      <input id="inputLDL" label="LDL (mg/dL)">
+        <inputExpression id="ldlExpression" typeRef="number">
+          <text>ldl</text>
+        </inputExpression>
+      </input>
+      <output id="outputLipidsResult" label="Lipids-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>cholesterol &gt;= 125 and cholesterol &lt;= 200 and triglycerides &gt;= 30 and triglycerides &lt;= 150 and hdl &gt;= 40 and hdl &lt;= 60 and ldl &gt;= 50 and ldl &lt;= 130</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>cholesterol &lt; 125 or cholesterol &gt; 200 or triglycerides &lt; 30 or triglycerides &gt; 150 or hdl &lt; 40 or hdl &gt; 60 or ldl &lt; 50 or ldl &gt; 130</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Acid-Base Group -->
+  <decision id="acidBaseTable" name="Acid-Base Results">
+    <decisionTable id="acidBaseDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputpH" label="pH">
+        <inputExpression id="phExpression" typeRef="number">
+          <text>ph</text>
+        </inputExpression>
+      </input>
+      <input id="inputpCO2" label="pCO2 (mmHg)">
+        <inputExpression id="pco2Expression" typeRef="number">
+          <text>pco2</text>
+        </inputExpression>
+      </input>
+      <input id="inputpO2" label="pO2 (mmHg)">
+        <inputExpression id="po2Expression" typeRef="number">
+          <text>po2</text>
+        </inputExpression>
+      </input>
+      <input id="inputBicarbonate" label="Bicarbonate (mEq/L)">
+        <inputExpression id="bicarbonateExpression" typeRef="number">
+          <text>bicarbonate</text>
+        </inputExpression>
+      </input>
+      <input id="inputBaseExcess" label="Base Excess (mEq/L)">
+        <inputExpression id="baseExcessExpression" typeRef="number">
+          <text>baseExcess</text>
+        </inputExpression>
+      </input>
+      <output id="outputAcidBaseResult" label="Acid-Base-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ph &gt;= 7.35 and ph &lt;= 7.45 and pco2 &gt;= 35 and pco2 &lt;= 45 and po2 &gt;= 75 and po2 &lt;= 100 and bicarbonate &gt;= 22 and bicarbonate &lt;= 26 and baseExcess &gt;= -2 and baseExcess &lt;= 2</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ph &lt; 7.35 or ph &gt; 7.45 or pco2 &lt; 35 or pco2 &gt; 45 or po2 &lt; 75 or po2 &gt; 100 or bicarbonate &lt; 22 or bicarbonate &gt; 26 or baseExcess &lt; -2 or baseExcess &gt; 2</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Gastrointestinal Function Group -->
+  <decision id="gastrointestinalFunctionTable" name="Gastrointestinal Function Results">
+    <decisionTable id="gastrointestinalFunctionDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputBilirubin" label="Bilirubin (mg/dL)">
+        <inputExpression id="bilirubinExpression" typeRef="number">
+          <text>bilirubin</text>
+        </inputExpression>
+      </input>
+      <input id="inputAlkalinePhosphatase" label="Alkaline Phosphatase (U/L)">
+        <inputExpression id="alkalinePhosphataseExpression" typeRef="number">
+          <text>alkalinePhosphatase</text>
+        </inputExpression>
+      </input>
+      <input id="inputAspartateAminotransferase" label="Aspartate Aminotransferase (U/L)">
+        <inputExpression id="aspartateAminotransferaseExpression" typeRef="number">
+          <text>aspartateAminotransferase</text>
+        </inputExpression>
+      </input>
+      <input id="inputAlanineAminotransferase" label="Alanine Aminotransferase (U/L)">
+        <inputExpression id="alanineAminotransferaseExpression" typeRef="number">
+          <text>alanineAminotransferase</text>
+        </inputExpression>
+      </input>
+      <input id="inputGammaGlutamylTransferase" label="Gamma Glutamyl Transferase (U/L)">
+        <inputExpression id="gammaGlutamylTransferaseExpression" typeRef="number">
+          <text>gammaGlutamylTransferase</text>
+        </inputExpression>
+      </input>
+      <output id="outputGastrointestinalFunctionResult" label="Gastrointestinal Function-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>bilirubin &gt;= 0.1 and bilirubin &lt;= 1.2 and alkalinePhosphatase &gt;= 30 and alkalinePhosphatase &lt;= 120 and aspartateAminotransferase &gt;= 10 and aspartateAminotransferase &lt;= 40 and alanineAminotransferase &gt;= 7 and alanineAminotransferase &lt;= 56 and gammaGlutamylTransferase &gt;= 0 and gammaGlutamylTransferase &lt;= 40</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>bilirubin &lt; 0.1 or bilirubin &gt; 1.2 or alkalinePhosphatase &lt; 30 or alkalinePhosphatase &gt; 120 or aspartateAminotransferase &lt; 10 or aspartateAminotransferase &gt; 40 or alanineAminotransferase &lt; 7 or alanineAminotransferase &gt; 56 or gammaGlutamylTransferase &lt; 0 or gammaGlutamylTransferase &gt; 40</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Renal Function Group -->
+  <decision id="renalFunctionTable" name="Renal Function Results">
+    <decisionTable id="renalFunctionDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputCreatinine" label="Creatinine (mg/dL)">
+        <inputExpression id="creatinineExpression" typeRef="number">
+          <text>creatinine</text>
+        </inputExpression>
+      </input>
+      <input id="inputBloodUreaNitrogen" label="Blood Urea Nitrogen (mg/dL)">
+        <inputExpression id="bloodUreaNitrogenExpression" typeRef="number">
+          <text>bloodUreaNitrogen</text>
+        </inputExpression>
+      </input>
+      <input id="inputSodium" label="Sodium (mmol/L)">
+        <inputExpression id="sodiumExpression" typeRef="number">
+          <text>sodium</text>
+        </inputExpression>
+      </input>
+      <input id="inputPotassium" label="Potassium (mmol/L)">
+        <inputExpression id="potassiumExpression" typeRef="number">
+          <text>potassium</text>
+        </inputExpression>
+      </input>
+      <input id="inputChloride" label="Chloride (mmol/L)">
+        <inputExpression id="chlorideExpression" typeRef="number">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <input id="inputCalcium" label="Calcium (mg/dL)">
+        <inputExpression id="calciumExpression" typeRef="number">
+          <text>calcium</text>
+        </inputExpression>
+      </input>
+      <input id="inputPhosphorus" label="Phosphorus (mg/dL)">
+        <inputExpression id="phosphorusExpression" typeRef="number">
+          <text>phosphorus</text>
+        </inputExpression>
+      </input>
+      <output id="outputRenalFunctionResult" label="Renal Function-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>creatinine &gt;= 0.6 and creatinine &lt;= 1.2 and bloodUreaNitrogen &gt;= 7 and bloodUreaNitrogen &lt;= 20 and sodium &gt;= 135 and sodium &lt;= 145 and potassium &gt;= 3.5 and potassium &lt;= 5.0 and chloride &gt;= 98 and chloride &lt;= 107 and calcium &gt;= 8.5 and calcium &lt;= 10.5 and phosphorus &gt;= 2.5 and phosphorus &lt;= 4.5</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>creatinine &lt; 0.6 or creatinine &gt; 1.2 or bloodUreaNitrogen &lt; 7 or bloodUreaNitrogen &gt; 20 or sodium &lt; 135 or sodium &gt; 145 or potassium &lt; 3.5 or potassium &gt; 5.0 or chloride &lt; 98 or chloride &gt; 107 or calcium &lt; 8.5 or calcium &gt; 10.5 or phosphorus &lt; 2.5 or phosphorus &gt; 4.5</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

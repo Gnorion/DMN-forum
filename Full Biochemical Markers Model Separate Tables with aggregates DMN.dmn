@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_06m3a9i" name="Definitions_06m3a9i" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="sodiumTable" name="Sodium Result">
+    <decisionTable id="sodiumDecisionTable">
+      <input id="inputSodium" label="Sodium (mmol/L)">
+        <inputExpression id="sodiumExpression" typeRef="number">
+          <text>sodium</text>
+        </inputExpression>
+      </input>
+      <output id="outputSodium" label="Sodium-result" typeRef="string" />
+      <rule id="DecisionRule_0tsa4wr">
+        <inputEntry id="UnaryTests_1190fe4">
+          <text>[135..145]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1p7k8m5">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nk3p59">
+        <inputEntry id="UnaryTests_0qxxbin">
+          <text>&lt;135</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03yt3up">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hvugg0">
+        <inputEntry id="UnaryTests_1g3ti8o">
+          <text>&gt;145</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03zdusj">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="potassiumTable" name="Potassium Result">
+    <decisionTable id="potassiumDecisionTable">
+      <input id="inputPotassium" label="Potassium (mmol/L)">
+        <inputExpression id="potassiumExpression" typeRef="number">
+          <text>potassium</text>
+        </inputExpression>
+      </input>
+      <output id="outputPotassium" label="Potassium-result" typeRef="string" />
+      <rule id="DecisionRule_1ssg4ob">
+        <inputEntry id="UnaryTests_0iksl13">
+          <text>[3.5..5.0]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0upfv4f">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0g30nv3">
+        <inputEntry id="UnaryTests_1bv2a8o">
+          <text>&lt;3.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_190gi0c">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05mu5dl">
+        <inputEntry id="UnaryTests_0so4sfh">
+          <text>&gt;5.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_116i8us">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="chemistryAggregateTable" name="Chemistry Results">
+    <informationRequirement id="InformationRequirement_078vy69">
+      <requiredDecision href="#sodiumTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_08a605r">
+      <requiredDecision href="#potassiumTable" />
+    </informationRequirement>
+    <decisionTable id="chemistryAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputSodiumResult" label="Sodium-result">
+        <inputExpression id="sodiumResultExpression" typeRef="string">
+          <text>sodiumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputPotassiumResult" label="Potassium-result">
+        <inputExpression id="potassiumResultExpression" typeRef="string">
+          <text>potassiumResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputChemistryResult" label="Chemistry-result" typeRef="string" />
+      <rule id="DecisionRule_0wa9du1">
+        <inputEntry id="UnaryTests_02qjspw">
+          <text>sodiumResult="Normal" and potassiumResult="Normal" and ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0v5g7nf">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_08g8ge8">
+        <inputEntry id="UnaryTests_1swrauj">
+          <text>sodiumResult!="Normal" or potassiumResult!="Normal" or ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1omj2gq">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hemoglobinTable" name="Hemoglobin Result">
+    <decisionTable id="hemoglobinDecisionTable">
+      <input id="inputHemoglobin" label="Hemoglobin (g/dL)">
+        <inputExpression id="hemoglobinExpression" typeRef="number">
+          <text>hemoglobin</text>
+        </inputExpression>
+      </input>
+      <output id="outputHemoglobin" label="Hemoglobin-result" typeRef="string" />
+      <rule id="DecisionRule_08x9co1">
+        <inputEntry id="UnaryTests_1foe6uc">
+          <text>[12..16]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0t0l5pd">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05oz24y">
+        <inputEntry id="UnaryTests_136kb0a">
+          <text>&lt;12</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01xpex5">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0e58loa">
+        <inputEntry id="UnaryTests_1uqrnik">
+          <text>&gt;16</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1326cr3">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hematologyAggregateTable" name="Hematology Results">
+    <informationRequirement id="InformationRequirement_1hykike">
+      <requiredDecision href="#hemoglobinTable" />
+    </informationRequirement>
+    <decisionTable id="hematologyAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputHemoglobinResult" label="Hemoglobin-result" biodi:width="583.9921875">
+        <inputExpression id="hemoglobinResultExpression" typeRef="string">
+          <text>hemoglobinResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputHematologyResult" label="Hematology-result" typeRef="string" />
+      <rule id="DecisionRule_0ogjs2x">
+        <inputEntry id="UnaryTests_1j7u5co">
+          <text>hemoglobinResult="Normal" and ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0gjk3b1">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_18kkf8c">
+        <inputEntry id="UnaryTests_0e8jcio">
+          <text>hemoglobinResult!="Normal" or ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_030nikd">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="triglyceridesTable" name="Triglycerides Result">
+    <decisionTable id="triglyceridesDecisionTable">
+      <input id="inputTriglycerides" label="Triglycerides (mg/dL)">
+        <inputExpression id="triglyceridesExpression" typeRef="number">
+          <text>triglycerides</text>
+        </inputExpression>
+      </input>
+      <output id="outputTriglycerides" label="Triglycerides-result" typeRef="string" />
+      <rule id="DecisionRule_0i7ubqf">
+        <inputEntry id="UnaryTests_1dwpc3w">
+          <text>&lt;150</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0i5l52r">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0dnai9a">
+        <inputEntry id="UnaryTests_1a807v8">
+          <text>&gt;=150</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_10kgm5h">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="lipidsAggregateTable" name="Lipids Results">
+    <informationRequirement id="InformationRequirement_1vn3mh8">
+      <requiredDecision href="#triglyceridesTable" />
+    </informationRequirement>
+    <decisionTable id="lipidsAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputTriglyceridesResult" label="Triglycerides-result" biodi:width="442.9921875">
+        <inputExpression id="triglyceridesResultExpression" typeRef="string">
+          <text>triglyceridesResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputLipidsResult" label="Lipids-result" typeRef="string" />
+      <rule id="DecisionRule_0akws60">
+        <inputEntry id="UnaryTests_0n65qon">
+          <text>triglyceridesResult="Normal" and ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jl3j66">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fmq0op">
+        <inputEntry id="UnaryTests_1yh4nk6">
+          <text>triglyceridesResult!="Normal" or ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0b4iqc7">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="acidBaseAggregateTable" name="Acid-Base Results">
+    <decisionTable id="acidBaseAggregateDecisionTable" hitPolicy="ANY">
+      <output id="outputAcidBaseResult" label="AcidBase-result" typeRef="string" />
+      <rule id="DecisionRule_0vh7ko2">
+        <inputEntry id="UnaryTests_0qydk8q">
+          <text>...="Normal" and ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0aue7o3">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_08zzwjt">
+        <inputEntry id="UnaryTests_08zhcp5">
+          <text>...!="Normal" or ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05ai5xl">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="topLevelAggregateTable" name="Top-Level Results">
+    <informationRequirement id="InformationRequirement_0niaiuh">
+      <requiredDecision href="#chemistryAggregateTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_112k1op">
+      <requiredDecision href="#hematologyAggregateTable" />
+    </informationRequirement>
+    <decisionTable id="topLevelAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputChemistryResult" label="Chemistry-result">
+        <inputExpression id="chemistryResultExpression" typeRef="string">
+          <text>chemistryResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputHematologyResult" label="Hematology-result">
+        <inputExpression id="hematologyResultExpression" typeRef="string">
+          <text>hematologyResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputOverallResult" label="Overall-result" typeRef="string" />
+      <rule id="DecisionRule_1r7btxa">
+        <inputEntry id="UnaryTests_08d018g">
+          <text>chemistryResult="Normal" and hematologyResult="Normal" and ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0h6n2w5">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jqts4p">
+        <inputEntry id="UnaryTests_1jshop0">
+          <text>chemistryResult!="Normal" or hematologyResult!="Normal" or ...</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_080a262">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_03ecph8">
+      <dmndi:DMNShape id="DMNShape_15xkq33" dmnElementRef="sodiumTable">
+        <dc:Bounds height="80" width="180" x="980" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1lzqia0" dmnElementRef="potassiumTable">
+        <dc:Bounds height="80" width="180" x="1190" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1fd69sd" dmnElementRef="chemistryAggregateTable">
+        <dc:Bounds height="80" width="180" x="1090" y="170" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0mw5odz" dmnElementRef="hemoglobinTable">
+        <dc:Bounds height="80" width="180" x="650" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1hbv7l3" dmnElementRef="hematologyAggregateTable">
+        <dc:Bounds height="80" width="180" x="650" y="170" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1el230m" dmnElementRef="triglyceridesTable">
+        <dc:Bounds height="80" width="180" x="160" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0r3lhu8" dmnElementRef="lipidsAggregateTable">
+        <dc:Bounds height="80" width="180" x="160" y="170" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1mh6t7d" dmnElementRef="acidBaseAggregateTable">
+        <dc:Bounds height="80" width="180" x="410" y="170" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_116kbhp" dmnElementRef="topLevelAggregateTable">
+        <dc:Bounds height="80" width="180" x="840" y="50" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_10dixpu" dmnElementRef="InformationRequirement_1vn3mh8">
+        <di:waypoint x="250" y="340" />
+        <di:waypoint x="250" y="270" />
+        <di:waypoint x="250" y="250" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0cdd1g5" dmnElementRef="InformationRequirement_1hykike">
+        <di:waypoint x="740" y="340" />
+        <di:waypoint x="740" y="270" />
+        <di:waypoint x="740" y="250" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1e32bh3" dmnElementRef="InformationRequirement_078vy69">
+        <di:waypoint x="1070" y="340" />
+        <di:waypoint x="1150" y="270" />
+        <di:waypoint x="1150" y="250" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0tmvsdx" dmnElementRef="InformationRequirement_08a605r">
+        <di:waypoint x="1280" y="340" />
+        <di:waypoint x="1210" y="270" />
+        <di:waypoint x="1210" y="250" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0lpftgr" dmnElementRef="InformationRequirement_0niaiuh">
+        <di:waypoint x="1180" y="170" />
+        <di:waypoint x="960" y="150" />
+        <di:waypoint x="960" y="130" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ixxq7l" dmnElementRef="InformationRequirement_112k1op">
+        <di:waypoint x="740" y="170" />
+        <di:waypoint x="900" y="150" />
+        <di:waypoint x="900" y="130" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

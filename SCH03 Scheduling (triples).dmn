@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0t3gp14" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0g9xxbg" name="generate order truck driver triples">
+    <variable id="InformationItem_0lif4fh" name="order_truck_driver_triples" typeRef="list" />
+    <literalExpression id="LiteralExpression_079sshx">
+      <text>for d in drivers [status="available" and approved=true],   
+    t in trucks [status="available" and licensed=true],   
+    o in orders [scheduled=false] 
+
+
+return [o,t,d]
+    
+</text>
+    </literalExpression>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1myucvq" dmnElementRef="Decision_0g9xxbg">
+        <dc:Bounds height="80" width="180" x="230" y="220" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1rt6dmb" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1skvxu2" name="eHarmony summary">
+    <informationRequirement id="InformationRequirement_085y8n2">
+      <requiredDecision href="#Decision_1xl6lp2" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_06tm1ki">
+      <input id="InputClause_03nwib7" label="how many M3?">
+        <inputExpression id="LiteralExpression_1d46yto" typeRef="string">
+          <text>count(M3)</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="result" typeRef="string" />
+      <rule id="DecisionRule_1jjmm2c">
+        <inputEntry id="UnaryTests_009plra">
+          <text>2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pw8uw6">
+          <text>"PASS M2 and M3"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tw694p">
+        <inputEntry id="UnaryTests_1yodgcd">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1f1ggx4">
+          <text>"FAIL M2"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vyj3wl">
+        <inputEntry id="UnaryTests_157f10l">
+          <text>not 2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00as4vq">
+          <text>"FAIL M3"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0prcegr">
+        <inputEntry id="UnaryTests_08ki2dh">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0mijujx">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1xl6lp2" name="M3&#10;filter then match">
+    <variable id="InformationItem_00c9t0f" name="M3" typeRef="list" />
+    <informationRequirement id="InformationRequirement_15ya7ov">
+      <requiredDecision href="#Decision_0lvp25e" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0dnx133">
+      <text>for male   in persons [gender="male"] , 
+    female in persons [gender="female"]
+
+return {match:[male,female]}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0lvp25e" name="define a collection of persons">
+    <variable id="InformationItem_0qdu01e" name="persons" typeRef="list" />
+    <literalExpression id="LiteralExpression_0nya4fe">
+      <text>// internally generated test data
+{
+  persons: 
+  [ {name:"Jane","id":1,"gender":"female"},
+    {name:"Dick","id":2,"gender":"male"} ,
+    {name:"Harry","id":3,"gender":"male"}  
+  ]
+}
+/* actual test data
+{
+  "persons": 
+  [ {"name":"Jane","id":1,"gender":"female"},
+    {"name":"Dick","id":2,"gender":"male"} ,
+    {"name":"Harry","id":3,"gender":"male"}  
+  ]
+}
+*/</text>
+    </literalExpression>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1skvxu2">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0dytuxr" dmnElementRef="Decision_1xl6lp2">
+        <dc:Bounds height="80" width="180" x="160" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0x0y921" dmnElementRef="Decision_0lvp25e">
+        <dc:Bounds height="80" width="180" x="160" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gtkhv2" dmnElementRef="InformationRequirement_15ya7ov">
+        <di:waypoint x="250" y="430" />
+        <di:waypoint x="250" y="350" />
+        <di:waypoint x="250" y="330" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gltoag" dmnElementRef="InformationRequirement_085y8n2">
+        <di:waypoint x="250" y="250" />
+        <di:waypoint x="250" y="180" />
+        <di:waypoint x="250" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

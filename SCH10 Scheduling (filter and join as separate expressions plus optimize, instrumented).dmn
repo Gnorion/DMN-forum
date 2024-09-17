@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0t3gp14" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0g9xxbg" name="Alt0 generate assignments">
+    <variable id="InformationItem_0lif4fh" name="assignments" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0iu2hzn">
+      <requiredDecision href="#Decision_1n0ni44" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0f829hb">
+      <requiredDecision href="#Decision_0o1huu2" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_079sshx">
+      <text>for dt in driverTrucks, o in openOrders 
+    return 
+      if o.type=dt.type 
+      then [o,dt,"matched an open order to a compatible available driver-truck"] 
+      else {} 
+</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0sqwlhc" name="orders" />
+  <inputData id="InputData_0qdvro9" name="trucks" />
+  <inputData id="InputData_0wnta1b" name="drivers" />
+  <decision id="Decision_1n0ni44" name="get open orders">
+    <variable id="InformationItem_0poekaq" name="openOrders" typeRef="list" />
+    <informationRequirement id="InformationRequirement_1t9eohf">
+      <requiredInput href="#InputData_0sqwlhc" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0yk1pvb">
+      <requiredDecision href="#Decision_0xsipey" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_162p14p">
+      <text> for o in orders [scheduled=false] 
+ return [o,"open order"]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1no5p35" name="get available trucks">
+    <variable id="InformationItem_07p1yaw" name="availableTrucks" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0tzqk0x">
+      <requiredInput href="#InputData_0qdvro9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1l5ujk3">
+      <requiredDecision href="#Decision_1l2pjkl" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0t8jycn">
+      <text>for t in trucks [status="available"  and licensed=true ] 
+return [t, "available and licensed truck"]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1tr5qqm" name="get available drivers">
+    <variable id="InformationItem_1gr44hh" name="availableDrivers" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0tgme51">
+      <requiredInput href="#InputData_0wnta1b" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_17argii">
+      <requiredDecision href="#Decision_14jtevo" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1j8focf">
+      <text>for d in drivers [status="available" and approved=true ] 
+return [d,"available and approved driver"]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1mct9bf" name="Alt1 approach">
+    <variable id="InformationItem_11mjn7t" name="possibleAssignments" typeRef="list" />
+    <literalExpression id="LiteralExpression_1paudsv">
+      <text>for d in availableDrivers , t in availableTrucks, o in openOrders 
+  
+return 
+  if [o.type=d.type and o.type=t.type and t.type=d.type]
+  then
+      {possibleAssignment:[{order:o},{truck:t},{driver:d}]} 
+  else {}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_14jtevo" name="TEST DATA&#10;create drivers">
+    <variable id="InformationItem_1gyuosx" name="drivers" typeRef="list" />
+    <literalExpression id="LiteralExpression_0nr8l7s">
+      <text>[
+	{"name":"tom","status":"available", "approved":true,"type":"cisterno"},
+    {"name":"dick","status":"available", "approved":true,"type":"flatbed"} 
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1l2pjkl" name="TEST DATA&#10;create trucks">
+    <variable id="InformationItem_0le6b4u" name="trucks" typeRef="list" />
+    <literalExpression id="LiteralExpression_0ukj907">
+      <text>[
+	{"name":"truck 1", "status":"available", "licensed":true,"type":"cisterno"},
+	{"name":"truck 2", "status":"available", "licensed":false,"type":"flatbed"}
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0xsipey" name="TEST DATA&#10;create orders">
+    <variable id="InformationItem_0b4jkri" name="orders" typeRef="list" />
+    <literalExpression id="LiteralExpression_0zja22s">
+      <text>[
+	{"name": "order 1","scheduled":false,"type":"cisterno"},
+	{"name": "order 2","scheduled":false,"type":"flatbed"},
+	{"name": "order 3","scheduled":false,"type":"cisterno"}
+]
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0alabmp" name="choose faster assignments">
+    <variable id="InformationItem_19urt97" />
+    <informationRequirement id="InformationRequirement_0i7mscn">
+      <requiredDecision href="#Decision_0g9xxbg" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1g8nbwc">
+      <text>for a1 in assigments a2 in assignments
+  return if a1.time &lt; a2.time then [a1,"faster delivery time"] 
+  else delete a2</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0fzj5k1" name="choose cheaper assigments">
+    <variable id="InformationItem_1lbrxry" />
+    <informationRequirement id="InformationRequirement_088lhdd">
+      <requiredDecision href="#Decision_0g9xxbg" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1jg5x22">
+      <text>for a1 in assigments a2 in assignments
+  return if a1.cost &lt; a2.cost then [a1,"cheaper alternative"] 
+  else delete a2</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0o1huu2" name="match drivers to trucks">
+    <variable id="InformationItem_040nmcy" name="driverTrucks" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0pxbg9d">
+      <requiredDecision href="#Decision_1tr5qqm" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0jii9ak">
+      <requiredDecision href="#Decision_1no5p35" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_12tdtru">
+      <text>for d in availableDrivers , t in trucks
+  return 
+  if d.type=t.type then [d,t, "matched an available driver to a compatible, available truck"]
+  else{}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_097kywn" name="verify test results">
+    <informationRequirement id="InformationRequirement_0fa1uyi">
+      <requiredDecision href="#Decision_0fzj5k1" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0vejoc6">
+      <requiredDecision href="#Decision_0alabmp" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1rryfgn">
+      <input id="InputClause_1766gc2">
+        <inputExpression id="LiteralExpression_06uvz4y" typeRef="string" />
+      </input>
+      <output id="OutputClause_136dxey" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_14npftm">
+    <text>for o in orders [scheduled=false] 
+ return [o,"open order"]</text>
+  </textAnnotation>
+  <association id="Association_1l31cz9">
+    <sourceRef href="#TextAnnotation_14npftm" />
+    <targetRef href="#Decision_1n0ni44" />
+  </association>
+  <textAnnotation id="TextAnnotation_0xf1tdj">
+    <text>[
+ {"name": "order 1","scheduled":false,"type":"cisterno"},
+ {"name": "order 2","scheduled":false,"type":"flatbed"},
+ {"name": "order 3","scheduled":false,"type":"cisterno"}
+]</text>
+  </textAnnotation>
+  <association id="Association_0ow7k2d">
+    <sourceRef href="#TextAnnotation_0xf1tdj" />
+    <targetRef href="#Decision_0xsipey" />
+  </association>
+  <textAnnotation id="TextAnnotation_1t0tgk6">
+    <text>for t in trucks [status="available" and licensed=true ] 
+return [t, "available and licensed truck"]</text>
+  </textAnnotation>
+  <association id="Association_1gjknsr">
+    <sourceRef href="#TextAnnotation_1t0tgk6" />
+    <targetRef href="#Decision_1no5p35" />
+  </association>
+  <textAnnotation id="TextAnnotation_1lcem2a">
+    <text>[
+ {"name":"truck 1", "status":"available", "licensed":true,"type":"cisterno"},
+ {"name":"truck 2", "status":"available", "licensed":false,"type":"flatbed"}
+]</text>
+  </textAnnotation>
+  <association id="Association_1lf8hyh">
+    <sourceRef href="#TextAnnotation_1lcem2a" />
+    <targetRef href="#Decision_1l2pjkl" />
+  </association>
+  <textAnnotation id="TextAnnotation_06c22uy">
+    <text>[
+ {"name":"tom","status":"available", "approved":true,"type":"cisterno"},
+ {"name":"dick","status":"available", "approved":true,"type":"flatbed"} 
+]</text>
+  </textAnnotation>
+  <association id="Association_1ng7xk1">
+    <sourceRef href="#TextAnnotation_06c22uy" />
+    <targetRef href="#Decision_14jtevo" />
+  </association>
+  <textAnnotation id="TextAnnotation_1p9qonb">
+    <text>for dt in driverTrucks, o in openOrders 
+    return 
+      if o.type=dt.type 
+      then [o,dt,"matched an open order to a compatible available driver-truck"] 
+      else {}</text>
+  </textAnnotation>
+  <association id="Association_0m2p5yb">
+    <sourceRef href="#TextAnnotation_1p9qonb" />
+    <targetRef href="#Decision_0g9xxbg" />
+  </association>
+  <textAnnotation id="TextAnnotation_1t8cxlx">
+    <text>for d in drivers [status="available" and approved=true ] 
+return [d,"available and approved driver"]</text>
+  </textAnnotation>
+  <association id="Association_1u4q8mq">
+    <sourceRef href="#TextAnnotation_1t8cxlx" />
+    <targetRef href="#Decision_1tr5qqm" />
+  </association>
+  <textAnnotation id="TextAnnotation_1tr6ncw">
+    <text>for d in availableDrivers , t in trucks
+  return 
+  if d.type=t.type then [d,t, "matched an available driver to a compatible, available truck"]
+  else{}</text>
+  </textAnnotation>
+  <association id="Association_1s1u7ej">
+    <sourceRef href="#TextAnnotation_1tr6ncw" />
+    <targetRef href="#Decision_0o1huu2" />
+  </association>
+  <textAnnotation id="TextAnnotation_184cpkg">
+    <text>for a1 in assigments a2 in assignments
+  return if a1.cost &lt; a2.cost then [a1,"cheaper alternative"] 
+  else delete a2</text>
+  </textAnnotation>
+  <association id="Association_0zvj8ho">
+    <sourceRef href="#TextAnnotation_184cpkg" />
+    <targetRef href="#Decision_0fzj5k1" />
+  </association>
+  <textAnnotation id="TextAnnotation_07il34s">
+    <text>for a1 in assigments a2 in assignments
+  return if a1.time &lt; a2.time then [a1,"faster delivery time"] 
+  else delete a2</text>
+  </textAnnotation>
+  <association id="Association_0tf9nf5">
+    <sourceRef href="#TextAnnotation_07il34s" />
+    <targetRef href="#Decision_0alabmp" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1myucvq" dmnElementRef="Decision_0g9xxbg">
+        <dc:Bounds height="80" width="180" x="685" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1y66v9c" dmnElementRef="InputData_0sqwlhc">
+        <dc:Bounds height="45" width="125" x="157" y="827" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zsoyaj" dmnElementRef="InputData_0qdvro9">
+        <dc:Bounds height="45" width="125" x="537" y="827" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_07e3kh9" dmnElementRef="InputData_0wnta1b">
+        <dc:Bounds height="45" width="125" x="907" y="827" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qjxfgl" dmnElementRef="InformationRequirement_1t9eohf">
+        <di:waypoint x="220" y="827" />
+        <di:waypoint x="390" y="730" />
+        <di:waypoint x="390" y="710" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_07ifg48" dmnElementRef="InformationRequirement_0tzqk0x">
+        <di:waypoint x="662" y="850" />
+        <di:waypoint x="665" y="850" />
+        <di:waypoint x="685" y="850" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1xlujn1" dmnElementRef="InformationRequirement_0tgme51">
+        <di:waypoint x="1032" y="850" />
+        <di:waypoint x="1040" y="850" />
+        <di:waypoint x="1060" y="850" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_17459wi" dmnElementRef="InformationRequirement_0iu2hzn">
+        <di:waypoint x="420" y="630" />
+        <di:waypoint x="745" y="530" />
+        <di:waypoint x="745" y="510" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0xgrgk5" dmnElementRef="Decision_1n0ni44">
+        <dc:Bounds height="80" width="180" x="330" y="630" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1b97p6t" dmnElementRef="Decision_1no5p35">
+        <dc:Bounds height="80" width="180" x="685" y="810" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0e8ikym" dmnElementRef="Decision_1tr5qqm">
+        <dc:Bounds height="80" width="180" x="1060" y="810" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0mp25y2" dmnElementRef="Decision_1mct9bf">
+        <dc:Bounds height="80" width="180" x="1870" y="600" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1x6bt4q" dmnElementRef="Decision_14jtevo">
+        <dc:Bounds height="80" width="180" x="1060" y="980" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0nwlv01" dmnElementRef="Decision_1l2pjkl">
+        <dc:Bounds height="80" width="180" x="685" y="980" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ck2bbs" dmnElementRef="Decision_0xsipey">
+        <dc:Bounds height="80" width="180" x="321" y="970" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0om943l" dmnElementRef="InformationRequirement_0yk1pvb">
+        <di:waypoint x="411" y="970" />
+        <di:waypoint x="450" y="730" />
+        <di:waypoint x="450" y="710" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1fz5foh" dmnElementRef="InformationRequirement_1l5ujk3">
+        <di:waypoint x="775" y="980" />
+        <di:waypoint x="775" y="910" />
+        <di:waypoint x="775" y="890" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1jn9brc" dmnElementRef="InformationRequirement_17argii">
+        <di:waypoint x="1150" y="980" />
+        <di:waypoint x="1150" y="910" />
+        <di:waypoint x="1150" y="890" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1gdd79f" dmnElementRef="TextAnnotation_14npftm">
+        <dc:Bounds height="45" width="230" x="475" y="745" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_075bah5" dmnElementRef="Association_1l31cz9">
+        <di:waypoint x="511" y="745" />
+        <di:waypoint x="457" y="710" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1lysnhk" dmnElementRef="TextAnnotation_0xf1tdj">
+        <dc:Bounds height="80" width="310" x="256" y="1080" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1yn4tld" dmnElementRef="Association_0ow7k2d">
+        <di:waypoint x="400" y="1080" />
+        <di:waypoint x="398" y="1050" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0iha38t" dmnElementRef="TextAnnotation_1t0tgk6">
+        <dc:Bounds height="43" width="335" x="802" y="917" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0zxznue" dmnElementRef="Association_1gjknsr">
+        <di:waypoint x="839" y="917" />
+        <di:waypoint x="804" y="890" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0i0xpas" dmnElementRef="TextAnnotation_1lcem2a">
+        <dc:Bounds height="70" width="390" x="585" y="1085" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_181595s" dmnElementRef="Association_1lf8hyh">
+        <di:waypoint x="760" y="1080" />
+        <di:waypoint x="759" y="1060" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0vvqw6d" dmnElementRef="TextAnnotation_06c22uy">
+        <dc:Bounds height="75" width="390" x="985" y="1087" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1rcm6ye" dmnElementRef="Association_1ng7xk1">
+        <di:waypoint x="1150" y="1080" />
+        <di:waypoint x="1150" y="1060" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01dfefs" dmnElementRef="TextAnnotation_1p9qonb">
+        <dc:Bounds height="80" width="505" x="905" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qrnjr2" dmnElementRef="Association_0m2p5yb">
+        <di:waypoint x="905" y="470" />
+        <di:waypoint x="865" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jzmw4x" dmnElementRef="Decision_0alabmp">
+        <dc:Bounds height="80" width="180" x="830" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1fjfkw8" dmnElementRef="Decision_0fzj5k1">
+        <dc:Bounds height="80" width="180" x="510" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1v3t1ma" dmnElementRef="TextAnnotation_1t8cxlx">
+        <dc:Bounds height="43" width="420" x="1280" y="828" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qng2ar" dmnElementRef="Association_1u4q8mq">
+        <di:waypoint x="1280" y="842" />
+        <di:waypoint x="1240" y="862" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_02qoxej" dmnElementRef="InformationRequirement_0pxbg9d">
+        <di:waypoint x="1150" y="810" />
+        <di:waypoint x="1000" y="720" />
+        <di:waypoint x="1000" y="700" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ep7lkh" dmnElementRef="InformationRequirement_0jii9ak">
+        <di:waypoint x="775" y="810" />
+        <di:waypoint x="940" y="720" />
+        <di:waypoint x="940" y="700" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1xgx8e1" dmnElementRef="InformationRequirement_0f829hb">
+        <di:waypoint x="970" y="620" />
+        <di:waypoint x="805" y="530" />
+        <di:waypoint x="805" y="510" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_11wybpq" dmnElementRef="Decision_0o1huu2">
+        <dc:Bounds height="80" width="180" x="880" y="620" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_02uv64d" dmnElementRef="TextAnnotation_1tr6ncw">
+        <dc:Bounds height="80" width="520" x="1100" y="620" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0un6wqa" dmnElementRef="Association_1s1u7ej">
+        <di:waypoint x="1100" y="660" />
+        <di:waypoint x="1060" y="660" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_14dw6ln" dmnElementRef="InformationRequirement_0i7mscn">
+        <di:waypoint x="775" y="430" />
+        <di:waypoint x="920" y="400" />
+        <di:waypoint x="920" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0prwjma" dmnElementRef="InformationRequirement_088lhdd">
+        <di:waypoint x="775" y="430" />
+        <di:waypoint x="600" y="400" />
+        <di:waypoint x="600" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0bgfks7" dmnElementRef="TextAnnotation_184cpkg">
+        <dc:Bounds height="60" width="325" x="257" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1a2r0d3" dmnElementRef="Association_0zvj8ho">
+        <di:waypoint x="346" y="280" />
+        <di:waypoint x="571" y="300" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_04quhak" dmnElementRef="TextAnnotation_07il34s">
+        <dc:Bounds height="60" width="320" x="1100" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nv1exs" dmnElementRef="Association_0tf9nf5">
+        <di:waypoint x="1160" y="270" />
+        <di:waypoint x="920" y="300" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1uzm4v7" dmnElementRef="Decision_097kywn">
+        <dc:Bounds height="80" width="180" x="670" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0zpc2j8" dmnElementRef="InformationRequirement_0fa1uyi">
+        <di:waypoint x="600" y="300" />
+        <di:waypoint x="730" y="180" />
+        <di:waypoint x="730" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_176cjwr" dmnElementRef="InformationRequirement_0vejoc6">
+        <di:waypoint x="920" y="300" />
+        <di:waypoint x="790" y="180" />
+        <di:waypoint x="790" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

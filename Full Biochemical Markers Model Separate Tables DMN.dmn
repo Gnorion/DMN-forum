@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_109am4v" name="Definitions_109am4v" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="sodiumTable" name="Sodium Result">
+    <decisionTable id="sodiumDecisionTable">
+      <input id="inputSodium" label="Sodium (mmol/L)">
+        <inputExpression id="sodiumExpression" typeRef="number">
+          <text>sodium</text>
+        </inputExpression>
+      </input>
+      <output id="outputSodium" label="Sodium-result" typeRef="string" />
+      <rule id="DecisionRule_1tqbmyi">
+        <inputEntry id="sodiumNormal">
+          <text>[135..145]</text>
+        </inputEntry>
+        <outputEntry id="sodiumNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1xg6ytf">
+        <inputEntry id="sodiumLow">
+          <text>&lt;135</text>
+        </inputEntry>
+        <outputEntry id="sodiumLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ub2o9h">
+        <inputEntry id="sodiumHigh">
+          <text>&gt;145</text>
+        </inputEntry>
+        <outputEntry id="sodiumHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="potassiumTable" name="Potassium Result">
+    <decisionTable id="potassiumDecisionTable">
+      <input id="inputPotassium" label="Potassium (mmol/L)">
+        <inputExpression id="potassiumExpression" typeRef="number">
+          <text>potassium</text>
+        </inputExpression>
+      </input>
+      <output id="outputPotassium" label="Potassium-result" typeRef="string" />
+      <rule id="DecisionRule_0w2siwu">
+        <inputEntry id="potassiumNormal">
+          <text>[3.5..5.0]</text>
+        </inputEntry>
+        <outputEntry id="potassiumNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02c4hqs">
+        <inputEntry id="potassiumLow">
+          <text>&lt;3.5</text>
+        </inputEntry>
+        <outputEntry id="potassiumLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qm6q7b">
+        <inputEntry id="potassiumHigh">
+          <text>&gt;5.0</text>
+        </inputEntry>
+        <outputEntry id="potassiumHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="chlorideTable" name="Chloride Result">
+    <decisionTable id="chlorideDecisionTable">
+      <input id="inputChloride" label="Chloride (mmol/L)">
+        <inputExpression id="chlorideExpression" typeRef="number">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <output id="outputChloride" label="Chloride-result" typeRef="string" />
+      <rule id="DecisionRule_01bleqa">
+        <inputEntry id="chlorideNormal">
+          <text>[98..106]</text>
+        </inputEntry>
+        <outputEntry id="chlorideNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0rqitl3">
+        <inputEntry id="chlorideLow">
+          <text>&lt;98</text>
+        </inputEntry>
+        <outputEntry id="chlorideLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0yk1gv1">
+        <inputEntry id="chlorideHigh">
+          <text>&gt;106</text>
+        </inputEntry>
+        <outputEntry id="chlorideHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="calciumTable" name="Calcium Result">
+    <decisionTable id="calciumDecisionTable">
+      <input id="inputCalcium" label="Calcium (mg/dL)">
+        <inputExpression id="calciumExpression" typeRef="number">
+          <text>calcium</text>
+        </inputExpression>
+      </input>
+      <output id="outputCalcium" label="Calcium-result" typeRef="string" />
+      <rule id="DecisionRule_0alawy8">
+        <inputEntry id="calciumNormal">
+          <text>[8.5..10.2]</text>
+        </inputEntry>
+        <outputEntry id="calciumNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0wavqg6">
+        <inputEntry id="calciumLow">
+          <text>&lt;8.5</text>
+        </inputEntry>
+        <outputEntry id="calciumLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1sn9dbr">
+        <inputEntry id="calciumHigh">
+          <text>&gt;10.2</text>
+        </inputEntry>
+        <outputEntry id="calciumHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="phosphateTable" name="Phosphate Result">
+    <decisionTable id="phosphateDecisionTable">
+      <input id="inputPhosphate" label="Phosphate (mg/dL)">
+        <inputExpression id="phosphateExpression" typeRef="number">
+          <text>phosphate</text>
+        </inputExpression>
+      </input>
+      <output id="outputPhosphate" label="Phosphate-result" typeRef="string" />
+      <rule id="DecisionRule_02dga2h">
+        <inputEntry id="phosphateNormal">
+          <text>[2.5..4.5]</text>
+        </inputEntry>
+        <outputEntry id="phosphateNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1e10wbs">
+        <inputEntry id="phosphateLow">
+          <text>&lt;2.5</text>
+        </inputEntry>
+        <outputEntry id="phosphateLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1idt77n">
+        <inputEntry id="phosphateHigh">
+          <text>&gt;4.5</text>
+        </inputEntry>
+        <outputEntry id="phosphateHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="chemistryAggregateTable" name="Chemistry Results">
+    <informationRequirement id="InformationRequirement_0jc1gqc">
+      <requiredDecision href="#calciumTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_12nwz8d">
+      <requiredDecision href="#potassiumTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1wdo3sd">
+      <requiredDecision href="#phosphateTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_04jqjs1">
+      <requiredDecision href="#chlorideTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0ktw0s2">
+      <requiredDecision href="#sodiumTable" />
+    </informationRequirement>
+    <decisionTable id="chemistryAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputSodiumResult" label="Sodium-result">
+        <inputExpression id="sodiumResultExpression" typeRef="string">
+          <text>sodiumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputPotassiumResult" label="Potassium-result">
+        <inputExpression id="potassiumResultExpression" typeRef="string">
+          <text>potassiumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputChlorideResult" label="Chloride-result">
+        <inputExpression id="chlorideResultExpression" typeRef="string">
+          <text>chlorideResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputCalciumResult" label="Calcium-result">
+        <inputExpression id="calciumResultExpression" typeRef="string">
+          <text>calciumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputPhosphateResult" label="Phosphate-result">
+        <inputExpression id="phosphateResultExpression" typeRef="string">
+          <text>phosphateResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputChemistryResult" label="Chemistry-result" typeRef="string" />
+      <rule id="DecisionRule_0hd24nb">
+        <inputEntry id="UnaryTests_1jie5d9">
+          <text>"Normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hdbn9z">
+          <text>"Normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0c35e92">
+          <text>"Normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1qj5gwy">
+          <text>"Normal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xder8m">
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07fdldc">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0rweh4n">
+        <inputEntry id="allNormal">
+          <text>sodiumResult="Normal" and potassiumResult="Normal" and chlorideResult="Normal" and calciumResult="Normal" and phosphateResult="Normal"</text>
+        </inputEntry>
+        <outputEntry id="chemistryAllNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_04sgeuk">
+        <inputEntry id="anyAbnormal">
+          <text>sodiumResult!="Normal" or potassiumResult!="Normal" or chlorideResult!="Normal" or calciumResult!="Normal" or phosphateResult!="Normal"</text>
+        </inputEntry>
+        <outputEntry id="chemistryAbnormalResult">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_000z05h">
+      <dmndi:DMNShape id="DMNShape_0089o7y" dmnElementRef="sodiumTable">
+        <dc:Bounds height="80" width="180" x="920" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_151rjop" dmnElementRef="potassiumTable">
+        <dc:Bounds height="80" width="180" x="380" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0b0tw9z" dmnElementRef="chlorideTable">
+        <dc:Bounds height="80" width="180" x="740" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1qlkaii" dmnElementRef="calciumTable">
+        <dc:Bounds height="80" width="180" x="200" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zdl7qb" dmnElementRef="phosphateTable">
+        <dc:Bounds height="80" width="180" x="560" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_00oc3jr" dmnElementRef="chemistryAggregateTable">
+        <dc:Bounds height="80" width="180" x="560" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_056g02b" dmnElementRef="InformationRequirement_0jc1gqc">
+        <di:waypoint x="290" y="250" />
+        <di:waypoint x="590" y="180" />
+        <di:waypoint x="590" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1yi7t2v" dmnElementRef="InformationRequirement_12nwz8d">
+        <di:waypoint x="470" y="250" />
+        <di:waypoint x="620" y="180" />
+        <di:waypoint x="620" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1sev2gt" dmnElementRef="InformationRequirement_1wdo3sd">
+        <di:waypoint x="650" y="250" />
+        <di:waypoint x="650" y="180" />
+        <di:waypoint x="650" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1rw1tg1" dmnElementRef="InformationRequirement_04jqjs1">
+        <di:waypoint x="830" y="250" />
+        <di:waypoint x="680" y="180" />
+        <di:waypoint x="680" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_00ddq5j" dmnElementRef="InformationRequirement_0ktw0s2">
+        <di:waypoint x="1010" y="250" />
+        <di:waypoint x="710" y="180" />
+        <di:waypoint x="710" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

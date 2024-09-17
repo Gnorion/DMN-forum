@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1ekyjhk" name="Definitions_1ekyjhk" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="sodiumTable" name="Sodium Result">
+    <decisionTable id="sodiumDecisionTable">
+      <input id="inputSodium" label="Sodium (mEq/L)">
+        <inputExpression id="sodiumExpression" typeRef="number">
+          <text>sodium</text>
+        </inputExpression>
+      </input>
+      <output id="outputSodium" label="Sodium-result" typeRef="string" />
+      <rule id="DecisionRule_1swnqnh">
+        <inputEntry id="UnaryTests_0g1l6wq">
+          <text>[136..145]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1y90fxa">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1setzbl">
+        <inputEntry id="UnaryTests_1l4jmpb">
+          <text>&lt;136</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_18qqcpw">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0dqqr3k">
+        <inputEntry id="UnaryTests_0su8w6o">
+          <text>&gt;145</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fsp0a3">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="potassiumTable" name="Potassium Result">
+    <decisionTable id="potassiumDecisionTable">
+      <input id="inputPotassium" label="Potassium (mEq/L)">
+        <inputExpression id="potassiumExpression" typeRef="number">
+          <text>potassium</text>
+        </inputExpression>
+      </input>
+      <output id="outputPotassium" label="Potassium-result" typeRef="string" />
+      <rule id="DecisionRule_1ag79ja">
+        <inputEntry id="UnaryTests_1pb13ac">
+          <text>[3.5..5.0]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1txgqtm">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1914na2">
+        <inputEntry id="UnaryTests_0zqvhk0">
+          <text>&lt;3.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ypx6mo">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_137guou">
+        <inputEntry id="UnaryTests_18ej5jb">
+          <text>&gt;5.0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xrya8q">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="chlorideTable" name="Chloride Result">
+    <decisionTable id="chlorideDecisionTable">
+      <input id="inputChloride" label="Chloride (mmol/L)">
+        <inputExpression id="chlorideExpression" typeRef="number">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <output id="outputChloride" label="Chloride-result" typeRef="string" />
+      <rule id="DecisionRule_0zqgm4h">
+        <inputEntry id="UnaryTests_0o0cmun">
+          <text>[95..105]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00tb1cy">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0s711hf">
+        <inputEntry id="UnaryTests_0dkrotj">
+          <text>&lt;95</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1c805yf">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1xcoeh4">
+        <inputEntry id="UnaryTests_1dxfbz3">
+          <text>&gt;105</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1oc9fk1">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="calciumTable" name="Total Calcium Result">
+    <decisionTable id="calciumDecisionTable">
+      <input id="inputCalcium" label="Total Calcium (mg/dL)">
+        <inputExpression id="calciumExpression" typeRef="number">
+          <text>totalCalcium</text>
+        </inputExpression>
+      </input>
+      <output id="outputCalcium" label="Total Calcium-result" typeRef="string" />
+      <rule id="DecisionRule_0v69gyx">
+        <inputEntry id="UnaryTests_0ok2yvb">
+          <text>[9..10.5]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mk5tpz">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ay65pn">
+        <inputEntry id="UnaryTests_0vh7e45">
+          <text>&lt;9</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12tvbso">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1qpxqj6">
+        <inputEntry id="UnaryTests_14w3jl9">
+          <text>&gt;10.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0g6d48h">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="phosphateTable" name="Phosphate Result">
+    <decisionTable id="phosphateDecisionTable">
+      <input id="inputPhosphate" label="Phosphate (mg/dL)">
+        <inputExpression id="phosphateExpression" typeRef="number">
+          <text>phosphate</text>
+        </inputExpression>
+      </input>
+      <output id="outputPhosphate" label="Phosphate-result" typeRef="string" />
+      <rule id="DecisionRule_0ah2pzd">
+        <inputEntry id="UnaryTests_0x75hsr">
+          <text>[2.5..4.5]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pcne9n">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qmcfuv">
+        <inputEntry id="UnaryTests_136eftw">
+          <text>&lt;2.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1frppn6">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ccaql5">
+        <inputEntry id="UnaryTests_1kvx61n">
+          <text>&gt;4.5</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tgbcef">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="chemistryAggregateTable" name="Chemistry Results">
+    <informationRequirement id="InformationRequirement_0qnabox">
+      <requiredDecision href="#calciumTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0ehft1p">
+      <requiredDecision href="#phosphateTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0mctir7">
+      <requiredDecision href="#potassiumTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1n7vx3x">
+      <requiredDecision href="#chlorideTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_03q015g">
+      <requiredDecision href="#sodiumTable" />
+    </informationRequirement>
+    <decisionTable id="chemistryAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputSodiumResult" label="Sodium-result">
+        <inputExpression id="sodiumResultExpression" typeRef="string">
+          <text>sodiumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputPotassiumResult" label="Potassium-result">
+        <inputExpression id="potassiumResultExpression" typeRef="string">
+          <text>potassiumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputChlorideResult" label="Chloride-result">
+        <inputExpression id="chlorideResultExpression" typeRef="string">
+          <text>chlorideResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputCalciumResult" label="Total Calcium-result">
+        <inputExpression id="calciumResultExpression" typeRef="string">
+          <text>totalCalciumResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputPhosphateResult" label="Phosphate-result">
+        <inputExpression id="phosphateResultExpression" typeRef="string">
+          <text>phosphateResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputChemistryResult" label="Chemistry-result" typeRef="string" />
+      <rule id="DecisionRule_0dpjcnx">
+        <inputEntry id="UnaryTests_0ueytxg">
+          <text>sodiumResult="Normal" and potassiumResult="Normal" and chlorideResult="Normal" and calciumResult="Normal" and phosphateResult="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dowp8l">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1f7cgu4">
+        <inputEntry id="UnaryTests_0wc1p14">
+          <text>sodiumResult!="Normal" or potassiumResult!="Normal" or chlorideResult!="Normal" or calciumResult!="Normal" or phosphateResult!="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03vncsf">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hemoglobinTable" name="Hemoglobin Result">
+    <decisionTable id="hemoglobinDecisionTable">
+      <input id="inputHemoglobin" label="Hemoglobin (g/dL)">
+        <inputExpression id="hemoglobinExpression" typeRef="number">
+          <text>hemoglobin</text>
+        </inputExpression>
+      </input>
+      <output id="outputHemoglobin" label="Hemoglobin-result" typeRef="string" />
+      <rule id="DecisionRule_05aq80c">
+        <inputEntry id="UnaryTests_1l44koz">
+          <text>[12..16]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tajwh0">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1mfpgu3">
+        <inputEntry id="UnaryTests_124cz1f">
+          <text>&lt;12</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1e88uq3">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0b4w4uz">
+        <inputEntry id="UnaryTests_0rlm3u6">
+          <text>&gt;16</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_169grzs">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hematocritTable" name="Hematocrit Result">
+    <decisionTable id="hematocritDecisionTable">
+      <input id="inputHematocrit" label="Hematocrit (%)">
+        <inputExpression id="hematocritExpression" typeRef="number">
+          <text>hematocrit</text>
+        </inputExpression>
+      </input>
+      <output id="outputHematocrit" label="Hematocrit-result" typeRef="string" />
+      <rule id="DecisionRule_0f8wd3q">
+        <inputEntry id="UnaryTests_1rr4ppo">
+          <text>[37..47]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0s308rc">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_076yjt8">
+        <inputEntry id="UnaryTests_1amznxj">
+          <text>&lt;37</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xdwifs">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1kq7rkm">
+        <inputEntry id="UnaryTests_08nszkb">
+          <text>&gt;47</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1n6lt99">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hematologyAggregateTable" name="Hematology Results">
+    <informationRequirement id="InformationRequirement_0zgppot">
+      <requiredDecision href="#hemoglobinTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_13fsgi7">
+      <requiredDecision href="#hematocritTable" />
+    </informationRequirement>
+    <decisionTable id="hematologyAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputHemoglobinResult" label="Hemoglobin-result">
+        <inputExpression id="hemoglobinResultExpression" typeRef="string">
+          <text>hemoglobinResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputHematocritResult" label="Hematocrit-result">
+        <inputExpression id="hematocritResultExpression" typeRef="string">
+          <text>hematocritResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputHematologyResult" label="Hematology-result" typeRef="string" />
+      <rule id="DecisionRule_004o9l4">
+        <inputEntry id="UnaryTests_04za5pa">
+          <text>hemoglobinResult="Normal" and hematocritResult="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r6a3rz">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zvdmhh">
+        <inputEntry id="UnaryTests_1fvin27">
+          <text>hemoglobinResult!="Normal" or hematocritResult!="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bm9czz">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="triglyceridesTable" name="Triglycerides Result">
+    <decisionTable id="triglyceridesDecisionTable">
+      <input id="inputTriglycerides" label="Triglycerides (mg/dL)">
+        <inputExpression id="triglyceridesExpression" typeRef="number">
+          <text>triglycerides</text>
+        </inputExpression>
+      </input>
+      <output id="outputTriglycerides" label="Triglycerides-result" typeRef="string" />
+      <rule id="DecisionRule_1ga6f0o">
+        <inputEntry id="UnaryTests_1132981">
+          <text>&lt;150</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1voxllq">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1p89u70">
+        <inputEntry id="UnaryTests_03o9dto">
+          <text>&gt;=150</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lv46vh">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="cholesterolTable" name="Total Cholesterol Result">
+    <decisionTable id="cholesterolDecisionTable">
+      <input id="inputCholesterol" label="Total Cholesterol (mg/dL)">
+        <inputExpression id="cholesterolExpression" typeRef="number">
+          <text>totalCholesterol</text>
+        </inputExpression>
+      </input>
+      <output id="outputCholesterol" label="Total Cholesterol-result" typeRef="string" />
+      <rule id="DecisionRule_08ivmi5">
+        <inputEntry id="UnaryTests_0e2cy9x">
+          <text>&lt;200</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1bu6h3k">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_040ith4">
+        <inputEntry id="UnaryTests_02e528g">
+          <text>&gt;=200</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0k6uw3y">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="lipidsAggregateTable" name="Lipids Results">
+    <informationRequirement id="InformationRequirement_19ts6lr">
+      <requiredDecision href="#triglyceridesTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0aqj5wb">
+      <requiredDecision href="#cholesterolTable" />
+    </informationRequirement>
+    <decisionTable id="lipidsAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputTriglyceridesResult" label="Triglycerides-result">
+        <inputExpression id="triglyceridesResultExpression" typeRef="string">
+          <text>triglyceridesResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputCholesterolResult" label="Total Cholesterol-result">
+        <inputExpression id="cholesterolResultExpression" typeRef="string">
+          <text>cholesterolResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputLipidsResult" label="Lipids-result" typeRef="string" />
+      <rule id="DecisionRule_0fv4v99">
+        <inputEntry id="UnaryTests_0edmd2y">
+          <text>triglyceridesResult="Normal" and cholesterolResult="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tmxf1a">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0n726fd">
+        <inputEntry id="UnaryTests_09j3t68">
+          <text>triglyceridesResult!="Normal" or cholesterolResult!="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_154crmj">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="overallAggregateTable" name="Overall Results">
+    <informationRequirement id="InformationRequirement_0885i1k">
+      <requiredDecision href="#lipidsAggregateTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_16oidqe">
+      <requiredDecision href="#hematologyAggregateTable" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_038asl8">
+      <requiredDecision href="#chemistryAggregateTable" />
+    </informationRequirement>
+    <decisionTable id="overallAggregateDecisionTable" hitPolicy="ANY">
+      <input id="inputChemistryResult" label="Chemistry-result">
+        <inputExpression id="chemistryResultExpression" typeRef="string">
+          <text>chemistryResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputHematologyResult" label="Hematology-result">
+        <inputExpression id="hematologyResultExpression" typeRef="string">
+          <text>hematologyResult</text>
+        </inputExpression>
+      </input>
+      <input id="inputLipidsResult" label="Lipids-result">
+        <inputExpression id="lipidsResultExpression" typeRef="string">
+          <text>lipidsResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputOverallResult" label="Overall-result" typeRef="string" />
+      <rule id="DecisionRule_046uusq">
+        <inputEntry id="UnaryTests_1h4zr3z">
+          <text>chemistryResult="Normal" and hematologyResult="Normal" and lipidsResult="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1t8c4uq">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hnf7dm">
+        <inputEntry id="UnaryTests_16gukuq">
+          <text>chemistryResult!="Normal" or hematologyResult!="Normal" or lipidsResult!="Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09aek2r">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_10qfgea">
+      <dmndi:DMNShape id="DMNShape_0eqxuuq" dmnElementRef="sodiumTable">
+        <dc:Bounds height="80" width="180" x="1160" y="520" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_13ml2xi" dmnElementRef="potassiumTable">
+        <dc:Bounds height="80" width="180" x="1250" y="440" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_178s3eo" dmnElementRef="chlorideTable">
+        <dc:Bounds height="80" width="180" x="1070" y="440" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_18qgcmu" dmnElementRef="calciumTable">
+        <dc:Bounds height="80" width="180" x="1070" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_08n9igc" dmnElementRef="phosphateTable">
+        <dc:Bounds height="80" width="180" x="1250" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1kzlnft" dmnElementRef="chemistryAggregateTable">
+        <dc:Bounds height="80" width="180" x="1160" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1d8rw7f" dmnElementRef="hemoglobinTable">
+        <dc:Bounds height="80" width="180" x="590" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1076qj2" dmnElementRef="hematocritTable">
+        <dc:Bounds height="80" width="180" x="770" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0s63b3s" dmnElementRef="hematologyAggregateTable">
+        <dc:Bounds height="80" width="180" x="680" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1x9hyce" dmnElementRef="triglyceridesTable">
+        <dc:Bounds height="80" width="180" x="160" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1y1ekkg" dmnElementRef="cholesterolTable">
+        <dc:Bounds height="80" width="180" x="340" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1vi2skw" dmnElementRef="lipidsAggregateTable">
+        <dc:Bounds height="80" width="180" x="250" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1xn40nb" dmnElementRef="overallAggregateTable">
+        <dc:Bounds height="80" width="180" x="680" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gnlpj1" dmnElementRef="InformationRequirement_0885i1k">
+        <di:waypoint x="340" y="280" />
+        <di:waypoint x="725" y="210" />
+        <di:waypoint x="725" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_07dvg8l" dmnElementRef="InformationRequirement_16oidqe">
+        <di:waypoint x="770" y="280" />
+        <di:waypoint x="770" y="210" />
+        <di:waypoint x="770" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0vxaer5" dmnElementRef="InformationRequirement_038asl8">
+        <di:waypoint x="1250" y="280" />
+        <di:waypoint x="815" y="210" />
+        <di:waypoint x="815" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1rxwohs" dmnElementRef="InformationRequirement_19ts6lr">
+        <di:waypoint x="250" y="360" />
+        <di:waypoint x="250" y="380" />
+        <di:waypoint x="250" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0tvm7xq" dmnElementRef="InformationRequirement_0aqj5wb">
+        <di:waypoint x="430" y="360" />
+        <di:waypoint x="430" y="380" />
+        <di:waypoint x="430" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_04pqz5w" dmnElementRef="InformationRequirement_0zgppot">
+        <di:waypoint x="680" y="360" />
+        <di:waypoint x="680" y="380" />
+        <di:waypoint x="680" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1gz4a27" dmnElementRef="InformationRequirement_13fsgi7">
+        <di:waypoint x="860" y="360" />
+        <di:waypoint x="860" y="380" />
+        <di:waypoint x="860" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1gnujwl" dmnElementRef="InformationRequirement_0qnabox">
+        <di:waypoint x="1160" y="360" />
+        <di:waypoint x="1160" y="380" />
+        <di:waypoint x="1160" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0t66q06" dmnElementRef="InformationRequirement_0ehft1p">
+        <di:waypoint x="1340" y="360" />
+        <di:waypoint x="1340" y="380" />
+        <di:waypoint x="1340" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0abfzm7" dmnElementRef="InformationRequirement_0mctir7">
+        <di:waypoint x="1340" y="440" />
+        <di:waypoint x="1310" y="380" />
+        <di:waypoint x="1310" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0505o18" dmnElementRef="InformationRequirement_1n7vx3x">
+        <di:waypoint x="1160" y="440" />
+        <di:waypoint x="1220" y="380" />
+        <di:waypoint x="1220" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0plh1e4" dmnElementRef="InformationRequirement_03q015g">
+        <di:waypoint x="1250" y="520" />
+        <di:waypoint x="1250" y="380" />
+        <di:waypoint x="1250" y="360" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

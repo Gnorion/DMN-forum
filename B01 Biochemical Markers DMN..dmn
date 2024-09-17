@@ -1,0 +1,467 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1vfo20p" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_16muhou" name="Biochemical Markers Summary">
+    <informationRequirement id="InformationRequirement_059kibg">
+      <requiredDecision href="#Decision_18kkqi0" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1fhsfu0">
+      <input id="Input_1" label="blood chemistry result">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="overall result" typeRef="string" />
+      <rule id="DecisionRule_1temjhl">
+        <inputEntry id="UnaryTests_1ko7bsr">
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04zyiyb">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_18kkqi0" name="Blood Chemistry">
+    <informationRequirement id="InformationRequirement_1j87thc">
+      <requiredInput href="#InputData_0j6e7k9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_18y14e3">
+      <requiredInput href="#InputData_0r6i41q" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_119673o">
+      <requiredInput href="#InputData_08n4img" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0qquyn0">
+      <requiredInput href="#InputData_06die7h" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_16heti0">
+      <requiredInput href="#InputData_1w1v3di" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0m2rez4">
+      <requiredInput href="#InputData_17rizau" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_08wwow0">
+      <requiredInput href="#InputData_1t2zkaq" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1m9b5fo">
+      <requiredInput href="#InputData_0b16k9n" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_04mors9">
+      <requiredInput href="#InputData_12x6u8o" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1wb1zkr">
+      <requiredInput href="#InputData_08ogqw9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1pazads">
+      <requiredInput href="#InputData_0lt507m" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0a7n9bz">
+      <requiredInput href="#InputData_02r85zs" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1v08kwf">
+      <requiredInput href="#InputData_0fssr7h" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1cwd4pi">
+      <requiredInput href="#InputData_02hud7r" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1701bqx">
+      <requiredInput href="#InputData_0zhbihx" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1aizzzh">
+      <requiredInput href="#InputData_19v1lt6" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_053wiu8">
+      <requiredInput href="#InputData_0u7swvn" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_05pdswv">
+      <requiredInput href="#InputData_049vgbz" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1kl9tlm">
+      <requiredInput href="#InputData_1nfp9ag" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0u94h57">
+      <requiredInput href="#InputData_1o3n21r" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0kztfbg">
+      <requiredInput href="#InputData_1pzamw9" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1qj94tm">
+      <input id="InputClause_16jjhr5" label="ammonia (μg/dL)" biodi:width="191">
+        <inputExpression id="LiteralExpression_1cp87ah" typeRef="number" />
+      </input>
+      <input id="InputClause_0ho7hng" label="ceruloplasmin (mg/dL)">
+        <inputExpression id="LiteralExpression_1ymvl2h" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1pflxax" label="chloride (mmol/L)" biodi:width="191">
+        <inputExpression id="LiteralExpression_044gyuf" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1e2wfr3" label="copper (μg/dL)" biodi:width="191">
+        <inputExpression id="LiteralExpression_0dcddwj" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0tngwhz" label="creatinine (mg/dL)">
+        <inputExpression id="LiteralExpression_1jz9d9k" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_002zmas" label="blood urea nitrogen (mg/dL)">
+        <inputExpression id="LiteralExpression_0zq4bd0" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1qohj8b" label="glucose (mg/dL)">
+        <inputExpression id="LiteralExpression_069jmpe" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1o5lb59" label="inorganic phosphorous (mg/dL)">
+        <inputExpression id="LiteralExpression_1eoe83b" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1wyyib1" label="ionized calcium (mmol/L)">
+        <inputExpression id="LiteralExpression_0rire1r" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0jzjm46" label="magnesium (mg/dL)">
+        <inputExpression id="LiteralExpression_153o3od" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0zvnsvg" label="phosphate (mg/dL)">
+        <inputExpression id="LiteralExpression_195wpap" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1kv9b62" label="potassium (mEq/L)">
+        <inputExpression id="LiteralExpression_07rf9gf" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1m3bv52" label="pyruvate (mmol/L)">
+        <inputExpression id="LiteralExpression_0ne6sz9" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_008uyeu" label="sodium (mEq/L)">
+        <inputExpression id="LiteralExpression_040b2wu" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1nky9h7" label="total calcium (mmol/L)">
+        <inputExpression id="LiteralExpression_1ybmoxg" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_02o2tfd" label="total iron-binding capacity (μg/dL)">
+        <inputExpression id="LiteralExpression_0rwlmd0" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_083c31r" label="total serum iron (μg/dL)">
+        <inputExpression id="LiteralExpression_1eyydqv" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_11da9i2" label="transferrin (mg/dL)">
+        <inputExpression id="LiteralExpression_0wdv9ev" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0wpve14" label="urea (mmol/L)">
+        <inputExpression id="LiteralExpression_0x730jj" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1m68ipb" label="uric acid (mmol/L)">
+        <inputExpression id="LiteralExpression_1eqid7d" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ah2mru" label="zinc (μg/dL)">
+        <inputExpression id="LiteralExpression_1eevi6x" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0jo8ozm" label="blood chemistry result" typeRef="string" />
+      <rule id="DecisionRule_0snfjrz">
+        <inputEntry id="UnaryTests_0mg6xpb">
+          <text>[40..70]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11udhi0">
+          <text>[25..43]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vhlgft">
+          <text>[95..105]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1i41bdh">
+          <text>[100..200]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1579mw1">
+          <text>[0.8..1.3]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kq7og1">
+          <text>[8..20]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1k98m1l">
+          <text>[70..99]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hqg2r5">
+          <text>[3.0..4.5]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13rwvys">
+          <text>[1.12..1.23]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17v0vik">
+          <text>[1.6..2.6]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ihfrcu">
+          <text>[2.5..4.5]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_09hnw3w">
+          <text>[3.5..5.0]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19diie8">
+          <text>[0.08..0.16]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0652a8l">
+          <text>[136..145]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08q81xa">
+          <text>[2.0..2.6]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nuqhzz">
+          <text>[250..310]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07o8ujd">
+          <text>[50..150]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15z87jy">
+          <text>[200..400]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vq25ap">
+          <text>[1.2..3.0]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03seqpp">
+          <text>[0.18..0.48]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1708s8f">
+          <text>[75..140]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03xxu53">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0j6e7k9" name="ammonia (μg/dL)" />
+  <inputData id="InputData_0r6i41q" name="ceruloplasmin (mg/dL)" />
+  <inputData id="InputData_08n4img" name="chloride (mmol/L)" />
+  <inputData id="InputData_1t2zkaq" name="creatinine (mg/dL)" />
+  <inputData id="InputData_0b16k9n" name="copper (μg/dL)" />
+  <inputData id="InputData_12x6u8o" name="blood urea nitrogen (mg/dL)" />
+  <inputData id="InputData_08ogqw9" name="glucose (mg/dL)" />
+  <inputData id="InputData_0lt507m" name="inorganic phosphorous (mg/dL)" />
+  <inputData id="InputData_02r85zs" name="ionized calcium (mmol/L)" />
+  <inputData id="InputData_17rizau" name="magnesium (mg/dL)" />
+  <inputData id="InputData_1w1v3di" name="phosphate (mg/dL)" />
+  <inputData id="InputData_06die7h" name="potassium (mEq/L)" />
+  <inputData id="InputData_0fssr7h" name="pyruvate (mmol/L)" />
+  <inputData id="InputData_02hud7r" name="sodium (mEq/L)" />
+  <inputData id="InputData_0zhbihx" name="total calcium (mmol/L)" />
+  <inputData id="InputData_19v1lt6" name="total iron-binding capacity (μg/dL)" />
+  <inputData id="InputData_0u7swvn" name="total serum iron (μg/dL)" />
+  <inputData id="InputData_049vgbz" name="transferrin (mg/dL)" />
+  <inputData id="InputData_1pzamw9" name="urea (mmol/L)" />
+  <inputData id="InputData_1nfp9ag" name="uric acid (mmol/L)" />
+  <inputData id="InputData_1o3n21r" name="zinc (μg/dL)" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_16muhou">
+        <dc:Bounds height="80" width="180" x="380" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0yf4v31" dmnElementRef="Decision_18kkqi0">
+        <dc:Bounds height="80" width="180" x="380" y="200" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_04heo3k" dmnElementRef="InformationRequirement_059kibg">
+        <di:waypoint x="470" y="200" />
+        <di:waypoint x="470" y="170" />
+        <di:waypoint x="470" y="150" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_08pmq5w" dmnElementRef="InputData_0j6e7k9">
+        <dc:Bounds height="45" width="125" x="187" y="328" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_07exuke" dmnElementRef="InformationRequirement_1j87thc">
+        <di:waypoint x="250" y="328" />
+        <di:waypoint x="388" y="300" />
+        <di:waypoint x="388" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1rwrndo" dmnElementRef="InputData_0r6i41q">
+        <dc:Bounds height="45" width="125" x="187" y="377" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_16yisyw" dmnElementRef="InformationRequirement_18y14e3">
+        <di:waypoint x="250" y="377" />
+        <di:waypoint x="396" y="300" />
+        <di:waypoint x="396" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0hl2zgw" dmnElementRef="InputData_08n4img">
+        <dc:Bounds height="45" width="125" x="187" y="428" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1dgi3nx" dmnElementRef="InformationRequirement_119673o">
+        <di:waypoint x="250" y="428" />
+        <di:waypoint x="405" y="300" />
+        <di:waypoint x="405" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1s9ss5j" dmnElementRef="InputData_1t2zkaq">
+        <dc:Bounds height="45" width="125" x="347" y="328" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03y6gb2" dmnElementRef="InputData_0b16k9n">
+        <dc:Bounds height="45" width="125" x="347" y="377" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1xqmnyv" dmnElementRef="InputData_12x6u8o">
+        <dc:Bounds height="45" width="125" x="347" y="428" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1np0fp0" dmnElementRef="InputData_08ogqw9">
+        <dc:Bounds height="45" width="125" x="347" y="478" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_18gsw7c" dmnElementRef="InputData_0lt507m">
+        <dc:Bounds height="45" width="125" x="347" y="527" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16bmbzg" dmnElementRef="InputData_02r85zs">
+        <dc:Bounds height="45" width="125" x="347" y="577" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0fd8e12" dmnElementRef="InputData_17rizau">
+        <dc:Bounds height="45" width="125" x="187" y="577" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0cot0yy" dmnElementRef="InputData_1w1v3di">
+        <dc:Bounds height="45" width="125" x="187" y="527" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_13vwtov" dmnElementRef="InputData_06die7h">
+        <dc:Bounds height="45" width="125" x="187" y="478" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0sfxchx" dmnElementRef="InputData_0fssr7h">
+        <dc:Bounds height="45" width="125" x="497" y="328" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0o0uslr" dmnElementRef="InputData_02hud7r">
+        <dc:Bounds height="45" width="125" x="497" y="377" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_19toxxu" dmnElementRef="InputData_0zhbihx">
+        <dc:Bounds height="45" width="125" x="497" y="428" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_04ixgly" dmnElementRef="InputData_19v1lt6">
+        <dc:Bounds height="45" width="125" x="497" y="478" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1xt85jm" dmnElementRef="InputData_0u7swvn">
+        <dc:Bounds height="45" width="125" x="497" y="527" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0lrig1n" dmnElementRef="InputData_049vgbz">
+        <dc:Bounds height="45" width="125" x="497" y="577" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1mw33wq" dmnElementRef="InputData_1pzamw9">
+        <dc:Bounds height="45" width="125" x="637" y="428" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1990v2i" dmnElementRef="InputData_1nfp9ag">
+        <dc:Bounds height="45" width="125" x="637" y="328" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1svl1sd" dmnElementRef="InputData_1o3n21r">
+        <dc:Bounds height="45" width="125" x="637" y="377" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06iunbe" dmnElementRef="InformationRequirement_0qquyn0">
+        <di:waypoint x="250" y="478" />
+        <di:waypoint x="413" y="300" />
+        <di:waypoint x="413" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ti3gsg" dmnElementRef="InformationRequirement_16heti0">
+        <di:waypoint x="250" y="527" />
+        <di:waypoint x="421" y="300" />
+        <di:waypoint x="421" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_14gyo1a" dmnElementRef="InformationRequirement_0m2rez4">
+        <di:waypoint x="250" y="577" />
+        <di:waypoint x="429" y="300" />
+        <di:waypoint x="429" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0rsdkm9" dmnElementRef="InformationRequirement_08wwow0">
+        <di:waypoint x="410" y="328" />
+        <di:waypoint x="437" y="300" />
+        <di:waypoint x="437" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1yprkyu" dmnElementRef="InformationRequirement_1m9b5fo">
+        <di:waypoint x="410" y="377" />
+        <di:waypoint x="445" y="300" />
+        <di:waypoint x="445" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_03618w7" dmnElementRef="InformationRequirement_04mors9">
+        <di:waypoint x="410" y="428" />
+        <di:waypoint x="454" y="300" />
+        <di:waypoint x="454" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1nqs7s7" dmnElementRef="InformationRequirement_1wb1zkr">
+        <di:waypoint x="410" y="478" />
+        <di:waypoint x="462" y="300" />
+        <di:waypoint x="462" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1h72wm4" dmnElementRef="InformationRequirement_1pazads">
+        <di:waypoint x="410" y="527" />
+        <di:waypoint x="470" y="300" />
+        <di:waypoint x="470" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0d7nwf7" dmnElementRef="InformationRequirement_0a7n9bz">
+        <di:waypoint x="410" y="577" />
+        <di:waypoint x="478" y="300" />
+        <di:waypoint x="478" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1e9cm9q" dmnElementRef="InformationRequirement_1v08kwf">
+        <di:waypoint x="560" y="328" />
+        <di:waypoint x="486" y="300" />
+        <di:waypoint x="486" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1lriz99" dmnElementRef="InformationRequirement_1cwd4pi">
+        <di:waypoint x="560" y="377" />
+        <di:waypoint x="495" y="300" />
+        <di:waypoint x="495" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0txs2bp" dmnElementRef="InformationRequirement_1701bqx">
+        <di:waypoint x="560" y="428" />
+        <di:waypoint x="503" y="300" />
+        <di:waypoint x="503" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1m2ux25" dmnElementRef="InformationRequirement_1aizzzh">
+        <di:waypoint x="560" y="478" />
+        <di:waypoint x="511" y="300" />
+        <di:waypoint x="511" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0t18yxc" dmnElementRef="InformationRequirement_053wiu8">
+        <di:waypoint x="560" y="527" />
+        <di:waypoint x="519" y="300" />
+        <di:waypoint x="519" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_11z9ybh" dmnElementRef="InformationRequirement_05pdswv">
+        <di:waypoint x="560" y="577" />
+        <di:waypoint x="527" y="300" />
+        <di:waypoint x="527" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1asoler" dmnElementRef="InformationRequirement_1kl9tlm">
+        <di:waypoint x="700" y="328" />
+        <di:waypoint x="535" y="300" />
+        <di:waypoint x="535" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0jy809f" dmnElementRef="InformationRequirement_0u94h57">
+        <di:waypoint x="700" y="377" />
+        <di:waypoint x="544" y="300" />
+        <di:waypoint x="544" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0bz6029" dmnElementRef="InformationRequirement_0kztfbg">
+        <di:waypoint x="700" y="428" />
+        <di:waypoint x="552" y="300" />
+        <di:waypoint x="552" y="280" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

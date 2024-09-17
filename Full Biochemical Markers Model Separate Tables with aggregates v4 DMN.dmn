@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20191111/modelelements"
+             xmlns:camunda="http://camunda.org/schema/1.0/dmn"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             id="Definitions"
+             name="Health Biomarkers DMN"
+             namespace="http://camunda.org/schema/1.0/dmn"
+             exporter="Camunda Modeler"
+             exporterVersion="4.10.0">
+
+  <!-- Ammonia -->
+  <decision id="ammoniaTable" name="Ammonia Results">
+    <decisionTable id="ammoniaDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputAmmonia" label="Ammonia (μg/dL)">
+        <inputExpression id="ammoniaExpression" typeRef="number">
+          <text>ammonia</text>
+        </inputExpression>
+      </input>
+      <output id="outputAmmoniaResult" label="Ammonia-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ammonia &gt;= 40 and ammonia &lt;= 70</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ammonia &lt; 40 or ammonia &gt; 70</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ceruloplasmin -->
+  <decision id="ceruloplasminTable" name="Ceruloplasmin Results">
+    <decisionTable id="ceruloplasminDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputCeruloplasmin" label="Ceruloplasmin (mg/dL)">
+        <inputExpression id="ceruloplasminExpression" typeRef="number">
+          <text>ceruloplasmin</text>
+        </inputExpression>
+      </input>
+      <output id="outputCeruloplasminResult" label="Ceruloplasmin-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ceruloplasmin &gt;= 25 and ceruloplasmin &lt;= 43</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ceruloplasmin &lt; 25 or ceruloplasmin &gt; 43</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Chloride -->
+  <decision id="chlorideTable" name="Chloride Results">
+    <decisionTable id="chlorideDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputChloride" label="Chloride (mmol/L)">
+        <inputExpression id="chlorideExpression" typeRef="number">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <output id="outputChlorideResult" label="Chloride-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>chloride &gt;= 95 and chloride &lt;= 105</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>chloride &lt; 95 or chloride &gt; 105</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Copper -->
+  <decision id="copperTable" name="Copper Results">
+    <decisionTable id="copperDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputCopper" label="Copper (μg/dL)">
+        <inputExpression id="copperExpression" typeRef="number">
+          <text>copper</text>
+        </inputExpression>
+      </input>
+      <output id="outputCopperResult" label="Copper-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>copper &gt;= 100 and copper &lt;= 200</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>copper &lt; 100 or copper &gt; 200</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Creatinine -->
+  <decision id="creatinineTable" name="Creatinine Results">
+    <decisionTable id="creatinineDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputCreatinine" label="Creatinine (mg/dL)">
+        <inputExpression id="creatinineExpression" typeRef="number">
+          <text>creatinine</text>
+        </inputExpression>
+      </input>
+      <output id="outputCreatinineResult" label="Creatinine-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>creatinine &gt;= 0.8 and creatinine &lt;= 1.3</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>creatinine &lt; 0.8 or creatinine &gt; 1.3</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Blood Urea Nitrogen -->
+  <decision id="bloodUreaNitrogenTable" name="Blood Urea Nitrogen Results">
+    <decisionTable id="bloodUreaNitrogenDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputBloodUreaNitrogen" label="Blood Urea Nitrogen (mg/dL)">
+        <inputExpression id="bloodUreaNitrogenExpression" typeRef="number">
+          <text>bloodUreaNitrogen</text>
+        </inputExpression>
+      </input>
+      <output id="outputBloodUreaNitrogenResult" label="Blood Urea Nitrogen-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>bloodUreaNitrogen &gt;= 8 and bloodUreaNitrogen &lt;= 20</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>bloodUreaNitrogen &lt; 8 or bloodUreaNitrogen &gt; 20</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ferritin (Female) -->
+  <decision id="ferritinFemaleTable" name="Ferritin (Female) Results">
+    <decisionTable id="ferritinFemaleDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputFerritinFemale" label="Ferritin (Female) (ng/mL)">
+        <inputExpression id="ferritinFemaleExpression" typeRef="number">
+          <text>ferritinFemale</text>
+        </inputExpression>
+      </input>
+      <output id="outputFerritinFemaleResult" label="Ferritin Female-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ferritinFemale &gt;= 24 and ferritinFemale &lt;= 307</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ferritinFemale &lt; 24 or ferritinFemale &gt; 307</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ferritin (Male) -->
+  <decision id="ferritinMaleTable" name="Ferritin (Male) Results">
+    <decisionTable id="ferritinMaleDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputFerritinMale" label="Ferritin (Male) (ng/mL)">
+        <inputExpression id="ferritinMaleExpression" typeRef="number">
+          <text>ferritinMale</text>
+        </inputExpression>
+      </input>
+      <output id="outputFerritinMaleResult" label="Ferritin Male-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ferritinMale &gt;= 24 and ferritinMale &lt;= 336</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ferritinMale &lt; 24 or ferritinMale &gt; 336</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Glucose -->
+  <decision id="glucoseTable" name="Glucose Results">
+    <decisionTable id="glucoseDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputGlucose" label="Glucose (mg/dL)">
+        <inputExpression id="glucoseExpression" typeRef="number">
+          <text>glucose</text>
+        </inputExpression>
+      </input>
+      <output id="outputGlucoseResult" label="Glucose-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>glucose &gt;= 70 and glucose &lt;= 99</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>glucose &lt; 70 or glucose &gt; 99</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Inorganic Phosphorous -->
+  <decision id="inorganicPhosphorousTable" name="Inorganic Phosphorous Results">
+    <decisionTable id="inorganicPhosphorousDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputInorganicPhosphorous" label="Inorganic Phosphorous (mg/dL)">
+        <inputExpression id="inorganicPhosphorousExpression" typeRef="number">
+          <text>inorganicPhosphorous</text>
+        </inputExpression>
+      </input>
+      <output id="outputInorganicPhosphorousResult" label="Inorganic Phosphorous-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>inorganicPhosphorous &gt;= 3 and inorganicPhosphorous &lt;= 4.5</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>inorganicPhosphorous &lt; 3 or inorganicPhosphorous &gt; 4.5</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ionized Calcium -->
+  <decision id="ionizedCalciumTable" name="Ionized Calcium Results">
+    <decisionTable id="ionizedCalciumDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputIonizedCalcium" label="Ionized Calcium (mmol/L)">
+        <inputExpression id="ionizedCalciumExpression" typeRef="number">
+          <text>ionizedCalcium</text>
+        </inputExpression>
+      </input>
+      <output id="outputIonizedCalciumResult" label="Ionized Calcium-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>ionizedCalcium &gt;= 1.12 and ionizedCalcium &lt;= 1.23</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>ionizedCalcium &lt; 1.12 or ionizedCalcium &gt; 1.23</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Magnesium -->
+  <decision id="magnesiumTable" name="Magnesium Results">
+    <decisionTable id="magnesiumDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputMagnesium" label="Magnesium (mg/dL)">
+        <inputExpression id="magnesiumExpression" typeRef="number">
+          <text>magnesium</text>
+        </inputExpression>
+      </input>
+      <output id="outputMagnesiumResult" label="Magnesium-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>magnesium &gt;= 1.6 and magnesium &lt;= 2.6</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>magnesium &lt; 1.6 or magnesium &gt; 2.6</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Phosphate -->
+  <decision id="phosphateTable" name="Phosphate Results">
+    <decisionTable id="phosphateDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputPhosphate" label="Phosphate (mg/dL)">
+        <inputExpression id="phosphateExpression" typeRef="number">
+          <text>phosphate</text>
+        </inputExpression>
+      </input>
+      <output id="outputPhosphateResult" label="Phosphate-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>phosphate &gt;= 2.5 and phosphate &lt;= 4.5</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>phosphate &lt; 2.5 or phosphate &gt; 4.5</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Potassium -->
+  <decision id="potassiumTable" name="Potassium Results">
+    <decisionTable id="potassiumDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputPotassium" label="Potassium (mmol/L)">
+        <inputExpression id="potassiumExpression" typeRef="number">
+          <text>potassium</text>
+        </inputExpression>
+      </input>
+      <output id="outputPotassiumResult" label="Potassium-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>potassium &gt;= 3.5 and potassium &lt;= 5.0</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>potassium &lt; 3.5 or potassium &gt; 5.0</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Pyruvate -->
+  <decision id="pyruvateTable" name="Pyruvate Results">
+    <decisionTable id="pyruvateDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputPyruvate" label="Pyruvate (mmol/L)">
+        <inputExpression id="pyruvateExpression" typeRef="number">
+          <text>pyruvate</text>
+        </inputExpression>
+      </input>
+      <output id="outputPyruvateResult" label="Pyruvate-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>pyruvate &gt;= 0.08 and pyruvate &lt;= 0.16</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>pyruvate &lt; 0.08 or pyruvate &gt; 0.16</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Sodium -->
+  <decision id="sodiumTable" name="Sodium Results">
+    <decisionTable id="sodiumDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputSodium" label="Sodium (mmol/L)">
+        <inputExpression id="sodiumExpression" typeRef="number">
+          <text>sodium</text>
+        </inputExpression>
+      </input>
+      <output id="outputSodiumResult" label="Sodium-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>sodium &gt;= 135 and sodium &lt;= 145</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>sodium &lt; 135 or sodium &gt; 145</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Urea -->
+  <decision id="ureaTable" name="Urea Results">
+    <decisionTable id="ureaDecisionTable" hitPolicy="UNIQUE">
+      <input id="inputUrea" label="Urea (mg/dL)">
+        <inputExpression id="ureaExpression" typeRef="number">
+          <text>urea</text>
+        </inputExpression>
+      </input>
+      <output id="outputUreaResult" label="Urea-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>urea &gt;= 7 and urea &lt;= 20</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>urea &lt; 7 or urea &gt; 20</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Top-Level Tables -->
+
+  <!-- Ammonia Group -->
+  <decision id="ammoniaGroup" name="Ammonia Group">
+    <decisionTable id="ammoniaGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputAmmoniaResult" label="Ammonia Result">
+        <inputExpression id="ammoniaGroupExpression" typeRef="string">
+          <text>ammoniaResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputAmmoniaGroupResult" label="Ammonia Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ceruloplasmin Group -->
+  <decision id="ceruloplasminGroup" name="Ceruloplasmin Group">
+    <decisionTable id="ceruloplasminGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputCeruloplasminResult" label="Ceruloplasmin Result">
+        <inputExpression id="ceruloplasminGroupExpression" typeRef="string">
+          <text>ceruloplasminResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputCeruloplasminGroupResult" label="Ceruloplasmin Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Chloride Group -->
+  <decision id="chlorideGroup" name="Chloride Group">
+    <decisionTable id="chlorideGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputChlorideResult" label="Chloride Result">
+        <inputExpression id="chlorideGroupExpression" typeRef="string">
+          <text>chlorideResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputChlorideGroupResult" label="Chloride Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Copper Group -->
+  <decision id="copperGroup" name="Copper Group">
+    <decisionTable id="copperGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputCopperResult" label="Copper Result">
+        <inputExpression id="copperGroupExpression" typeRef="string">
+          <text>copperResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputCopperGroupResult" label="Copper Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Creatinine Group -->
+  <decision id="creatinineGroup" name="Creatinine Group">
+    <decisionTable id="creatinineGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputCreatinineResult" label="Creatinine Result">
+        <inputExpression id="creatinineGroupExpression" typeRef="string">
+          <text>creatinineResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputCreatinineGroupResult" label="Creatinine Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Blood Urea Nitrogen Group -->
+  <decision id="bloodUreaNitrogenGroup" name="Blood Urea Nitrogen Group">
+    <decisionTable id="bloodUreaNitrogenGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputBloodUreaNitrogenResult" label="Blood Urea Nitrogen Result">
+        <inputExpression id="bloodUreaNitrogenGroupExpression" typeRef="string">
+          <text>bloodUreaNitrogenResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputBloodUreaNitrogenGroupResult" label="Blood Urea Nitrogen Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ferritin (Female) Group -->
+  <decision id="ferritinFemaleGroup" name="Ferritin (Female) Group">
+    <decisionTable id="ferritinFemaleGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputFerritinFemaleResult" label="Ferritin (Female) Result">
+        <inputExpression id="ferritinFemaleGroupExpression" typeRef="string">
+          <text>ferritinFemaleResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputFerritinFemaleGroupResult" label="Ferritin Female Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ferritin (Male) Group -->
+  <decision id="ferritinMaleGroup" name="Ferritin (Male) Group">
+    <decisionTable id="ferritinMaleGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputFerritinMaleResult" label="Ferritin (Male) Result">
+        <inputExpression id="ferritinMaleGroupExpression" typeRef="string">
+          <text>ferritinMaleResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputFerritinMaleGroupResult" label="Ferritin Male Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Glucose Group -->
+  <decision id="glucoseGroup" name="Glucose Group">
+    <decisionTable id="glucoseGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputGlucoseResult" label="Glucose Result">
+        <inputExpression id="glucoseGroupExpression" typeRef="string">
+          <text>glucoseResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputGlucoseGroupResult" label="Glucose Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Inorganic Phosphorous Group -->
+  <decision id="inorganicPhosphorousGroup" name="Inorganic Phosphorous Group">
+    <decisionTable id="inorganicPhosphorousGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputInorganicPhosphorousResult" label="Inorganic Phosphorous Result">
+        <inputExpression id="inorganicPhosphorousGroupExpression" typeRef="string">
+          <text>inorganicPhosphorousResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputInorganicPhosphorousGroupResult" label="Inorganic Phosphorous Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Ionized Calcium Group -->
+  <decision id="ionizedCalciumGroup" name="Ionized Calcium Group">
+    <decisionTable id="ionizedCalciumGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputIonizedCalciumResult" label="Ionized Calcium Result">
+        <inputExpression id="ionizedCalciumGroupExpression" typeRef="string">
+          <text>ionizedCalciumResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputIonizedCalciumGroupResult" label="Ionized Calcium Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Magnesium Group -->
+  <decision id="magnesiumGroup" name="Magnesium Group">
+    <decisionTable id="magnesiumGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputMagnesiumResult" label="Magnesium Result">
+        <inputExpression id="magnesiumGroupExpression" typeRef="string">
+          <text>magnesiumResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputMagnesiumGroupResult" label="Magnesium Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Phosphate Group -->
+  <decision id="phosphateGroup" name="Phosphate Group">
+    <decisionTable id="phosphateGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputPhosphateResult" label="Phosphate Result">
+        <inputExpression id="phosphateGroupExpression" typeRef="string">
+          <text>phosphateResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputPhosphateGroupResult" label="Phosphate Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Potassium Group -->
+  <decision id="potassiumGroup" name="Potassium Group">
+    <decisionTable id="potassiumGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputPotassiumResult" label="Potassium Result">
+        <inputExpression id="potassiumGroupExpression" typeRef="string">
+          <text>potassiumResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputPotassiumGroupResult" label="Potassium Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Pyruvate Group -->
+  <decision id="pyruvateGroup" name="Pyruvate Group">
+    <decisionTable id="pyruvateGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputPyruvateResult" label="Pyruvate Result">
+        <inputExpression id="pyruvateGroupExpression" typeRef="string">
+          <text>pyruvateResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputPyruvateGroupResult" label="Pyruvate Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Sodium Group -->
+  <decision id="sodiumGroup" name="Sodium Group">
+    <decisionTable id="sodiumGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputSodiumResult" label="Sodium Result">
+        <inputExpression id="sodiumGroupExpression" typeRef="string">
+          <text>sodiumResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputSodiumGroupResult" label="Sodium Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+  <!-- Urea Group -->
+  <decision id="ureaGroup" name="Urea Group">
+    <decisionTable id="ureaGroupDecisionTable" hitPolicy="COLLECT">
+      <input id="inputUreaResult" label="Urea Result">
+        <inputExpression id="ureaGroupExpression" typeRef="string">
+          <text>ureaResult</text>
+        </inputExpression>
+      </input>
+      <output id="outputUreaGroupResult" label="Urea Group-result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry>
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+
+</definitions>

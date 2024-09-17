@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_0llop3d" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <!-- Ammonia -->
+  <decision id="ammonia" name="Ammonia">
+    <decisionTable id="ammoniaDecisionTable" hitPolicy="RULE_ORDER">
+      <input id="inputAmmonia" label="Ammonia">
+        <inputExpression id="ammoniaExpression" typeRef="number">
+          <text>ammonia</text>
+        </inputExpression>
+      </input>
+      <output id="outputAmmoniaResult" label="Ammonia Result" typeRef="string"/>
+      <rule>
+        <inputEntry>
+          <text>[40..70]</text>
+        </inputEntry>
+        <outputEntry>
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
+

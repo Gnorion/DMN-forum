@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0rdxwlr" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0b3dhzt" name="COL02&#10;Collections Examples Listing Filtering" />
+  <decision id="Decision_0p7ve0n" name="define a collection of persons">
+    <variable id="InformationItem_0wto4rj" name="persons" typeRef="collection" />
+    <literalExpression id="LiteralExpression_1q392af">
+      <text>[
+  {name:"Tom",age:57,salary:100000,gender:"male"},
+  {name:"Dick",age:26,salary:80000,gender:"male"},
+  {name:"Harry",age:37,salary:160000,gender:"male"},
+  {name:"Jane",age:42,salary:120000,gender:"female"},
+  {name:"Mary",age:26,salary:180000,gender:"female"},
+  {name:"Ruth",age:76,salary:180000,gender:"female"}
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_07clbbj" name="compare counts">
+    <informationRequirement id="InformationRequirement_134invl">
+      <requiredDecision href="#Decision_0p7ve0n" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1pb8knu">
+      <requiredInput href="#InputData_0yqkxkb" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0gojg2q">
+      <input id="InputClause_0xv074a" label="filter gender then age">
+        <inputExpression id="LiteralExpression_157z26k" typeRef="string">
+          <text>count(persons [gender="male" and age in [20..65]] ) </text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0yxoazd" label="filter age then gender">
+        <inputExpression id="LiteralExpression_0cdvkv0" typeRef="number">
+          <text>count(persons [age in [20..65] and gender="male"] )</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1su99i0" typeRef="string" />
+      <rule id="DecisionRule_0ytpov8">
+        <inputEntry id="UnaryTests_0kaiui3">
+          <text>3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ta16or">
+          <text>3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_155t1px">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_07uywby">
+        <inputEntry id="UnaryTests_1rntpbr">
+          <text>0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hhyxqf">
+          <text>3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1sa1pdf">
+          <text>"FAIL"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0n2zsi3" name="count persons">
+    <variable id="InformationItem_1hg0iv3" />
+    <informationRequirement id="InformationRequirement_0665s71">
+      <requiredDecision href="#Decision_0p7ve0n" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0yukf8j">
+      <requiredInput href="#InputData_0yqkxkb" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0epnfwq">
+      <text>count(persons[age&gt;60]) = 1 and                                      // count persons over 60
+count(persons [age in [13..19]]) = 0 and                            // count persons 13..19
+count(persons [age in [20..65] and gender = "male"]) &gt; 2 and        // count males 20..65
+{n:count(persons [ age in [20..65]])}.n = 5  and                    // count all persons 20..65
+count(persons [age&lt;40 and gender="male"]  and                       // count males under 65
+count(persons[salary &lt; mean(persons.salary)]))= 3                   // count people with salary less than the mean</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0zaeohj" name="anomalous counts">
+    <variable id="InformationItem_1ezvkp8" name="counts" typeRef="list" />
+    <informationRequirement id="InformationRequirement_03y3qb5">
+      <requiredDecision href="#Decision_0p7ve0n" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_127v8bq">
+      <requiredInput href="#InputData_0yqkxkb" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1xeqgbv">
+      <text>{
+count1:count(persons [gender="male" and age in [20..65]] ),
+count2:count(persons [age in [20..65] and gender="male"] ),
+count3:count(persons [(age in [20..65]) and gender="male"] )
+}</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0yqkxkb" name="persons" />
+  <textAnnotation id="TextAnnotation_0k7gocl">
+    <text>[
+  {name:"Tom",age:57,salary:100000,gender:"male"},
+  {name:"Dick",age:26,salary:80000,gender:"male"},
+  {name:"Harry",age:37,salary:160000,gender:"male"},
+  {name:"Jane",age:42,salary:120000,gender:"female"},
+  {name:"Mary",age:26,salary:180000,gender:"female"},
+  {name:"Ruth",age:76,salary:180000,gender:"female"}
+]</text>
+  </textAnnotation>
+  <association id="Association_1w045ou">
+    <sourceRef href="#TextAnnotation_0k7gocl" />
+    <targetRef href="#Decision_0p7ve0n" />
+  </association>
+  <textAnnotation id="TextAnnotation_0olf71a">
+    <text>The order of the filters seems to make a difference
+count(persons [gender="male" and age in [20..65]] ) = 3
+count(persons [age in [20..65] and gender="male"] ) = 0
+
+count(persons [(age in [20..65]) and gender="male"] )=3 extra parens</text>
+  </textAnnotation>
+  <association id="Association_0wppzr0">
+    <sourceRef href="#TextAnnotation_0olf71a" />
+    <targetRef href="#Decision_07clbbj" />
+  </association>
+  <textAnnotation id="TextAnnotation_13g7lgo">
+    <text>count(persons[age&gt;60]) = 1 and // count persons over 60
+count(persons [age in [13..19]]) = 0 and // count persons 13..19
+count(persons [age in [20..65] and gender = "male"]) &gt; 2 and // count males 20..65
+{n:count(persons [ age in [20..65]])}.n = 5 and // count all persons 20..65
+count(persons [age&lt;40 and gender="male"] and // count males under 65
+count(persons[salary &lt; mean(persons.salary)]))= 3 // count people with salary less than the mean</text>
+  </textAnnotation>
+  <association id="Association_08s1yk6">
+    <sourceRef href="#TextAnnotation_13g7lgo" />
+    <targetRef href="#Decision_0n2zsi3" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1ibp1xi" dmnElementRef="Decision_0b3dhzt">
+        <dc:Bounds height="80" width="180" x="690" y="40" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0dhp6j9" dmnElementRef="Decision_0p7ve0n">
+        <dc:Bounds height="80" width="180" x="690" y="420" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_10fis2q" dmnElementRef="TextAnnotation_0k7gocl">
+        <dc:Bounds height="130" width="510" x="715" y="535" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gyszdv" dmnElementRef="Association_1w045ou">
+        <di:waypoint x="760" y="530" />
+        <di:waypoint x="760" y="500" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_07ku0sz" dmnElementRef="Decision_07clbbj">
+        <dc:Bounds height="80" width="180" x="950" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1fbklif" dmnElementRef="TextAnnotation_0olf71a">
+        <dc:Bounds height="80" width="390" x="1205" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_134w1de" dmnElementRef="Association_0wppzr0">
+        <di:waypoint x="1205" y="280" />
+        <di:waypoint x="1130" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1uqsda8" dmnElementRef="InformationRequirement_134invl">
+        <di:waypoint x="780" y="420" />
+        <di:waypoint x="1040" y="340" />
+        <di:waypoint x="1040" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0grc2s3" dmnElementRef="Decision_0n2zsi3">
+        <dc:Bounds height="80" width="180" x="430" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_06ge8mz" dmnElementRef="Decision_0zaeohj">
+        <dc:Bounds height="80" width="180" x="690" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1oyjssj" dmnElementRef="InformationRequirement_03y3qb5">
+        <di:waypoint x="780" y="420" />
+        <di:waypoint x="780" y="340" />
+        <di:waypoint x="780" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1oji46o" dmnElementRef="InformationRequirement_0665s71">
+        <di:waypoint x="780" y="420" />
+        <di:waypoint x="520" y="340" />
+        <di:waypoint x="520" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_00fbll4" dmnElementRef="InputData_0yqkxkb">
+        <dc:Bounds height="45" width="125" x="718" y="148" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1es78ka" dmnElementRef="InformationRequirement_0yukf8j">
+        <di:waypoint x="781" y="193" />
+        <di:waypoint x="520" y="220" />
+        <di:waypoint x="520" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0t5l8j2" dmnElementRef="InformationRequirement_127v8bq">
+        <di:waypoint x="781" y="193" />
+        <di:waypoint x="780" y="220" />
+        <di:waypoint x="780" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_01zp4vs" dmnElementRef="InformationRequirement_1pb8knu">
+        <di:waypoint x="781" y="193" />
+        <di:waypoint x="1040" y="220" />
+        <di:waypoint x="1040" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_02vb4kv" dmnElementRef="TextAnnotation_13g7lgo">
+        <dc:Bounds height="120" width="450" x="155" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_10ash33" dmnElementRef="Association_08s1yk6">
+        <di:waypoint x="247" y="540" />
+        <di:waypoint x="478" y="320" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

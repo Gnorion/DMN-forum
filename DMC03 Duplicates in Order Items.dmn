@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_10f5z5l" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_00xqrmd" name="Challenge August-2015&#10;Duplicates" />
+  <decision id="Decision_08e15e1" name="define some items">
+    <variable id="InformationItem_15tdzre" name="items" typeRef="any" />
+    <literalExpression id="LiteralExpression_0nurl6v">
+      <text>[
+  {sku:"100",price:10,qty:10},
+  {sku:"101",price:20,qty:3},
+  {sku:"102",price:30,qty:1},
+  {sku:"101",price:20,qty:4},
+  {sku:"103",price:40,qty:6},
+  {sku:"103",price:42,qty:8},
+  {sku:"104",price:15,qty:2}
+]
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0xlorl4" name="define some orders">
+    <variable id="InformationItem_0xw8uwz" />
+    <literalExpression id="LiteralExpression_07vs5zk">
+      <text>{order number:1,
+ date: "1/1/2024",
+ items:
+[
+  {sku:"100",price:10,qty:10},
+  {sku:"101",price:20,qty:3},
+  {sku:"102",price:30,qty:1},
+  {sku:"101",price:20,qty:4},
+  {sku:"103",price:40,qty:6},
+  {sku:"103",price:42,qty:8},
+  {sku:"104",price:15,qty:2}
+]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0hs9695" name="find duplicate items (sku and price)">
+    <variable id="InformationItem_1rob0pc" name="messages" typeRef="string" />
+    <informationRequirement id="InformationRequirement_0lafjda">
+      <requiredDecision href="#Decision_08e15e1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_17mmbdu">
+      <text>{getDuplicates: function (items)
+  for item1 in items, item2 in items
+     return if item1.line&lt;item2.line and 
+               item1.sku = item2.sku and 
+               item1.price=item2.price
+            then {comment: "duplicate items: "+ 
+                           string(item1.line) + " and " + 
+                           string(item2.line),
+                  dup:true}
+            else {},
+  duplicates: getDuplicates(items)
+}.duplicates[dup=true]
+
+</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0liy6hb" name="items" />
+  <decision id="Decision_0j8zg9e" name="find duplicates within orders (using two functions)">
+    <variable id="InformationItem_0f50rpd" name="dups" typeRef="list" />
+    <literalExpression id="LiteralExpression_1hcym1s">
+      <text>{ getDuplicates: function (order)                                               // function to get duplicates within a single order
+  for item1 in order.items, item2 in order.items
+     return if item1.line&lt;item2.line and 
+               item1.sku = item2.sku and 
+               item1.price=item2.price
+            then {comment: "duplicate items: "+ 
+                           " order number " + string(order.order number) + " lines " +
+                           string(item1.line) + " and " + 
+                           string(item2.line),
+                  dup:true}
+            else {},
+ checkOrders: function (orders)                                                 // function to process all orders
+   for o in orders 
+      return getDuplicates(o)[dup=true],  
+ dups: checkOrders(orders)                                                      // invoke the function to process all orders
+}.dups</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_09t5b4d" name="find duplicates within each order (single function)">
+    <variable id="InformationItem_0qj9ecz" name="duplicates" />
+    <informationRequirement id="InformationRequirement_12o5w1l">
+      <requiredDecision href="#Decision_0xlorl4" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_17g3lw2">
+      <text>{ getDuplicates: function (order)                                               // function to get duplicates within a single order
+  for item1 in order.items, item2 in order.items
+     return if item1.line&lt;item2.line and 
+               item1.sku = item2.sku and 
+               item1.price=item2.price
+            then {comment: "duplicate items: "+ 
+                           " order number " + string(order.order number) + " lines " +
+                           string(item1.line) + " and " + 
+                           string(item2.line),
+                  dup:true}
+            else {},
+ dups:for o in orders return getDuplicates(o)[dup=true]                       // invoke the function to process all orders
+}.dups</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_014umfn">
+    <text>[
+  {line:1,sku:"100",price:10,qty:10},
+  {line:2,sku:"101",price:20,qty:3},
+  {line:3,sku:"102",price:30,qty:1},
+  {line:4,sku:"101",price:20,qty:4},
+  {line:5,sku:"103",price:40,qty:6},
+  {line:6,sku:"103",price:42,qty:8},
+  {line:7,sku:"104",price:15,qty:2}
+]</text>
+  </textAnnotation>
+  <association id="Association_0i7742l">
+    <sourceRef href="#TextAnnotation_014umfn" />
+    <targetRef href="#Decision_08e15e1" />
+  </association>
+  <textAnnotation id="TextAnnotation_1qsnofa">
+    <text>PROBLEM STATEMENT
+Create a decision model to decide which product lines inside such orders are duplicate. The duplicate product lines can be recognized by user-defined similarity rules, e.g. two product lines are considered “duplicate” if they have the same “sku” and “price”</text>
+  </textAnnotation>
+  <association id="Association_0on4vyv">
+    <sourceRef href="#TextAnnotation_1qsnofa" />
+    <targetRef href="#Decision_00xqrmd" />
+  </association>
+  <textAnnotation id="TextAnnotation_03lho54">
+    <text>INTERNAL DATA
+{order number:1,
+ items:
+[
+  {sku:"100",price:10,qty:10},
+  {sku:"101",price:20,qty:3},
+  {sku:"102",price:30,qty:1},
+  {sku:"101",price:20,qty:4},
+  {sku:"103",price:40,qty:6},
+  {sku:"103",price:42,qty:8},
+  {sku:"104",price:15,qty:2}
+]
+}</text>
+  </textAnnotation>
+  <association id="Association_191foj5">
+    <sourceRef href="#TextAnnotation_03lho54" />
+    <targetRef href="#Decision_0xlorl4" />
+  </association>
+  <textAnnotation id="TextAnnotation_0kxq6nr">
+    <text>"items":[
+  {"line":1,"sku":"100","price":10,"qty":10},
+  {"line":2,"sku":"101","price":20,"qty":3},
+  {"line":3,"sku":"102","price":30,"qty":1},
+  {"line":4,"sku":"101","price":20,"qty":4},
+  {"line":5,"sku":"103","price":40,"qty":6},
+  {"line":6,"sku":"103","price":42,"qty":8},
+  {"line":7,"sku":"104","price":15,"qty":2}
+]</text>
+  </textAnnotation>
+  <association id="Association_0vt40y2">
+    <sourceRef href="#TextAnnotation_0kxq6nr" />
+    <targetRef href="#InputData_0liy6hb" />
+  </association>
+  <textAnnotation id="TextAnnotation_0v5eatm">
+    <text>EXTERNAL DATA
+{"orders":[
+  { "order number":1,
+    "items":[
+      {"line":1,"sku":"100","price":10,"qty":10},
+      {"line":2,"sku":"101","price":20,"qty":3},
+      {"line":3,"sku":"102","price":30,"qty":1},
+      {"line":4,"sku":"101","price":20,"qty":4},
+      {"line":5,"sku":"103","price":40,"qty":6},
+      {"line":6,"sku":"103","price":42,"qty":8},
+      {"line":7,"sku":"104","price":15,"qty":2}
+]}]
+}</text>
+  </textAnnotation>
+  <association id="Association_0lj40tg">
+    <sourceRef href="#TextAnnotation_0v5eatm" />
+    <targetRef href="#Decision_09t5b4d" />
+  </association>
+  <textAnnotation id="TextAnnotation_1x5o7rc">
+    <text>OUTPUT
+[
+  [
+    { "comment": "duplicate items: order number 1 lines 2 and 4",
+      "dup": true }
+  ]
+]</text>
+  </textAnnotation>
+  <association id="Association_11h7e9p">
+    <sourceRef href="#TextAnnotation_1x5o7rc" />
+    <targetRef href="#Decision_09t5b4d" />
+  </association>
+  <textAnnotation id="TextAnnotation_1gbbdxj">
+    <text>MULTIPLE ORDERS EXTERNAL DATA
+{"orders":[
+  { "order number":1,
+    "items":[
+      {"line":1,"sku":"100","price":10,"qty":10},
+      {"line":2,"sku":"101","price":20,"qty":3},
+      {"line":3,"sku":"102","price":30,"qty":1},
+      {"line":4,"sku":"101","price":20,"qty":4},
+      {"line":5,"sku":"103","price":40,"qty":6},
+      {"line":6,"sku":"103","price":42,"qty":8},
+      {"line":7,"sku":"104","price":15,"qty":2}
+]},{ "order number":2,
+    "items":[
+      {"line":1,"sku":"100","price":10,"qty":10},
+      {"line":2,"sku":"101","price":20,"qty":3},
+      {"line":3,"sku":"102","price":30,"qty":1},
+      {"line":4,"sku":"101","price":20,"qty":4},
+      {"line":5,"sku":"103","price":40,"qty":6},
+      {"line":6,"sku":"103","price":40,"qty":8},
+      {"line":7,"sku":"104","price":15,"qty":2}
+]}]</text>
+  </textAnnotation>
+  <association id="Association_180wh3x">
+    <sourceRef href="#TextAnnotation_1gbbdxj" />
+    <targetRef href="#Decision_0xlorl4" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1vyhfnw" dmnElementRef="Decision_00xqrmd">
+        <dc:Bounds height="80" width="180" x="400" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0i2mj12" dmnElementRef="Decision_08e15e1">
+        <dc:Bounds height="80" width="180" x="470" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ge6tej" dmnElementRef="TextAnnotation_014umfn">
+        <dc:Bounds height="140" width="260" x="430" y="655" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0jvin79" dmnElementRef="Association_0i7742l">
+        <di:waypoint x="576" y="655" />
+        <di:waypoint x="544" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1di4x1w" dmnElementRef="TextAnnotation_1qsnofa">
+        <dc:Bounds height="110" width="310" x="650" y="85" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1se1dci" dmnElementRef="Association_0on4vyv">
+        <di:waypoint x="650" y="104" />
+        <di:waypoint x="580" y="115" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_056i2ty" dmnElementRef="TextAnnotation_03lho54">
+        <dc:Bounds height="200" width="190" x="1145" y="670" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1ee8qg2" dmnElementRef="Association_191foj5">
+        <di:waypoint x="1215" y="670" />
+        <di:waypoint x="1210" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_13gdibe" dmnElementRef="Decision_0xlorl4">
+        <dc:Bounds height="80" width="180" x="1140" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0f7usls" dmnElementRef="Decision_0hs9695">
+        <dc:Bounds height="80" width="180" x="470" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_098ofmb" dmnElementRef="InformationRequirement_0lafjda">
+        <di:waypoint x="560" y="540" />
+        <di:waypoint x="560" y="490" />
+        <di:waypoint x="560" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_15ffebw" dmnElementRef="InputData_0liy6hb">
+        <dc:Bounds height="45" width="125" x="187" y="568" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1wnake8" dmnElementRef="TextAnnotation_0kxq6nr">
+        <dc:Bounds height="150" width="250" x="155" y="650" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0n42jcq" dmnElementRef="Association_0vt40y2">
+        <di:waypoint x="222" y="650" />
+        <di:waypoint x="241" y="613" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_16geezm" dmnElementRef="Decision_0j8zg9e">
+        <dc:Bounds height="80" width="180" x="780" y="790" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0psn7lx" dmnElementRef="Decision_09t5b4d">
+        <dc:Bounds height="80" width="180" x="1140" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_07d595h" dmnElementRef="InformationRequirement_12o5w1l">
+        <di:waypoint x="1230" y="540" />
+        <di:waypoint x="1230" y="500" />
+        <di:waypoint x="1230" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0mutouu" dmnElementRef="TextAnnotation_0v5eatm">
+        <dc:Bounds height="200" width="250" x="1405" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1ggxpl5" dmnElementRef="Association_0lj40tg">
+        <di:waypoint x="1405" y="432" />
+        <di:waypoint x="1320" y="436" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_05r6x6l" dmnElementRef="TextAnnotation_1x5o7rc">
+        <dc:Bounds height="168" width="360" x="750" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nrv57d" dmnElementRef="Association_11h7e9p">
+        <di:waypoint x="1110" y="440" />
+        <di:waypoint x="1140" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1o60csb" dmnElementRef="TextAnnotation_1gbbdxj">
+        <dc:Bounds height="320" width="255" x="1400" y="620" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_160z2vt" dmnElementRef="Association_180wh3x">
+        <di:waypoint x="1400" y="642" />
+        <di:waypoint x="1320" y="613" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

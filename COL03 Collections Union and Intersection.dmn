@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0bafvm3" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0juul62" name="COL03&#10;Operations on Collections&#10;Union and Intersection" />
+  <decision id="Decision_0fcpl87" name="intersection with literals&#10;:[&#34;red&#34;,&#34;blue&#34;]">
+    <variable id="InformationItem_1mgfqe8" name="intersection" typeRef="list" />
+    <informationRequirement id="InformationRequirement_09knw2f">
+      <requiredDecision href="#Decision_1yrkfr5" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1vuiexi">
+      <requiredDecision href="#Decision_0p77drg" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_153x4k2">
+      <text>distinct values(listA[list contains(listB, item)])
+/*
+The intersection of two sets is the collection of items belonging to both. 
+The filter distinct values(listA[list contains(listB, item)])
+returns a list of items in listA that are also contained in listB. 
+So it is an ordered version of the intersection of setA and setB.
+
+other variations
+list contains(listB, "red")
+list contains(listB, color)
+listA[list contains(listB, item)] // item is a keyword here. duplicates
+distinct values(listA[list contains(listB, item)]) // no duplicates
+some item in listA satisfies list contains(listB, item)
+
+{"color":"red",
+  "listA":["red","green","blue","red",1,[1]],    // sublists will be ignored
+  "listB":["red","blue","yellow",1,[1]]
+}
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1yrkfr5" name="define listA&#10;[&#34;red&#34;,&#34;green&#34;,&#34;blue&#34;]">
+    <variable id="InformationItem_0w6sgam" name="listA" typeRef="list" />
+    <literalExpression id="LiteralExpression_17947mo">
+      <text>{
+  listA:["red","green","blue"]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0p77drg" name="define listB&#10;:[&#34;red&#34;,&#34;blue&#34;,&#34;yellow&#34;]">
+    <variable id="InformationItem_1utd8sb" name="listB" typeRef="list" />
+    <literalExpression id="LiteralExpression_00g5cer">
+      <text>{
+  listB:["red","blue","yellow"]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0ixigf6" name="intersection with objects">
+    <variable id="InformationItem_0y31c8g" name="listC and listD" typeRef="Any" />
+    <informationRequirement id="InformationRequirement_1f3qotl">
+      <requiredInput href="#InputData_0dsrro2" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1xw6vfz">
+      <text>listC[list contains(listD.color, item.color) and
+      list contains(listD.shape, item.shape) and
+      list contains(listD.size, item.size)]</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0dsrro2" name="context" />
+  <decision id="Decision_07zwtes" name="intersection with arbitrary sublists" />
+  <decision id="Decision_0jojotg" name="union">
+    <variable id="InformationItem_181kxtx" name="union of list A and B" typeRef="any" />
+    <informationRequirement id="InformationRequirement_10r69ni">
+      <requiredInput href="#InputData_0dsrro2" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0nkuhqm">
+      <text> union(listA, listB)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_08tc9rj" name="union with arbitrary sublists" />
+  <decision id="Decision_176e7mb" name="contains">
+    <variable id="InformationItem_06t2xeq" name="listY is contained within ListX" typeRef="any" />
+    <literalExpression id="LiteralExpression_1dp010n">
+      <text>every item in listX satisfies list contains(listY, item)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1y5rkha" name="identical">
+    <variable id="InformationItem_0z7gr6w" />
+    <literalExpression id="LiteralExpression_08sq399">
+      <text>every i in union(listA, listB) satisfies (list contains(listA, i) and list contains(listB, i))
+/*
+  note fails if the list contains objects
+this fails
+ {"listA1":["red","green","blue","red",1,{"n":2}], 
+  "listA2":["red","green","blue","red",1,{"n":2}]}
+
+this works
+ {"listA1":["red","green","blue","red",1], 
+  "listA2":["red","green","blue","red",1]}
+*/</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0iezriu">
+    <text>distinct values(listA[list contains(listB, item)])</text>
+  </textAnnotation>
+  <association id="Association_1ha73nb">
+    <sourceRef href="#TextAnnotation_0iezriu" />
+    <targetRef href="#Decision_0fcpl87" />
+  </association>
+  <textAnnotation id="TextAnnotation_153h49j">
+    <text>{ "color":"red", "sublist":[1],
+  "listA":["red","green","blue","red",1,{"n":2}],
+  "listB":["red","blue","yellow",1,{"n":2}],
+  "listC":[{"color":"red","size":"large","shape":"square","values":[1,2,[4,5]]},
+           {"color":"yellow","size":"large","shape":"square"},
+           {"color":"blue","size":"large","shape":"square"}],
+  "listD":[{"color":"red","size":"large","shape":"square","values":[1,2,3]},
+           {"color":"green","size":"large","shape":"square"},
+           {"color":"pink","size":"large","shape":"square"}]
+}</text>
+  </textAnnotation>
+  <association id="Association_1kvjcnm">
+    <sourceRef href="#TextAnnotation_153h49j" />
+    <targetRef href="#InputData_0dsrro2" />
+  </association>
+  <textAnnotation id="TextAnnotation_1h1kydp">
+    <text>listC[list contains(listD.color, item.color) and
+      list contains(listD.shape, item.shape) and
+      list contains(listD.size, item.size)]</text>
+  </textAnnotation>
+  <association id="Association_1fcgu0a">
+    <sourceRef href="#TextAnnotation_1h1kydp" />
+    <targetRef href="#Decision_0ixigf6" />
+  </association>
+  <textAnnotation id="TextAnnotation_0kyjlvf">
+    <text>[
+  {
+    "color": "red",
+    "size": "large",
+    "shape": "square"
+  }
+]</text>
+  </textAnnotation>
+  <association id="Association_1st9s3h">
+    <sourceRef href="#TextAnnotation_0kyjlvf" />
+    <targetRef href="#Decision_0ixigf6" />
+  </association>
+  <textAnnotation id="TextAnnotation_1v6hmd3">
+    <text>[
+  "red",
+  "green",
+  "blue",
+  1,
+  "yellow"
+]</text>
+  </textAnnotation>
+  <association id="Association_0t0qhei">
+    <sourceRef href="#TextAnnotation_1v6hmd3" />
+    <targetRef href="#Decision_0jojotg" />
+  </association>
+  <textAnnotation id="TextAnnotation_0cd8g6q">
+    <text>union(listA, listB)</text>
+  </textAnnotation>
+  <association id="Association_0we1bk8">
+    <sourceRef href="#TextAnnotation_0cd8g6q" />
+    <targetRef href="#Decision_0jojotg" />
+  </association>
+  <textAnnotation id="TextAnnotation_14ys3oc">
+    <text>retains sublists</text>
+  </textAnnotation>
+  <association id="Association_0sp9p8t">
+    <sourceRef href="#TextAnnotation_14ys3oc" />
+    <targetRef href="#Decision_0jojotg" />
+  </association>
+  <textAnnotation id="TextAnnotation_0q9w495">
+    <text>does not handle sublists</text>
+  </textAnnotation>
+  <association id="Association_0z4wmgt">
+    <sourceRef href="#TextAnnotation_0q9w495" />
+    <targetRef href="#Decision_0ixigf6" />
+  </association>
+  <textAnnotation id="TextAnnotation_0pegz4e">
+    <text>equivalent to
+distinct values(concatenate(listA, listB))</text>
+  </textAnnotation>
+  <association id="Association_10kbpdx">
+    <sourceRef href="#TextAnnotation_0pegz4e" />
+    <targetRef href="#Decision_0jojotg" />
+  </association>
+  <textAnnotation id="TextAnnotation_1mb4r1g">
+    <text>"listX":["red","green","blue","red",1], "listY":["red","green","blue","red",1,"purple",[1,2]]</text>
+  </textAnnotation>
+  <association id="Association_14jgepk">
+    <sourceRef href="#TextAnnotation_1mb4r1g" />
+    <targetRef href="#Decision_176e7mb" />
+  </association>
+  <textAnnotation id="TextAnnotation_0yrkmxo">
+    <text>every item in listX satisfies list contains(listY, item)</text>
+  </textAnnotation>
+  <association id="Association_0qizl9p">
+    <sourceRef href="#TextAnnotation_0yrkmxo" />
+    <targetRef href="#Decision_176e7mb" />
+  </association>
+  <textAnnotation id="TextAnnotation_0xprcaq">
+    <text>//distinct values(listA[list contains(listB, item)])
+//list contains(listB, "red")
+//list contains(listB, color)
+//listA[list contains(listB, item)] 
+//list contains(listB, sublist)
+//some item in listA satisfies list contains(listB, item)
+
+
+//listC[list contains(listD, item)]
+//listC[list contains(listD.color, item.color)]
+//listC[list contains(listD.color, item.color) and
+// list contains(listD.shape, item.shape) and
+// list contains(listD.size, item.size) and
+// list contains(listD.values, item.values) ]  
+//union(listC, listD)
+//union(listA, listB)
+//distinct values(concatenate(listA, listB))
+every item in listX satisfies list contains(listY, item)</text>
+  </textAnnotation>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_06q5c40" dmnElementRef="Decision_0juul62">
+        <dc:Bounds height="80" width="180" x="280" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_02xc5rh" dmnElementRef="Decision_0fcpl87">
+        <dc:Bounds height="80" width="180" x="280" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_07qqamy" dmnElementRef="Decision_1yrkfr5">
+        <dc:Bounds height="80" width="180" x="160" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0mz8hx8" dmnElementRef="Decision_0p77drg">
+        <dc:Bounds height="80" width="180" x="400" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09l853w" dmnElementRef="InformationRequirement_09knw2f">
+        <di:waypoint x="250" y="530" />
+        <di:waypoint x="340" y="510" />
+        <di:waypoint x="340" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_01g9748" dmnElementRef="InformationRequirement_1vuiexi">
+        <di:waypoint x="490" y="530" />
+        <di:waypoint x="400" y="510" />
+        <di:waypoint x="400" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1andmyk" dmnElementRef="TextAnnotation_0iezriu">
+        <dc:Bounds height="80" width="260" x="490" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1bjsxdg" dmnElementRef="Association_1ha73nb">
+        <di:waypoint x="490" y="450" />
+        <di:waypoint x="460" y="450" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0qp53ry" dmnElementRef="Decision_0ixigf6">
+        <dc:Bounds height="80" width="180" x="940" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1pa4vs6" dmnElementRef="InputData_0dsrro2">
+        <dc:Bounds height="45" width="125" x="1167" y="567" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1uzxox5" dmnElementRef="TextAnnotation_153h49j">
+        <dc:Bounds height="150" width="465" x="1105" y="655" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_17xsygu" dmnElementRef="Association_1kvjcnm">
+        <di:waypoint x="1220" y="655" />
+        <di:waypoint x="1230" y="612" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_10uswvo" dmnElementRef="InformationRequirement_1f3qotl">
+        <di:waypoint x="1230" y="567" />
+        <di:waypoint x="1030" y="510" />
+        <di:waypoint x="1030" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0hc3r8n" dmnElementRef="TextAnnotation_1h1kydp">
+        <dc:Bounds height="80" width="260" x="810" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06er14v" dmnElementRef="Association_1fcgu0a">
+        <di:waypoint x="907" y="530" />
+        <di:waypoint x="1023" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0vzaurc" dmnElementRef="TextAnnotation_0kyjlvf">
+        <dc:Bounds height="110" width="180" x="980" y="265" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0tlrhab" dmnElementRef="Association_1st9s3h">
+        <di:waypoint x="1046" y="375" />
+        <di:waypoint x="1021" y="410" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0c83opd" dmnElementRef="Decision_07zwtes">
+        <dc:Bounds height="80" width="180" x="1720" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xx9xsm" dmnElementRef="Decision_0jojotg">
+        <dc:Bounds height="80" width="180" x="1370" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_03o33mm" dmnElementRef="InformationRequirement_10r69ni">
+        <di:waypoint x="1230" y="567" />
+        <di:waypoint x="1460" y="510" />
+        <di:waypoint x="1460" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0kfjz67" dmnElementRef="TextAnnotation_1v6hmd3">
+        <dc:Bounds height="110" width="100" x="1400" y="265" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_11c1lxg" dmnElementRef="Association_0t0qhei">
+        <di:waypoint x="1412" y="375" />
+        <di:waypoint x="1498" y="410" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_02yph6g" dmnElementRef="Decision_08tc9rj">
+        <dc:Bounds height="80" width="180" x="1720" y="610" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1nszyvs" dmnElementRef="TextAnnotation_0cd8g6q">
+        <dc:Bounds height="30" width="120" x="1470" y="555" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1g45x8t" dmnElementRef="Association_0we1bk8">
+        <di:waypoint x="1491" y="555" />
+        <di:waypoint x="1489" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_16agfa6" dmnElementRef="TextAnnotation_14ys3oc">
+        <dc:Bounds height="30" width="100" x="1550" y="345" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0eys3dw" dmnElementRef="Association_0sp9p8t">
+        <di:waypoint x="1577" y="375" />
+        <di:waypoint x="1522" y="410" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jpr0xk" dmnElementRef="TextAnnotation_0q9w495">
+        <dc:Bounds height="40" width="90" x="1135" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cq5ljq" dmnElementRef="Association_0z4wmgt">
+        <di:waypoint x="1135" y="464" />
+        <di:waypoint x="1120" y="462" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0s2svt9" dmnElementRef="TextAnnotation_0pegz4e">
+        <dc:Bounds height="40" width="230" x="1590" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1hp4kcm" dmnElementRef="Association_10kbpdx">
+        <di:waypoint x="1640" y="430" />
+        <di:waypoint x="1550" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_023v4cy" dmnElementRef="Decision_176e7mb">
+        <dc:Bounds height="80" width="180" x="1720" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0sj1upg" dmnElementRef="TextAnnotation_1mb4r1g">
+        <dc:Bounds height="80" width="240" x="1760" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0cvdfkq" dmnElementRef="Association_14jgepk">
+        <di:waypoint x="1810" y="260" />
+        <di:waypoint x="1810" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1i8q57w" dmnElementRef="TextAnnotation_0yrkmxo">
+        <dc:Bounds height="80" width="120" x="1940" y="160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0wsxw3f" dmnElementRef="Association_0qizl9p">
+        <di:waypoint x="1940" y="200" />
+        <di:waypoint x="1900" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_07sbl3n" dmnElementRef="TextAnnotation_0xprcaq">
+        <dc:Bounds height="550" width="390" x="2325" y="85" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1f5vpvd" dmnElementRef="Decision_1y5rkha">
+        <dc:Bounds height="80" width="180" x="2030" y="360" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

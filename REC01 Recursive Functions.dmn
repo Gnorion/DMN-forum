@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0gjoval" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
-  <decision id="Decision_1y3dbqr" name="Recursive Functions in DMN" />
+  <decision id="Decision_1y3dbqr" name="REC01&#10;Recursive Functions in DMN Using the Y combinator" />
   <decision id="Decision_19fxlmt" name="factorial recursive">
     <variable id="InformationItem_0c2l0au" />
     <literalExpression id="LiteralExpression_0zba3fo">
@@ -31,6 +31,164 @@
 }</text>
     </literalExpression>
   </decision>
+  <decision id="Decision_13hq83i" name="factorial N">
+    <variable id="InformationItem_14j9abd" name="factorialN" typeRef="number" />
+    <informationRequirement id="InformationRequirement_15y28vw">
+      <requiredDecision href="#Decision_10cvcub" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0y19wic">
+      <requiredInput href="#InputData_15u54c1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1l540i9">
+      <text>{ Y: function(f) (function(x) x(x))(function(y) f(function(x) y(y)(x))),  // define a generic function named "Y"
+  factorial: Y(function(f) function(n)                                    // using the generic function Y
+    if n &gt; 1 then n * f(n-1) else 1),                                     // define the specific function for factorial
+  facN: factorial(N)                                                      // invoke the factorial function with argument N
+}.facN                                                                    // get the value of the fac4 property</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_02eeyx3" name="fibonacci N">
+    <variable id="InformationItem_00719tu" name="fibonacciN" typeRef="number" />
+    <informationRequirement id="InformationRequirement_06zggub">
+      <requiredDecision href="#Decision_10cvcub" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0a62j04">
+      <requiredInput href="#InputData_15u54c1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_18utrf6">
+      <text>{ Y: function(f) (function(x) x(x))(function(y) f(function(x) y(y)(x))),    // define a generic function
+  fibonacci: Y(function(f)                                                  // using the generic Y function
+                 function(n)                          
+                  if n=2                                                    // define the specific function for fibonacci
+                  then [1,1] 
+                  else {p: f(n-1),
+                        p: f(n-1), 
+                        r: concatenate(p,[p[-1] + p[-2]])}.r),    
+  fibN: fibonacci(N)                                                       // invoke the fibonacci function with argument N
+}.fibN 
+// result should be [  1,  1,  2,  3,  5,  8] when N=6</text>
+    </literalExpression>
+  </decision>
+  <knowledgeSource id="KnowledgeSource_1cgjzvo" name="Y Combinator" />
+  <decision id="Decision_10cvcub" name="define N=6">
+    <variable id="InformationItem_1edymn6" name="N" typeRef="number" />
+    <literalExpression id="LiteralExpression_0zt4vxp">
+      <text>6</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_15u54c1" name="N" />
+  <decision id="Decision_0diysj7" name="DECISION: self Test">
+    <informationRequirement id="InformationRequirement_19kvdvv">
+      <requiredDecision href="#Decision_02eeyx3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0fgy8ph">
+      <requiredDecision href="#Decision_13hq83i" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_01cou10">
+      <input id="InputClause_1pcrq7t" label="N">
+        <inputExpression id="LiteralExpression_0wqvda3" typeRef="number">
+          <text>N</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1ivs3is" label="factorial N">
+        <inputExpression id="LiteralExpression_1n3tfam" typeRef="number">
+          <text>factorialN</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1qjtblh" label="fibonacci N">
+        <inputExpression id="LiteralExpression_0vgpik1" typeRef="number">
+          <text>fibonacciN</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_10lidj3" label="result" name="result" typeRef="string" />
+      <rule id="DecisionRule_0a1qtpa">
+        <description>fibonacci not defined for N=1</description>
+        <inputEntry id="UnaryTests_18akyvu">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1q1as7w">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17gz1kb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ykt3lm">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pflgqa">
+        <inputEntry id="UnaryTests_0ddh1pk">
+          <text>2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03k276c">
+          <text>2</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00g27lo">
+          <text>[ 1, 1]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dgk17r">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1efdih3">
+        <inputEntry id="UnaryTests_1jitjnx">
+          <text>3</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rnesqb">
+          <text>6</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bexi12">
+          <text>[ 1, 1, 2]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zy9f2n">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1op9you">
+        <inputEntry id="UnaryTests_0vgz6iu">
+          <text>4</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gm0ypu">
+          <text>24</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lk9z24">
+          <text>[ 1, 1, 2, 3]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yzqt2k">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0l3uiq3">
+        <inputEntry id="UnaryTests_0x05r3w">
+          <text>5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02k9yln">
+          <text>120</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j2x3je">
+          <text>[ 1, 1, 2, 3, 5]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_129m2mj">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1380pfb">
+        <description>when N is 6</description>
+        <inputEntry id="UnaryTests_1cbpkqz">
+          <text>6</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02ldkkq">
+          <text>720</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_12m5kxh">
+          <text>[ 1, 1, 2, 3, 5, 8]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0bydyxm">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
   <textAnnotation id="TextAnnotation_1ucrqmn">
     <text>{
   factorial: function(n) if n&gt;1 then factorial(n-1)*n else 1,
@@ -53,33 +211,198 @@
     <sourceRef href="#TextAnnotation_1846kmq" />
     <targetRef href="#Decision_18ljvrb" />
   </association>
+  <textAnnotation id="TextAnnotation_06dfd0y">
+    <text>{ Y: function(f) (function(x) x(x))(function(y) f(function(x) y(y)(x))), // define a generic function
+  fibonacci: Y(function(f)                                                                 // define the specific function for fibonacci
+                 function(n) 
+                  if n=2 
+                  then [1,1] 
+                  else {p: f(n-1),
+                        p: f(n-1), 
+                        r: concatenate(p,[p[-1] + p[-2]])}.r),    
+  fibN: fibonacci(N)                                                                       // invoke the fibonacci function with argument 9
+}.fibN</text>
+  </textAnnotation>
+  <association id="Association_046fxmk">
+    <sourceRef href="#TextAnnotation_06dfd0y" />
+    <targetRef href="#Decision_02eeyx3" />
+  </association>
+  <textAnnotation id="TextAnnotation_0x5wvug">
+    <text>fibonacciN should be [ 1, 1, 2, 3, 5, 8]
+when n=6</text>
+  </textAnnotation>
+  <association id="Association_1i43nf6">
+    <sourceRef href="#TextAnnotation_0x5wvug" />
+    <targetRef href="#Decision_02eeyx3" />
+  </association>
+  <textAnnotation id="TextAnnotation_1dpmx9s">
+    <text>https://www.youtube.com/watch?v=9T8A89jgeTI
+https://en.wikipedia.org/wiki/Fixed-point_combinator
+https://lucasfcosta.com/2018/05/20/Y-The-Most-Beautiful-Idea-in-Computer-Science.html
+https://blog.kie.org/2020/04/functional-programming-in-dmn-it-feels-like-recursing-my-university-studies-again.html</text>
+  </textAnnotation>
+  <association id="Association_1k0ov9b">
+    <sourceRef href="#KnowledgeSource_1cgjzvo" />
+    <targetRef href="#TextAnnotation_1dpmx9s" />
+  </association>
+  <textAnnotation id="TextAnnotation_0zzmsvv">
+    <text>{ Y: function(f) (function(x) x(x))(function(y) f(function(x) y(y)(x))),                   // define a generic function named "Y"
+  factorial: Y(function(f) function(n)                                                                   // define the specific function for factorial using the generic function Y
+    if n &gt; 1 then n * f(n-1) else 1),                                                                      // the actual definition of factorial
+  facN: factorial(N)                                                                                             // invoke the factorial function with argument 4
+}.facN                                                                                                                // get the value of the fac4 property</text>
+  </textAnnotation>
+  <association id="Association_18e3zp7">
+    <sourceRef href="#TextAnnotation_0zzmsvv" />
+    <targetRef href="#Decision_13hq83i" />
+  </association>
+  <textAnnotation id="TextAnnotation_0su5g7y">
+    <text>EXTERNAL:
+{"N":6}</text>
+  </textAnnotation>
+  <association id="Association_1pifbps">
+    <sourceRef href="#TextAnnotation_0su5g7y" />
+    <targetRef href="#InputData_15u54c1" />
+  </association>
+  <textAnnotation id="TextAnnotation_1pdwrfn">
+    <text>INTERNAL
+6</text>
+  </textAnnotation>
+  <association id="Association_1yfpd1w">
+    <sourceRef href="#TextAnnotation_1pdwrfn" />
+    <targetRef href="#Decision_10cvcub" />
+  </association>
+  <textAnnotation id="TextAnnotation_1u86cfn">
+    <text>factorialN should be 720 for N=6</text>
+  </textAnnotation>
+  <association id="Association_1u7rwah">
+    <sourceRef href="#TextAnnotation_1u86cfn" />
+    <targetRef href="#Decision_13hq83i" />
+  </association>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
       <dmndi:DMNShape id="DMNShape_10pjp8v" dmnElementRef="Decision_1y3dbqr">
-        <dc:Bounds height="80" width="180" x="160" y="100" />
+        <dc:Bounds height="80" width="180" x="360" y="40" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0fxdnz7" dmnElementRef="Decision_19fxlmt">
-        <dc:Bounds height="80" width="180" x="560" y="200" />
+        <dc:Bounds height="80" width="180" x="930" y="730" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0tx1ds5" dmnElementRef="TextAnnotation_1ucrqmn">
-        <dc:Bounds height="80" width="340" x="820" y="200" />
+        <dc:Bounds height="80" width="340" x="1180" y="730" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1tgx0u4" dmnElementRef="Association_04dvm5h">
-        <di:waypoint x="820" y="240" />
-        <di:waypoint x="740" y="240" />
+        <di:waypoint x="1180" y="770" />
+        <di:waypoint x="1110" y="770" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_0p43jgb" dmnElementRef="Decision_1ux0ah3">
-        <dc:Bounds height="80" width="180" x="560" y="320" />
+        <dc:Bounds height="80" width="180" x="720" y="730" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_06s9f5h" dmnElementRef="Decision_18ljvrb">
-        <dc:Bounds height="80" width="180" x="560" y="420" />
+        <dc:Bounds height="80" width="180" x="510" y="730" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_04nf353" dmnElementRef="TextAnnotation_1846kmq">
-        <dc:Bounds height="90" width="290" x="205" y="415" />
+        <dc:Bounds height="90" width="290" x="155" y="725" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1yjs7rv" dmnElementRef="Association_0tnmk34">
-        <di:waypoint x="495" y="458" />
-        <di:waypoint x="560" y="459" />
+        <di:waypoint x="445" y="768" />
+        <di:waypoint x="510" y="769" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0is0bun" dmnElementRef="Decision_13hq83i">
+        <dc:Bounds height="80" width="180" x="780" y="120" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0960n8z" dmnElementRef="Decision_02eeyx3">
+        <dc:Bounds height="80" width="180" x="780" y="380" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1t1rjk3" dmnElementRef="TextAnnotation_06dfd0y">
+        <dc:Bounds height="170" width="700" x="1250" y="405" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_07cn1l7" dmnElementRef="Association_046fxmk">
+        <di:waypoint x="1250" y="450" />
+        <di:waypoint x="960" y="411" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0xcqwy9" dmnElementRef="TextAnnotation_0x5wvug">
+        <dc:Bounds height="45" width="260" x="770" y="505" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0guuwg6" dmnElementRef="Association_1i43nf6">
+        <di:waypoint x="995" y="505" />
+        <di:waypoint x="874" y="460" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_17ul9f9" dmnElementRef="TextAnnotation_1dpmx9s">
+        <dc:Bounds height="148" width="360" x="1540" y="236" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0k1wx0i" dmnElementRef="KnowledgeSource_1cgjzvo">
+        <dc:Bounds height="63" width="100" x="1330" y="258" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1eyytq7" dmnElementRef="Association_1k0ov9b">
+        <di:waypoint x="1430" y="310" />
+        <di:waypoint x="1540" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0k8k33s" dmnElementRef="TextAnnotation_0zzmsvv">
+        <dc:Bounds height="130" width="830" x="1255" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_10ar4pl" dmnElementRef="Association_18e3zp7">
+        <di:waypoint x="1255" y="160" />
+        <di:waypoint x="960" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_070eqi2" dmnElementRef="Decision_10cvcub">
+        <dc:Bounds height="80" width="180" x="920" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09r5b7m" dmnElementRef="InformationRequirement_15y28vw">
+        <di:waypoint x="1010" y="250" />
+        <di:waypoint x="900" y="220" />
+        <di:waypoint x="900" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_07vhnkg" dmnElementRef="InformationRequirement_06zggub">
+        <di:waypoint x="1010" y="330" />
+        <di:waypoint x="900" y="360" />
+        <di:waypoint x="900" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1si6o9u" dmnElementRef="InputData_15u54c1">
+        <dc:Bounds height="45" width="125" x="657" y="267" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cm8osp" dmnElementRef="InformationRequirement_0y19wic">
+        <di:waypoint x="720" y="267" />
+        <di:waypoint x="840" y="220" />
+        <di:waypoint x="840" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1gkaekz" dmnElementRef="InformationRequirement_0a62j04">
+        <di:waypoint x="720" y="312" />
+        <di:waypoint x="840" y="360" />
+        <di:waypoint x="840" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0q21kwh" dmnElementRef="TextAnnotation_0su5g7y">
+        <dc:Bounds height="40" width="87" x="796" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xisf68" dmnElementRef="Association_1pifbps">
+        <di:waypoint x="796" y="286" />
+        <di:waypoint x="782" y="286" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0cllpge" dmnElementRef="TextAnnotation_1pdwrfn">
+        <dc:Bounds height="35" width="180" x="1140" y="265" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0zq37bf" dmnElementRef="Association_1yfpd1w">
+        <di:waypoint x="1140" y="292" />
+        <di:waypoint x="1100" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1h8ub8e" dmnElementRef="TextAnnotation_1u86cfn">
+        <dc:Bounds height="30" width="211" x="779" y="45" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0a88uvm" dmnElementRef="Association_1u7rwah">
+        <di:waypoint x="860" y="75" />
+        <di:waypoint x="860" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_03g3fp2" dmnElementRef="Decision_0diysj7">
+        <dc:Bounds height="80" width="180" x="360" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0a1ussl" dmnElementRef="InformationRequirement_19kvdvv">
+        <di:waypoint x="870" y="380" />
+        <di:waypoint x="450" y="350" />
+        <di:waypoint x="450" y="330" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_17nru0b" dmnElementRef="InformationRequirement_0fgy8ph">
+        <di:waypoint x="870" y="200" />
+        <di:waypoint x="450" y="230" />
+        <di:waypoint x="450" y="250" />
       </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>

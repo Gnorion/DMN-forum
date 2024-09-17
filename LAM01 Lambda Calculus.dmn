@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1s6o6on" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0v1icl2" name="Lambda Calculus" />
+  <textAnnotation id="TextAnnotation_02akjtg">
+    <text>https://en.wikipedia.org/wiki/Fixed-point_combinator
+https://lucasfcosta.com/2018/05/20/Y-The-Most-Beautiful-Idea-in-Computer-Science.html</text>
+  </textAnnotation>
+  <association id="Association_0gkq4bo">
+    <sourceRef href="#TextAnnotation_02akjtg" />
+    <targetRef href="#Decision_0v1icl2" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0zz6smq" dmnElementRef="Decision_0v1icl2">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1q2wwp3" dmnElementRef="TextAnnotation_02akjtg">
+        <dc:Bounds height="60" width="540" x="530" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1f3tb7z" dmnElementRef="Association_0gkq4bo">
+        <di:waypoint x="530" y="140" />
+        <di:waypoint x="340" y="140" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

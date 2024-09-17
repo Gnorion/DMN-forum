@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0t3gp14" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0g9xxbg" name="generate assignments using a function">
+    <variable id="InformationItem_0lif4fh" name="assignments" typeRef="list" />
+    <informationRequirement id="InformationRequirement_14vbsap">
+      <requiredDecision href="#Decision_0xsipey" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_09je59m">
+      <requiredDecision href="#Decision_1l2pjkl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0ug2bj1">
+      <requiredDecision href="#Decision_14jtevo" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_00ax4p4">
+      <requiredInput href="#InputData_0wnta1b" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1nqvjc6">
+      <requiredInput href="#InputData_0qdvro9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0vk5m73">
+      <requiredInput href="#InputData_0sqwlhc" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_079sshx">
+      <text>{assign: function(orders,driver,trucks)                                  // declare the function named "assign"
+for d in drivers [approved=true and status="available"],                 // find available, approved drivers
+    t in trucks  [licensed=true and status="available"],                 // find availabel, licensed trucks
+    o in orders  [scheduled=false]                                       // find orders that are not yet scheduled
+return   
+  if d.type=t.type and o.type=d.type                                     // order, driver and truck must match on type
+  then 
+    {order:o,                                                            // set the order
+     driver:d,                                                           // set the driver
+     truck:t,                                                            // set the truck
+     assigned:true,                                                      // mark as assigned         
+     comment:"matched driver [" + d.name + "]" +                         // add a comment - reason why assigned
+                  " to truck [" + t.name + "]" +
+                  " to order [" + o.name + "]" +
+                  " where order type=" + o.type}
+  else 
+     {comment:"no match: " + o.name + ", " + d.name + ", " + t.name +    // reasone why not assigned
+              " where order type = " + o.type},
+ assignments: assign(orders,drivers,trucks)                              // invoke the function named "assign"
+}.assignments[assigned=true]                                             // filter the resulting assgnments 
+</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0sqwlhc" name="orders" />
+  <inputData id="InputData_0qdvro9" name="trucks" />
+  <inputData id="InputData_0wnta1b" name="drivers" />
+  <decision id="Decision_14jtevo" name="TEST DATA: create drivers">
+    <variable id="InformationItem_1gyuosx" name="drivers" typeRef="list" />
+    <literalExpression id="LiteralExpression_0nr8l7s">
+      <text>[
+	{name:"tom",status:"available", approved:true,type:"cisterno"},
+    {name:"dick",status:"available", approved:true,type:"flatbed"} 
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1l2pjkl" name="TEST DATA: create trucks">
+    <variable id="InformationItem_0le6b4u" name="trucks" typeRef="list" />
+    <literalExpression id="LiteralExpression_0ukj907">
+      <text>[
+	{name:"truck 1", status:"available", licensed:true,type:"cisterno"},
+	{name:"truck 2", status:"available", licensed:true,type:"flatbed"}
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0xsipey" name="TEST DATA: create orders">
+    <variable id="InformationItem_0b4jkri" name="orders" typeRef="list" />
+    <literalExpression id="LiteralExpression_0zja22s">
+      <text>[
+	{name: "order 1",scheduled:false,type:"cisterno"},
+	{name: "order 2",scheduled:false,type:"flatbed"},
+	{name: "order 3",scheduled:false,type:"cisterno"}
+]
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0s1cms4" name="SCH15&#10;Scheduling Using a Function" />
+  <textAnnotation id="TextAnnotation_0xf1tdj">
+    <text>[
+ {name: "order 1",scheduled:false,type:"cisterno"},
+ {name: "order 2",scheduled:false,type:"flatbed"},
+ {name: "order 3",scheduled:false,type:"cisterno"}
+]</text>
+  </textAnnotation>
+  <association id="Association_0ow7k2d">
+    <sourceRef href="#TextAnnotation_0xf1tdj" />
+    <targetRef href="#Decision_0xsipey" />
+  </association>
+  <textAnnotation id="TextAnnotation_1lcem2a">
+    <text>[
+ {name:"truck 1", status:"available", licensed:true,type:"cisterno"},
+ {name:"truck 2", status:"available", licensed:true,type:"flatbed"}
+]</text>
+  </textAnnotation>
+  <association id="Association_1lf8hyh">
+    <sourceRef href="#TextAnnotation_1lcem2a" />
+    <targetRef href="#Decision_1l2pjkl" />
+  </association>
+  <textAnnotation id="TextAnnotation_06c22uy">
+    <text>[
+ {name:"tom",status:"available", approved:true,type:"cisterno"},
+    {name:"dick",status:"available", approved:true,type:"flatbed"} 
+]</text>
+  </textAnnotation>
+  <association id="Association_1ng7xk1">
+    <sourceRef href="#TextAnnotation_06c22uy" />
+    <targetRef href="#Decision_14jtevo" />
+  </association>
+  <textAnnotation id="TextAnnotation_0ltzetl">
+    <text>{assign: function(orders,driver,trucks)
+for d in drivers [approved=true and status="available"], 
+    t in trucks [licensed=true and status="available"],
+    o in orders [scheduled=false]                         
+return   
+  if d.type=t.type and o.type=d.type
+  then 
+    {order:o,
+     driver:d,
+     truck:t,
+     assigned:true,
+     comment:"matched driver [" + d.name + "]" +
+                  " to truck [" + t.name + "]" +
+                  " to order [" + o.name + "]" +
+                  " where order type=" + o.type}
+  else 
+     {comment:"no match: " + o.name + ", " + d.name + ", " + t.name + 
+              " where order type = " + o.type},
+ assignments: assign(orders,drivers,trucks)
+}.assignments[assigned=true]</text>
+  </textAnnotation>
+  <association id="Association_0jiwtf1">
+    <sourceRef href="#TextAnnotation_0ltzetl" />
+    <targetRef href="#Decision_0g9xxbg" />
+  </association>
+  <textAnnotation id="TextAnnotation_1bc0bm4">
+    <text>CONTEXT
+{"orders":[
+  {"name": "order 1","scheduled":false,"type":"cisterno"},
+  {"name": "order 2","scheduled":false,"type":"flatbed"},
+  {"name": "order 3","scheduled":false,"type":"cisterno"}
+]
+}</text>
+  </textAnnotation>
+  <association id="Association_07gby2h">
+    <sourceRef href="#TextAnnotation_1bc0bm4" />
+    <targetRef href="#InputData_0sqwlhc" />
+  </association>
+  <textAnnotation id="TextAnnotation_0fai8g1">
+    <text>{"trucks":[
+  {"name":"truck 1", "status":"available", "licensed":true,"type":"cisterno"},
+  {"name":"truck 2", "status":"available", "licensed":true,"type":"flatbed"}
+]
+}</text>
+  </textAnnotation>
+  <association id="Association_0s5h4kx">
+    <sourceRef href="#TextAnnotation_0fai8g1" />
+    <targetRef href="#InputData_0qdvro9" />
+  </association>
+  <textAnnotation id="TextAnnotation_15s75ce">
+    <text>{"drivers":[[
+  {"name":"tom","status":"available", "approved":true,"type":"cisterno"},
+  {"name":"dick","status":"available", "approved":true,"type":"flatbed"} 
+]
+}</text>
+  </textAnnotation>
+  <association id="Association_0rt9ykq">
+    <sourceRef href="#TextAnnotation_15s75ce" />
+    <targetRef href="#InputData_0wnta1b" />
+  </association>
+  <textAnnotation id="TextAnnotation_1osrld6">
+    <text>only returns the assigned orders,drivers and trucks</text>
+  </textAnnotation>
+  <association id="Association_0blxrwr">
+    <sourceRef href="#TextAnnotation_1osrld6" />
+    <targetRef href="#Decision_0g9xxbg" />
+  </association>
+  <textAnnotation id="TextAnnotation_0cjgtwc">
+    <text>[
+  { "order": { "name": "order 1", "scheduled": false, "type": "cisterno" },
+    "driver": { "name": "tom", "status": "available", "approved": true, "type": "cisterno" },
+    "truck": { "name": "truck 1", "status": "available", "licensed": true, "type": "cisterno" },
+    "assigned": true,
+    "comment": "matched driver [tom] to truck [truck 1] to order [order 1] where order type=cisterno" },
+  { "order": { "name": "order 3", "scheduled": false, "type": "cisterno" },
+    "driver": { "name": "tom", "status": "available", "approved": true, "type": "cisterno" },
+    "truck": { "name": "truck 1", "status": "available", "licensed": true, "type": "cisterno" },
+    "assigned": true,
+    "comment": "matched driver [tom] to truck [truck 1] to order [order 3] where order type=cisterno" },
+  { "order": { "name": "order 2", "scheduled": false, "type": "flatbed" },
+    "driver": { "name": "dick", "status": "available", "approved": true, "type": "flatbed" },
+    "truck": { "name": "truck 2", "status": "available", "licensed": true, "type": "flatbed" },
+    "assigned": true,
+    "comment": "matched driver [dick] to truck [truck 2] to order [order 2] where order type=flatbed" }
+]</text>
+  </textAnnotation>
+  <association id="Association_0vctxh9">
+    <sourceRef href="#TextAnnotation_0cjgtwc" />
+    <targetRef href="#Decision_0g9xxbg" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1myucvq" dmnElementRef="Decision_0g9xxbg">
+        <dc:Bounds height="80" width="180" x="930" y="290" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1y66v9c" dmnElementRef="InputData_0sqwlhc">
+        <dc:Bounds height="45" width="125" x="627" y="267" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zsoyaj" dmnElementRef="InputData_0qdvro9">
+        <dc:Bounds height="45" width="125" x="627" y="317" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_07e3kh9" dmnElementRef="InputData_0wnta1b">
+        <dc:Bounds height="45" width="125" x="627" y="367" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1x6bt4q" dmnElementRef="Decision_14jtevo">
+        <dc:Bounds height="80" width="180" x="1240" y="500" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0nwlv01" dmnElementRef="Decision_1l2pjkl">
+        <dc:Bounds height="80" width="180" x="930" y="500" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ck2bbs" dmnElementRef="Decision_0xsipey">
+        <dc:Bounds height="80" width="180" x="610" y="500" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1lysnhk" dmnElementRef="TextAnnotation_0xf1tdj">
+        <dc:Bounds height="100" width="285" x="515" y="640" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1yn4tld" dmnElementRef="Association_0ow7k2d">
+        <di:waypoint x="659" y="640" />
+        <di:waypoint x="687" y="580" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0i0xpas" dmnElementRef="TextAnnotation_1lcem2a">
+        <dc:Bounds height="70" width="390" x="825" y="655" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_181595s" dmnElementRef="Association_1lf8hyh">
+        <di:waypoint x="1000" y="650" />
+        <di:waypoint x="1004" y="580" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0vvqw6d" dmnElementRef="TextAnnotation_06c22uy">
+        <dc:Bounds height="75" width="390" x="1225" y="652" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1rcm6ye" dmnElementRef="Association_1ng7xk1">
+        <di:waypoint x="1390" y="645" />
+        <di:waypoint x="1330" y="580" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_15xqe2q" dmnElementRef="InformationRequirement_14vbsap">
+        <di:waypoint x="700" y="500" />
+        <di:waypoint x="975" y="390" />
+        <di:waypoint x="975" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_10zgt5r" dmnElementRef="InformationRequirement_09je59m">
+        <di:waypoint x="1020" y="500" />
+        <di:waypoint x="1020" y="390" />
+        <di:waypoint x="1020" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ul3how" dmnElementRef="InformationRequirement_0ug2bj1">
+        <di:waypoint x="1330" y="500" />
+        <di:waypoint x="1065" y="390" />
+        <di:waypoint x="1065" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1191ply" dmnElementRef="InformationRequirement_00ax4p4">
+        <di:waypoint x="752" y="390" />
+        <di:waypoint x="910" y="350" />
+        <di:waypoint x="930" y="350" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_13ol0mg" dmnElementRef="InformationRequirement_1nqvjc6">
+        <di:waypoint x="752" y="340" />
+        <di:waypoint x="910" y="330" />
+        <di:waypoint x="930" y="330" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_15cykcz" dmnElementRef="InformationRequirement_0vk5m73">
+        <di:waypoint x="752" y="290" />
+        <di:waypoint x="910" y="310" />
+        <di:waypoint x="930" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jc2puo" dmnElementRef="TextAnnotation_0ltzetl">
+        <dc:Bounds height="305" width="465" x="1597" y="157" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1iojxxs" dmnElementRef="Association_0jiwtf1">
+        <di:waypoint x="1597" y="377" />
+        <di:waypoint x="1110" y="330" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1wr0wlg" dmnElementRef="TextAnnotation_1bc0bm4">
+        <dc:Bounds height="122" width="380" x="160" y="169" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1vorczc" dmnElementRef="Association_07gby2h">
+        <di:waypoint x="540" y="275" />
+        <di:waypoint x="620" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0ejdrt8" dmnElementRef="TextAnnotation_0fai8g1">
+        <dc:Bounds height="90" width="400" x="160" y="295" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0bui0mj" dmnElementRef="Association_0s5h4kx">
+        <di:waypoint x="560" y="342" />
+        <di:waypoint x="627" y="338" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1c47dle" dmnElementRef="TextAnnotation_15s75ce">
+        <dc:Bounds height="90" width="395" x="162" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0uq9l4s" dmnElementRef="Association_0rt9ykq">
+        <di:waypoint x="557" y="403" />
+        <di:waypoint x="627" y="397" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jbib86" dmnElementRef="TextAnnotation_1osrld6">
+        <dc:Bounds height="40" width="190" x="1125" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1m2gq5u" dmnElementRef="Association_0blxrwr">
+        <di:waypoint x="1175" y="270" />
+        <di:waypoint x="1110" y="295" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1600cbi" dmnElementRef="TextAnnotation_0cjgtwc">
+        <dc:Bounds height="260" width="580" x="1600" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0vm7kyk" dmnElementRef="Association_0vctxh9">
+        <di:waypoint x="1600" y="514" />
+        <di:waypoint x="1110" y="359" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0yw2izb" dmnElementRef="Decision_0s1cms4">
+        <dc:Bounds height="80" width="180" x="640" y="80" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

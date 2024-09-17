@@ -286,7 +286,7 @@ Return C</text>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
       <dmndi:DMNShape dmnElementRef="Decision_1dkzfp7">
-        <dc:Bounds height="80" width="180" x="660" y="80" />
+        <dc:Bounds height="80" width="180" x="660" y="110" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1vg1wq9" dmnElementRef="Decision_03u97m3">
         <dc:Bounds height="80" width="180" x="840" y="650" />
@@ -390,8 +390,8 @@ Return C</text>
       </dmndi:DMNEdge>
       <dmndi:DMNEdge id="DMNEdge_1cg56tt" dmnElementRef="InformationRequirement_1ps3nkw">
         <di:waypoint x="750" y="240" />
-        <di:waypoint x="750" y="180" />
-        <di:waypoint x="750" y="160" />
+        <di:waypoint x="750" y="210" />
+        <di:waypoint x="750" y="190" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_03ifmdw" dmnElementRef="TextAnnotation_09rydg5">
         <dc:Bounds height="107" width="60" x="160" y="345" />
@@ -441,7 +441,7 @@ Return C</text>
         <di:waypoint x="548" y="500" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_05raqdc" dmnElementRef="Decision_0j4wz9p">
-        <dc:Bounds height="80" width="180" x="200" y="80" />
+        <dc:Bounds height="80" width="180" x="310" y="110" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1juurxi" dmnElementRef="TextAnnotation_0f0zxk9">
         <dc:Bounds height="150" width="360" x="1570" y="545" />

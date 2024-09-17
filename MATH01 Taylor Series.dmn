@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_042s131" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0y7i28n" name="MATH01" />
+  <decision id="Decision_08qtiy5" name="sin(x) as a series">
+    <variable id="InformationItem_1iqb6uv" name="sinx" typeRef="number" />
+    <informationRequirement id="InformationRequirement_17v7eid">
+      <requiredInput href="#InputData_1d886wk" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0f92izf">
+      <text>{factorial: function (n) product (for i in 1..n return i),                       // define the factorial function
+ sines: for x in [-1,-0.5,0,0.5,1]  return                                       // list of values of x
+        {x:x,
+        sin:  sum (for j in [1,3,5,7,9,11,13,15] 
+                   return (-1)**((j-1)/2) *x**j / factorial(j) )}
+}
+
+
+
+</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_1d886wk" name="x" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0nmkdkl" dmnElementRef="Decision_0y7i28n">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_186ed3k" dmnElementRef="Decision_08qtiy5">
+        <dc:Bounds height="80" width="180" x="500" y="180" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1rmn20l" dmnElementRef="InputData_1d886wk">
+        <dc:Bounds height="45" width="125" x="527" y="357" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0t6rlyg" dmnElementRef="InformationRequirement_17v7eid">
+        <di:waypoint x="590" y="357" />
+        <di:waypoint x="590" y="280" />
+        <di:waypoint x="590" y="260" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

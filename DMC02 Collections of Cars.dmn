@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_043p4y9" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1gof9mp" name="generate cars">
+    <variable id="InformationItem_18h51om" name="cars" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0if3ek1">
+      <requiredInput href="#InputData_0dbmuh9" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_18rmpo3">
+      <text>// INTERNALLY GENERATED DATA
+[
+  {make:"ford",model:"taurus",group:"G1"},
+  {make:"ford",model:"taurus",group:"G1"},
+  {make:"ford",model:"taurus",group:"G1"},
+  {make:"hyundai",model:"santa fe",group:"G2"},
+  {make:"austi",model:"mini",group:"G2"}
+]
+/* outputs this list as the value of variable cars
+[
+ {"make":"ford","model":"taurus","group":"G1"},
+ {"make":"ford","model":"taurus","group":"G1"},
+ {"make":"ford","model":"taurus","group":"G1"},
+ {"make":"hyundai","model":"santa fe","group":"G2"},
+ {"make":"austin","model":"mini","group":"G2"}
+]
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0txoefa" name="summarize">
+    <informationRequirement id="InformationRequirement_1pm56sr">
+      <requiredDecision href="#Decision_0ite1i5" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_15vkbqx">
+      <requiredDecision href="#Decision_1plab6x" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0fsu2dy">
+      <requiredDecision href="#Decision_0tv93vr" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_08fuwnu">
+      <requiredDecision href="#Decision_05ohzuc" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_125allm">
+      <input id="InputClause_0ileu44">
+        <inputExpression id="LiteralExpression_0emji7y" typeRef="string" />
+      </input>
+      <output id="OutputClause_0qpckzq" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0ite1i5" name="find distinct make and model combinations">
+    <variable id="InformationItem_12q91p4" name="distinctMakeAndModelList" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0gdl3nc">
+      <requiredDecision href="#Decision_1gof9mp" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0c6ad68">
+      <text>distinct values (
+    for car in cars
+    return {make:car.make, model:car.model}
+)
+/*  generates this from the list of cars
+ [
+    { "make": "ford", "model": "taurus"  },
+    { "make": "hyundai", "model": "santa fe" },
+    { "make": "austin", "model": "mini"  }
+  ]
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1plab6x" name="find distinct groups">
+    <variable id="InformationItem_1bk7vc0" name="distinctGroups" typeRef="list" />
+    <informationRequirement id="InformationRequirement_0f7gr3j">
+      <requiredDecision href="#Decision_1gof9mp" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_034u9z4">
+      <text>distinct values (cars.group)
+
+/* generates this from the list of cars
+[
+  "G1",
+  "G2"
+]
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_05ohzuc" name="find distinct makes">
+    <variable id="InformationItem_17ploe6" name="distinctMakes" typeRef="list" />
+    <informationRequirement id="InformationRequirement_1smq5gk">
+      <requiredDecision href="#Decision_1gof9mp" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0c0vwqu">
+      <text>distinct values (cars.make)
+
+/* generates this from the list of cars
+[
+  "ford",
+  "hyundai",
+  "austin"
+]
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0tv93vr" name="find distinct models">
+    <variable id="InformationItem_0we4fb3" />
+    <informationRequirement id="InformationRequirement_035a0u1">
+      <requiredDecision href="#Decision_1gof9mp" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0mnqahl">
+      <text>distinct values (cars.model)
+
+/* generates this from the list of cars
+[
+  "taurus",
+  "santa fe",
+  "mini"
+]
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0junl3x" name="various expressions">
+    <variable id="InformationItem_04ovste" name="result" typeRef="list" />
+    <literalExpression id="LiteralExpression_0axzusj">
+      <text>//distinct values ( for car in cars return {make:car.make, model:car.model})                           // distinct combinations of make and model
+// {distinctMakeAndModel: distinct values ( for car in cars return {make:car.make, model:car.model})}  // distinct combinations of make and model   
+//{makes: distinct values (cars.make),models: distinct values (cars.model)}       // distinct make and distinct models separately
+//count(cars)                                                                     // total number of cars
+//distinct values (cars.group)                                                    // distinct groups
+//distinct values [cars]                                                            // distinct instances of car
+//distinct cars [count(cars[make=distinct make and model = distinct model])=count(distinct values cars.group)]
+//{distinctMakes:distinct values (cars.make), distinctModels:distinct values (cars.model)}
+
+for car in cars return {car:car} </text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_0dbmuh9" name="cars" />
+  <decision id="Decision_1ta5gyg" name="sample expressions">
+    <variable id="InformationItem_1pcpidv" name="samples" typeRef="boolean" />
+    <literalExpression id="LiteralExpression_1j0fd4r">
+      <text>distinct values (cars [group="G1"]) = [{"make": "ford","model": "taurus","group": "G1"}] and
+distinct values (cars [group="G2"]) =[{"make": "hyundai","model": "santa fe","group": "G2"  }, {"make": "austin","model": "mini","group": "G2"}] and
+distinct values (cars.make)         = ["ford","hyundai","austin"] and
+distinct values (cars.model)        = ["taurus","santa fe","mini"] and
+distinct values (cars.group)        = ["G1","G2"] and
+distinct values (cars)              = [  {"make": "ford","model": "taurus","group": "G1"},{"make": "hyundai","model": "santa fe","group": "G2"  }, {"make": "austin","model": "mini","group": "G2"}  ]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0460lu3" name="DMC02&#10;Decision Modeling Challenge&#10;collections of Cars" />
+  <decision id="Decision_1kxibw5" name="analysis">
+    <variable id="InformationItem_08usycv" name="car statistics" typeRef="Any" />
+    <literalExpression id="LiteralExpression_1q3j10e">
+      <text>{
+makes: distinct values (cars.make), 
+number of makes:count(makes),
+models: distinct values (cars.model),
+number of models:count(models),
+groups: distinct values (cars.group),
+number of groups:count(groups),
+total number of cars: count(cars),
+average number of cars per group: count(cars/number of groups)
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0lvfl9v" name="program">
+    <variable id="InformationItem_1ms9bw0" />
+    <literalExpression id="LiteralExpression_1vu1r9w">
+      <text>{
+  // defines some cars
+  car: [
+  {make:"ford",model:"taurus",group:"G1",VIN:111},
+  {make:"ford",model:"taurus",group:"G1",VIN:222},
+  {make:"ford",model:"taurus",group:"G1",VIN:333},
+  {make:"hyundai",model:"santa fe",group:"G2",VIN:444},
+  {make:"austin",model:"mini",group:"G2",VIN:555}
+],
+  // get distinct objects
+distinctMakes: distinct values (cars.make), 
+distinctModels: distinct values (cars.model),
+distinctGroups: distinct values (cars.group),
+distinctCars:distinct values (
+    for car in cars
+    return {make:car.make, model:car.model}),
+// find cars in all groups
+  carsInAllGroups: distinctCars [count(cars[make=distinct make and model = distinct model])=count(distinctGroups)]
+}</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0pv2cod">
+    <text>ACTUAL JSON INPUT DATA
+{"cars":
+[
+ {"make":"ford","model":"taurus","group":"G1"},
+ {"make":"ford","model":"taurus","group":"G1"},
+ {"make":"ford","model":"taurus","group":"G1"},
+ {"make":"hyundai","model":"santa fe","group":"G2"},
+ {"make":"austin","model":"mini","group":"G2"}
+]
+}</text>
+  </textAnnotation>
+  <association id="Association_012fliu">
+    <sourceRef href="#InputData_0dbmuh9" />
+    <targetRef href="#TextAnnotation_0pv2cod" />
+  </association>
+  <textAnnotation id="TextAnnotation_15shmi5">
+    <text>// INTERNALLY GENERATED DATA
+[
+  {make:"ford",model:"taurus",group:"G1",VIN:111},
+  {make:"ford",model:"taurus",group:"G1",VIN:222},
+  {make:"ford",model:"taurus",group:"G1",VIN:333},
+  {make:"ford",model:"taurus",group:"G2",VIN:666},
+  {make:"hyundai",model:"santa fe",group:"G2",VIN:444},
+  {make:"austin",model:"mini",group:"G2",VIN:555}
+]</text>
+  </textAnnotation>
+  <association id="Association_1gjp5tx">
+    <sourceRef href="#TextAnnotation_15shmi5" />
+    <targetRef href="#Decision_1gof9mp" />
+  </association>
+  <textAnnotation id="TextAnnotation_0yj5if9">
+    <text>distinct values (cars.make)</text>
+  </textAnnotation>
+  <association id="Association_0arh4wy">
+    <sourceRef href="#TextAnnotation_0yj5if9" />
+    <targetRef href="#Decision_05ohzuc" />
+  </association>
+  <textAnnotation id="TextAnnotation_0mnk2wz">
+    <text>distinct values (cars.model)</text>
+  </textAnnotation>
+  <association id="Association_0d2sf2e">
+    <sourceRef href="#TextAnnotation_0mnk2wz" />
+    <targetRef href="#Decision_0tv93vr" />
+  </association>
+  <textAnnotation id="TextAnnotation_0z5kkdw">
+    <text>distinct values ( for car in cars
+return {make:car.make, model:car.model})</text>
+  </textAnnotation>
+  <association id="Association_12u77gf">
+    <sourceRef href="#TextAnnotation_0z5kkdw" />
+    <targetRef href="#Decision_0ite1i5" />
+  </association>
+  <textAnnotation id="TextAnnotation_15xxp21">
+    <text>EXPRESSION
+{distinctMakeAndModel: distinct values ( for car in cars return {make:car.make, model:car.model})}
+
+OUTPUT
+{
+  "distinctMakeAndModel": [
+    { "make": "ford", "model": "taurus"  },
+    { "make": "hyundai", "model": "santa fe" },
+    { "make": "austin", "model": "mini"  }
+  ]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_10og9ga">
+    <text>distinct values (cars.group)</text>
+  </textAnnotation>
+  <association id="Association_0e7r6jc">
+    <sourceRef href="#TextAnnotation_10og9ga" />
+    <targetRef href="#Decision_1plab6x" />
+  </association>
+  <textAnnotation id="TextAnnotation_1wdhw8a">
+    <text>distinct values (cars [group="G1"]) = [{"make": "ford","model": "taurus","group": "G1"}] and
+distinct values (cars [group="G2"]) =[{"make": "hyundai","model": "santa fe","group": "G2" }, {"make": "austin","model": "mini","group": "G2"}] and
+distinct values (cars.make) = ["ford","hyundai","austin"] and
+distinct values (cars.model) = ["taurus","santa fe","mini"] and
+distinct values (cars.group) = ["G1","G2"] and
+distinct values (cars) = [ {"make": "ford","model": "taurus","group": "G1"},{"make": "hyundai","model": "santa fe","group": "G2" }, {"make": "austin","model": "mini","group": "G2"} ]</text>
+  </textAnnotation>
+  <association id="Association_06ge3c5">
+    <sourceRef href="#TextAnnotation_1wdhw8a" />
+    <targetRef href="#Decision_1ta5gyg" />
+  </association>
+  <textAnnotation id="TextAnnotation_052bnpy">
+    <text>should return true</text>
+  </textAnnotation>
+  <association id="Association_0lzfsd7">
+    <sourceRef href="#TextAnnotation_052bnpy" />
+    <targetRef href="#Decision_1ta5gyg" />
+  </association>
+  <textAnnotation id="TextAnnotation_06el0n2">
+    <text>https://dmcommunity.org/challenge/challenge-sep-2015/</text>
+  </textAnnotation>
+  <association id="Association_1247glb">
+    <sourceRef href="#TextAnnotation_06el0n2" />
+    <targetRef href="#Decision_0460lu3" />
+  </association>
+  <textAnnotation id="TextAnnotation_09xcpu3">
+    <text>{
+  "makes": [    "ford",    "hyundai",    "austin"  ],
+  "number of makes": 3,
+  "models": [    "taurus",    "santa fe",    "mini"  ],
+  "number of models": 3,
+  "groups": [    "G1",    "G2"  ],
+    "number of groups": 2,
+  "total number of cars": 6,
+  "average number of cars per group": 3
+}</text>
+  </textAnnotation>
+  <association id="Association_1mnwzwa">
+    <sourceRef href="#TextAnnotation_09xcpu3" />
+    <targetRef href="#Decision_1kxibw5" />
+  </association>
+  <textAnnotation id="TextAnnotation_1rcsr0u">
+    <text>{
+makes: distinct values (cars.make), 
+number of makes:count(makes),
+models: distinct values (cars.model),
+number of models:count(models),
+groups: distinct values (cars.group),
+number of groups:count(groups),
+total number of cars: count(cars),
+average number of cars per group: count(total number of cars/number of groups)
+}</text>
+  </textAnnotation>
+  <association id="Association_0hoa7eg">
+    <sourceRef href="#TextAnnotation_1rcsr0u" />
+    <targetRef href="#Decision_1kxibw5" />
+  </association>
+  <association id="Association_0q0gbz9">
+    <sourceRef href="#Decision_1kxibw5" />
+    <targetRef href="#TextAnnotation_15shmi5" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1hz9ndv" dmnElementRef="Decision_1gof9mp">
+        <dc:Bounds height="80" width="180" x="550" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_01rbu5m" dmnElementRef="TextAnnotation_0pv2cod">
+        <dc:Bounds height="150" width="295" x="220" y="615" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1lovlnx" dmnElementRef="Decision_0txoefa">
+        <dc:Bounds height="80" width="180" x="550" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06acyqd" dmnElementRef="InformationRequirement_1pm56sr">
+        <di:waypoint x="300" y="320" />
+        <di:waypoint x="586" y="180" />
+        <di:waypoint x="586" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0m4vjmy" dmnElementRef="Decision_0ite1i5">
+        <dc:Bounds height="80" width="180" x="210" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_09x05id" dmnElementRef="Decision_1plab6x">
+        <dc:Bounds height="80" width="180" x="532" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0oghpqh" dmnElementRef="InformationRequirement_0f7gr3j">
+        <di:waypoint x="640" y="540" />
+        <di:waypoint x="622" y="420" />
+        <di:waypoint x="622" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0h1dij0" dmnElementRef="Decision_05ohzuc">
+        <dc:Bounds height="80" width="180" x="990" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1x2ds5z" dmnElementRef="InformationRequirement_1smq5gk">
+        <di:waypoint x="640" y="540" />
+        <di:waypoint x="1080" y="420" />
+        <di:waypoint x="1080" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1fms59r" dmnElementRef="Decision_0tv93vr">
+        <dc:Bounds height="80" width="180" x="760" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xfr55m" dmnElementRef="InformationRequirement_035a0u1">
+        <di:waypoint x="640" y="540" />
+        <di:waypoint x="850" y="420" />
+        <di:waypoint x="850" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01a26lg" dmnElementRef="Decision_0junl3x">
+        <dc:Bounds height="80" width="180" x="1260" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_04fq18f" dmnElementRef="InformationRequirement_0gdl3nc">
+        <di:waypoint x="640" y="540" />
+        <di:waypoint x="300" y="420" />
+        <di:waypoint x="300" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0n5bq23" dmnElementRef="InformationRequirement_15vkbqx">
+        <di:waypoint x="622" y="320" />
+        <di:waypoint x="622" y="180" />
+        <di:waypoint x="622" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0m7azv2" dmnElementRef="InformationRequirement_0fsu2dy">
+        <di:waypoint x="850" y="320" />
+        <di:waypoint x="658" y="180" />
+        <di:waypoint x="658" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gdtpy9" dmnElementRef="InformationRequirement_08fuwnu">
+        <di:waypoint x="1080" y="320" />
+        <di:waypoint x="694" y="180" />
+        <di:waypoint x="694" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1h56l8d" dmnElementRef="InputData_0dbmuh9">
+        <dc:Bounds height="45" width="125" x="577" y="667" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0j3y8ou" dmnElementRef="InformationRequirement_0if3ek1">
+        <di:waypoint x="640" y="667" />
+        <di:waypoint x="640" y="640" />
+        <di:waypoint x="640" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0j2fng6" dmnElementRef="Association_012fliu">
+        <di:waypoint x="577" y="690" />
+        <di:waypoint x="515" y="690" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1tk7bp6" dmnElementRef="TextAnnotation_15shmi5">
+        <dc:Bounds height="140" width="310" x="800" y="610" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_02cumsl" dmnElementRef="Association_1gjp5tx">
+        <di:waypoint x="800" y="633" />
+        <di:waypoint x="730" y="610" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1p4vvqz" dmnElementRef="TextAnnotation_0yj5if9">
+        <dc:Bounds height="20" width="200" x="1100" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1v2pxoq" dmnElementRef="Association_0arh4wy">
+        <di:waypoint x="1178" y="410" />
+        <di:waypoint x="1167" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0n4qg24" dmnElementRef="TextAnnotation_0mnk2wz">
+        <dc:Bounds height="20" width="180" x="890" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qrbqly" dmnElementRef="Association_0d2sf2e">
+        <di:waypoint x="963" y="410" />
+        <di:waypoint x="917" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1pd8sjp" dmnElementRef="TextAnnotation_0z5kkdw">
+        <dc:Bounds height="40" width="270" x="115" y="450" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0td9d8e" dmnElementRef="Association_12u77gf">
+        <di:waypoint x="125" y="450" />
+        <di:waypoint x="210" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0mp5q5x" dmnElementRef="TextAnnotation_15xxp21">
+        <dc:Bounds height="190" width="370" x="1035" y="95" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1lp3tmg" dmnElementRef="TextAnnotation_10og9ga">
+        <dc:Bounds height="20" width="170" x="635" y="420" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0kune8d" dmnElementRef="Association_0e7r6jc">
+        <di:waypoint x="706" y="420" />
+        <di:waypoint x="678" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0rv7km1" dmnElementRef="Decision_1ta5gyg">
+        <dc:Bounds height="80" width="180" x="1540" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1vt5b5c" dmnElementRef="TextAnnotation_1wdhw8a">
+        <dc:Bounds height="100" width="1120" x="1360" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nquben" dmnElementRef="Association_06ge3c5">
+        <di:waypoint x="1640" y="530" />
+        <di:waypoint x="1640" y="510" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1ubivas" dmnElementRef="TextAnnotation_052bnpy">
+        <dc:Bounds height="80" width="100" x="1750" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_13pfpqk" dmnElementRef="Association_0lzfsd7">
+        <di:waypoint x="1750" y="470" />
+        <di:waypoint x="1720" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1qaeq76" dmnElementRef="Decision_0460lu3">
+        <dc:Bounds height="80" width="180" x="170" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0v1uws6" dmnElementRef="TextAnnotation_06el0n2">
+        <dc:Bounds height="30" width="320" x="130" y="175" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lld0fr" dmnElementRef="Association_1247glb">
+        <di:waypoint x="200" y="175" />
+        <di:waypoint x="207" y="170" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0yb9jd6" dmnElementRef="Decision_1kxibw5">
+        <dc:Bounds height="80" width="180" x="1220" y="740" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0x3mmmr" dmnElementRef="Decision_0lvfl9v">
+        <dc:Bounds height="80" width="180" x="1770" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16cmzzi" dmnElementRef="TextAnnotation_09xcpu3">
+        <dc:Bounds height="165" width="280" x="1210" y="865" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0eejaid" dmnElementRef="Association_1mnwzwa">
+        <di:waypoint x="1250" y="859" />
+        <di:waypoint x="1250" y="820" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1vwlvq3" dmnElementRef="TextAnnotation_1rcsr0u">
+        <dc:Bounds height="180" width="270" x="1455" y="660" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xb6vie" dmnElementRef="Association_0hoa7eg">
+        <di:waypoint x="1455" y="721" />
+        <di:waypoint x="1400" y="743" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0zd6e9f" dmnElementRef="Association_0q0gbz9">
+        <di:waypoint x="1220" y="756" />
+        <di:waypoint x="1110" y="727" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -114,6 +114,7 @@ What is the average age of the oldest 3 males between 21 and 45? avgAge={p in Pe
 Which are the oldest 3 males between 21 and 45? oldest={p in Person where age in [20..65],gender='male'}.sortedBy(age).first(3) collection saved for later use
 What is the sum of the incomes for the oldest N males? incomeSum={p in Person where gender='male'}.sortedByDesc(age).first(N).income.sum returns a number
 What state does the youngest person over 65 live in? state={p in Person where age&gt;65}.sortedBy(age).first.state 
+persons [age&gt;65 and age=min(persons.age)].state
 Find all the males over 65. seniorMales={p in Person where age&gt;65,gender='male'} collection saved for further use
 Then find their average income. seniorMaleAvgIncome=seniorMales.income.avg result is a value
 Is the highest income of the oldest 5 persons greater than 10000? {p in Person}.sortedBy(age).first(5).sortedByDesc(income).first.income&gt;10000 
@@ -148,7 +149,7 @@ or lowest_two=Books.sortedBy(price).subSequence(1,2).price.sum
         <dc:Bounds height="590" width="150" x="395" y="110" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0i4uhrg" dmnElementRef="TextAnnotation_0nyr1uq">
-        <dc:Bounds height="600" width="710" x="785" y="105" />
+        <dc:Bounds height="600" width="710" x="735" y="90" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_046lqlm" dmnElementRef="Decision_1jeyecu">
         <dc:Bounds height="80" width="180" x="160" y="340" />
@@ -161,8 +162,8 @@ or lowest_two=Books.sortedBy(price).subSequence(1,2).price.sum
         <dc:Bounds height="80" width="180" x="530" y="350" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1c569l4" dmnElementRef="Association_0cwgp2s">
-        <di:waypoint x="710" y="395" />
-        <di:waypoint x="785" y="398" />
+        <di:waypoint x="710" y="387" />
+        <di:waypoint x="735" y="386" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_07lovj0" dmnElementRef="TextAnnotation_0lhoh2a">
         <dc:Bounds height="680" width="670" x="1470" y="70" />

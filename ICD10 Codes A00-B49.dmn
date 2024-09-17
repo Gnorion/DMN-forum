@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI/" id="infectious-diseases-codes" name="InfectiousDiseasesCodes">
+  <decision id="Decision_1" name="Infectious Diseases Classification">
+    <decisionTable id="DecisionTable_0m5cjws">
+      <input id="Input_1" label="Code Range">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>Code</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Description" typeRef="string" />
+      <rule id="DecisionRule_1v34q3m">
+        <inputEntry id="InputEntry_1">
+          <text>["A00".."A09"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_1">
+          <text>"Intestinal infectious diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0yow4hs">
+        <inputEntry id="InputEntry_2">
+          <text>["A15".."A19"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_2">
+          <text>"Tuberculosis"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19cb7mb">
+        <inputEntry id="InputEntry_3">
+          <text>["A20".."A28"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_3">
+          <text>"Certain zoonotic bacterial diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0l1e8vw">
+        <inputEntry id="InputEntry_4">
+          <text>["A30".."A49"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_4">
+          <text>"Other bacterial diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zoyhsf">
+        <inputEntry id="InputEntry_5">
+          <text>["A50".."A64"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_5">
+          <text>"Infections with a predominantly sexual mode of transmission"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1lhlwmo">
+        <inputEntry id="InputEntry_6">
+          <text>["A65".."A69"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_6">
+          <text>"Other spirochetal diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_09397gq">
+        <inputEntry id="InputEntry_7">
+          <text>["A70".."A74"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_7">
+          <text>"Other diseases caused by chlamydiae"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tt9izd">
+        <inputEntry id="InputEntry_8">
+          <text>["A75".."A79"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_8">
+          <text>"Rickettsioses"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1i6wah6">
+        <inputEntry id="InputEntry_9">
+          <text>["A80".."A89"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_9">
+          <text>"Viral and prion infections of the central nervous system"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1q70m2h">
+        <inputEntry id="InputEntry_10">
+          <text>["A90".."A99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_10">
+          <text>"Arthropod-borne viral fevers and viral hemorrhagic fevers"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1cf0wrg">
+        <inputEntry id="InputEntry_11">
+          <text>["B00".."B09"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_11">
+          <text>"Viral infections characterized by skin and mucous membrane lesions"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0q5bufr">
+        <inputEntry id="InputEntry_12">
+          <text>["B10".."B10"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_12">
+          <text>"Other human herpesviruses"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00zh3wm">
+        <inputEntry id="InputEntry_13">
+          <text>["B15".."B19"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_13">
+          <text>"Viral hepatitis"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1fntzcl">
+        <inputEntry id="InputEntry_14">
+          <text>["B20".."B20"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_14">
+          <text>"Human immunodeficiency virus [HIV] disease"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1vyipr3">
+        <inputEntry id="InputEntry_15">
+          <text>["B25".."B34"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_15">
+          <text>"Other viral diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hmehjs">
+        <inputEntry id="InputEntry_16">
+          <text>["B35".."B49"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_16">
+          <text>"Mycoses"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ei10aa">
+        <inputEntry id="InputEntry_17">
+          <text>["B50".."B64"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_17">
+          <text>"Protozoal diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1p27om9">
+        <inputEntry id="InputEntry_18">
+          <text>["B65".."B83"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_18">
+          <text>"Helminthiases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0b1z3lg">
+        <inputEntry id="InputEntry_19">
+          <text>["B85".."B89"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_19">
+          <text>"Pediculosis, acariasis and other infestations"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0xtr2ne">
+        <inputEntry id="InputEntry_20">
+          <text>["B90".."B94"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_20">
+          <text>"Sequelae of infectious and parasitic diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0azjy40">
+        <inputEntry id="InputEntry_21">
+          <text>["B95".."B97"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_21">
+          <text>"Bacterial and viral infectious agents"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nquwhl">
+        <inputEntry id="InputEntry_22">
+          <text>["B99".."B99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_22">
+          <text>"Other infectious diseases"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

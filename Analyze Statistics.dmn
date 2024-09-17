@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0ded2i4" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0e25hgc" name="Analyse Statistics">
+    <informationRequirement id="InformationRequirement_0yxakea">
+      <requiredDecision href="#Decision_1yixn5v" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0hvgvtf">
+      <requiredDecision href="#Decision_1hyozem" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_13hh6aj">
+      <requiredDecision href="#Decision_01m5ic0" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_043caxb">
+      <input id="Input_1" label="theMean">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_04efpux" label="the Std">
+        <inputExpression id="LiteralExpression_0nqrt4s" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1drfp79" label="theVariance">
+        <inputExpression id="LiteralExpression_07wobbq" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="result" typeRef="string" />
+      <rule id="DecisionRule_04ujtzc">
+        <inputEntry id="UnaryTests_1f0plz3">
+          <text>&lt;0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wsozav">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1v8lquq">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0itgwq1">
+          <text>"less than zero"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1mfx330">
+        <inputEntry id="UnaryTests_1l7kndo">
+          <text>=0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00k3jli">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_047nb0r">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06k4n8f">
+          <text>"zero"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1k434dm">
+        <inputEntry id="UnaryTests_0cr3fz3">
+          <text>&gt;0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0toey93">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z4p8k7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1db844w">
+          <text>"greater than zero"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0mf8qwk">
+        <inputEntry id="UnaryTests_0k7gq8j">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_15s1ke8">
+          <text>&lt;0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mx15ph">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1x92h2e">
+          <text>"error"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_06c7b9q">
+        <inputEntry id="UnaryTests_0y7wabm">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zo57z2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1d3osam">
+          <text>&lt;0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0v1f0fz">
+          <text>"error"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1yixn5v" name="Compute Mean">
+    <variable id="InformationItem_02lj5o3" name="theMean" typeRef="number" />
+    <informationRequirement id="InformationRequirement_14ocsxz">
+      <requiredInput href="#InputData_03ovq7s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0y7x1o0">
+      <text>mean(numbers)</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_03ovq7s" name="numbers" />
+  <decision id="Decision_1hyozem" name="Compute Standard Deviation">
+    <variable id="InformationItem_1ktw4p1" name="theSTD" typeRef="number" />
+    <informationRequirement id="InformationRequirement_1yvfhxf">
+      <requiredInput href="#InputData_03ovq7s" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1o34ffa">
+      <text>std(numbers)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_01m5ic0" name="Compute Variance">
+    <variable id="InformationItem_1s6k0rb" name="variance" typeRef="number" />
+    <informationRequirement id="InformationRequirement_0dy8fgx">
+      <requiredDecision href="#Decision_1hyozem" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1nc9ki0">
+      <text>theStd * theStd</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_08m6ygg">
+    <text>var = square of std
+Variance describe the variability of the observations</text>
+  </textAnnotation>
+  <association id="Association_1rjy7ar">
+    <sourceRef href="#TextAnnotation_08m6ygg" />
+    <targetRef href="#Decision_01m5ic0" />
+  </association>
+  <textAnnotation id="TextAnnotation_1pboxcw">
+    <text>sum(numbers)/N
+mean = sum of observations / number of observations.</text>
+  </textAnnotation>
+  <association id="Association_19macj1">
+    <sourceRef href="#TextAnnotation_1pboxcw" />
+    <targetRef href="#Decision_1yixn5v" />
+  </association>
+  <textAnnotation id="TextAnnotation_1femggl">
+    <text>standard deviation measures the dispersion of observations within a set</text>
+  </textAnnotation>
+  <association id="Association_19sl237">
+    <sourceRef href="#TextAnnotation_1femggl" />
+    <targetRef href="#Decision_1hyozem" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0e25hgc">
+        <dc:Bounds height="80" width="180" x="430" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ewhvrv" dmnElementRef="Decision_1yixn5v">
+        <dc:Bounds height="80" width="180" x="240" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0snzw72" dmnElementRef="InputData_03ovq7s">
+        <dc:Bounds height="45" width="125" x="357" y="507" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1c4gmm8" dmnElementRef="InformationRequirement_14ocsxz">
+        <di:waypoint x="420" y="507" />
+        <di:waypoint x="330" y="460" />
+        <di:waypoint x="330" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1kn6e0r" dmnElementRef="InformationRequirement_0yxakea">
+        <di:waypoint x="330" y="360" />
+        <di:waypoint x="475" y="180" />
+        <di:waypoint x="475" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_051usyw" dmnElementRef="InformationRequirement_1yvfhxf">
+        <di:waypoint x="420" y="507" />
+        <di:waypoint x="550" y="460" />
+        <di:waypoint x="550" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0qeg3z2" dmnElementRef="Decision_1hyozem">
+        <dc:Bounds height="80" width="180" x="460" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0cg48oo" dmnElementRef="InformationRequirement_0hvgvtf">
+        <di:waypoint x="550" y="360" />
+        <di:waypoint x="520" y="180" />
+        <di:waypoint x="520" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0uoce2w" dmnElementRef="Decision_01m5ic0">
+        <dc:Bounds height="80" width="180" x="600" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_14ipz6w" dmnElementRef="TextAnnotation_08m6ygg">
+        <dc:Bounds height="55" width="230" x="805" y="372" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1upo2q7" dmnElementRef="Association_1rjy7ar">
+        <di:waypoint x="800" y="400" />
+        <di:waypoint x="720" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1odt1rb" dmnElementRef="InformationRequirement_13hh6aj">
+        <di:waypoint x="690" y="230" />
+        <di:waypoint x="565" y="180" />
+        <di:waypoint x="565" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_15ebsm0" dmnElementRef="TextAnnotation_1pboxcw">
+        <dc:Bounds height="40" width="310" x="155" y="570" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1grl0dr" dmnElementRef="Association_19macj1">
+        <di:waypoint x="290" y="570" />
+        <di:waypoint x="320" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1a77ppb" dmnElementRef="TextAnnotation_1femggl">
+        <dc:Bounds height="40" width="230" x="635" y="500" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0r7rnvt" dmnElementRef="Association_19sl237">
+        <di:waypoint x="780" y="500" />
+        <di:waypoint x="640" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ap7hxb" dmnElementRef="InformationRequirement_0dy8fgx">
+        <di:waypoint x="550" y="360" />
+        <di:waypoint x="690" y="330" />
+        <di:waypoint x="690" y="310" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

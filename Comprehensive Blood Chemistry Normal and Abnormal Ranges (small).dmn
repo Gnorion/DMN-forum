@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_173dk3a" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+
+  <!-- Ammonia -->
+  <decision id="Ammonia" name="Ammonia Level">
+    <decisionTable id="AmmoniaTable">
+      <input id="AmmoniaInput" label="Ammonia (μg/dL)">
+        <inputExpression id="AmmoniaInputExpression" typeRef="number">
+          <text>ammonia</text>
+        </inputExpression>
+      </input>
+      <output id="AmmoniaOutput" label="Result" typeRef="string"/>
+      
+      <!-- Low Ammonia -->
+      <rule id="AmmoniaLow">
+        <inputEntry id="AmmoniaLowEntry">
+          <text>&lt;40</text>
+        </inputEntry>
+        <outputEntry id="AmmoniaLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- Normal Ammonia -->
+      <rule id="AmmoniaNormal">
+        <inputEntry id="AmmoniaNormalEntry">
+          <text>[40..70]</text>
+        </inputEntry>
+        <outputEntry id="AmmoniaNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- High Ammonia -->
+      <rule id="AmmoniaHigh">
+        <inputEntry id="AmmoniaHighEntry">
+          <text>&gt;70</text>
+        </inputEntry>
+        <outputEntry id="AmmoniaHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+    <annotation description="μg/dL"/>
+  </decision>
+
+  <!-- Ceruloplasmin -->
+  <decision id="Ceruloplasmin" name="Ceruloplasmin Level">
+    <decisionTable id="CeruloplasminTable">
+      <input id="CeruloplasminInput" label="Ceruloplasmin (mg/dL)">
+        <inputExpression id="CeruloplasminInputExpression" typeRef="number">
+          <text>ceruloplasmin</text>
+        </inputExpression>
+      </input>
+      <output id="CeruloplasminOutput" label="Result" typeRef="string"/>
+      
+      <!-- Low Ceruloplasmin -->
+      <rule id="CeruloplasminLow">
+        <inputEntry id="CeruloplasminLowEntry">
+          <text>&lt;25</text>
+        </inputEntry>
+        <outputEntry id="CeruloplasminLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- Normal Ceruloplasmin -->
+      <rule id="CeruloplasminNormal">
+        <inputEntry id="CeruloplasminNormalEntry">
+          <text>[25..43]</text>
+        </inputEntry>
+        <outputEntry id="CeruloplasminNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- High Ceruloplasmin -->
+      <rule id="CeruloplasminHigh">
+        <inputEntry id="CeruloplasminHighEntry">
+          <text>&gt;43</text>
+        </inputEntry>
+        <outputEntry id="CeruloplasminHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+    <annotation description="mg/dL"/>
+  </decision>
+
+  <!-- Chloride -->
+  <decision id="Chloride" name="Chloride Level">
+    <decisionTable id="ChlorideTable">
+      <input id="ChlorideInput" label="Chloride (mmol/L)">
+        <inputExpression id="ChlorideInputExpression" typeRef="number">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <output id="ChlorideOutput" label="Result" typeRef="string"/>
+      
+      <!-- Low Chloride -->
+      <rule id="ChlorideLow">
+        <inputEntry id="ChlorideLowEntry">
+          <text>&lt;95</text>
+        </inputEntry>
+        <outputEntry id="ChlorideLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- Normal Chloride -->
+      <rule id="ChlorideNormal">
+        <inputEntry id="ChlorideNormalEntry">
+          <text>[95..105]</text>
+        </inputEntry>
+        <outputEntry id="ChlorideNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- High Chloride -->
+      <rule id="ChlorideHigh">
+        <inputEntry id="ChlorideHighEntry">
+          <text>&gt;105</text>
+        </inputEntry>
+        <outputEntry id="ChlorideHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+    <annotation description="mmol/L"/>
+  </decision>
+
+  <!-- Additional decisions would follow a similar pattern for each test -->
+  
+  <!-- Example for Glucose -->
+  <decision id="Glucose" name="Glucose Level">
+    <decisionTable id="GlucoseTable">
+      <input id="GlucoseInput" label="Glucose (mg/dL)">
+        <inputExpression id="GlucoseInputExpression" typeRef="number">
+          <text>glucose</text>
+        </inputExpression>
+      </input>
+      <output id="GlucoseOutput" label="Result" typeRef="string"/>
+      
+      <!-- Low Glucose -->
+      <rule id="GlucoseLow">
+        <inputEntry id="GlucoseLowEntry">
+          <text>&lt;70</text>
+        </inputEntry>
+        <outputEntry id="GlucoseLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- Normal Glucose -->
+      <rule id="GlucoseNormal">
+        <inputEntry id="GlucoseNormalEntry">
+          <text>[70..99]</text>
+        </inputEntry>
+        <outputEntry id="GlucoseNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      
+      <!-- High Glucose -->
+      <rule id="GlucoseHigh">
+        <inputEntry id="GlucoseHighEntry">
+          <text>&gt;99</text>
+        </inputEntry>
+        <outputEntry id="GlucoseHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+    <annotation description="mg/dL"/>
+  </decision>
+
+  <!-- Diagram Information -->
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="MedicalTestDiagram">
+      <dmndi:DMNShape id="AmmoniaShape" dmnElementRef="Ammonia">
+        <dc:Bounds x="100" y="100" width="180" height="80"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="CeruloplasminShape" dmnElementRef="Ceruloplasmin">
+        <dc:Bounds x="300" y="100" width="180" height="80"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="ChlorideShape" dmnElementRef="Chloride">
+        <dc:Bounds x="500" y="100" width="180" height="80"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="GlucoseShape" dmnElementRef="Glucose">
+        <dc:Bounds x="700" y="100" width="180" height="80"/>
+      </dmndi:DMNShape>
+
+      <!-- Input Data for Ammonia -->
+      <dmndi:DMNShape id="AmmoniaInputShape" dmnElementRef="AmmoniaInput">
+        <dc:Bounds x="100" y="200" width="100" height="50"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="AmmoniaInputEdge" dmnElementRef="Ammonia">
+        <di:waypoint x="150" y="200"/>
+        <di:waypoint x="190" y="180"/>
+      </dmndi:DMNEdge>
+
+      <!-- Input Data for Ceruloplasmin -->
+      <dmndi:DMNShape id="CeruloplasminInputShape" dmnElementRef="CeruloplasminInput">
+        <dc:Bounds x="300" y="200" width="100" height="50"/>
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="CeruloplasminInputEdge" dmnElementRef="Ceruloplasmin">
+        <di:waypoint x="350" y="200"/>
+        <di:waypoint x="390" y="180"/>
+      </dmndi:DMNEdge>
+
+      <!-- Input Data for Chloride -->
+      <dmndi:DMNShape id="ChlorideInputShape" dmnElementRef="ChlorideInput">
+        <dc:Bounds x="500" y="200" width="100" height="50"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="ChlorideInputEdge" dmnElementRef="Chloride">
+        <di:waypoint x="550" y="200"/>
+        <di:waypoint x="590" y="180"/>
+      </dmndi:DMNEdge>
+
+      <!-- Input Data for Glucose -->
+      <dmndi:DMNShape id="GlucoseInputShape" dmnElementRef="GlucoseInput">
+        <dc:Bounds x="700" y="200" width="100" height="50"/>
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="GlucoseInputEdge" dmnElementRef="Glucose">
+        <di:waypoint x="750" y="200"/>
+        <di:waypoint x="790" y="180"/>
+      </dmndi:DMNEdge>
+
+      <!-- Additional diagram elements would be added similarly -->
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

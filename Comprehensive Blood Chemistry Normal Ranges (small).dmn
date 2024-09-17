@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="definitions" name="MedicalTestRanges" namespace="http://example.com/medical">
+  <decision id="AmmoniaDecision" name="Ammonia Level">
+    <extensionElements>
+      <camunda:property name="Unit" value="μg/dL" />
+    </extensionElements>
+    <decisionTable id="AmmoniaTable" hitPolicy="FIRST">
+      <input id="AmmoniaInput" label="Ammonia (μg/dL)">
+        <inputExpression id="AmmoniaInputExpression" typeRef="double">
+          <text>ammonia</text>
+        </inputExpression>
+      </input>
+      <output id="AmmoniaOutput" label="Result" typeRef="string" />
+      <rule id="AmmoniaLow">
+        <inputEntry id="AmmoniaLowEntry">
+          <text>&lt; 40</text>
+        </inputEntry>
+        <outputEntry id="AmmoniaLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="AmmoniaNormal">
+        <inputEntry id="AmmoniaNormalEntry">
+          <text>[40..70]</text>
+        </inputEntry>
+        <outputEntry id="AmmoniaNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="AmmoniaHigh">
+        <inputEntry id="AmmoniaHighEntry">
+          <text>&gt; 70</text>
+        </inputEntry>
+        <outputEntry id="AmmoniaHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="CeruloplasminDecision" name="Ceruloplasmin Level">
+    <extensionElements>
+      <camunda:property name="Unit" value="mg/dL" />
+    </extensionElements>
+    <decisionTable id="CeruloplasminTable" hitPolicy="FIRST">
+      <input id="CeruloplasminInput" label="Ceruloplasmin (mg/dL)">
+        <inputExpression id="CeruloplasminInputExpression" typeRef="double">
+          <text>ceruloplasmin</text>
+        </inputExpression>
+      </input>
+      <output id="CeruloplasminOutput" label="Result" typeRef="string" />
+      <rule id="CeruloplasminLow">
+        <inputEntry id="CeruloplasminLowEntry">
+          <text>&lt; 25</text>
+        </inputEntry>
+        <outputEntry id="CeruloplasminLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="CeruloplasminNormal">
+        <inputEntry id="CeruloplasminNormalEntry">
+          <text>[25..43]</text>
+        </inputEntry>
+        <outputEntry id="CeruloplasminNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="CeruloplasminHigh">
+        <inputEntry id="CeruloplasminHighEntry">
+          <text>&gt; 43</text>
+        </inputEntry>
+        <outputEntry id="CeruloplasminHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="ChlorideDecision" name="Chloride Level">
+    <extensionElements>
+      <camunda:property name="Unit" value="mmol/L" />
+    </extensionElements>
+    <decisionTable id="ChlorideTable" hitPolicy="FIRST">
+      <input id="ChlorideInput" label="Chloride (mmol/L)">
+        <inputExpression id="ChlorideInputExpression" typeRef="double">
+          <text>chloride</text>
+        </inputExpression>
+      </input>
+      <output id="ChlorideOutput" label="Result" typeRef="string" />
+      <rule id="ChlorideLow">
+        <inputEntry id="ChlorideLowEntry">
+          <text>&lt; 95</text>
+        </inputEntry>
+        <outputEntry id="ChlorideLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="ChlorideNormal">
+        <inputEntry id="ChlorideNormalEntry">
+          <text>[95..105]</text>
+        </inputEntry>
+        <outputEntry id="ChlorideNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="ChlorideHigh">
+        <inputEntry id="ChlorideHighEntry">
+          <text>&gt; 105</text>
+        </inputEntry>
+        <outputEntry id="ChlorideHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="GlucoseDecision" name="Glucose Level">
+    <extensionElements>
+      <camunda:property name="Unit" value="mg/dL" />
+    </extensionElements>
+    <decisionTable id="GlucoseTable" hitPolicy="FIRST">
+      <input id="GlucoseInput" label="Glucose (mg/dL)">
+        <inputExpression id="GlucoseInputExpression" typeRef="double">
+          <text>glucose</text>
+        </inputExpression>
+      </input>
+      <output id="GlucoseOutput" label="Result" typeRef="string" />
+      <rule id="GlucoseLow">
+        <inputEntry id="GlucoseLowEntry">
+          <text>&lt; 70</text>
+        </inputEntry>
+        <outputEntry id="GlucoseLowOutput">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="GlucoseNormal">
+        <inputEntry id="GlucoseNormalEntry">
+          <text>[70..99]</text>
+        </inputEntry>
+        <outputEntry id="GlucoseNormalOutput">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="GlucoseHigh">
+        <inputEntry id="GlucoseHighEntry">
+          <text>&gt; 99</text>
+        </inputEntry>
+        <outputEntry id="GlucoseHighOutput">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

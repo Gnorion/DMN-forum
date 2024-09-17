@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI/" id="medical-codes" name="MedicalCodes">
+  <decision id="Decision_1" name="Medical Codes Classification">
+    <decisionTable id="DecisionTable_144njg4">
+      <input id="Input_1" label="Code Range">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>Code</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="Description" typeRef="string" />
+      <rule id="DecisionRule_13bkjhg">
+        <inputEntry id="InputEntry_1">
+          <text>["A00".."B99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_1">
+          <text>"Certain infectious and parasitic diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1fvsa0p">
+        <inputEntry id="InputEntry_2">
+          <text>["C00".."D49"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_2">
+          <text>"Neoplasms"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1u8dkgt">
+        <inputEntry id="InputEntry_3">
+          <text>["D50".."D89"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_3">
+          <text>"Diseases of the blood and blood-forming organs and certain disorders involving the immune mechanism"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0kfxepr">
+        <inputEntry id="InputEntry_4">
+          <text>["E00".."E89"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_4">
+          <text>"Endocrine, nutritional and metabolic diseases"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zwfy6y">
+        <inputEntry id="InputEntry_5">
+          <text>["F01".."F99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_5">
+          <text>"Mental, Behavioral and Neurodevelopmental disorders"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0mvreni">
+        <inputEntry id="InputEntry_6">
+          <text>["G00".."G99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_6">
+          <text>"Diseases of the nervous system"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13jonpj">
+        <inputEntry id="InputEntry_7">
+          <text>["H00".."H59"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_7">
+          <text>"Diseases of the eye and adnexa"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_05lhoqn">
+        <inputEntry id="InputEntry_8">
+          <text>["H60".."H95"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_8">
+          <text>"Diseases of the ear and mastoid process"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0z29lpj">
+        <inputEntry id="InputEntry_9">
+          <text>["I00".."I99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_9">
+          <text>"Diseases of the circulatory system"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zmhmrf">
+        <inputEntry id="InputEntry_10">
+          <text>["J00".."J99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_10">
+          <text>"Diseases of the respiratory system"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1gyx2yq">
+        <inputEntry id="InputEntry_11">
+          <text>["K00".."K95"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_11">
+          <text>"Diseases of the digestive system"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1b7te5f">
+        <inputEntry id="InputEntry_12">
+          <text>["L00".."L99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_12">
+          <text>"Diseases of the skin and subcutaneous tissue"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1h9fq7u">
+        <inputEntry id="InputEntry_13">
+          <text>["M00".."M99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_13">
+          <text>"Diseases of the musculoskeletal system and connective tissue"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1japc7p">
+        <inputEntry id="InputEntry_14">
+          <text>["N00".."N99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_14">
+          <text>"Diseases of the genitourinary system"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_07oat33">
+        <inputEntry id="InputEntry_15">
+          <text>["O00".."O9A"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_15">
+          <text>"Pregnancy, childbirth and the puerperium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0oyen1w">
+        <inputEntry id="InputEntry_16">
+          <text>["P00".."P96"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_16">
+          <text>"Certain conditions originating in the perinatal period"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_031m2lg">
+        <inputEntry id="InputEntry_17">
+          <text>["Q00".."Q99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_17">
+          <text>"Congenital malformations, deformations and chromosomal abnormalities"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1g063jq">
+        <inputEntry id="InputEntry_18">
+          <text>["R00".."R99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_18">
+          <text>"Symptoms, signs and abnormal clinical and laboratory findings, not elsewhere classified"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pb3ric">
+        <inputEntry id="InputEntry_19">
+          <text>["S00".."T88"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_19">
+          <text>"Injury, poisoning and certain other consequences of external causes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19xfvnu">
+        <inputEntry id="InputEntry_20">
+          <text>["U00".."U85"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_20">
+          <text>"Codes for special purposes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03058oe">
+        <inputEntry id="InputEntry_21">
+          <text>["V00".."Y99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_21">
+          <text>"External causes of morbidity"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0t0j9du">
+        <inputEntry id="InputEntry_22">
+          <text>["Z00".."Z99"]</text>
+        </inputEntry>
+        <outputEntry id="OutputEntry_22">
+          <text>"Factors influencing health status and contact with health services"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

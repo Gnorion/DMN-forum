@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="Definitions_17ssw54" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+<decision id="decision_1" name="Medical Parameters Decision">
+    <decisionTable id="decisionTable_1" hitPolicy="ANY">
+      <input id="input_ammonia" label="Ammonia">
+        <inputExpression id="inputExpression_ammonia" typeRef="number">
+          <text>Ammonia</text>
+        </inputExpression>
+      </input>
+      <input id="input_ceruloplasmin" label="Ceruloplasmin">
+        <inputExpression id="inputExpression_ceruloplasmin" typeRef="number">
+          <text>Ceruloplasmin</text>
+        </inputExpression>
+      </input>
+      <input id="input_chloride" label="Chloride">
+        <inputExpression id="inputExpression_chloride" typeRef="number">
+          <text>Chloride</text>
+        </inputExpression>
+      </input>
+      <input id="input_copper" label="Copper">
+        <inputExpression id="inputExpression_copper" typeRef="number">
+          <text>Copper</text>
+        </inputExpression>
+      </input>
+      <input id="input_creatinine" label="Creatinine">
+        <inputExpression id="inputExpression_creatinine" typeRef="number">
+          <text>Creatinine</text>
+        </inputExpression>
+      </input>
+      <input id="input_bun" label="Blood Urea Nitrogen">
+        <inputExpression id="inputExpression_bun" typeRef="number">
+          <text>Blood Urea Nitrogen</text>
+        </inputExpression>
+      </input>
+      <input id="input_ferritin" label="Ferritin">
+        <inputExpression id="inputExpression_ferritin" typeRef="number">
+          <text>Ferritin</text>
+        </inputExpression>
+      </input>
+      <input id="input_glucose" label="Glucose">
+        <inputExpression id="inputExpression_glucose" typeRef="number">
+          <text>Glucose</text>
+        </inputExpression>
+      </input>
+      <input id="input_inorganic_phosphorous" label="Inorganic Phosphorous">
+        <inputExpression id="inputExpression_inorganic_phosphorous" typeRef="number">
+          <text>Inorganic Phosphorous</text>
+        </inputExpression>
+      </input>
+      <input id="input_ionized_calcium" label="Ionized Calcium">
+        <inputExpression id="inputExpression_ionized_calcium" typeRef="number">
+          <text>Ionized Calcium</text>
+        </inputExpression>
+      </input>
+      <input id="input_magnesium" label="Magnesium">
+        <inputExpression id="inputExpression_magnesium" typeRef="number">
+          <text>Magnesium</text>
+        </inputExpression>
+      </input>
+      <input id="input_phosphate" label="Phosphate">
+        <inputExpression id="inputExpression_phosphate" typeRef="number">
+          <text>Phosphate</text>
+        </inputExpression>
+      </input>
+      <input id="input_potassium" label="Potassium">
+        <inputExpression id="inputExpression_potassium" typeRef="number">
+          <text>Potassium</text>
+        </inputExpression>
+      </input>
+      <input id="input_pyruvate" label="Pyruvate">
+        <inputExpression id="inputExpression_pyruvate" typeRef="number">
+          <text>Pyruvate</text>
+        </inputExpression>
+      </input>
+      <input id="input_sodium" label="Sodium">
+        <inputExpression id="inputExpression_sodium" typeRef="number">
+          <text>Sodium</text>
+        </inputExpression>
+      </input>
+      <input id="input_total_calcium" label="Total Calcium">
+        <inputExpression id="inputExpression_total_calcium" typeRef="number">
+          <text>Total Calcium</text>
+        </inputExpression>
+      </input>
+      <input id="input_tibc" label="Total Iron-Binding Capacity">
+        <inputExpression id="inputExpression_tibc" typeRef="number">
+          <text>Total Iron-Binding Capacity</text>
+        </inputExpression>
+      </input>
+      <input id="input_total_serum_iron" label="Total Serum Iron">
+        <inputExpression id="inputExpression_total_serum_iron" typeRef="number">
+          <text>Total Serum Iron</text>
+        </inputExpression>
+      </input>
+      <input id="input_transferrin" label="Transferrin">
+        <inputExpression id="inputExpression_transferrin" typeRef="number">
+          <text>Transferrin</text>
+        </inputExpression>
+      </input>
+      <input id="input_urea" label="Urea">
+        <inputExpression id="inputExpression_urea" typeRef="number">
+          <text>Urea</text>
+        </inputExpression>
+      </input>
+      <input id="input_uric_acid" label="Uric Acid">
+        <inputExpression id="inputExpression_uric_acid" typeRef="number">
+          <text>Uric Acid</text>
+        </inputExpression>
+      </input>
+      <input id="input_zinc" label="Zinc">
+        <inputExpression id="inputExpression_zinc" typeRef="number">
+          <text>Zinc</text>
+        </inputExpression>
+      </input>
+      <output id="output_validation" label="Validation Result" typeRef="string"/>
+
+      <!-- Decision rules -->
+      <rule id="rule_ammonia">
+        <inputEntry id="inputEntry_ammonia">
+          <text>[40..70]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ammonia_valid">
+          <text>"Ammonia level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_ceruloplasmin">
+        <inputEntry id="inputEntry_ceruloplasmin">
+          <text>[25..43]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ceruloplasmin_valid">
+          <text>"Ceruloplasmin level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_chloride">
+        <inputEntry id="inputEntry_chloride">
+          <text>[95..105]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_chloride_valid">
+          <text>"Chloride level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_copper">
+        <inputEntry id="inputEntry_copper">
+          <text>[100..200]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_copper_valid">
+          <text>"Copper level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_creatinine">
+        <inputEntry id="inputEntry_creatinine">
+          <text>[0.8..1.3]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_creatinine_valid">
+          <text>"Creatinine level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_bun">
+        <inputEntry id="inputEntry_bun">
+          <text>[8..20]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_bun_valid">
+          <text>"Blood Urea Nitrogen level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_ferritin_female">
+        <inputEntry id="inputEntry_ferritin">
+          <text>[24..307]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ferritin_female_valid">
+          <text>"Ferritin level for females is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_ferritin_male">
+        <inputEntry id="inputEntry_ferritin">
+          <text>[24..336]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ferritin_male_valid">
+          <text>"Ferritin level for males is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_glucose">
+        <inputEntry id="inputEntry_glucose">
+          <text>[70..99]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_glucose_valid">
+          <text>"Glucose level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_inorganic_phosphorous">
+        <inputEntry id="inputEntry_inorganic_phosphorous">
+          <text>[3..4.5]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_inorganic_phosphorous_valid">
+          <text>"Inorganic Phosphorous level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_ionized_calcium">
+        <inputEntry id="inputEntry_ionized_calcium">
+          <text>[1.12..1.23]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ionized_calcium_valid">
+          <text>"Ionized Calcium level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_magnesium">
+        <inputEntry id="inputEntry_magnesium">
+          <text>[1.6..2.6]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_magnesium_valid">
+          <text>"Magnesium level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_phosphate">
+        <inputEntry id="inputEntry_phosphate">
+          <text>[2.5..4.5]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_phosphate_valid">
+          <text>"Phosphate level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_potassium">
+        <inputEntry id="inputEntry_potassium">
+          <text>[3.5..5.0]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_potassium_valid">
+          <text>"Potassium level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_pyruvate">
+        <inputEntry id="inputEntry_pyruvate">
+          <text>[0.08..0.16]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_pyruvate_valid">
+          <text>"Pyruvate level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_sodium">
+        <inputEntry id="inputEntry_sodium">
+          <text>[136..145]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_sodium_valid">
+          <text>"Sodium level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_total_calcium">
+        <inputEntry id="inputEntry_total_calcium">
+          <text>[2..2.6]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_total_calcium_valid">
+          <text>"Total Calcium level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_tibc">
+        <inputEntry id="inputEntry_tibc">
+          <text>[250..310]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_tibc_valid">
+          <text>"Total Iron-Binding Capacity is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_total_serum_iron">
+        <inputEntry id="inputEntry_total_serum_iron">
+          <text>[50..150]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_total_serum_iron_valid">
+          <text>"Total Serum Iron level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_transferrin">
+        <inputEntry id="inputEntry_transferrin">
+          <text>[200..400]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_transferrin_valid">
+          <text>"Transferrin level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_urea">
+        <inputEntry id="inputEntry_urea">
+          <text>[1.2..3]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_urea_valid">
+          <text>"Urea level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_uric_acid">
+        <inputEntry id="inputEntry_uric_acid">
+          <text>[0.18..0.48]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_uric_acid_valid">
+          <text>"Uric Acid level is within range"</text>
+        </outputEntry>
+      </rule>
+      
+      <rule id="rule_zinc">
+        <inputEntry id="inputEntry_zinc">
+          <text>[75..140]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_zinc_valid">
+          <text>"Zinc level is within range"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

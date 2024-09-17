@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="complete-decision-model" name="Complete Decision Model" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="chemistryTable" name="Chemistry Results">
+    <decisionTable id="chemistryDecisionTable" hitPolicy="COLLECT">
+      <input id="inputAmmonia" label="Ammonia (μg/dL)">
+        <inputExpression id="ammoniaExpression" typeRef="number">
+          <text>ammonia</text>
+        </inputExpression>
+      </input>
+      <input id="inputCeruloplasmin" label="Ceruloplasmin (mg/dL)">
+        <inputExpression id="ceruloplasminExpression" typeRef="number">
+          <text>ceruloplasmin</text>
+        </inputExpression>
+      </input>
+      <output id="outputAmmonia" label="Ammonia-result" typeRef="string" />
+      <output id="outputCeruloplasmin" label="Ceruloplasmin-result" typeRef="string" />
+      <rule id="DecisionRule_0rvqkda">
+        <inputEntry id="ammoniaNormal">
+          <text>[40..70]</text>
+        </inputEntry>
+        <inputEntry id="ceruloplasminNormal">
+          <text>[25..43]</text>
+        </inputEntry>
+        <outputEntry id="ammoniaNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="ceruloplasminNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0va9jxa">
+        <inputEntry id="ammoniaLow">
+          <text>&lt;40</text>
+        </inputEntry>
+        <inputEntry id="ceruloplasminLow">
+          <text>&lt;25</text>
+        </inputEntry>
+        <outputEntry id="ammoniaLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+        <outputEntry id="ceruloplasminLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0q0c1s2">
+        <inputEntry id="ammoniaHigh">
+          <text>&gt;70</text>
+        </inputEntry>
+        <inputEntry id="ceruloplasminHigh">
+          <text>&gt;43</text>
+        </inputEntry>
+        <outputEntry id="ammoniaHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="ceruloplasminHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hematologyTable" name="Hematology Results">
+    <decisionTable id="hematologyDecisionTable" hitPolicy="COLLECT">
+      <input id="inputHemoglobin" label="Hemoglobin (g/dL)">
+        <inputExpression id="hemoglobinExpression" typeRef="number">
+          <text>hemoglobin</text>
+        </inputExpression>
+      </input>
+      <input id="inputHematocrit" label="Hematocrit (%)">
+        <inputExpression id="hematocritExpression" typeRef="number">
+          <text>hematocrit</text>
+        </inputExpression>
+      </input>
+      <output id="outputHemoglobin" label="Hemoglobin-result" typeRef="string" />
+      <output id="outputHematocrit" label="Hematocrit-result" typeRef="string" />
+      <rule id="DecisionRule_0e4oss5">
+        <inputEntry id="hemoglobinNormalFemale">
+          <text>[12..16]</text>
+        </inputEntry>
+        <inputEntry id="hematocritNormalFemale">
+          <text>[37..47]</text>
+        </inputEntry>
+        <outputEntry id="hemoglobinNormalFemaleResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="hematocritNormalFemaleResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1joy0hm">
+        <inputEntry id="hemoglobinLow">
+          <text>&lt;12</text>
+        </inputEntry>
+        <inputEntry id="hematocritLow">
+          <text>&lt;37</text>
+        </inputEntry>
+        <outputEntry id="hemoglobinLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+        <outputEntry id="hematocritLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0c30cj3">
+        <inputEntry id="hemoglobinHigh">
+          <text>&gt;16</text>
+        </inputEntry>
+        <inputEntry id="hematocritHigh">
+          <text>&gt;47</text>
+        </inputEntry>
+        <outputEntry id="hemoglobinHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="hematocritHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="lipidsTable" name="Lipids Results">
+    <decisionTable id="lipidsDecisionTable" hitPolicy="COLLECT">
+      <input id="inputTriglycerides" label="Triglycerides (mg/dL)">
+        <inputExpression id="triglyceridesExpression" typeRef="number">
+          <text>triglycerides</text>
+        </inputExpression>
+      </input>
+      <input id="inputTotalCholesterol" label="Total Cholesterol (mg/dL)">
+        <inputExpression id="totalCholesterolExpression" typeRef="number">
+          <text>totalCholesterol</text>
+        </inputExpression>
+      </input>
+      <output id="outputTriglycerides" label="Triglycerides-result" typeRef="string" />
+      <output id="outputTotalCholesterol" label="Total Cholesterol-result" typeRef="string" />
+      <rule id="DecisionRule_1dct6sy">
+        <inputEntry id="triglyceridesNormal">
+          <text>&lt;150</text>
+        </inputEntry>
+        <inputEntry id="totalCholesterolNormal">
+          <text>&lt;200</text>
+        </inputEntry>
+        <outputEntry id="triglyceridesNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="totalCholesterolNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1mmrchk">
+        <inputEntry id="triglyceridesHigh">
+          <text>&gt;=150</text>
+        </inputEntry>
+        <inputEntry id="totalCholesterolHigh">
+          <text>&gt;=200</text>
+        </inputEntry>
+        <outputEntry id="triglyceridesHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="totalCholesterolHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="acidBaseTable" name="Acid Base Results">
+    <decisionTable id="acidBaseDecisionTable" hitPolicy="COLLECT">
+      <input id="inputPH" label="pH">
+        <inputExpression id="phExpression" typeRef="number">
+          <text>ph</text>
+        </inputExpression>
+      </input>
+      <input id="inputBicarbonate" label="Bicarbonate (mEq/L)">
+        <inputExpression id="bicarbonateExpression" typeRef="number">
+          <text>bicarbonate</text>
+        </inputExpression>
+      </input>
+      <output id="outputPH" label="pH-result" typeRef="string" />
+      <output id="outputBicarbonate" label="Bicarbonate-result" typeRef="string" />
+      <rule id="DecisionRule_05ivgti">
+        <inputEntry id="phNormal">
+          <text>[7.38..7.44]</text>
+        </inputEntry>
+        <inputEntry id="bicarbonateNormal">
+          <text>[23..26]</text>
+        </inputEntry>
+        <outputEntry id="phNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="bicarbonateNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0b43ycc">
+        <inputEntry id="phLow">
+          <text>&lt;7.38</text>
+        </inputEntry>
+        <inputEntry id="bicarbonateLow">
+          <text>&lt;23</text>
+        </inputEntry>
+        <outputEntry id="phLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+        <outputEntry id="bicarbonateLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0axd74z">
+        <inputEntry id="phHigh">
+          <text>&gt;7.44</text>
+        </inputEntry>
+        <inputEntry id="bicarbonateHigh">
+          <text>&gt;26</text>
+        </inputEntry>
+        <outputEntry id="phHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="bicarbonateHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="gastrointestinalTable" name="Gastrointestinal Results">
+    <decisionTable id="gastrointestinalDecisionTable" hitPolicy="COLLECT">
+      <input id="inputAmylase" label="Amylase (U/L)">
+        <inputExpression id="amylaseExpression" typeRef="number">
+          <text>amylase</text>
+        </inputExpression>
+      </input>
+      <input id="inputLipase" label="Lipase (U/L)">
+        <inputExpression id="lipaseExpression" typeRef="number">
+          <text>lipase</text>
+        </inputExpression>
+      </input>
+      <output id="outputAmylase" label="Amylase-result" typeRef="string" />
+      <output id="outputLipase" label="Lipase-result" typeRef="string" />
+      <rule id="DecisionRule_1o93hg4">
+        <inputEntry id="amylaseNormal">
+          <text>[30..110]</text>
+        </inputEntry>
+        <inputEntry id="lipaseNormal">
+          <text>[0..160]</text>
+        </inputEntry>
+        <outputEntry id="amylaseNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="lipaseNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zsdc5i">
+        <inputEntry id="amylaseHigh">
+          <text>&gt;110</text>
+        </inputEntry>
+        <inputEntry id="lipaseHigh">
+          <text>&gt;160</text>
+        </inputEntry>
+        <outputEntry id="amylaseHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="lipaseHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="cardiacEnzymesTable" name="Cardiac Enzymes Results">
+    <decisionTable id="cardiacEnzymesDecisionTable" hitPolicy="COLLECT">
+      <input id="inputTroponin" label="Troponin (ng/mL)">
+        <inputExpression id="troponinExpression" typeRef="number">
+          <text>troponin</text>
+        </inputExpression>
+      </input>
+      <input id="inputCKMB" label="CK-MB (ng/mL)">
+        <inputExpression id="ckmbExpression" typeRef="number">
+          <text>ckmb</text>
+        </inputExpression>
+      </input>
+      <output id="outputTroponin" label="Troponin-result" typeRef="string" />
+      <output id="outputCKMB" label="CK-MB-result" typeRef="string" />
+      <rule id="DecisionRule_14kidmu">
+        <inputEntry id="troponinNormal">
+          <text>&lt;0.04</text>
+        </inputEntry>
+        <inputEntry id="ckmbNormal">
+          <text>&lt;6.0</text>
+        </inputEntry>
+        <outputEntry id="troponinNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="ckmbNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1pekj5g">
+        <inputEntry id="troponinHigh">
+          <text>&gt;=0.04</text>
+        </inputEntry>
+        <inputEntry id="ckmbHigh">
+          <text>&gt;=6.0</text>
+        </inputEntry>
+        <outputEntry id="troponinHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="ckmbHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="hormonesTable" name="Hormones Results">
+    <decisionTable id="hormonesDecisionTable" hitPolicy="COLLECT">
+      <input id="inputTSH" label="TSH (μIU/mL)">
+        <inputExpression id="tshExpression" typeRef="number">
+          <text>tsh</text>
+        </inputExpression>
+      </input>
+      <input id="inputT4" label="T4 (μg/dL)">
+        <inputExpression id="t4Expression" typeRef="number">
+          <text>t4</text>
+        </inputExpression>
+      </input>
+      <output id="outputTSH" label="TSH-result" typeRef="string" />
+      <output id="outputT4" label="T4-result" typeRef="string" />
+      <rule id="DecisionRule_18174ll">
+        <inputEntry id="tshNormal">
+          <text>[0.4..4.0]</text>
+        </inputEntry>
+        <inputEntry id="t4Normal">
+          <text>[5.0..12.0]</text>
+        </inputEntry>
+        <outputEntry id="tshNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="t4NormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0cvt0rx">
+        <inputEntry id="tshLow">
+          <text>&lt;0.4</text>
+        </inputEntry>
+        <inputEntry id="t4Low">
+          <text>&lt;5.0</text>
+        </inputEntry>
+        <outputEntry id="tshLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+        <outputEntry id="t4LowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_14p0uhz">
+        <inputEntry id="tshHigh">
+          <text>&gt;4.0</text>
+        </inputEntry>
+        <inputEntry id="t4High">
+          <text>&gt;12.0</text>
+        </inputEntry>
+        <outputEntry id="tshHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="t4HighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="vitaminsTable" name="Vitamins Results">
+    <decisionTable id="vitaminsDecisionTable" hitPolicy="COLLECT">
+      <input id="inputVitaminD" label="Vitamin D (ng/mL)">
+        <inputExpression id="vitaminDExpression" typeRef="number">
+          <text>vitaminD</text>
+        </inputExpression>
+      </input>
+      <input id="inputVitaminB12" label="Vitamin B12 (pg/mL)">
+        <inputExpression id="vitaminB12Expression" typeRef="number">
+          <text>vitaminB12</text>
+        </inputExpression>
+      </input>
+      <output id="outputVitaminD" label="Vitamin D-result" typeRef="string" />
+      <output id="outputVitaminB12" label="Vitamin B12-result" typeRef="string" />
+      <rule id="DecisionRule_183donf">
+        <inputEntry id="vitaminDNormal">
+          <text>[20..50]</text>
+        </inputEntry>
+        <inputEntry id="vitaminB12Normal">
+          <text>[200..900]</text>
+        </inputEntry>
+        <outputEntry id="vitaminDNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="vitaminB12NormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0pw3s3s">
+        <inputEntry id="vitaminDLow">
+          <text>&lt;20</text>
+        </inputEntry>
+        <inputEntry id="vitaminB12Low">
+          <text>&lt;200</text>
+        </inputEntry>
+        <outputEntry id="vitaminDLowResult">
+          <text>"Low"</text>
+        </outputEntry>
+        <outputEntry id="vitaminB12LowResult">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0t616go">
+        <inputEntry id="vitaminDHigh">
+          <text>&gt;50</text>
+        </inputEntry>
+        <inputEntry id="vitaminB12High">
+          <text>&gt;900</text>
+        </inputEntry>
+        <outputEntry id="vitaminDHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="vitaminB12HighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="tumorMarkersTable" name="Tumor Markers Results">
+    <decisionTable id="tumorMarkersDecisionTable" hitPolicy="COLLECT">
+      <input id="inputPSA" label="PSA (ng/mL)">
+        <inputExpression id="psaExpression" typeRef="number">
+          <text>psa</text>
+        </inputExpression>
+      </input>
+      <input id="inputCEA" label="CEA (ng/mL)">
+        <inputExpression id="ceaExpression" typeRef="number">
+          <text>cea</text>
+        </inputExpression>
+      </input>
+      <output id="outputPSA" label="PSA-result" typeRef="string" />
+      <output id="outputCEA" label="CEA-result" typeRef="string" />
+      <rule id="DecisionRule_1xhq8za">
+        <inputEntry id="psaNormal">
+          <text>&lt;4.0</text>
+        </inputEntry>
+        <inputEntry id="ceaNormal">
+          <text>&lt;5.0</text>
+        </inputEntry>
+        <outputEntry id="psaNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="ceaNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0yeoyfa">
+        <inputEntry id="psaHigh">
+          <text>&gt;=4.0</text>
+        </inputEntry>
+        <inputEntry id="ceaHigh">
+          <text>&gt;=5.0</text>
+        </inputEntry>
+        <outputEntry id="psaHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="ceaHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="miscellaneousTable" name="Miscellaneous Ranges Results">
+    <decisionTable id="miscellaneousDecisionTable" hitPolicy="COLLECT">
+      <input id="inputUricAcid" label="Uric Acid (mg/dL)">
+        <inputExpression id="uricAcidExpression" typeRef="number">
+          <text>uricAcid</text>
+        </inputExpression>
+      </input>
+      <input id="inputFerritin" label="Ferritin (ng/mL)">
+        <inputExpression id="ferritinExpression" typeRef="number">
+          <text>ferritin</text>
+        </inputExpression>
+      </input>
+      <output id="outputUricAcid" label="Uric Acid-result" typeRef="string" />
+      <output id="outputFerritin" label="Ferritin-result" typeRef="string" />
+      <rule id="DecisionRule_0cjo7w8">
+        <inputEntry id="uricAcidNormal">
+          <text>[3.5..7.2]</text>
+        </inputEntry>
+        <inputEntry id="ferritinNormal">
+          <text>[20..500]</text>
+        </inputEntry>
+        <outputEntry id="uricAcidNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+        <outputEntry id="ferritinNormalResult">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1mu48sh">
+        <inputEntry id="uricAcidHigh">
+          <text>&gt;7.2</text>
+        </inputEntry>
+        <inputEntry id="ferritinHigh">
+          <text>&gt;500</text>
+        </inputEntry>
+        <outputEntry id="uricAcidHighResult">
+          <text>"High"</text>
+        </outputEntry>
+        <outputEntry id="ferritinHighResult">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

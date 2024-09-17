@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             id="definitions_1" name="BloodChemistryRanges" namespace="http://www.example.com/dmn">
+    
+    <decision id="decision_1" name="Blood Chemistry Decision">
+        <decisionTable id="decisionTable_1">
+            <input id="input_BUN" label="Blood urea nitrogen (BUN)">
+                <inputExpression id="inputExpression_BUN" typeRef="number">
+                    <text>BUN</text>
+                </inputExpression>
+            </input>
+            <input id="input_CO2" label="Carbon dioxide (CO2)">
+                <inputExpression id="inputExpression_CO2" typeRef="number">
+                    <text>CO2</text>
+                </inputExpression>
+            </input>
+            <input id="input_Creatinine" label="Creatinine">
+                <inputExpression id="inputExpression_Creatinine" typeRef="number">
+                    <text>Creatinine</text>
+                </inputExpression>
+            </input>
+            <input id="input_Glucose" label="Glucose">
+                <inputExpression id="inputExpression_Glucose" typeRef="number">
+                    <text>Glucose</text>
+                </inputExpression>
+            </input>
+            <input id="input_SerumChloride" label="Serum chloride">
+                <inputExpression id="inputExpression_SerumChloride" typeRef="number">
+                    <text>SerumChloride</text>
+                </inputExpression>
+            </input>
+            <input id="input_SerumPotassium" label="Serum potassium">
+                <inputExpression id="inputExpression_SerumPotassium" typeRef="number">
+                    <text>SerumPotassium</text>
+                </inputExpression>
+            </input>
+            <input id="input_SerumSodium" label="Serum sodium">
+                <inputExpression id="inputExpression_SerumSodium" typeRef="number">
+                    <text>SerumSodium</text>
+                </inputExpression>
+            </input>
+            <input id="input_SerumCalcium" label="Serum calcium">
+                <inputExpression id="inputExpression_SerumCalcium" typeRef="number">
+                    <text>SerumCalcium</text>
+                </inputExpression>
+            </input>
+            <input id="input_TotalBilirubin" label="Total bilirubin">
+                <inputExpression id="inputExpression_TotalBilirubin" typeRef="number">
+                    <text>TotalBilirubin</text>
+                </inputExpression>
+            </input>
+            <input id="input_TotalProtein" label="Total protein">
+                <inputExpression id="inputExpression_TotalProtein" typeRef="number">
+                    <text>TotalProtein</text>
+                </inputExpression>
+            </input>
+            <output id="output_1" label="Result" typeRef="string"/>
+            <rule id="rule_1">
+                <inputEntry id="inputEntry_BUN">
+                    <text>[6..20]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_CO2">
+                    <text>[23..29]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_Creatinine">
+                    <text>[0.8..1.2]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_Glucose">
+                    <text>[64..100]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_SerumChloride">
+                    <text>[96..106]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_SerumPotassium">
+                    <text>[3.7..5.2]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_SerumSodium">
+                    <text>[136..144]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_SerumCalcium">
+                    <text>[8.5..10.2]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_TotalBilirubin">
+                    <text>[0.1..1.2]</text>
+                </inputEntry>
+                <inputEntry id="inputEntry_TotalProtein">
+                    <text>[6.0..8.3]</text>
+                </inputEntry>
+                <outputEntry id="outputEntry_1">
+                    <text>"Within Normal Ranges"</text>
+                </outputEntry>
+            </rule>
+        </decisionTable>
+    </decision>
+    
+    <dmndi:DMNDI>
+        <dmndi:DMNDiagram id="dmnDiagram_1">
+            <dmndi:DMNShape id="dmnShape_decision_1" dmnElementRef="decision_1">
+                <dc:Bounds x="150" y="100" width="180" height="80"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_BUN" dmnElementRef="input_BUN">
+                <dc:Bounds x="10" y="10" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_CO2" dmnElementRef="input_CO2">
+                <dc:Bounds x="10" y="70" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_Creatinine" dmnElementRef="input_Creatinine">
+                <dc:Bounds x="10" y="130" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_Glucose" dmnElementRef="input_Glucose">
+                <dc:Bounds x="10" y="190" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_SerumChloride" dmnElementRef="input_SerumChloride">
+                <dc:Bounds x="10" y="250" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_SerumPotassium" dmnElementRef="input_SerumPotassium">
+                <dc:Bounds x="10" y="310" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_SerumSodium" dmnElementRef="input_SerumSodium">
+                <dc:Bounds x="10" y="370" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_SerumCalcium" dmnElementRef="input_SerumCalcium">
+                <dc:Bounds x="10" y="430" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_TotalBilirubin" dmnElementRef="input_TotalBilirubin">
+                <dc:Bounds x="10" y="490" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNShape id="dmnShape_input_TotalProtein" dmnElementRef="input_TotalProtein">
+                <dc:Bounds x="10" y="550" width="150" height="50"/>
+            </dmndi:DMNShape>
+            <dmndi:DMNEdge id="dmnEdge_input_BUN" dmnElementRef="input_BUN">
+                <di:waypoint x="160" y="35"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_CO2" dmnElementRef="input_CO2">
+                <di:waypoint x="160" y="95"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_Creatinine" dmnElementRef="input_Creatinine">
+                <di:waypoint x="160" y="155"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_Glucose" dmnElementRef="input_Glucose">
+                <di:waypoint x="160" y="215"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_SerumChloride" dmnElementRef="input_SerumChloride">
+                <di:waypoint x="160" y="275"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_SerumPotassium" dmnElementRef="input_SerumPotassium">
+                <di:waypoint x="160" y="335"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_SerumSodium" dmnElementRef="input_SerumSodium">
+                <di:waypoint x="160" y="395"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_SerumCalcium" dmnElementRef="input_SerumCalcium">
+                <di:waypoint x="160" y="455"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_TotalBilirubin" dmnElementRef="input_TotalBilirubin">
+                <di:waypoint x="160" y="515"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+            <dmndi:DMNEdge id="dmnEdge_input_TotalProtein" dmnElementRef="input_TotalProtein">
+                <di:waypoint x="160" y="575"/>
+                <di:waypoint x="150" y="140"/>
+            </dmndi:DMNEdge>
+        </dmndi:DMNDiagram>
+    </dmndi:DMNDI>
+</definitions>

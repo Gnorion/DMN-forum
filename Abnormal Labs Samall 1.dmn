@@ -1,0 +1,312 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="definitions_0" name="Normal Ranges" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="decision_ammonia" name="Ammonia Test">
+    <informationRequirement id="InformationRequirement_0j971hz">
+      <requiredInput href="#InputData_08k20z3" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_ammonia">
+      <input id="input_ammonia" label="Ammonia (μg/dL)">
+        <inputExpression id="inputExpression_ammonia" typeRef="number" />
+      </input>
+      <output id="output_ammonia" label="Ammonia-result" name="Ammonia-result" />
+      <rule id="rule_ammonia_normal">
+        <inputEntry id="inputEntry_ammonia_normal">
+          <text>[40..70]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ammonia_normal">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_ammonia_low">
+        <inputEntry id="inputEntry_ammonia_low">
+          <text>"&lt;40"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ammonia_low">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_ammonia_high">
+        <inputEntry id="inputEntry_ammonia_high">
+          <text>"&gt;70"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_ammonia_high">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_hemoglobin" name="Hemoglobin Test">
+    <informationRequirement id="InformationRequirement_12j7k8r">
+      <requiredInput href="#InputData_03tw81u" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_15le88n">
+      <requiredInput href="#InputData_1r92kkn" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_hemoglobin">
+      <input id="input_hemoglobin" label="Gender">
+        <inputExpression id="inputExpression_hemoglobin" typeRef="number" />
+      </input>
+      <input id="input_gender" label="Hemoglobin (g/dL)">
+        <inputExpression id="inputExpression_gender" typeRef="string" />
+      </input>
+      <output id="output_hemoglobin" label="Hemoglobin-result" name="Hemoglobin-result" />
+      <rule id="rule_hemoglobin_female_normal">
+        <inputEntry id="inputEntry_hemoglobin_female_normal">
+          <text>"Female"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_hemoglobin_female_normal_value">
+          <text>[12..16]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hemoglobin_female_normal">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_hemoglobin_female_low">
+        <inputEntry id="inputEntry_hemoglobin_female_low">
+          <text>"Female"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_hemoglobin_female_low_value">
+          <text>"&lt;12"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hemoglobin_female_low">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_hemoglobin_female_high">
+        <inputEntry id="inputEntry_hemoglobin_female_high">
+          <text>"Female"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_hemoglobin_female_high_value">
+          <text>"&gt;16"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hemoglobin_female_high">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_hemoglobin_male_normal">
+        <inputEntry id="inputEntry_hemoglobin_male_normal">
+          <text>"Male"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_hemoglobin_male_normal_value">
+          <text>[14..18]</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hemoglobin_male_normal">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_hemoglobin_male_low">
+        <inputEntry id="inputEntry_hemoglobin_male_low">
+          <text>"Male"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_hemoglobin_male_low_value">
+          <text>"&lt;14"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hemoglobin_male_low">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_hemoglobin_male_high">
+        <inputEntry id="inputEntry_hemoglobin_male_high">
+          <text>"Male"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_hemoglobin_male_high_value">
+          <text>"&gt;18"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_hemoglobin_male_high">
+          <text>"High"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_summary_chemistry" name="Chemistry Summary">
+    <informationRequirement id="InformationRequirement_1prrpfg">
+      <requiredDecision href="#decision_ammonia" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_summary_chemistry">
+      <input id="input_ammonia_result" label="Ammonia-result">
+        <inputExpression id="inputExpression_ammonia_result" typeRef="string" />
+      </input>
+      <output id="output_summary_chemistry" label="Chemistry-summary" name="Chemistry-summary" />
+      <rule id="rule_summary_chemistry_normal">
+        <inputEntry id="inputEntry_summary_chemistry_normal">
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_summary_chemistry_normal">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_summary_chemistry_abnormal">
+        <inputEntry id="inputEntry_summary_chemistry_abnormal">
+          <text>"Low"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_summary_chemistry_abnormal">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_summary_chemistry_abnormal_high">
+        <inputEntry id="inputEntry_summary_chemistry_abnormal_high">
+          <text>"High"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_summary_chemistry_abnormal_high">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_summary_hematology" name="Hematology Summary">
+    <informationRequirement id="InformationRequirement_0d983a8">
+      <requiredDecision href="#decision_hemoglobin" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_summary_hematology">
+      <input id="input_hemoglobin_result" label="Hemoglobin-result">
+        <inputExpression id="inputExpression_hemoglobin_result" typeRef="string" />
+      </input>
+      <output id="output_summary_hematology" label="Hematology-summary" name="Hematology-summary" />
+      <rule id="rule_summary_hematology_normal">
+        <inputEntry id="inputEntry_summary_hematology_normal">
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_summary_hematology_normal">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_summary_hematology_abnormal">
+        <inputEntry id="inputEntry_summary_hematology_abnormal">
+          <text>"Low"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_summary_hematology_abnormal">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_summary_hematology_abnormal_high">
+        <inputEntry id="inputEntry_summary_hematology_abnormal_high">
+          <text>"High"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_summary_hematology_abnormal_high">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="decision_final" name="Abnormal Results">
+    <informationRequirement id="InformationRequirement_0a9tjnd">
+      <requiredDecision href="#decision_summary_chemistry" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0gxbjqj">
+      <requiredDecision href="#decision_summary_hematology" />
+    </informationRequirement>
+    <decisionTable id="decisionTable_final">
+      <input id="input_summary_chemistry" label="Chemistry-summary">
+        <inputExpression id="inputExpression_summary_chemistry" typeRef="string" />
+      </input>
+      <input id="input_summary_hematology" label="Hematology-summary">
+        <inputExpression id="inputExpression_summary_hematology" typeRef="string" />
+      </input>
+      <output id="output_final" label="Abnormal-results" name="Abnormal-results" />
+      <rule id="DecisionRule_1w03q1i">
+        <inputEntry id="UnaryTests_07211br">
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_190xyh7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0b32nc2">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0odxjmf">
+        <inputEntry id="UnaryTests_067pa65">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0eytz0q">
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1w772pt">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_final_normal">
+        <inputEntry id="inputEntry_final_normal">
+          <text>"Normal"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_final_normal">
+          <text>"Normal"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_final_abnormal">
+        <inputEntry id="inputEntry_final_abnormal">
+          <text>"Abnormal"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_final_abnormal">
+          <text>"Abnormal"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_03tw81u" name="Hemoglobin (g/dL)" />
+  <inputData id="InputData_1r92kkn" name="Gender" />
+  <inputData id="InputData_08k20z3" name="Ammonia (μg/dL)" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_1kejt2o">
+      <dmndi:DMNShape id="DMNShape_18kw7ab" dmnElementRef="decision_ammonia">
+        <dc:Bounds height="80" width="180" x="160" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0tcilci" dmnElementRef="decision_hemoglobin">
+        <dc:Bounds height="80" width="180" x="400" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1p935s0" dmnElementRef="decision_summary_chemistry">
+        <dc:Bounds height="80" width="180" x="160" y="200" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1hibdsr" dmnElementRef="decision_summary_hematology">
+        <dc:Bounds height="80" width="180" x="400" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1amqdvx" dmnElementRef="decision_final">
+        <dc:Bounds height="80" width="180" x="280" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1s8q8en" dmnElementRef="InformationRequirement_0a9tjnd">
+        <di:waypoint x="250" y="200" />
+        <di:waypoint x="340" y="180" />
+        <di:waypoint x="340" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1pkwy7v" dmnElementRef="InformationRequirement_0gxbjqj">
+        <di:waypoint x="490" y="210" />
+        <di:waypoint x="400" y="180" />
+        <di:waypoint x="400" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0dfhb61" dmnElementRef="InformationRequirement_1prrpfg">
+        <di:waypoint x="250" y="360" />
+        <di:waypoint x="250" y="300" />
+        <di:waypoint x="250" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0i1g3cm" dmnElementRef="InformationRequirement_0d983a8">
+        <di:waypoint x="490" y="360" />
+        <di:waypoint x="490" y="310" />
+        <di:waypoint x="490" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_14zdh8q" dmnElementRef="InputData_03tw81u">
+        <dc:Bounds height="45" width="125" x="347" y="497" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0infdd9" dmnElementRef="InputData_1r92kkn">
+        <dc:Bounds height="45" width="125" x="508" y="497" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0lz1b8z" dmnElementRef="InformationRequirement_12j7k8r">
+        <di:waypoint x="410" y="497" />
+        <di:waypoint x="460" y="460" />
+        <di:waypoint x="460" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0lduy4y" dmnElementRef="InformationRequirement_15le88n">
+        <di:waypoint x="571" y="497" />
+        <di:waypoint x="520" y="460" />
+        <di:waypoint x="520" y="440" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_10o6of9" dmnElementRef="InputData_08k20z3">
+        <dc:Bounds height="45" width="125" x="187" y="497" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0f570nl" dmnElementRef="InformationRequirement_0j971hz">
+        <di:waypoint x="250" y="497" />
+        <di:waypoint x="250" y="460" />
+        <di:waypoint x="250" y="440" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

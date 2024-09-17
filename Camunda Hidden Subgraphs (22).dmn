@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0w6cjuc" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1wd9hr5" name="DT1">
+    <informationRequirement id="InformationRequirement_1mu162c">
+      <requiredDecision href="#Decision_0brwcou" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1iayfm6">
+      <input id="Input_1" label="P">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0syd1zj" label="Q">
+        <inputExpression id="LiteralExpression_03ja22f" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="T" typeRef="string" />
+      <output id="OutputClause_0y5cuqi" label="U" typeRef="string" />
+      <rule id="DecisionRule_1tbs9v9">
+        <inputEntry id="UnaryTests_0j65bef">
+          <text>x</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_19m9gc0">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xlkddd">
+          <text>x</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_12u32mr">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01ksyzt">
+        <inputEntry id="UnaryTests_1lkf4ue">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_186agbd">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_16kimo0">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ynxmin">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0brwcou" name="DT2">
+    <informationRequirement id="InformationRequirement_00z1xe9">
+      <requiredDecision href="#Decision_0a3vj3s" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0txf9h0">
+      <input id="InputClause_13txcqy" label="T">
+        <inputExpression id="LiteralExpression_0h28k5u" typeRef="string" />
+      </input>
+      <output id="OutputClause_1bngcvc" label="W" typeRef="string" />
+      <rule id="DecisionRule_18lxar1">
+        <inputEntry id="UnaryTests_0qvnhpv">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1brkhm1">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0azbi26">
+        <inputEntry id="UnaryTests_00uzj41">
+          <text>y</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1s144ed">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_17kyaxk" name="DT4">
+    <informationRequirement id="InformationRequirement_0l08dto">
+      <requiredDecision href="#Decision_1wd9hr5" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1husuhi">
+      <input id="InputClause_0a39tqd" label="p">
+        <inputExpression id="LiteralExpression_0qfjefx" typeRef="string" />
+      </input>
+      <output id="OutputClause_13b7kt3" label="w" typeRef="string" />
+      <rule id="DecisionRule_0lb5ctu">
+        <inputEntry id="UnaryTests_0awpj25">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dfr6ct">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0a3vj3s" name="DT3">
+    <informationRequirement id="InformationRequirement_1vaa8yw">
+      <requiredDecision href="#Decision_17kyaxk" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1t5fb40">
+      <input id="InputClause_1lhh5vq" label="W">
+        <inputExpression id="LiteralExpression_00dde9t" typeRef="string" />
+      </input>
+      <output id="OutputClause_0y3960u" label="Z" typeRef="string" />
+      <rule id="DecisionRule_0x6d7rl">
+        <inputEntry id="UnaryTests_14698ij">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0f1z41z">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1wd9hr5">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0681156" dmnElementRef="InformationRequirement_1mu162c">
+        <di:waypoint x="250" y="240" />
+        <di:waypoint x="250" y="200" />
+        <di:waypoint x="250" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0gibk72" dmnElementRef="Decision_0brwcou">
+        <dc:Bounds height="80" width="180" x="160" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ozuk4z" dmnElementRef="InformationRequirement_00z1xe9">
+        <di:waypoint x="410" y="280" />
+        <di:waypoint x="360" y="280" />
+        <di:waypoint x="340" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0lxwig8" dmnElementRef="InformationRequirement_0l08dto">
+        <di:waypoint x="340" y="140" />
+        <di:waypoint x="390" y="140" />
+        <di:waypoint x="410" y="140" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_19xyczw" dmnElementRef="InformationRequirement_1vaa8yw">
+        <di:waypoint x="500" y="180" />
+        <di:waypoint x="500" y="220" />
+        <di:waypoint x="500" y="240" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jznycj" dmnElementRef="Decision_17kyaxk">
+        <dc:Bounds height="80" width="180" x="410" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_05rnx8t" dmnElementRef="Decision_0a3vj3s">
+        <dc:Bounds height="80" width="180" x="410" y="240" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

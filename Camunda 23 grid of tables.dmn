@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0crn7p8" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0vwtllj" name="T1">
+    <informationRequirement id="InformationRequirement_0vx627s">
+      <requiredDecision href="#Decision_1f7fbhq" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1pjke79">
+      <requiredDecision href="#Decision_12we7of" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_19ahkaj">
+      <input id="Input_1" label="T2">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0trseos" label="T4">
+        <inputExpression id="LiteralExpression_1ekrq2l" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="T1" typeRef="string" />
+      <rule id="DecisionRule_1wu5k2g">
+        <inputEntry id="UnaryTests_013kzm9">
+          <text>&lt;100</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fi1m59">
+          <text>&lt;100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0c2iu5p">
+          <text>'eligible'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tq3vqp">
+        <inputEntry id="UnaryTests_0qeehz2">
+          <text>&gt;=100</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pfu2p3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yih3tw">
+          <text>'ineligible'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0maxz5z">
+        <inputEntry id="UnaryTests_0p2t6wi">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0m3yd04">
+          <text>&gt;=100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00pk4q6">
+          <text>'ineligible'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1bae5ge" name="A" />
+  <inputData id="InputData_00nw14p" name="B" />
+  <inputData id="InputData_11jxdah" name="C" />
+  <inputData id="InputData_02kbknb" name="D" />
+  <decision id="Decision_00n7py6" name="T3">
+    <informationRequirement id="InformationRequirement_0dr1knd">
+      <requiredInput href="#InputData_1bae5ge" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1mfiwee">
+      <requiredInput href="#InputData_00nw14p" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0y039bm">
+      <input id="InputClause_0qa05xx" label="A">
+        <inputExpression id="LiteralExpression_0woxdpx" typeRef="string" />
+      </input>
+      <input id="InputClause_0h5vhsk" label="B">
+        <inputExpression id="LiteralExpression_0o2kkke" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_09caft7" label="T3" typeRef="string" />
+      <rule id="DecisionRule_0v4jtzi">
+        <inputEntry id="UnaryTests_14gy78o">
+          <text>'red'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wt8gc2">
+          <text>'large'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15sfhyn">
+          <text>'T3A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0sl55gu">
+        <inputEntry id="UnaryTests_05xeo90">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00wz0el">
+          <text>'small'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nvgkpi">
+          <text>'T3B'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_18rz6kh" name="T6">
+    <informationRequirement id="InformationRequirement_1rf5677">
+      <requiredInput href="#InputData_00nw14p" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_02ctlvb">
+      <input id="InputClause_1kb12ad" label="B">
+        <inputExpression id="LiteralExpression_08jv8ld" typeRef="string" />
+      </input>
+      <output id="OutputClause_1aovzpi" label="T6" typeRef="string" />
+      <rule id="DecisionRule_1rgxfu2">
+        <inputEntry id="UnaryTests_01tvkqi">
+          <text>&gt;100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0l9ydu5">
+          <text>'T6A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ep3pv6">
+        <inputEntry id="UnaryTests_0yaaptg">
+          <text>&lt;=100</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08v46hv">
+          <text>'T6B'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0r5bytu" name="T9">
+    <informationRequirement id="InformationRequirement_0qiguun">
+      <requiredInput href="#InputData_11jxdah" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_17eualb">
+      <input id="InputClause_1ne66ju" label="c">
+        <inputExpression id="LiteralExpression_1hjdxra" typeRef="string" />
+      </input>
+      <output id="OutputClause_1c6hpw0" label="T9" typeRef="string" />
+      <rule id="DecisionRule_14pv82p">
+        <inputEntry id="UnaryTests_0q0076w">
+          <text>&lt;0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0fclw1v">
+          <text>'T9A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_018srwf">
+        <inputEntry id="UnaryTests_1x62xtd">
+          <text>&gt;=0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pui2ao">
+          <text>'T9B'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1kgvmeb" name="T12">
+    <informationRequirement id="InformationRequirement_01exyn1">
+      <requiredInput href="#InputData_02kbknb" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0huel98">
+      <input id="InputClause_00hiu7i" label="D">
+        <inputExpression id="LiteralExpression_0bk4kzl" typeRef="string" />
+      </input>
+      <output id="OutputClause_0wvgm3z" label="T12" typeRef="string" />
+      <rule id="DecisionRule_1m26inn">
+        <inputEntry id="UnaryTests_1h0jco5">
+          <text>[0..100]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1icy7qu">
+          <text>'T12A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1s5jyg4">
+        <inputEntry id="UnaryTests_0fasomk">
+          <text>&lt;0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0jh5x97">
+          <text>'T12B'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11t8yg0">
+        <inputEntry id="UnaryTests_10wsmfb">
+          <text>&gt;1-00</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1rsilxt">
+          <text>'T12C'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0ti8qla" name="T5">
+    <informationRequirement id="InformationRequirement_1m4ikpn">
+      <requiredDecision href="#Decision_18rz6kh" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0w37ndj">
+      <requiredDecision href="#Decision_0r5bytu" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0mo7axp">
+      <input id="InputClause_04tez2c" label="T6">
+        <inputExpression id="LiteralExpression_15c16a3" typeRef="string" />
+      </input>
+      <input id="InputClause_0djx1to" label="T9">
+        <inputExpression id="LiteralExpression_0cjvdnc" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1rhpr3u" label="T5" typeRef="string" />
+      <rule id="DecisionRule_1143r7z">
+        <inputEntry id="UnaryTests_10qjdox">
+          <text>'T6A'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gt8x66">
+          <text>'T9A'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05h4603">
+          <text>'T5A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_014lkf8">
+        <inputEntry id="UnaryTests_1o65c8g">
+          <text>'T6B'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1p6ui4u">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01oe07h">
+          <text>'T5B'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0f0i7db" name="T11">
+    <informationRequirement id="InformationRequirement_1013wof">
+      <requiredDecision href="#Decision_1kgvmeb" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1y3iy1r">
+      <input id="InputClause_02swai3">
+        <inputExpression id="LiteralExpression_045pzhq" typeRef="string" />
+      </input>
+      <output id="OutputClause_1dw6r1v" label="T10" typeRef="string" />
+      <output id="OutputClause_027ocjl" label="X" typeRef="string" />
+      <rule id="DecisionRule_1xoeboy">
+        <inputEntry id="UnaryTests_1leudl9">
+          <text>'T11A'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dgxpox">
+          <text>'T10A'</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0w38fzl">
+          <text>'X1'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0qun8dq" name="T7">
+    <informationRequirement id="InformationRequirement_0ucyndg">
+      <requiredDecision href="#Decision_0d810a8" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_03m2xc6">
+      <requiredDecision href="#Decision_0f0i7db" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0bojgq5">
+      <requiredDecision href="#Decision_1etsxmd" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1ifrpea">
+      <input id="InputClause_1iq7rps" label="T8">
+        <inputExpression id="LiteralExpression_1inpt5p" typeRef="string" />
+      </input>
+      <input id="InputClause_0di3pgu" label="X">
+        <inputExpression id="LiteralExpression_0k8xxi4" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_01qp2rm" label="T10">
+        <inputExpression id="LiteralExpression_1e2pjc1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1wrg2js" label="T7" typeRef="string" />
+      <rule id="DecisionRule_18h2opg">
+        <inputEntry id="UnaryTests_0l8w8yb">
+          <text>'T8A'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lr68s9">
+          <text>'X1'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0z2hkll">
+          <text>'T10A'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0d1g6s1">
+          <text>'T7A'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0d810a8" name="T8">
+    <informationRequirement id="InformationRequirement_0k6dgwq">
+      <requiredDecision href="#Decision_0r5bytu" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0vouoa4">
+      <input id="InputClause_0oe5cay" label="T9">
+        <inputExpression id="LiteralExpression_00ptbvc" typeRef="string" />
+      </input>
+      <output id="OutputClause_07c7l68" label="T8" typeRef="string" />
+      <rule id="DecisionRule_1mp0bi7">
+        <inputEntry id="UnaryTests_14ducoy">
+          <text>'T9A'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dsrvkt">
+          <text>'T8A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fiimil">
+        <inputEntry id="UnaryTests_17lcwri">
+          <text>'T9B'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nbb9oe">
+          <text>'T8A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ii9yju">
+        <inputEntry id="UnaryTests_1cv8r6p">
+          <text>'T9C'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13x5fmy">
+          <text>'T8A'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1etsxmd" name="T10">
+    <informationRequirement id="InformationRequirement_12doq6r">
+      <requiredDecision href="#Decision_0f0i7db" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0rsweni">
+      <input id="InputClause_12bq53d" label="T11">
+        <inputExpression id="LiteralExpression_19mreiq" typeRef="string" />
+      </input>
+      <output id="OutputClause_0a6hgqi" label="T10" typeRef="string" />
+      <rule id="DecisionRule_03orjzg">
+        <inputEntry id="UnaryTests_13g82ic">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_16irn6h">
+          <text>'T10A'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_12we7of" name="T4">
+    <informationRequirement id="InformationRequirement_05knzyn">
+      <requiredDecision href="#Decision_0ti8qla" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1kg5v92">
+      <requiredDecision href="#Decision_0qun8dq" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_01idfo7">
+      <input id="InputClause_0wm8q1n" label="T5">
+        <inputExpression id="LiteralExpression_0l5rbuf" typeRef="string" />
+      </input>
+      <input id="InputClause_0kv55kn" label="T7">
+        <inputExpression id="LiteralExpression_140qz9l" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0c7dgj6" label="T4" typeRef="string" />
+      <rule id="DecisionRule_06nmt8q">
+        <inputEntry id="UnaryTests_1vbpsyi">
+          <text>'T5A'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gzzsiy">
+          <text>'T7A'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15a1a1c">
+          <text>'T4A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_00f97i7">
+        <inputEntry id="UnaryTests_102leqd">
+          <text>'T5B'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1afzblm">
+          <text>'T5B'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0feqfea">
+          <text>'T4B'</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1f7fbhq" name="T2">
+    <informationRequirement id="InformationRequirement_03gg4qg">
+      <requiredDecision href="#Decision_00n7py6" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1y36dlq">
+      <input id="InputClause_002vrwz" label="T5">
+        <inputExpression id="LiteralExpression_1qb01t6" typeRef="string" />
+      </input>
+      <input id="InputClause_0svtj2x" label="T3">
+        <inputExpression id="LiteralExpression_1e6gels" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1aqo4fu" label="T11">
+        <inputExpression id="LiteralExpression_0gtxyzq" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0vvuc95" typeRef="string" />
+      <rule id="DecisionRule_0k246iv">
+        <inputEntry id="UnaryTests_0q6x44t">
+          <text>'T5A'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1o20wjv">
+          <text>'T3A'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0yc6te6">
+          <text>'T11A'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0qjw97i">
+          <text>'T2A'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1jfbj4b">
+        <inputEntry id="UnaryTests_17ro3ui">
+          <text>'T5B'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0q1l6v5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ac2hgv">
+          <text>'T11B'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1oapsng">
+          <text>'T2B'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0pkaocd">
+        <inputEntry id="UnaryTests_1gd8sa4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1jwlbfu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0tqyu1n">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_072yap1">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0vwtllj">
+        <dc:Bounds height="80" width="180" x="190" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_007p9as" dmnElementRef="InformationRequirement_1013wof">
+        <di:waypoint x="980" y="340" />
+        <di:waypoint x="980" y="330" />
+        <di:waypoint x="980" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_17v45j9" dmnElementRef="InformationRequirement_12doq6r">
+        <di:waypoint x="980" y="230" />
+        <di:waypoint x="980" y="210" />
+        <di:waypoint x="980" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0q3n3mn" dmnElementRef="InformationRequirement_0k6dgwq">
+        <di:waypoint x="750" y="340" />
+        <di:waypoint x="750" y="330" />
+        <di:waypoint x="750" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1q8w7w1" dmnElementRef="InformationRequirement_0ucyndg">
+        <di:waypoint x="750" y="230" />
+        <di:waypoint x="720" y="210" />
+        <di:waypoint x="720" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1fjt2if" dmnElementRef="InformationRequirement_1m4ikpn">
+        <di:waypoint x="520" y="340" />
+        <di:waypoint x="490" y="330" />
+        <di:waypoint x="490" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1hsdelz" dmnElementRef="InformationRequirement_05knzyn">
+        <di:waypoint x="520" y="230" />
+        <di:waypoint x="520" y="210" />
+        <di:waypoint x="520" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1eh85re" dmnElementRef="InformationRequirement_03gg4qg">
+        <di:waypoint x="280" y="340" />
+        <di:waypoint x="280" y="330" />
+        <di:waypoint x="280" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ilwsrj" dmnElementRef="InformationRequirement_0vx627s">
+        <di:waypoint x="280" y="230" />
+        <di:waypoint x="280" y="210" />
+        <di:waypoint x="280" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1tobr8k" dmnElementRef="InformationRequirement_1pjke79">
+        <di:waypoint x="430" y="150" />
+        <di:waypoint x="390" y="150" />
+        <di:waypoint x="370" y="150" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1wuggin" dmnElementRef="InputData_1bae5ge">
+        <dc:Bounds height="45" width="125" x="187" y="478" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0buxbzi" dmnElementRef="InputData_00nw14p">
+        <dc:Bounds height="45" width="125" x="457" y="478" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1a936g2" dmnElementRef="InputData_11jxdah">
+        <dc:Bounds height="45" width="125" x="688" y="479" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ugkxu9" dmnElementRef="InputData_02kbknb">
+        <dc:Bounds height="45" width="125" x="918" y="479" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0rak7fm" dmnElementRef="InformationRequirement_01exyn1">
+        <di:waypoint x="981" y="479" />
+        <di:waypoint x="980" y="440" />
+        <di:waypoint x="980" y="420" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0wdpy9p" dmnElementRef="InformationRequirement_0qiguun">
+        <di:waypoint x="751" y="479" />
+        <di:waypoint x="750" y="440" />
+        <di:waypoint x="750" y="420" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0249uq4" dmnElementRef="InformationRequirement_1rf5677">
+        <di:waypoint x="520" y="478" />
+        <di:waypoint x="520" y="440" />
+        <di:waypoint x="520" y="420" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_049e681" dmnElementRef="InformationRequirement_0dr1knd">
+        <di:waypoint x="250" y="478" />
+        <di:waypoint x="250" y="440" />
+        <di:waypoint x="250" y="420" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_07ntnbk" dmnElementRef="InformationRequirement_1mfiwee">
+        <di:waypoint x="520" y="478" />
+        <di:waypoint x="310" y="440" />
+        <di:waypoint x="310" y="420" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01t1qsg" dmnElementRef="Decision_00n7py6">
+        <dc:Bounds height="80" width="180" x="190" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1gn4old" dmnElementRef="Decision_18rz6kh">
+        <dc:Bounds height="80" width="180" x="430" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_14189q9" dmnElementRef="Decision_0r5bytu">
+        <dc:Bounds height="80" width="180" x="660" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0g0yayy" dmnElementRef="Decision_1kgvmeb">
+        <dc:Bounds height="80" width="180" x="890" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_19eudey" dmnElementRef="Decision_0ti8qla">
+        <dc:Bounds height="80" width="180" x="430" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_14m0r8w" dmnElementRef="InformationRequirement_0w37ndj">
+        <di:waypoint x="750" y="340" />
+        <di:waypoint x="550" y="330" />
+        <di:waypoint x="550" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0edrtap" dmnElementRef="Decision_0f0i7db">
+        <dc:Bounds height="80" width="180" x="890" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_08meo1b" dmnElementRef="InformationRequirement_03m2xc6">
+        <di:waypoint x="980" y="230" />
+        <di:waypoint x="780" y="210" />
+        <di:waypoint x="780" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0le630v" dmnElementRef="Decision_0qun8dq">
+        <dc:Bounds height="80" width="180" x="660" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ftiso7" dmnElementRef="Decision_0d810a8">
+        <dc:Bounds height="80" width="180" x="660" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_19kh6v7" dmnElementRef="Decision_1etsxmd">
+        <dc:Bounds height="80" width="180" x="890" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06vx081" dmnElementRef="InformationRequirement_0bojgq5">
+        <di:waypoint x="890" y="150" />
+        <di:waypoint x="860" y="150" />
+        <di:waypoint x="840" y="150" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ac6nx9" dmnElementRef="InformationRequirement_1kg5v92">
+        <di:waypoint x="660" y="150" />
+        <di:waypoint x="630" y="150" />
+        <di:waypoint x="610" y="150" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1e2n9at" dmnElementRef="Decision_12we7of">
+        <dc:Bounds height="80" width="180" x="430" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0hhsohd" dmnElementRef="Decision_1f7fbhq">
+        <dc:Bounds height="80" width="180" x="190" y="230" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

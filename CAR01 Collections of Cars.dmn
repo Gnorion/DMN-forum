@@ -141,6 +141,7 @@ distinct values (cars.group)        = ["G1","G2"] and
 distinct values (cars)              = [  {"make": "ford","model": "taurus","group": "G1"},{"make": "hyundai","model": "santa fe","group": "G2"  }, {"make": "austin","model": "mini","group": "G2"}  ]</text>
     </literalExpression>
   </decision>
+  <decision id="Decision_0460lu3" name="DMC02 collections of Cars" />
   <textAnnotation id="TextAnnotation_0pv2cod">
     <text>ACTUAL JSON INPUT DATA
 {"cars":
@@ -231,6 +232,13 @@ distinct values (cars) = [ {"make": "ford","model": "taurus","group": "G1"},{"ma
   <association id="Association_0lzfsd7">
     <sourceRef href="#TextAnnotation_052bnpy" />
     <targetRef href="#Decision_1ta5gyg" />
+  </association>
+  <textAnnotation id="TextAnnotation_06el0n2">
+    <text>https://dmcommunity.org/challenge/challenge-sep-2015/</text>
+  </textAnnotation>
+  <association id="Association_1247glb">
+    <sourceRef href="#TextAnnotation_06el0n2" />
+    <targetRef href="#Decision_0460lu3" />
   </association>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
@@ -364,6 +372,16 @@ distinct values (cars) = [ {"make": "ford","model": "taurus","group": "G1"},{"ma
       <dmndi:DMNEdge id="DMNEdge_13pfpqk" dmnElementRef="Association_0lzfsd7">
         <di:waypoint x="1750" y="470" />
         <di:waypoint x="1720" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1qaeq76" dmnElementRef="Decision_0460lu3">
+        <dc:Bounds height="80" width="180" x="170" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0v1uws6" dmnElementRef="TextAnnotation_06el0n2">
+        <dc:Bounds height="30" width="320" x="130" y="175" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lld0fr" dmnElementRef="Association_1247glb">
+        <di:waypoint x="200" y="175" />
+        <di:waypoint x="207" y="170" />
       </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             xmlns:camunda="http://camunda.org/schema/1.0/dmn"
+             id="_0019_flight_rebooking"
+             name="0019-flight-rebooking"
+             namespace="http://camunda.org/schema/1.0/dmn">
+
+  <!-- Input Data Definitions -->
+  <inputData id="i_Flight_List" name="Flight List">
+    <variable name="Flight List" typeRef="tFlightTable"/>
+  </inputData>
+
+  <inputData id="i_Passenger_List" name="Passenger List">
+    <variable name="Passenger List" typeRef="tPassengerTable"/>
+  </inputData>
+
+  <!-- Decision Table: Prioritized Waiting List -->
+  <decision id="d_PrioritizedWaitingList" name="Prioritized Waiting List">
+    <variable name="Prioritized Waiting List" typeRef="tPassengerTable"/>
+    <informationRequirement>
+      <requiredInput href="#i_Passenger_List"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#i_Flight_List"/>
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#b_PassengerPriority"/>
+    </knowledgeRequirement>
+    
+    <context>
+      <contextEntry>
+        <variable name="Cancelled Flights" typeRef="tFlightNumberList"/>
+        <literalExpression>
+          <text>Flight List[ Status = "cancelled" ].Flight Number</text>
+        </literalExpression>
+      </contextEntry>
+      <contextEntry>
+        <variable name="Waiting List" typeRef="tPassengerTable"/>
+        <literalExpression>
+          <text>Passenger List[ list contains(Cancelled Flights, Flight Number) ]</text>
+        </literalExpression>
+      </contextEntry>
+      <contextEntry>
+        <literalExpression>
+          <text>sort(Waiting List, passenger priority)</text>
+        </literalExpression>
+      </contextEntry>
+    </context>
+  </decision>
+
+  <!-- Decision Table: Rebooked Passengers -->
+  <decision id="d_RebookedPassengers" name="Rebooked Passengers">
+    <variable name="Rebooked Passengers" typeRef="tPassengerTable"/>
+    <informationRequirement>
+      <requiredDecision href="#d_PrioritizedWaitingList"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#i_Flight_List"/>
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#b_ReassignNextPassenger"/>
+    </knowledgeRequirement>
+    
+    <invocation>
+      <literalExpression>
+        <text>reassign next passenger</text>
+      </literalExpression>
+      <binding>
+        <parameter name="Waiting List"/>
+        <literalExpression>
+          <text>Prioritized Waiting List</text>
+        </literalExpression>
+      </binding>
+      <binding>
+        <parameter name="Reassigned Passengers List"/>
+        <literalExpression>
+          <text>[]</text>
+        </literalExpression>
+      </binding>
+      <binding>
+        <parameter name="Flights"/>
+        <literalExpression>
+          <text>Flight List</text>
+        </literalExpression>
+      </binding>
+    </invocation>
+  </decision>
+
+  <!-- Business Knowledge Model: Passenger Priority -->
+  <businessKnowledgeModel id="b_PassengerPriority" name="passenger priority">
+    <variable name="passenger priority" typeRef="boolean"/>
+    <encapsulatedLogic>
+      <formalParameter name="Passenger1" typeRef="tPassenger"/>
+      <formalParameter name="Passenger2" typeRef="tPassenger"/>
+      <decisionTable hitPolicy="UNIQUE">
+        <input id="b_Passenger_Priority_dt_i_P1_Status" label="Passenger1.Status">
+          <inputExpression typeRef="string">
+            <text>Passenger1.Status</text>
+          </inputExpression>
+          <inputValues>
+            <text>"gold", "silver", "bronze"</text>
+          </inputValues>
+        </input>
+        <input id="b_Passenger_Priority_dt_i_P2_Status" label="Passenger2.Status">
+          <inputExpression typeRef="string">
+            <text>Passenger2.Status</text>
+          </inputExpression>
+          <inputValues>
+            <text>"gold", "silver", "bronze"</text>
+          </inputValues>
+        </input>
+        <input id="b_Passenger_Priority_dt_i_P1_Miles" label="Passenger1.Miles">
+          <inputExpression typeRef="number">
+            <text>Passenger1.Miles</text>
+          </inputExpression>
+        </input>
+        <output id="b_Status_Priority_dt_o" label="Passenger1 has priority">
+          <outputValues>
+            <text>true, false</text>
+          </outputValues>
+          <defaultOutputEntry>
+            <text>false</text>
+          </defaultOutputEntry>
+        </output>
+        <rule id="b_Passenger_Priority_dt_r1">
+          <inputEntry>
+            <text>"gold"</text>
+          </inputEntry>
+          <inputEntry>
+            <text>"gold"</text>
+          </inputEntry>
+          <inputEntry>
+            <text>&gt;= Passenger2.Miles</text>
+          </inputEntry>
+          <outputEntry>
+            <text>true</text>
+          </outputEntry>
+        </rule>
+        <!-- Additional rules follow similar pattern -->
+      </decisionTable>
+    </encapsulatedLogic>
+  </businessKnowledgeModel>
+
+  <!-- Additional BKM: Reassign Next Passenger and Has Capacity -->
+  <!-- Modify other elements similarly -->
+
+</definitions>

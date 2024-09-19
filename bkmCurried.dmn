@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="definitions" name="new-file" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="usingNormal" name="usingNormal">
+    <variable id="InformationItem_0jjlp7v" name="usingNormal" typeRef="number" />
+    <literalExpression id="LiteralExpression_0qd81ls">
+      <text>normal(1,2)</text>
+    </literalExpression>
+  </decision>
+  <decision id="usingCurried" name="usingCurried">
+    <variable id="InformationItem_04v05zt" name="usingCurried" typeRef="number" />
+    <literalExpression id="LiteralExpression_1hzrlap">
+      <text>curried(1)(2)</text>
+    </literalExpression>
+  </decision>
+  <decision id="normal" name="normal">
+    <variable id="InformationItem_07hha6z" name="normal" typeRef="number" />
+    <literalExpression id="LiteralExpression_12a51pb">
+      <text>a + b</text>
+    </literalExpression>
+  </decision>
+  <decision id="curried" name="curried">
+    <variable id="InformationItem_0yvx81v" name="curried" typeRef="number" />
+    <literalExpression id="LiteralExpression_0xzgahb">
+      <text>function(b) a + b</text>
+    </literalExpression>
+  </decision>
+</definitions>

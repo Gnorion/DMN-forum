@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1hg8dut" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_039w6mz" name="Decision 1">
+    <decisionTable id="DecisionTable_1k17u3n">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <decision id="Decision_08jzns4" name="Einstein">
+    <variable id="InformationItem_0bx6cxw" />
+    <literalExpression id="LiteralExpression_1m4o0ik">
+      <text>for DIGIT,norwegian breakif solved
+/*9*/ if norwegian.house = 1 then // CONSTRAINT the norwegian lives in house 1
+
+/*14*/   if (norwegian.house = blue.house+1 or norwegian.house=blue.house-1) then   // the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+
+/*8*/if milk.house = 3 then  // CONSTRAINT house 3 drinks milk
+
+       if brit.house&lt;&gt;norwegian.house then  // brit and norwegina are in different houses
+
+/*1*/    if brit.house = red.house and red.house&lt;&gt;blue.house then // CONSTRAINT brit lives in the red house
+
+           if swede.house&lt;&gt;norwegian.house and swede.house&lt;&gt;brit.house then  // the swede lives in a different house from the brit and the norwegian
+
+/*2*/        if swede.house = dog.house then // the swede owns the dog
+
+               if green.house&lt;&gt;blue.house and green.house&lt;&gt;red.house and red.house&lt;&gt;blue.house then // the green, blue and red houses are different
+
+/*5*/             if green.house = coffee.house and coffee.house&lt;&gt;milk.house then  //The owner of the greenhouse drinks coffee.                                                                                                                       
+/*4*/              if white.house =  green.house+1 and
+                      white.house&lt;&gt;red.house and white.house&lt;&gt;blue.house and white.house&lt;&gt;red.house  then  // green house is to the left of the white house
+                    for DIGIT,pallmall
+/*6*/                for DIGIT,bird breakif solved
+                      if bird.house = pallmall.house and bird.house&lt;&gt;dog.house  then  // the bird owner smokes pallmall
+                       for DIGIT,yellow breakif solved
+                        if yellow.house&lt;&gt;white.house and yellow.house&lt;&gt;green.house and yellow.house&lt;&gt;red.house and yellow.house&lt;&gt;blue.house then
+                         for DIGIT,dunhill breakif solved
+/*7*/                     if yellow.house = dunhill.house then  // the dunhill smoker lives in the yellow house
+                           for DIGIT,bluemaster breakif solved
+                            if bluemaster.house&lt;&gt;pallmall.house and bluemaster.house&lt;&gt;dunhill.house and bluemaster.house&lt;&gt;pallmall.house then  // smokers are in different houses
+                             for DIGIT,beer breakif solved
+/*12*/                        if beer.house = bluemaster.house and // beer drinker smokes bluemaster
+                                 bluemaster.house&lt;&gt;dunhill.house and beer.house&lt;&gt;coffee.house and beer.house&lt;&gt;milk.house then
+                               for DIGIT,german breakif solved
+                                if german.house&lt;&gt;norwegian.house and german.house&lt;&gt;brit.house and german.house&lt;&gt;swede.house then // german lives somewhere different from the others
+                                 for DIGIT,prince breakif solved
+/*13*/                               if prince.house = german.house and prince.house&lt;&gt;bluemaster.house and prince.house&lt;&gt;dunhill.house and prince.house&lt;&gt;pallmall.house  then // german smokes prince
+                                   for DIGIT,blend breakif solved
+                                    if blend.house&lt;&gt;prince.house and blend.house&lt;&gt;bluemaster.house and blend.house&lt;&gt;dunhill.house and blend.house&lt;&gt;pallmall.house then // smokers in different houses
+                                     for DIGIT,water breakif solved
+                                      if water.house&lt;&gt;milk.house and water.house&lt;&gt;coffee.house and water.house&lt;&gt;beer.house and
+                                         (blend.house = water.house+1 or blend.house=water.house-1) then //the water drinker lives nesxt to the blend smoker
+                                        for DIGIT,cat breakif solved
+/*10*/                                   if (blend.house = cat.house+1 or blend.house=cat.house-1) and cat.house&lt;&gt;dog.house and cat.house&lt;&gt;bird.house  then // the blend smoker lives next to the cat owner
+                                          for DIGIT,horse breakif solved
+/*11*/                                     if (horse.house=dunhill.house+1 or horse.house=dunhill.house-1) and // the horse owner is next to the dunhill smoker
+                                              horse.house&lt;&gt;dog.house and horse.house&lt;&gt;cat.house and horse.house&lt;&gt;bird.house  then
+                                           for DIGIT,tea breakif solved
+                                            if tea.house&lt;&gt;milk.house and tea.house&lt;&gt;water.house and tea.house&lt;&gt;coffee.house and tea.house&lt;&gt;beer.house then  // different drinks in different houses
+                                             for DIGIT,dane breakif solved
+/*3*/                                         if dane.house = tea.house and
+                                                  dane.house &lt;&gt; norwegian.house and dane.house &lt;&gt; brit.house  and dane.house &lt;&gt;swede.house and dane.house &lt;&gt;german.house then   // the dane drinks tea
+                                               for DIGIT,fish breakif solved
+                                                 if fish.house&lt;&gt;cat.house and fish.house&lt;&gt;dog.house and fish.house&lt;&gt;bird.house and fish.house&lt;&gt;horse.house then// pets in different houses
+                                                     messagebox(
+                                                    "fish: "        &amp; format(fish.house)        &amp; CHAR_EOL &amp;
+                                                    "dog: "         &amp; format(dog.house)         &amp; CHAR_EOL &amp;
+                                                    "horse: "       &amp; format(horse.house)       &amp; CHAR_EOL &amp;
+                                                    "cat: "         &amp; format(cat.house)         &amp; CHAR_EOL &amp;
+                                                    "Bird: "        &amp; format(bird.house)        &amp; CHAR_EOL &amp;
+                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
+                                                    "Blend: "       &amp; format(blend.house)       &amp; CHAR_EOL &amp;
+                                                    "Prince: "      &amp; format(prince.house)      &amp; CHAR_EOL &amp;
+                                                    "Bluemaster: "  &amp; format(bluemaster.house)  &amp; CHAR_EOL &amp;
+                                                    "Dunhill: "     &amp; format(dunhill.house)     &amp; CHAR_EOL &amp;
+                                                    "Pallmall: "    &amp; format(pallmall.house)    &amp; CHAR_EOL &amp;
+                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
+                                                    "tea: "         &amp; format(tea.house)         &amp; CHAR_EOL &amp;
+                                                    "water: "       &amp; format(water.house)       &amp; CHAR_EOL &amp;
+                                                    "Beer: "        &amp; format(beer.house)        &amp; CHAR_EOL &amp;
+                                                    "coffee: "      &amp; format(coffee.house)      &amp; CHAR_EOL &amp;
+                                                    "milk: "        &amp; format(milk.house)        &amp; CHAR_EOL &amp;
+                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
+                                                    "White: "       &amp; format(white.house)       &amp; CHAR_EOL &amp;
+                                                    "green: "       &amp; format(green.house)       &amp; CHAR_EOL &amp;
+                                                    "yellow: "      &amp; format(yellow.house)      &amp; CHAR_EOL &amp;
+                                                    "Blue: "        &amp; format(blue.house)        &amp; CHAR_EOL &amp;
+                                                    "Red: "         &amp; format(red.house)         &amp; CHAR_EOL &amp;
+                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
+                                                    "german: "      &amp; format(german.house)      &amp; CHAR_EOL &amp;
+                                                    "swede: "       &amp; format(swede.house)       &amp; CHAR_EOL &amp;
+                                                    "Brit: "        &amp; format(brit.house)        &amp; CHAR_EOL &amp;
+                                                    "dane: "        &amp; format(dane.house)        &amp; CHAR_EOL &amp;
+                                                    "norwegian: "   &amp; format(norwegian.house)   &amp; CHAR_EOL
+                                                 )
+                                                 //solved=true
+                                               end
+
+
+end end end end end end end end end end end end end end end end end end end end end end end end end
+end end end end end end end end end end end end end end end end end end end end end end end
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_103rr8h" name="small">
+    <variable id="InformationItem_1ai29v2" />
+    <literalExpression id="LiteralExpression_0mjd6mj">
+      <text>{solve: function(DIGITS)
+  for norwegian in DIGITS
+     return if norwegian = 1 then // CONSTRAINT the norwegian lives in house 1
+          for blue in DIGITS 
+            return if norwegian = blue+1 or norwegian=blue-1 then   // the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+            for milk in DIGITS
+             return if milk.house = 3 then  // CONSTRAINT house 3 drinks milk
+                 {norwegian : norwegian,
+                  blue      : blue,
+                  milk      : milk
+                 } 
+             else{}}
+ solution: solve([1,2,3])                            
+}.solution</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0eu2rsl" name="Einstein Working">
+    <variable id="InformationItem_0awwmjo" />
+    <literalExpression id="LiteralExpression_0hajait">
+      <text>{solve: function(HOUSES)
+  for norwegian in [1], blue in HOUSES, milk in [3], brit in HOUSES, red in HOUSES, swede in HOUSES, dog in HOUSES, green in HOUSES, coffee in HOUSES, white in HOUSES
+     return if norwegian = 1 then                                   // CONSTRAINT the norwegian lives in house 1
+            if norwegian = blue+1 or norwegian=blue-1 then          // CONSTRAINT the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+            if milk = 3 then                                        // CONSTRAINT house 3 drinks milk
+            if brit != norwegian then                               // CONSTRAINT brit and norwegian are in different houses
+            if brit = red and red != blue then                      // CONSTRAINT brit lives in the red house
+            if swede!=norwegian and swede!=brit then                // CONSTRAINT the swede lives in a different house from the brit and the norwegian
+            if swede = dog then                                     // CONSTRAINT the swede owns the dog
+            if green!=blue and green!=red and red!=blue then        // CONSTRAINT the green, blue and red houses are different
+            if green = coffee and coffee!=milk then                 // CONSTRAINT The owner of the green house drinks coffee.
+            if white = green+1 and                                  // CONSTRAINT green house is to the left of the white house
+               white!= red and white!=blue and white!=red  then     // different houses are different colors
+                {solved    : true,
+                 norwegian : norwegian,
+                 blue      : blue,
+                 milk      : milk,
+                 brit      : brit,
+                 red       : red,
+                 swede     : swede,
+                 dog       : dog,
+                 green     : green,
+                 white     : white
+                } 
+             else{} else{} else{} else{} else{} else{} else{} else{} else{} else{},
+ solution: solve([1,2,3,4,5])                            
+}.solution[solved=true]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1uhorts" name="Einstein with filters">
+    <variable id="InformationItem_18vy3c2" />
+    <literalExpression id="LiteralExpression_18pplco" />
+  </decision>
+  <decision id="Decision_0sfta6p" name="Einstein nested">
+    <variable id="InformationItem_1yxp7st" />
+    <literalExpression id="LiteralExpression_0swygts">
+      <text>{solve: function(HOUSES)
+  for norwegian in HOUSES                                                                   // CONSTRAINT the norwegian lives in house 1
+    return if norwegian=1 then
+      for blue      in HOUSES                          // CONSTRAINT the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+        return if blue=norwegian+1 or blue=norwegian-1
+        then
+//      milk      in [3]                                                                   // CONSTRAINT house 3 drinks milk
+//      brit      in HOUSES[brit!=norwegian]                                                // CONSTRAINT brit and norwegian are in different houses
+//      red       in HOUSES [brit = red and red != blue]                                   // CONSTRAINT brit lives in the red house
+//      swede     in HOUSES[swede!=norwegian and swede!=brit],                              // CONSTRAINT the swede lives in a different house from the brit and the norwegian
+//      dog       in HOUSES[swede = dog],                                                   // CONSTRAINT the swede owns the dog
+//      green     in HOUSES[green!=blue and green!=red and red!=blue],                      // CONSTRAINT the green, blue and red houses are different
+//      coffee    in HOUSES[green = coffee and coffee!=milk],                               // CONSTRAINT The owner of the green house drinks coffee
+//      white     in HOUSES[white = green+1 and white!= red and white!=blue and white!=red] // CONSTRAINT green house is to the left of the white house                   
+                {solved    : true,
+                 norwegian : norwegian,
+                 blue      : blue,
+                 milk      : milk,
+                 brit      : brit,
+                 red       : red,
+                 swede     : swede,
+                 dog       : dog,
+                 green     : green,
+                 white     : white
+                } else{} else{},
+ solution: solve([1,2,3,4,5])                            
+}.solution   //[solved=true]</text>
+    </literalExpression>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_039w6mz">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0qss2mg" dmnElementRef="Decision_08jzns4">
+        <dc:Bounds height="80" width="180" x="540" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1l7ukft" dmnElementRef="Decision_103rr8h">
+        <dc:Bounds height="80" width="180" x="540" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0eiehvt" dmnElementRef="Decision_0eu2rsl">
+        <dc:Bounds height="80" width="180" x="160" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rovjj0" dmnElementRef="Decision_1uhorts">
+        <dc:Bounds height="80" width="180" x="160" y="330" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0bvufiy" dmnElementRef="Decision_0sfta6p">
+        <dc:Bounds height="80" width="180" x="160" y="430" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

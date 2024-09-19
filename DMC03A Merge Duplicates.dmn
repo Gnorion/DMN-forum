@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_10f5z5l" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_00xqrmd" name="Challenge August-2015&#10;Variation: Merge Quantities with Same SKU" />
+  <decision id="Decision_04m26n5" name="P1&#10;merge items for same sku">
+    <variable id="InformationItem_1bpbbe7" name="merged" typeRef="any" />
+    <informationRequirement id="InformationRequirement_0q63etk">
+      <requiredInput href="#InputData_1vaqvih" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_021vcdc">
+      <requiredDecision href="#Decision_1f5nade" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_05w52a1">
+      <text>{ skus:    distinct values (items.sku),                // get a list of the distinct skus
+  merged:  for s in skus                               // for each distinct sku in the list of items              
+           return {sku:s, qty:sum(items[sku=s].qty)}   // find the total quantity for that sku
+}.merged                                               // return only the merged list (ignore the list of skus)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0w086y3" name="P2&#10;merge items for the same sku within each order">
+    <variable id="InformationItem_0v2a4td" name="merged" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1u7gc59">
+      <requiredInput href="#InputData_1ah5z9w" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_05b31jl">
+      <requiredDecision href="#Decision_1uy1mup" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0cxe3wb">
+      <text>{merged: for o in orders                                           // for each order in the list
+        return                                                     // return the following:
+           { merged: for s in  distinct values (o.items.sku)       // for each distinct sku in this order              
+                     return {order:o.order,                        // order number
+                             sku:s,                                // sku for this order
+                             qty:sum(o.items[sku=s].qty)}          // find the total quantity for that sku
+           }.merged                                                // omit the skus from the return value 
+}.merged                                                           // return just the content of the merged property                                                    // return just the content of the merged property</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1r59g62" name="run P1 and P2">
+    <informationRequirement id="InformationRequirement_0ghw3nc">
+      <requiredDecision href="#Decision_0w086y3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0sta5ih">
+      <requiredDecision href="#Decision_04m26n5" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0gql6sp">
+      <input id="InputClause_03mbdwa">
+        <inputExpression id="LiteralExpression_125uhee" typeRef="string" />
+      </input>
+      <output id="OutputClause_1jm4zep" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1vaqvih" name="items" />
+  <inputData id="InputData_1ah5z9w" name="orders" />
+  <decision id="Decision_1uy1mup" name="define some orders">
+    <variable id="InformationItem_07ntifz" name="orders" typeRef="any" />
+    <literalExpression id="LiteralExpression_1p8xemv">
+      <text>[   
+    {order:1, items:[ {sku:"101",qty:10}, {sku:"101",qty:3}, {sku:"103",qty:1}, {sku:"101",qty:4}, {sku:"103",qty:6}, {sku:"103",qty:8}, {sku:"101",qty:2} ]},
+    {order:2, items:[ {sku:"101",qty:10}, {sku:"101",qty:3}, {sku:"103",qty:1}, {sku:"101",qty:4}, {sku:"103",qty:6}, {sku:"103",qty:8}, {sku:"101",qty:2} ]}
+]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1f5nade" name="define some items">
+    <variable id="InformationItem_169j4xl" name="items" typeRef="any" />
+    <literalExpression id="LiteralExpression_04g6cbs">
+      <text>{
+     items:[
+      {sku:"101",qty:10},
+      {sku:"101",qty:3},
+      {sku:"103",qty:1},
+      {sku:"101",qty:4},
+      {sku:"103",qty:6},
+      {sku:"103",qty:8},
+      {sku:"101",qty:2}
+           ]
+}</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_1qsnofa">
+    <text>PROBLEM STATEMENT
+P1: merge the quantities for items with the same sku
+P2: repeat with items inside orders</text>
+  </textAnnotation>
+  <association id="Association_0on4vyv">
+    <sourceRef href="#TextAnnotation_1qsnofa" />
+    <targetRef href="#Decision_00xqrmd" />
+  </association>
+  <textAnnotation id="TextAnnotation_14hedel">
+    <text>EXTERNAL DATA {
+    "items":[
+      {"sku":"101","qty":10},
+      {"sku":"101","qty":3},
+      {"sku":"103","qty":1},
+      {"sku":"101","qty":4},
+      {"sku":"103","qty":6},
+      {"sku":"103","qty":8},
+      {"sku":"101","qty":2}
+]}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_19ayog7">
+    <text>INTERNAL DATA
+{
+     items:[
+      {sku:"101",qty:10},
+      {sku:"101",qty:3},
+      {sku:"103",qty:1},
+      {sku:"101",qty:4},
+      {sku:"103",qty:6},
+      {sku:"103",qty:8},
+      {sku:"101",qty:2}
+]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0c719fi">
+    <text>OBJECTIVE
+merge items with the same sku by adding the quantities</text>
+  </textAnnotation>
+  <association id="Association_16800z8">
+    <sourceRef href="#Decision_04m26n5" />
+    <targetRef href="#TextAnnotation_0c719fi" />
+  </association>
+  <association id="Association_0rwfmi2">
+    <sourceRef href="#Decision_04m26n5" />
+    <targetRef href="#TextAnnotation_14hedel" />
+  </association>
+  <textAnnotation id="TextAnnotation_03k50er">
+    <text>OUTPUT
+[
+  { "sku": "101", "qty": 19 },
+  { "sku": "103", "qty": 15 }
+]</text>
+  </textAnnotation>
+  <association id="Association_0msr2ir">
+    <sourceRef href="#TextAnnotation_03k50er" />
+    <targetRef href="#Decision_04m26n5" />
+  </association>
+  <textAnnotation id="TextAnnotation_1sjilkn">
+    <text>INTERNAL DATA
+[   
+    {order:1, items:[ {sku:"101",qty:10}, {sku:"101",qty:3}, {sku:"103",qty:1}, {sku:"101",qty:4}, {sku:"103",qty:6}, {sku:"103",qty:8}, {sku:"101",qty:2} ]},
+    {order:2, items:[ {sku:"101",qty:10}, {sku:"101",qty:3}, {sku:"103",qty:1}, {sku:"101",qty:4}, {sku:"103",qty:6}, {sku:"103",qty:8}, {sku:"101",qty:2} ]}
+]</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_05ccq76">
+    <text>EXTERNAL DATA 
+{
+  "orders":[
+     {"order":1,"items":[ {"sku":"101","qty":10}, {"sku":"101","qty":3}, {"sku":"103","qty":1}, {"sku":"101","qty":4}, {"sku":"103","qty":6}, {"sku":"103","qty":8}, {"sku":"101","qty":2}]},
+     {"order":2,"items":[ {"sku":"101","qty":100}, {"sku":"101","qty":31}, {"sku":"103","qty":11}, {"sku":"101","qty":14}, {"sku":"103","qty":16}, {"sku":"103","qty":18}, {"sku":"101","qty":12}]}
+                 ]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0dthfcm">
+    <text>EXPRESSION
+{merged: for o in orders                                           // for each order in the list
+        return                                                               // return the following:
+           { skus: distinct values (o.items.sku),             // list of distinct skus for this order
+             merged: for s in skus                                   // for each distinct sku in this order              
+                     return {order:o.order,                           // order number
+                             sku:s,                                           // sku for this order
+                             qty:sum(o.items[sku=s].qty)}       // find the total quantity for that sku
+           }.merged                                                        // omit the skus from the return value 
+}.merged                                                                   // return just the content of the merged property</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_06zc0gs">
+    <text>OUTPUT
+[
+  [    {      "order": 1,      "sku": "101",      "qty": 19    },
+       {      "order": 1,      "sku": "103",      "qty": 15    }  ],
+  [    {      "order": 2,      "sku": "101",      "qty": 157  },
+       {      "order": 2,      "sku": "103",      "qty": 45    }  ]
+]</text>
+  </textAnnotation>
+  <association id="Association_1k1lfpp">
+    <sourceRef href="#Decision_0w086y3" />
+    <targetRef href="#TextAnnotation_06zc0gs" />
+  </association>
+  <association id="Association_1b7jlao">
+    <sourceRef href="#Decision_0w086y3" />
+    <targetRef href="#TextAnnotation_0dthfcm" />
+  </association>
+  <association id="Association_0840m3w">
+    <sourceRef href="#InputData_1ah5z9w" />
+    <targetRef href="#TextAnnotation_05ccq76" />
+  </association>
+  <association id="Association_1ica0w3">
+    <sourceRef href="#Decision_1uy1mup" />
+    <targetRef href="#TextAnnotation_1sjilkn" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1vyhfnw" dmnElementRef="Decision_00xqrmd">
+        <dc:Bounds height="80" width="180" x="450" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1di4x1w" dmnElementRef="TextAnnotation_1qsnofa">
+        <dc:Bounds height="65" width="310" x="735" y="77" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1se1dci" dmnElementRef="Association_0on4vyv">
+        <di:waypoint x="735" y="96" />
+        <di:waypoint x="630" y="95" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1cuzyrw" dmnElementRef="TextAnnotation_14hedel">
+        <dc:Bounds height="165" width="190" x="425" y="577" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_18st2em" dmnElementRef="TextAnnotation_19ayog7">
+        <dc:Bounds height="185" width="175" x="142" y="577" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_02xp83c" dmnElementRef="TextAnnotation_0c719fi">
+        <dc:Bounds height="68" width="160" x="390" y="236" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_04qy2zu" dmnElementRef="Decision_04m26n5">
+        <dc:Bounds height="80" width="180" x="380" y="338" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0d47ik6" dmnElementRef="Association_16800z8">
+        <di:waypoint x="470" y="338" />
+        <di:waypoint x="470" y="304" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1flfxs1" dmnElementRef="Association_0rwfmi2">
+        <di:waypoint x="500" y="532" />
+        <di:waypoint x="500" y="577" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1lcymde" dmnElementRef="TextAnnotation_03k50er">
+        <dc:Bounds height="80" width="160" x="160" y="338" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0vndtyr" dmnElementRef="Association_0msr2ir">
+        <di:waypoint x="320" y="380" />
+        <di:waypoint x="380" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0puitf4" dmnElementRef="Decision_0w086y3">
+        <dc:Bounds height="80" width="180" x="940" y="338" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16xnxc3" dmnElementRef="TextAnnotation_1sjilkn">
+        <dc:Bounds height="92" width="1050" x="1515" y="344" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1lftwqx" dmnElementRef="TextAnnotation_05ccq76">
+        <dc:Bounds height="220" width="1040" x="1240" y="440" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0eilua0" dmnElementRef="TextAnnotation_0dthfcm">
+        <dc:Bounds height="160" width="705" x="1237" y="170" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0h4augo" dmnElementRef="TextAnnotation_06zc0gs">
+        <dc:Bounds height="120" width="310" x="735" y="520" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_048kbx5" dmnElementRef="Decision_1r59g62">
+        <dc:Bounds height="80" width="180" x="670" y="200" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1kuxhjp" dmnElementRef="InputData_1vaqvih">
+        <dc:Bounds height="45" width="125" x="437" y="487" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_15rujh6" dmnElementRef="InformationRequirement_0q63etk">
+        <di:waypoint x="500" y="487" />
+        <di:waypoint x="500" y="438" />
+        <di:waypoint x="500" y="418" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_09438bg" dmnElementRef="Association_1k1lfpp">
+        <di:waypoint x="998" y="418" />
+        <di:waypoint x="918" y="520" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ux2fqq" dmnElementRef="InformationRequirement_0ghw3nc">
+        <di:waypoint x="1030" y="338" />
+        <di:waypoint x="790" y="300" />
+        <di:waypoint x="790" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0zkz73e" dmnElementRef="InformationRequirement_0sta5ih">
+        <di:waypoint x="470" y="338" />
+        <di:waypoint x="730" y="300" />
+        <di:waypoint x="730" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_11saiv1" dmnElementRef="Association_1b7jlao">
+        <di:waypoint x="1101" y="338" />
+        <di:waypoint x="1237" y="262" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0qen3xb" dmnElementRef="InputData_1ah5z9w">
+        <dc:Bounds height="45" width="125" x="1067" y="497" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0p3byop" dmnElementRef="InformationRequirement_1u7gc59">
+        <di:waypoint x="1130" y="497" />
+        <di:waypoint x="1030" y="438" />
+        <di:waypoint x="1030" y="418" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1td4ud6" dmnElementRef="Association_0840m3w">
+        <di:waypoint x="1192" y="520" />
+        <di:waypoint x="1240" y="520" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0viwnvz" dmnElementRef="Decision_1uy1mup">
+        <dc:Bounds height="80" width="180" x="1240" y="338" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1ewn24a" dmnElementRef="Association_1ica0w3">
+        <di:waypoint x="1420" y="383" />
+        <di:waypoint x="1515" y="389" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0qx00vx" dmnElementRef="InformationRequirement_05b31jl">
+        <di:waypoint x="1240" y="378" />
+        <di:waypoint x="1140" y="378" />
+        <di:waypoint x="1120" y="378" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_08fvlko" dmnElementRef="Decision_1f5nade">
+        <dc:Bounds height="80" width="180" x="150" y="480" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1wby8hs" dmnElementRef="InformationRequirement_021vcdc">
+        <di:waypoint x="240" y="480" />
+        <di:waypoint x="440" y="438" />
+        <di:waypoint x="440" y="418" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0kw1ujq" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0sr3o1h" name="map example" />
+  <decision id="Decision_0948nho" name="map (not working)">
+    <variable id="InformationItem_1js2zag" name="mappedValues" typeRef="list" />
+    <literalExpression id="LiteralExpression_0z6faft">
+      <text>map([1, 2, 3], function(x) x * 2)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_00fmgrx" name="iterate">
+    <variable id="InformationItem_0rthx20" name="out" typeRef="any" />
+    <literalExpression id="LiteralExpression_1lz5nw2">
+      <text>for x in [1,2,3] return x*2
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_07r81wp" name="steps">
+    <variable id="InformationItem_1f8qc8v" name="result" typeRef="list" />
+    <literalExpression id="LiteralExpression_0k50mfx">
+      <text>{
+  xlist : for x in [1,2,3] return x*2,
+  ylist : for y in xlist return y+y,
+  zlist : for x in xlist, y in ylist return x*y 
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1ftdem8" name="embedded steps">
+    <variable id="InformationItem_14vjugh" name="w" typeRef="list" />
+    <literalExpression id="LiteralExpression_0i2ztm5">
+      <text>for w in
+  {xlist : for x in [1,2,3] return x*2,
+    ylist : for y in xlist return y+y,
+    zlist : for x in xlist, y in ylist return x*y 
+  }.zlist 
+return w*w</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_01y97at" name="embedded steps with filter">
+    <variable id="InformationItem_0p410sf" name="wlist" typeRef="list" />
+    <literalExpression id="LiteralExpression_0d9hf5d">
+      <text>for w in
+  {xlist : for x in [1,2,3] return x*2,
+    ylist : for y in xlist return y+y,
+    zlist : for x in xlist, y in ylist return x*y 
+  }.zlist[item&lt;30] // only values in zlist &lt; 30
+return w*w</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_01fova9" name="deeply embedded with filters">
+    <variable id="InformationItem_0diqn0h" name="tlist" typeRef="list" />
+    <literalExpression id="LiteralExpression_0hhqn7s">
+      <text>{tlist : for t in 
+   {wlist: for w in
+     { xlist : for x in [1,2,3] return x*2,
+       ylist : for y in xlist   return y+y,
+       zlist : for x in xlist, y in ylist return x*y 
+     }.zlist[item&lt;30]                                 // only values in zlist &lt; 30
+   return w*w
+   }.wlist[item&lt;100]
+return t*t
+}.tlist</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0bpwtpv">
+    <text>map([1, 2, 3], function(x) x * 2)
+does not work</text>
+  </textAnnotation>
+  <association id="Association_03zxpab">
+    <sourceRef href="#TextAnnotation_0bpwtpv" />
+    <targetRef href="#Decision_0948nho" />
+  </association>
+  <textAnnotation id="TextAnnotation_04plcpj">
+    <text>for x in [1,2,3] return x*2
+does work</text>
+  </textAnnotation>
+  <association id="Association_0sua5em">
+    <sourceRef href="#TextAnnotation_04plcpj" />
+    <targetRef href="#Decision_00fmgrx" />
+  </association>
+  <textAnnotation id="TextAnnotation_07ka606">
+    <text>OUTPUT
+[  2,  4,  6]</text>
+  </textAnnotation>
+  <association id="Association_00ixwgb">
+    <sourceRef href="#TextAnnotation_07ka606" />
+    <targetRef href="#Decision_00fmgrx" />
+  </association>
+  <textAnnotation id="TextAnnotation_1gurjxh">
+    <text>{
+  xlist : for x in [1,2,3] return x*2,
+  ylist : for y in xlist return y+y,
+  zlist : for x in xlist, y in ylist return x*y 
+}</text>
+  </textAnnotation>
+  <association id="Association_0j9cz2z">
+    <sourceRef href="#TextAnnotation_1gurjxh" />
+    <targetRef href="#Decision_07r81wp" />
+  </association>
+  <textAnnotation id="TextAnnotation_0p3csce">
+    <text>for w in
+  {xlist : for x in [1,2,3] return x*2,
+    ylist : for y in xlist return y+y,
+    zlist : for x in xlist, y in ylist return x*y 
+  }.zlist[item&lt;30]       // only values in zlist &lt; 30
+return w*w</text>
+  </textAnnotation>
+  <association id="Association_1on7qpl">
+    <sourceRef href="#TextAnnotation_0p3csce" />
+    <targetRef href="#Decision_01y97at" />
+  </association>
+  <textAnnotation id="TextAnnotation_1k5l25v">
+    <text>for w in
+  {xlist : for x in [1,2,3] return x*2,
+    ylist : for y in xlist return y+y,
+    zlist : for x in xlist, y in ylist return x*y 
+  }.zlist 
+return w*w</text>
+  </textAnnotation>
+  <association id="Association_07hplda">
+    <sourceRef href="#TextAnnotation_1k5l25v" />
+    <targetRef href="#Decision_1ftdem8" />
+  </association>
+  <textAnnotation id="TextAnnotation_1qnqo1d">
+    <text>{tlist : for t in 
+   {wlist: for w in
+     { xlist : for x in [1,2,3] return x*2,
+       ylist : for y in xlist return y+y,
+       zlist : for x in xlist, y in ylist return x*y 
+     }.zlist[item&lt;30] // only values in zlist &lt; 30
+   return w*w
+   }.wlist[item&lt;100]
+return t*t
+}.tlist</text>
+  </textAnnotation>
+  <association id="Association_18f6lpo">
+    <sourceRef href="#TextAnnotation_1qnqo1d" />
+    <targetRef href="#Decision_01fova9" />
+  </association>
+  <textAnnotation id="TextAnnotation_1oop1q3">
+    <text>{
+  "xlist": [ 2, 4, 6  ],
+  "ylist": [ 4, 8,12  ],
+  "zlist": [ 8, 16, 24, 16, 32, 48, 24, 48, 72  ]
+}</text>
+  </textAnnotation>
+  <association id="Association_07kelqp">
+    <sourceRef href="#TextAnnotation_1oop1q3" />
+    <targetRef href="#Decision_07r81wp" />
+  </association>
+  <textAnnotation id="TextAnnotation_15wtanp">
+    <text>[64, 256, 576, 256, 1024, 2304, 576, 2304, 5184]</text>
+  </textAnnotation>
+  <association id="Association_0ry3xq7">
+    <sourceRef href="#TextAnnotation_15wtanp" />
+    <targetRef href="#Decision_1ftdem8" />
+  </association>
+  <textAnnotation id="TextAnnotation_0g4p17j">
+    <text>[64, 256, 576, 256, 576]</text>
+  </textAnnotation>
+  <association id="Association_0380xt1">
+    <sourceRef href="#TextAnnotation_0g4p17j" />
+    <targetRef href="#Decision_01y97at" />
+  </association>
+  <textAnnotation id="TextAnnotation_1x4wwlb">
+    <text>[ 4096]</text>
+  </textAnnotation>
+  <association id="Association_075bq1m">
+    <sourceRef href="#TextAnnotation_1x4wwlb" />
+    <targetRef href="#Decision_01fova9" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0khsopk" dmnElementRef="Decision_0sr3o1h">
+        <dc:Bounds height="80" width="180" x="470" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0g8qn4m" dmnElementRef="Decision_0948nho">
+        <dc:Bounds height="80" width="180" x="470" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1yx6k5p" dmnElementRef="TextAnnotation_0bpwtpv">
+        <dc:Bounds height="80" width="260" x="710" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1cbklcl" dmnElementRef="Association_03zxpab">
+        <di:waypoint x="710" y="280" />
+        <di:waypoint x="650" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0bw0uqh" dmnElementRef="TextAnnotation_04plcpj">
+        <dc:Bounds height="40" width="210" x="705" y="350" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ilt54r" dmnElementRef="Association_0sua5em">
+        <di:waypoint x="700" y="380" />
+        <di:waypoint x="650" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1efkrhh" dmnElementRef="TextAnnotation_07ka606">
+        <dc:Bounds height="40" width="100" x="300" y="350" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1oevoqp" dmnElementRef="Association_00ixwgb">
+        <di:waypoint x="400" y="370" />
+        <di:waypoint x="470" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0qedvkw" dmnElementRef="Decision_00fmgrx">
+        <dc:Bounds height="80" width="180" x="470" y="330" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xgqezz" dmnElementRef="TextAnnotation_1gurjxh">
+        <dc:Bounds height="80" width="250" x="700" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06ovul3" dmnElementRef="Association_0j9cz2z">
+        <di:waypoint x="700" y="470" />
+        <di:waypoint x="650" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_19pe7xz" dmnElementRef="Decision_07r81wp">
+        <dc:Bounds height="80" width="180" x="470" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0lku6ci" dmnElementRef="Decision_1ftdem8">
+        <dc:Bounds height="80" width="180" x="470" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ovrdpl" dmnElementRef="Decision_01y97at">
+        <dc:Bounds height="80" width="180" x="470" y="620" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1p1xnf3" dmnElementRef="Decision_01fova9">
+        <dc:Bounds height="80" width="180" x="470" y="720" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0561srj" dmnElementRef="TextAnnotation_0p3csce">
+        <dc:Bounds height="90" width="290" x="700" y="620" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0z9vuva" dmnElementRef="Association_1on7qpl">
+        <di:waypoint x="700" y="660" />
+        <di:waypoint x="650" y="660" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1wz4ncr" dmnElementRef="TextAnnotation_1k5l25v">
+        <dc:Bounds height="90" width="300" x="700" y="520" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1096kg6" dmnElementRef="Association_07hplda">
+        <di:waypoint x="700" y="560" />
+        <di:waypoint x="650" y="570" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1tbhkf1" dmnElementRef="TextAnnotation_1qnqo1d">
+        <dc:Bounds height="160" width="270" x="700" y="720" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0560w6v" dmnElementRef="Association_18f6lpo">
+        <di:waypoint x="700" y="760" />
+        <di:waypoint x="650" y="760" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1aukavm" dmnElementRef="TextAnnotation_1oop1q3">
+        <dc:Bounds height="90" width="250" x="175" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0w9i8t4" dmnElementRef="Association_07kelqp">
+        <di:waypoint x="425" y="470" />
+        <di:waypoint x="470" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0tn41x5" dmnElementRef="TextAnnotation_15wtanp">
+        <dc:Bounds height="30" width="280" x="160" y="555" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_02usf0a" dmnElementRef="Association_0ry3xq7">
+        <di:waypoint x="440" y="570" />
+        <di:waypoint x="470" y="570" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1k8x51m" dmnElementRef="TextAnnotation_0g4p17j">
+        <dc:Bounds height="35" width="140" x="270" y="647" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_19uhg8b" dmnElementRef="Association_0380xt1">
+        <di:waypoint x="410" y="676" />
+        <di:waypoint x="470" y="655" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1v22adt" dmnElementRef="TextAnnotation_1x4wwlb">
+        <dc:Bounds height="30" width="80" x="310" y="745" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0txonxp" dmnElementRef="Association_075bq1m">
+        <di:waypoint x="390" y="773" />
+        <di:waypoint x="470" y="767" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

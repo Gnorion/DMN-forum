@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI/" xmlns:di="http://www.omg.org/spec/DMN/20151101/DI/" xmlns:dc="http://www.omg.org/spec/DMN/20151101/DC/" id="definitions" name="habitability" namespace="http://camunda.org/schema/1.0/dmn" typeLanguage="http://www.omg.org/spec/FEEL/20140401">
+  <inputData id="input_oxygene" name="oxygene">
+    <variable id="variable_oxygene" name="oxygene" typeRef="number" />
+  </inputData>
+  <inputData id="input_temperature" name="temperature">
+    <variable id="variable_temperature" name="temperature" typeRef="number" />
+  </inputData>
+  <decision id="decision_habitability" name="habitability">
+    <variable id="variable_habitability" name="habitability" typeRef="string" />
+    <decisionTable id="decisionTable_habitability" hitPolicy="FIRST">
+      <input id="input_oxygene_column" label="oxygene">
+        <inputExpression id="inputExpression_oxygene" typeRef="number">
+          <text>oxygene</text>
+        </inputExpression>
+      </input>
+      <input id="input_temperature_column" label="temperature">
+        <inputExpression id="inputExpression_temperature" typeRef="number">
+          <text>temperature</text>
+        </inputExpression>
+      </input>
+      <output id="output_habitability" label="habitability" name="habitability" typeRef="string" />
+      <rule id="rule_1">
+        <inputEntry id="inputEntry_oxygene_1">
+          <text>[10..100]</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_temperature_1">
+          <text>&lt; 40</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_habitability_1">
+          <text>"somehow doable"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_2">
+        <inputEntry id="inputEntry_oxygene_2">
+          <text>&lt;10</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_temperature_2">
+          <text>&lt; 40</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_habitability_2">
+          <text>"hardly doable"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_3">
+        <inputEntry id="inputEntry_oxygene_3">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_temperature_3">
+          <text>&gt;= 40</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_habitability_3">
+          <text>"too hot"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

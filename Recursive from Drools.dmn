@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="Recursive" name="Recursive" namespace="http://camunda.org/schema/1.0/dmn">
+  <itemDefinition id="tNumberList" name="tNumberList" isCollection="true">
+    <typeRef>number</typeRef>
+  </itemDefinition>
+  <decision id="decision_x" name="x">
+    <variable id="variable_x" name="x" />
+    <context id="Context_0vw8mla">
+      <contextEntry id="ContextEntry_00fnke5">
+        <variable id="variable_f" name="f" />
+        <functionDefinition id="FunctionDefinition_1ma2vyx">
+          <formalParameter id="InformationItem_1vu1rt1" name="n" />
+          <formalParameter id="InformationItem_1hmowlq" name="limit" />
+          <formalParameter id="InformationItem_0ahmmy0" name="list" />
+          <context id="Context_1f9d8xr">
+            <contextEntry id="ContextEntry_0pfja4h">
+              <variable id="variable_newList" name="new list" />
+              <literalExpression id="LiteralExpression_0y80r1u">
+                <text>append(list, n)</text>
+              </literalExpression>
+            </contextEntry>
+            <contextEntry id="ContextEntry_08nh47m">
+              <literalExpression id="LiteralExpression_036vinh">
+                <text>if (n + 1 &gt; limit) then new list else f(n + 1, limit, new list)</text>
+              </literalExpression>
+            </contextEntry>
+          </context>
+        </functionDefinition>
+      </contextEntry>
+      <contextEntry id="ContextEntry_01ul5ca">
+        <variable id="variable_g" name="g" />
+        <literalExpression id="LiteralExpression_0822kes">
+          <text>function(n, limit, list) { newList : append(list, n), result : if (n + 1 &gt; limit) then newList else g(n + 1, limit, newList) }.result</text>
+        </literalExpression>
+      </contextEntry>
+      <contextEntry id="ContextEntry_03ndc2p">
+        <variable id="variable_h" name="h" />
+        <functionDefinition id="FunctionDefinition_1lxmufi">
+          <formalParameter id="InformationItem_15aaf2c" name="n" />
+          <formalParameter id="InformationItem_1xvut07" name="limit" />
+          <formalParameter id="InformationItem_0wlqhec" name="list" />
+          <literalExpression id="LiteralExpression_0n7ofy4">
+            <text>if (n + 1 &gt; limit) then append(list, n) else h(n + 1, limit, append(list, n))</text>
+          </literalExpression>
+        </functionDefinition>
+      </contextEntry>
+      <contextEntry id="ContextEntry_0pgiyaz">
+        <literalExpression id="LiteralExpression_0ru3g1y">
+          <text>[f(1, 3, []), g(1, 3, []), h(1, 3, [])]</text>
+        </literalExpression>
+      </contextEntry>
+    </context>
+  </decision>
+</definitions>

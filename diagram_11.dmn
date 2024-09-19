@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1dflyfa" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <businessKnowledgeModel id="BusinessKnowledgeModel_1tengou" name="Discount">
+    <variable id="InformationItem_0qb3fww" name="Discount" />
+    <encapsulatedLogic id="FunctionDefinition_0bxx0y6">
+      <formalParameter id="InformationItem_0gymln6" name="customer" />
+      <formalParameter id="InformationItem_1vtdk6b" name="orderSize" />
+      <decisionTable id="dt_discount">
+        <input id="input1" label="Customer">
+          <inputExpression id="inputExpression1" typeRef="string">
+            <text>customer</text>
+          </inputExpression>
+        </input>
+        <input id="InputClause_0948jsx" label="Order Size">
+          <inputExpression id="LiteralExpression_0541nfx" typeRef="integer">
+            <text>orderSize</text>
+          </inputExpression>
+        </input>
+        <output id="output1" label="Discount" name="discount" typeRef="double" />
+        <rule id="row-958866071-1">
+          <inputEntry id="UnaryTests_1j7evgw">
+            <text>"Business"</text>
+          </inputEntry>
+          <inputEntry id="UnaryTests_1jf21ih">
+            <text>&lt; 10</text>
+          </inputEntry>
+          <outputEntry id="LiteralExpression_104sjjb">
+            <text>0.1</text>
+          </outputEntry>
+        </rule>
+        <rule id="row-958866071-2">
+          <description></description>
+          <inputEntry id="UnaryTests_1nz4a49">
+            <text>"Business"</text>
+          </inputEntry>
+          <inputEntry id="UnaryTests_13nukij">
+            <text>&gt;= 10</text>
+          </inputEntry>
+          <outputEntry id="LiteralExpression_15ipzxo">
+            <text>0.15</text>
+          </outputEntry>
+        </rule>
+        <rule id="row-958866071-3">
+          <inputEntry id="UnaryTests_1d94e9a">
+            <text>"Private"</text>
+          </inputEntry>
+          <inputEntry id="UnaryTests_05iyfwy">
+            <text></text>
+          </inputEntry>
+          <outputEntry id="LiteralExpression_1dx9evc">
+            <text>0.05</text>
+          </outputEntry>
+        </rule>
+      </decisionTable>
+    </encapsulatedLogic>
+  </businessKnowledgeModel>
+  <decision id="Decision_13bml7x" name="Table">
+    <knowledgeRequirement id="KnowledgeRequirement_1h1y0ab">
+      <requiredKnowledge href="#BusinessKnowledgeModel_1tengou" />
+    </knowledgeRequirement>
+    <decisionTable id="DecisionTable_1125t3q">
+      <input id="InputClause_0ls80vt">
+        <inputExpression id="LiteralExpression_0wq5h7c" typeRef="string" />
+      </input>
+      <output id="OutputClause_0us7hyl" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1miug26" dmnElementRef="BusinessKnowledgeModel_1tengou">
+        <dc:Bounds height="46" width="135" x="1012" y="347" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1mh9vnh" dmnElementRef="Decision_13bml7x">
+        <dc:Bounds height="80" width="180" x="120" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nvojgs" dmnElementRef="KnowledgeRequirement_1h1y0ab">
+        <di:waypoint x="1012" y="355" />
+        <di:waypoint x="220" y="180" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

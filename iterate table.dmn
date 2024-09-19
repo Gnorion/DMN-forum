@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1w40gbf" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0khen4s" name="Expression invoking a table in a loop" />
+  <decision id="Decision_1riyk3m" name="classify">
+    <decisionTable id="DecisionTable_1b369tx">
+      <input id="InputClause_0h3rvtv" label="input">
+        <inputExpression id="LiteralExpression_0xd32q3" typeRef="string" />
+      </input>
+      <output id="OutputClause_150mrhi" label="output" typeRef="string" />
+      <rule id="DecisionRule_0tv85ik">
+        <inputEntry id="UnaryTests_1voy6n3">
+          <text>&lt;3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0wmrwsu">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1p5dyrq">
+        <inputEntry id="UnaryTests_0q3ohrc">
+          <text>3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jmhojb">
+          <text>"med"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_148zz5d">
+        <inputEntry id="UnaryTests_1d3zy4f">
+          <text>&gt;3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08t0a77">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_055rq1m" name="iterate">
+    <variable id="InformationItem_1ueh9kh" name="results" typeRef="any" />
+    <informationRequirement id="InformationRequirement_0zdt22t">
+      <requiredDecision href="#Decision_1riyk3m" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1sc1o1m">
+      <text>for  input in [1,2,3,4,5] return classify(input)</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_14ytmpo">
+    <text>for input in [1,2,3,4,5] return classify(input)</text>
+  </textAnnotation>
+  <association id="Association_0tav7es">
+    <sourceRef href="#TextAnnotation_14ytmpo" />
+    <targetRef href="#Decision_055rq1m" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0ezofp0" dmnElementRef="Decision_0khen4s">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1xu8sxv" dmnElementRef="Decision_1riyk3m">
+        <dc:Bounds height="80" width="180" x="170" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_00xeyt2" dmnElementRef="Decision_055rq1m">
+        <dc:Bounds height="80" width="180" x="170" y="230" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_05s2jgy" dmnElementRef="InformationRequirement_0zdt22t">
+        <di:waypoint x="260" y="360" />
+        <di:waypoint x="260" y="330" />
+        <di:waypoint x="260" y="310" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0st5ft9" dmnElementRef="TextAnnotation_14ytmpo">
+        <dc:Bounds height="40" width="260" x="400" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1vexnig" dmnElementRef="Association_0tav7es">
+        <di:waypoint x="400" y="270" />
+        <di:waypoint x="350" y="270" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

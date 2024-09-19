@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1mzsfks" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_081usiw" name="DMC04&#10;Make a Good Burger" />
+  <decision id="Decision_1qcm99c" name="define ingredients">
+    <variable id="InformationItem_0wrypow" />
+    <literalExpression id="LiteralExpression_1iu0f5g">
+      <text>{ingredients:
+[
+  {name:"beef patty",sodium:50, fat:17,calories:220,cost:0.25},
+  {name:"bun",       sodium:330,fat:9, calories:260,cost:0.15},
+  {name:"cheese",    sodium:310,fat:6, calories:70, cost:0.10},
+  {name:"onions",    sodium:1,  fat:2, calories:10, cost:0.09},
+  {name:"pickles",   sodium:260,fat:0, calories:5,  cost:0.03},
+  {name:"lettuce",   sodium:3,  fat:0, calories:4,  cost:0.04},
+  {name:"ketchup",   sodium:160,fat:0, calories:20, cost:0.02},
+  {name:"tomato",    sodium:3,  fat:0, calories:9,  cost:0.04}
+]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0nn9ru9" name="generate all burgers">
+    <variable id="InformationItem_06m8own" name="all burgers" typeRef="any" />
+    <informationRequirement id="InformationRequirement_0hsa0c9">
+      <requiredDecision href="#Decision_1qcm99c" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0sjrq4h">
+      <text>//for patties in 1..5, buns in 1..5 , cheese in 1..5, onions in 1..5, ketchup_lettuce in 1..5, pickles_tomato in 1..5
+//for patties in 1..2, buns in 1..2 , cheese in 1..5, onions in 1..2, ketchup_lettuce in 1..2, pickles_tomato in 1..2   // quicker to execute
+//for patties in itemCount, buns in itemCount , cheese in itemCount, onions in itemCount, ketchup_lettuce in itemCount, pickles_tomato in itemCount // parameterised item count
+for patties in 0..pattyMax, buns in 0..bunMax , cheese in 0..cheeseMax, onions in 0..onionsMax, ketchup_lettuce in 0..ketchup_lettuceMax, pickles_tomato in 0..pickles_tomatoMax // variable counts
+return
+  {
+  quantities:     string(patties) + " " + string(buns) + " " +string(cheese) + " " +string(onions) + " " +string(ketchup_lettuce) + " " +string(pickles_tomato),
+    
+  total sodium:   patties              * ingredients[name="beef patty"].sodium[1] +
+                  buns                 * ingredients[name="bun"       ].sodium[1] +
+                  cheese               * ingredients[name="cheese"    ].sodium[1] +
+                  onions               * ingredients[name="onions"    ].sodium[1] +
+                  ketchup_lettuce      * ingredients[name="ketchup"   ].sodium[1] +
+                  ketchup_lettuce      * ingredients[name="lettuce"   ].sodium[1] +
+                  pickles_tomato       * ingredients[name="pickles"   ].sodium[1] +
+                  pickles_tomato       * ingredients[name="tomato"    ].sodium[1],
+    
+  total fat:      patties              * ingredients[name="beef patty"].fat[1] +
+                  buns                 * ingredients[name="bun"       ].fat[1] +
+                  cheese               * ingredients[name="cheese"    ].fat[1] +
+                  onions               * ingredients[name="onions"    ].fat[1] +
+                  ketchup_lettuce      * ingredients[name="ketchup"   ].fat[1] +
+                  ketchup_lettuce      * ingredients[name="lettuce"   ].fat[1] +
+                  pickles_tomato       * ingredients[name="pickles"   ].fat[1] +
+                  pickles_tomato       * ingredients[name="tomato"    ].fat[1],
+    
+  total calories: patties              * ingredients[name="beef patty"].calories[1] +
+                  buns                 * ingredients[name="bun"       ].calories[1] +
+                  cheese               * ingredients[name="cheese"    ].calories[1] +
+                  onions               * ingredients[name="onions"    ].calories[1] +
+                  ketchup_lettuce      * ingredients[name="ketchup"   ].calories[1] +
+                  ketchup_lettuce      * ingredients[name="lettuce"   ].calories[1] +
+                  pickles_tomato       * ingredients[name="pickles"   ].calories[1] +
+                  pickles_tomato       * ingredients[name="tomato"    ].calories[1],
+    
+  total cost:     patties              * ingredients[name="beef patty"].cost[1] +
+                  buns                 * ingredients[name="bun"       ].cost[1] +
+                  cheese               * ingredients[name="cheese"    ].cost[1] +
+                  onions               * ingredients[name="onions"    ].cost[1] +
+                  ketchup_lettuce      * ingredients[name="ketchup"   ].cost[1] +
+                  ketchup_lettuce      * ingredients[name="lettuce"   ].cost[1] +
+                  pickles_tomato       * ingredients[name="pickles"   ].cost[1] +
+                  pickles_tomato       * ingredients[name="tomato"    ].cost[1]   
+  }</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1bedupn" name="find healthy burgers">
+    <variable id="InformationItem_1pje808" name="healthy burgers" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1un1550">
+      <requiredDecision href="#Decision_0nn9ru9" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0j20t5w">
+      <text>all burgers[ total sodium &lt; 3000 and total fat &lt; 150 and total calories &lt; 3000]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1ktt6lq" name="count healthy burgers">
+    <variable id="InformationItem_1po3gq9" name="number of healthy burgers" typeRef="number" />
+    <informationRequirement id="InformationRequirement_1fv1klp">
+      <requiredDecision href="#Decision_1bedupn" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1wpkxy8">
+      <text>count(healthy burgers)</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0edplml">
+    <text>EXTERNAL DATA
+{"ingredients":
+[
+  {"name":"beef patty","sodium":50, "fat":17,"calories":220,"cost":25},
+  {"name":"bun", "sodium":330,"fat":9, "calories":260,"cost":15},
+  {"name":"cheese", "sodium":310,"fat":6, "calories":70, "cost":10},
+  {"name":"onions", "sodium":1, "fat":2, "calories":10, "cost":9},
+  {"name":"ketchup", "sodium":160,"fat":0, "calories":20, "cost":2},
+  {"name":"lettuce", "sodium":3, "fat":0, "calories":4, "cost":4},
+  {"name":"pickles", "sodium":260,"fat":0, "calories":5, "cost":3},
+  {"name":"tomato", "sodium":3, "fat":0, "calories":9, "cost":4}
+],
+   "itemCount":[1,2,3],
+  "pattyMax":2,
+  "bunMax":2,
+  "cheeseMax":3,
+  "onionsMax":2,
+  "ketchup_lettuceMax":2,
+  "pickles_tomatoMax":2
+}</text>
+  </textAnnotation>
+  <association id="Association_06n73as">
+    <sourceRef href="#TextAnnotation_0edplml" />
+    <targetRef href="#Decision_0nn9ru9" />
+  </association>
+  <textAnnotation id="TextAnnotation_1b67ix0">
+    <text>HEALTHY
+sodium&lt;3000
+fat &lt; 150
+calories &lt; 3000</text>
+  </textAnnotation>
+  <association id="Association_0cowj8b">
+    <sourceRef href="#TextAnnotation_1b67ix0" />
+    <targetRef href="#Decision_0nn9ru9" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1054m1a" dmnElementRef="Decision_081usiw">
+        <dc:Bounds height="80" width="180" x="300" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0cv7my4" dmnElementRef="Decision_1qcm99c">
+        <dc:Bounds height="80" width="180" x="300" y="510" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1q0ghdh" dmnElementRef="InformationRequirement_0hsa0c9">
+        <di:waypoint x="390" y="510" />
+        <di:waypoint x="390" y="500" />
+        <di:waypoint x="390" y="480" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1sdcack" dmnElementRef="Decision_0nn9ru9">
+        <dc:Bounds height="80" width="180" x="300" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_117csqe" dmnElementRef="TextAnnotation_0edplml">
+        <dc:Bounds height="300" width="380" x="580" y="290" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1o2wzqv" dmnElementRef="Association_06n73as">
+        <di:waypoint x="580" y="336" />
+        <di:waypoint x="480" y="429" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_076tj1q" dmnElementRef="TextAnnotation_1b67ix0">
+        <dc:Bounds height="80" width="100" x="160" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0j1krn7" dmnElementRef="Association_0cowj8b">
+        <di:waypoint x="260" y="340" />
+        <di:waypoint x="290" y="350" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_06uzjue" dmnElementRef="InformationRequirement_1un1550">
+        <di:waypoint x="390" y="400" />
+        <di:waypoint x="390" y="400" />
+        <di:waypoint x="390" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1vbiyk6" dmnElementRef="InformationRequirement_1fv1klp">
+        <di:waypoint x="390" y="300" />
+        <di:waypoint x="390" y="300" />
+        <di:waypoint x="390" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0y9yflv" dmnElementRef="Decision_1bedupn">
+        <dc:Bounds height="80" width="180" x="300" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1m18zew" dmnElementRef="Decision_1ktt6lq">
+        <dc:Bounds height="80" width="180" x="300" y="200" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             xmlns:camunda="http://camunda.org/schema/1.0/dmn"
+             id="_0020_vacation_days"
+             name="0020-vacation-days"
+             namespace="http://www.camunda.org/schema/1.0/dmn">
+
+   <inputData id="i_Age" name="Age">
+      <variable name="Age" typeRef="number"/>
+   </inputData>
+
+   <inputData id="i_Years_of_Service" name="Years of Service">
+      <variable name="Years of Service" typeRef="number"/>
+   </inputData>
+
+   <decision id="d_Total_Vacation_Days" name="Total Vacation Days">
+      <variable name="Total Vacation Days" typeRef="number"/>
+      <informationRequirement>
+         <requiredDecision href="#d_Base_Vacation_Days"/>
+      </informationRequirement>
+      <informationRequirement>
+         <requiredDecision href="#d_Extra_days_case_1"/>
+      </informationRequirement>
+      <informationRequirement>
+         <requiredDecision href="#d_Extra_days_case_2"/>
+      </informationRequirement>
+      <informationRequirement>
+         <requiredDecision href="#d_Extra_days_case_3"/>
+      </informationRequirement>
+      <literalExpression>
+         <text>Base Vacation Days +
+	              max( Extra days case 1, Extra days case 3 ) +
+	              Extra days case 2</text>
+      </literalExpression>
+   </decision>
+
+   <decision id="d_Extra_days_case_1" name="Extra days case 1">
+      <variable name="Extra days case 1" typeRef="number"/>
+      <informationRequirement>
+         <requiredInput href="#i_Age"/>
+      </informationRequirement>
+      <informationRequirement>
+         <requiredInput href="#i_Years_of_Service"/>
+      </informationRequirement>
+      <decisionTable hitPolicy="COLLECT" aggregation="MAX">
+         <input id="d_Extra_days_case_1_dt_i_age" label="Age">
+            <inputExpression typeRef="number">
+               <text>Age</text>
+            </inputExpression>
+         </input>
+         <input id="d_Extra_days_case_1_dt_i_years" label="Years of Service">
+            <inputExpression typeRef="number">
+               <text>Years of Service</text>
+            </inputExpression>
+         </input>
+         <output id="d_Extra_days_case_1_dt_o" label="Extra days">
+            <outputEntry>
+               <text>0</text>
+            </outputEntry>
+         </output>
+         <rule id="d_Extra_days_case_1_dt_r1">
+            <inputEntry id="d_Extra_days_case_1_dt_r1_i1">
+               <text>&lt;18,&gt;=60</text>
+            </inputEntry>
+            <inputEntry id="d_Extra_days_case_1_dt_r1_i2">
+               <text>-</text>
+            </inputEntry>
+            <outputEntry id="d_Extra_days_case_1_dt_r1_o1">
+               <text>5</text>
+            </outputEntry>
+         </rule>
+         <rule id="d_Extra_days_case_1_dt_r2">
+            <inputEntry id="d_Extra_days_case_1_dt_r2_i1">
+               <text>-</text>
+            </inputEntry>
+            <inputEntry id="d_Extra_days_case_1_dt_r2_i2">
+               <text>&gt;=30</text>
+            </inputEntry>
+            <outputEntry id="d_Extra_days_case_1_dt_r2_o1">
+               <text>5</text>
+            </outputEntry>
+         </rule>
+      </decisionTable>
+   </decision>
+
+   <decision id="d_Extra_days_case_2" name="Extra days case 2">
+      <variable name="Extra days case 2" typeRef="number"/>
+      <informationRequirement>
+         <requiredInput href="#i_Age"/>
+      </informationRequirement>
+      <informationRequirement>
+         <requiredInput href="#i_Years_of_Service"/>
+      </informationRequirement>
+      <decisionTable hitPolicy="COLLECT" aggregation="MAX">
+         <input id="d_Extra_days_case_2_dt_i_age" label="Age">
+            <inputExpression typeRef="number">
+               <text>Age</text>
+            </inputExpression>
+         </input>
+         <input id="d_Extra_days_case_2_dt_i_years" label="Years of Service">
+            <inputExpression typeRef="number">
+               <text>Years of Service</text>
+            </inputExpression>
+         </input>
+         <output id="d_Extra_days_case_2_dt_o" label="Extra days">
+            <outputEntry>
+               <text>0</text>
+            </outputEntry>
+         </output>
+         <rule id="d_Extra_days_case_2_dt_r1">
+            <inputEntry id="d_Extra_days_case_2_dt_r1_i1">
+               <text>-</text>
+            </inputEntry>
+            <inputEntry id="d_Extra_days_case_2_dt_r1_i2">
+               <text>&gt;=30</text>
+            </inputEntry>
+            <outputEntry id="d_Extra_days_case_2_dt_r1_o1">
+               <text>3</text>
+            </outputEntry>
+         </rule>
+         <rule id="d_Extra_days_case_2_dt_r2">
+            <inputEntry id="d_Extra_days_case_2_dt_r2_i1">
+               <text>&gt;=60</text>
+            </inputEntry>
+            <inputEntry id="d_Extra_days_case_2_dt_r2_i2">
+               <text>-</text>
+            </inputEntry>
+            <outputEntry id="d_Extra_days_case_2_dt_r2_o1">
+               <text>3</text>
+            </outputEntry>
+         </rule>
+      </decisionTable>
+   </decision>
+
+   <decision id="d_Extra_days_case_3" name="Extra days case 3">
+      <variable name="Extra days case 3" typeRef="number"/>
+      <informationRequirement>
+         <requiredInput href="#i_Age"/>
+      </informationRequirement>
+      <informationRequirement>
+         <requiredInput href="#i_Years_of_Service"/>
+      </informationRequirement>
+      <decisionTable hitPolicy="COLLECT" aggregation="MAX">
+         <input id="d_Extra_days_case_3_dt_i_age" label="Age">
+            <inputExpression typeRef="number">
+               <text>Age</text>
+            </inputExpression>
+         </input>
+         <input id="d_Extra_days_case_3_dt_i_years" label="Years of Service">
+            <inputExpression typeRef="number">
+               <text>Years of Service</text>
+            </inputExpression>
+         </input>
+         <output id="d_Extra_days_case_3_dt_o" label="Extra days">
+            <outputEntry>
+               <text>0</text>
+            </outputEntry>
+         </output>
+         <rule id="d_Extra_days_case_3_dt_r1">
+            <inputEntry id="d_Extra_days_case_3_dt_r1_i1">
+               <text>-</text>
+            </inputEntry>
+            <inputEntry id="d_Extra_days_case_3_dt_r1_i2">
+               <text>[15..30)</text>
+            </inputEntry>
+            <outputEntry id="d_Extra_days_case_3_dt_r1_o1">
+               <text>2</text>
+            </outputEntry>
+         </rule>
+         <rule id="d_Extra_days_case_3_dt_r2">
+            <inputEntry id="d_Extra_days_case_3_dt_r2_i1">
+               <text>&gt;=45</text>
+            </inputEntry>
+            <inputEntry id="d_Extra_days_case_3_dt_r2_i2">
+               <text>-</text>
+            </inputEntry>
+            <outputEntry id="d_Extra_days_case_3_dt_r2_o1">
+               <text>2</text>
+            </outputEntry>
+         </rule>
+      </decisionTable>
+   </decision>
+
+   <decision id="d_Base_Vacation_Days" name="Base Vacation Days">
+      <variable name="Base Vacation Days" typeRef="number"/>
+      <literalExpression>
+         <text>22</text>
+      </literalExpression>
+   </decision>
+
+</definitions>

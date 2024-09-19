@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/"
+             xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/"
+             xmlns:dmndi="http://www.omg.org/spec/DMN/20180521/DMNDI/"
+             id="definitions_1"
+             name="DMCommunity Challenge - March 2017"
+             namespace="http://camunda.org/schema/1.0/dmn">
+  
+  <itemDefinition id="tProfile" name="tProfile" isCollection="false">
+    <itemComponent id="_ca82dc10-9d18-49b3-a899-6888fe0c432e" name="Name" isCollection="false">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_1b2e3428-4599-4fc8-9bec-3332094a8e13" name="Gender" isCollection="false">
+      <typeRef>tGender</typeRef>
+    </itemComponent>
+    <itemComponent id="_9fc95729-59a5-4709-8d67-7b7076f8a2c2" name="City" isCollection="false">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_f57320fd-6aa5-4dbf-b5b3-562d87e6d6c2" name="Age" isCollection="false">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_329e326b-830a-4ebc-96a1-b5570e07e0ec" name="List of Interests" isCollection="false">
+      <typeRef>tInterests</typeRef>
+    </itemComponent>
+    <itemComponent id="_0fd65c9c-ef19-400d-92ea-2f64abe8aa24" name="Minimum Acceptable Age" isCollection="false">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_2ec9cbb9-37d2-4e5d-9141-0be6926c3eaf" name="Maximum Acceptable Age" isCollection="false">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_bc5ff4fb-670d-400b-8a11-3b703c7529ad" name="Acceptable Genders" isCollection="false">
+      <typeRef>tGenders</typeRef>
+    </itemComponent>
+    <itemComponent id="_2d0ca6ea-c4db-4338-af57-0bbba8f5323a" name="Minimum Matching Interests" isCollection="false">
+      <typeRef>number</typeRef>
+    </itemComponent>
+  </itemDefinition>
+
+  <itemDefinition id="tGender" name="tGender" isCollection="false">
+    <typeRef>string</typeRef>
+    <allowedValues>
+      <text>"Male","Female"</text>
+    </allowedValues>
+  </itemDefinition>
+
+  <itemDefinition id="tGenders" name="tGenders" isCollection="true">
+    <typeRef>tGender</typeRef>
+  </itemDefinition>
+
+  <itemDefinition id="tInterests" name="tInterests" isCollection="true">
+    <typeRef>string</typeRef>
+  </itemDefinition>
+
+  <decision id="decision_1" name="Candidate Souls">
+    <variable name="Candidate Souls" typeRef="tCandidates"/>
+    <informationRequirement>
+      <requiredInput href="#input_1"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#input_2"/>
+    </informationRequirement>
+    <knowledgeRequirement>
+      <requiredKnowledge href="#bkm_1"/>
+    </knowledgeRequirement>
+    <context>
+      <contextEntry>
+        <variable name="Candidates" typeRef="tCandidates"/>
+        <literalExpression>
+          <text>for Soul Mate in Potential Soul Mates return Evaluate Match(Lonely Soul, Soul Mate)</text>
+        </literalExpression>
+      </contextEntry>
+      <contextEntry>
+        <literalExpression>
+          <text>Candidates[ Is Match = true ]</text>
+        </literalExpression>
+      </contextEntry>
+    </context>
+  </decision>
+
+  <businessKnowledgeModel id="bkm_1" name="Evaluate Match">
+    <variable name="Evaluate Match" typeRef="tCandidate"/>
+    <encapsulatedLogic>
+      <formalParameter name="Candidate1" typeRef="tProfile"/>
+      <formalParameter name="Candidate2" typeRef="tProfile"/>
+      <context>
+        <contextEntry>
+          <variable name="Profile1" typeRef="tProfile"/>
+          <literalExpression>
+            <text>Candidate1</text>
+          </literalExpression>
+        </contextEntry>
+        <contextEntry>
+          <variable name="Profile2" typeRef="tProfile"/>
+          <literalExpression>
+            <text>Candidate2</text>
+          </literalExpression>
+        </contextEntry>
+        <contextEntry>
+          <variable name="Is Match" typeRef="boolean"/>
+          <literalExpression>
+            <text>Is Soul a Match(Candidate1, Candidate2) and Is Soul a Match(Candidate2, Candidate1)</text>
+          </literalExpression>
+        </contextEntry>
+        <contextEntry>
+          <variable name="Score" typeRef="number"/>
+          <literalExpression>
+            <text>Number of Matching Interests(Candidate1, Candidate2) - abs(Candidate1.Age - Candidate2.Age)</text>
+          </literalExpression>
+        </contextEntry>
+      </context>
+    </encapsulatedLogic>
+  </businessKnowledgeModel>
+  
+  <!-- Other elements like additional business knowledge models, input data, and knowledge requirements go here -->
+
+</definitions>

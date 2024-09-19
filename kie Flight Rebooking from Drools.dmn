@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn.xsd"
+             xmlns:dmndi="http://www.omg.org/spec/DMN/20151101/DMNDI/"
+             xmlns:dc="http://www.omg.org/spec/DMN/20151101/DC/"
+             xmlns:di="http://www.omg.org/spec/DMN/20151101/DI/"
+             id="_0019_flight_rebooking"
+             name="0019-flight-rebooking"
+             namespace="http://camunda.org/schema/1.0/dmn">
+
+  <itemDefinition id="_tFlight" name="tFlight">
+    <itemComponent id="_tFlight_Flight" name="Flight Number">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_tFlight_From" name="From">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_tFlight_To" name="To">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_tFlight_Dep" name="Departure">
+      <typeRef>dateTime</typeRef>
+    </itemComponent>
+    <itemComponent id="_tFlight_Arr" name="Arrival">
+      <typeRef>dateTime</typeRef>
+    </itemComponent>
+    <itemComponent id="_tFlight_Capacity" name="Capacity">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_tFlight_Status" name="Status">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+
+  <itemDefinition id="_tFlightTable" isCollection="true" name="tFlightTable">
+    <typeRef>tFlight</typeRef>
+  </itemDefinition>
+
+  <itemDefinition id="_tPassenger" name="tPassenger">
+    <itemComponent id="_tPassenger_Name" name="Name">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_tPassenger_Status" name="Status">
+      <typeRef>string</typeRef>
+    </itemComponent>
+    <itemComponent id="_tPassenger_Miles" name="Miles">
+      <typeRef>number</typeRef>
+    </itemComponent>
+    <itemComponent id="_tPassenger_Flight" name="Flight Number">
+      <typeRef>string</typeRef>
+    </itemComponent>
+  </itemDefinition>
+
+  <itemDefinition id="_tPassengerTable" isCollection="true" name="tPassengerTable">
+    <typeRef>tPassenger</typeRef>
+  </itemDefinition>
+
+  <inputData id="i_Flight_List" name="Flight List">
+    <variable name="Flight List" typeRef="tFlightTable"/>
+  </inputData>
+
+  <inputData id="i_Passenger_List" name="Passenger List">
+    <variable name="Passenger List" typeRef="tPassengerTable"/>
+  </inputData>
+
+  <decision id="d_PrioritizedWaitingList" name="Prioritized Waiting List">
+    <variable name="Prioritized Waiting List" typeRef="tPassengerTable"/>
+    <informationRequirement>
+      <requiredInput href="#i_Passenger_List"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#i_Flight_List"/>
+    </informationRequirement>
+    <context>
+      <contextEntry>
+        <variable name="Cancelled Flights" typeRef="tFlightNumberList"/>
+        <literalExpression>
+          <text>Flight List[Status = "cancelled"].Flight Number</text>
+        </literalExpression>
+      </contextEntry>
+      <contextEntry>
+        <variable name="Waiting List" typeRef="tPassengerTable"/>
+        <literalExpression>
+          <text>Passenger List[list contains(Cancelled Flights, Flight Number)]</text>
+        </literalExpression>
+      </contextEntry>
+      <contextEntry>
+        <literalExpression>
+          <text>sort(Waiting List, passenger priority)</text>
+        </literalExpression>
+      </contextEntry>
+    </context>
+  </decision>
+
+  <decision id="d_RebookedPassengers" name="Rebooked Passengers">
+    <variable name="Rebooked Passengers" typeRef="tPassengerTable"/>
+    <informationRequirement>
+      <requiredDecision href="#d_PrioritizedWaitingList"/>
+    </informationRequirement>
+    <informationRequirement>
+      <requiredInput href="#i_Flight_List"/>
+    </informationRequirement>
+    <invocation>
+      <literalExpression>
+        <text>reassign next passenger</text>
+      </literalExpression>
+      <binding>
+        <parameter name="Waiting List"/>
+        <literalExpression>
+          <text>Prioritized Waiting List</text>
+        </literalExpression>
+      </binding>
+      <binding>
+        <parameter name="Reassigned Passengers List"/>
+        <literalExpression>
+          <text>[]</text>
+        </literalExpression>
+      </binding>
+      <binding>
+        <parameter name="Flights"/>
+        <literalExpression>
+          <text>Flight List</text>
+        </literalExpression>
+      </binding>
+    </invocation>
+  </decision>
+  
+  <!-- Additional decisions and logic here -->
+
+</definitions>

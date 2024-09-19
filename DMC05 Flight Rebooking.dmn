@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0kiweya" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1p7fb88" name="DMC05&#10;Flight Rebooking" />
+  <decision id="Decision_0l7g9s0" name="define flights">
+    <variable id="InformationItem_13cql7m" name="flights" typeRef="any" />
+    <literalExpression id="LiteralExpression_0vrg7y6">
+      <text>[
+{no:"UA123",from:"SFO",to:"SNA",dep:"2007-1-1T18:00",arr:"2007-1-1T19:00",capacity:5,status:"cancelled"},
+{no:"UA456",from:"SFO",to:"SNA",dep:"2007-1-1T19:00",arr:"2007-1-1T20:00",capacity:2,status:"scheduled"},
+{no:"UA789",from:"SFO",to:"SNA",dep:"2007-1-1T21:00",arr:"2007-1-1T23:00",capacity:2,status:"scheduled"},
+{no:"UA1001",from:"SFO",to:"SNA",dep:"2007-1-1T23:00",arr:"2007-1-2T05:00",capacity:0,status:"scheduled"},
+{no:"UA1111",from:"SFO",to:"LAX",dep:"2007-1-1T18:00",arr:"2007-1-2T05:00",capacity:2,status:"scheduled"}
+]
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1qk9coj" name="cancelled flights">
+    <variable id="InformationItem_0l8w07q" name="cancelled flights" typeRef="Any" />
+    <literalExpression id="LiteralExpression_1civrwl">
+      <text>flights[status="cancelled"]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1sjcfri" name="available flights">
+    <variable id="InformationItem_1of6u33" name="available flights" typeRef="any" />
+    <informationRequirement id="InformationRequirement_068l90x">
+      <requiredDecision href="#Decision_0l7g9s0" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_01hb35r">
+      <requiredInput href="#InputData_17zhwyd" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_06kdt39">
+      <text>flights[status="scheduled"]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1awxnc7" name="define reservations">
+    <variable id="InformationItem_1ochk7p" />
+    <literalExpression id="LiteralExpression_1g9p8vp">
+      <text>[{name}]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1n2y7hp" name="define passengers">
+    <variable id="InformationItem_0baw5rv" />
+    <literalExpression id="LiteralExpression_1h1rlw5" />
+  </decision>
+  <decision id="Decision_0ue7bow" name="inconvenienced passengers">
+    <variable id="InformationItem_0ghvakm" name="inconvenienced passengers" typeRef="list" />
+    <informationRequirement id="InformationRequirement_15nbj72">
+      <requiredDecision href="#Decision_1n2y7hp" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1hi1ey0">
+      <requiredDecision href="#Decision_0l7g9s0" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1kefirb">
+      <requiredInput href="#InputData_0pvbzku" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0lltdko">
+      <requiredInput href="#InputData_0cwogi1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0cvatb8">
+      <text>{find passengers on cancelled flights: function(flights,passengers)                  // define a function
+  for cancelled flight in flights[status="cancelled"]                                // for every cancelled flight
+      return                                                                         // return flight detail + list of passengers
+            { flight    : cancelled flight.no,                                       // flight number
+              from      : cancelled flight.from,                                     // from
+              to        : cancelled flight.to,                                       // to
+              dep       : cancelled flight.dep,                                      // orginal departure time
+              arr       : cancelled flight.arr,                                      // original arrival time
+              status    :"cancelled",                                                // status
+              passengers: for p in passengers[flight=cancelled flight.no]            // for each passenger on the cancelled flight
+                          return  {name   : p.name,                                  // name
+                                   miles  : p.miles,                                 // miles
+                                   status : p.status}                                // status
+            },            
+inconvenienced passengers: find passengers on cancelled flights (flights,passengers) // invoke the function
+}.inconvenienced passengers                                                          // output the list</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0tvo6s1" name="reschedule passengers (TODO)">
+    <variable id="InformationItem_0mp6msu" />
+    <informationRequirement id="InformationRequirement_0atyle4">
+      <requiredDecision href="#Decision_1sjcfri" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1coakyn">
+      <requiredDecision href="#Decision_0ue7bow" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_11cs4it">
+      <text>for flight in flights [status="scheduled"]
+    passenger in inconvenienced passengers
+   if flight.capacity &gt; 0 and </text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0cch8fu" name="alternative for inconvenienced passengers">
+    <variable id="InformationItem_046qyx6" name="alt" typeRef="list" />
+    <literalExpression id="LiteralExpression_1xi2yce">
+      <text>{find passengers on cancelled flights: function(flights,reservations,passengers)                  // define a function
+  for cancelled flight in flights                                             // for every cancelled flight
+      return {flt: cancelled flight.no,                                                           // get the flight number
+              from:cancelled flight.from,                                                         // from
+              to: cancelled flight.to,                                                            // to
+              passengers: reservations[reservation.flight = cancelledflight.no].name},            // get the passengers on this cancelled flight
+inconvenienced passengers: find passengers on cancelled flights (flights[status="cancelled"],reservations,passengers) // invoke the function
+}.inconvenienced passengers 
+
+// note - the filter [status="cancelled"] is now passed in as an argument of the function</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_17zhwyd" name="flights" />
+  <inputData id="InputData_0pvbzku" name="passengers" />
+  <inputData id="InputData_0cwogi1" name="flights" />
+  <textAnnotation id="TextAnnotation_0phoxpy">
+    <text>https://dmcommunity.org/challenge/challenge-oct-2016/</text>
+  </textAnnotation>
+  <association id="Association_174dvk4">
+    <sourceRef href="#TextAnnotation_0phoxpy" />
+    <targetRef href="#Decision_1p7fb88" />
+  </association>
+  <textAnnotation id="TextAnnotation_1uw4wo7">
+    <text>INTERNAL DATA
+[
+{no:"UA123",from:"SFO",to:"SNA",dep:"2007-1-1T18:00",arr:"2007-1-1T19:00",capacity:5,status:"cancelled"},
+{no:"UA456",from:"SFO",to:"SNA",dep:"2007-1-1T19:00",arr:"2007-1-1T20:00",capacity:2,status:"scheduled"},
+{no:"UA789",from:"SFO",to:"SNA",dep:"2007-1-1T21:00",arr:"2007-1-1T23:00",capacity:2,status:"scheduled"},
+{no:"UA1001",from:"SFO",to:"SNA",dep:"2007-1-1T23:00",arr:"2007-1-2T05:00",capacity:0,status:"scheduled"},
+{no:"UA1111",from:"SFO",to:"LAX",dep:"2007-1-1T18:00",arr:"2007-1-2T05:00",capacity:2,status:"scheduled"}
+]</text>
+  </textAnnotation>
+  <association id="Association_0tefd2k">
+    <sourceRef href="#TextAnnotation_1uw4wo7" />
+    <targetRef href="#Decision_0l7g9s0" />
+  </association>
+  <textAnnotation id="TextAnnotation_0c8f4fs">
+    <text>EXTERNAL DATA
+{"flights":[
+{"no":"UA123","from":"SFO","to":"SNA","dep":"2007-1-1T18:00","arr":"2007-1-1T19:00","capacity":5,"status":"cancelled"},
+{"no":"UA456","from":"SFO","to":"SNA","dep":"2007-1-1T19:00","arr":"2007-1-1T20:00","capacity":2,"status":"cancelled"},
+{"no":"UA789","from":"SFO","to":"SNA","dep":"2007-1-1T21:00","arr":"2007-1-1T23:00","capacity":2,"status":"scheduled"},
+{"no":"UA1001","from":"SFO","to":"SNA","dep":"2007-1-1T23:00","arr":"2007-1-2T05:00","capacity":0,"status":"scheduled"},
+{"no":"UA1111","from":"SFO","to":"LAX","dep":"2007-1-1T18:00","arr":"2007-1-2T05:00","capacity":2,"status":"scheduled"}
+]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_01c0dzx">
+    <text>{"reservations":
+[{name":Jenny","flight":"UA123","seat":"1A"},
+{name":Harry","flight":"UA123","seat:"1B"}
+{name":Igor","flight":"UA123","seat":36D}
+{name":Dick","flight":"UA123","seat":"21A"}
+{name":Tom","flight":"UA123","seats":"16F"}
+]}</text>
+  </textAnnotation>
+  <association id="Association_1hkfpoj">
+    <sourceRef href="#TextAnnotation_01c0dzx" />
+    <targetRef href="#Decision_1awxnc7" />
+  </association>
+  <textAnnotation id="TextAnnotation_0y7xubd">
+    <text>[
+{name:"Jenny",status:"gold",miles:500000,flight:"UA123"},
+{name:"Harry",status:"gold",miles:100000,flight:"UA123"},
+{name:"Igor",status:"gold",miles:50000,flight:"UA123"},
+{name:"Dick",status:"silver",miles:100,flight:"UA123"},
+{name:"Tom",status:"bronze",miles:10,flight:"UA123"},
+{name:"Mary",status:"bronze",miles:10,flight:"UA123"}
+]</text>
+  </textAnnotation>
+  <association id="Association_0fafw24">
+    <sourceRef href="#TextAnnotation_0y7xubd" />
+    <targetRef href="#Decision_1n2y7hp" />
+  </association>
+  <textAnnotation id="TextAnnotation_10mwe8v">
+    <text>{"passengers":[
+{"name":"Jenny","status":"gold","miles":500000},
+{"name":"Harry","status":"gold","miles":100000},
+{"name":"Igor","status":"gold","miles":50000},
+{"name":"Dick","status":"silver","miles":100},
+{"name":"Tom","status":"bronze","miles":10},
+ {"name": "Mary","miles": 10,"status": "bronze"}
+]
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0i8ofrs">
+    <text>{"reservations":
+[{"name":"Jenny","flight":"UA123","seat":"1A"},
+{"name":"Harry","flight":"UA123","seat":"1B"},
+{"name":"Igor","flight":"UA123","seat":"36D"},
+{"name":"Dick","flight":"UA123","seat":"21A"},
+{"name":"Tom","flight":"UA123","seats":"16F"}
+]}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_067esik">
+    <text>OUTPUT
+[
+  { "flight": "UA123","from": "SFO", "to": "SNA",
+    "passengers": [
+      {"name": "Jenny","miles": 500000,"status": "gold"},
+      {"name": "Harry","miles": 100000,"status": "gold"},
+      {"name": "Igor","miles": 50000,"status": "gold"},
+      {"name": "Dick","miles": 100,"status": "silver"},
+      {"name": "Tom","miles": 10,"status": "bronze"}
+    ]
+  },
+  { "flight": "UA456","from": "SFO","to": "SNA",
+    "passengers": [
+      {"name": "Mary","miles": 10,"status": "bronze"}
+    ]
+  }
+]</text>
+  </textAnnotation>
+  <association id="Association_1qcsv90">
+    <sourceRef href="#TextAnnotation_067esik" />
+    <targetRef href="#Decision_0ue7bow" />
+  </association>
+  <textAnnotation id="TextAnnotation_1xwoutj">
+    <text>match cancelled flights to reservations to get passenger details</text>
+  </textAnnotation>
+  <association id="Association_0cincy8">
+    <sourceRef href="#TextAnnotation_1xwoutj" />
+    <targetRef href="#Decision_0ue7bow" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1idcs1q" dmnElementRef="Decision_1p7fb88">
+        <dc:Bounds height="80" width="180" x="30" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0c6h81s" dmnElementRef="TextAnnotation_0phoxpy">
+        <dc:Bounds height="45" width="175" x="32" y="325" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1o314dk" dmnElementRef="Association_174dvk4">
+        <di:waypoint x="130" y="318" />
+        <di:waypoint x="130" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1beqx3x" dmnElementRef="Decision_0l7g9s0">
+        <dc:Bounds height="80" width="180" x="150" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ajc7bp" dmnElementRef="TextAnnotation_1uw4wo7">
+        <dc:Bounds height="130" width="610" x="-65" y="665" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0k3frcs" dmnElementRef="Association_0tefd2k">
+        <di:waypoint x="211" y="665" />
+        <di:waypoint x="213" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0pvqb3b" dmnElementRef="TextAnnotation_0c8f4fs">
+        <dc:Bounds height="140" width="680" x="1140" y="-70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1pl197l" dmnElementRef="Decision_1qk9coj">
+        <dc:Bounds height="80" width="180" x="1450" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_06ssppw" dmnElementRef="Decision_1sjcfri">
+        <dc:Bounds height="80" width="180" x="50" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_12g7sss" dmnElementRef="Decision_1awxnc7">
+        <dc:Bounds height="80" width="180" x="1440" y="360" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zrds3x" dmnElementRef="TextAnnotation_01c0dzx">
+        <dc:Bounds height="110" width="260" x="1430" y="465" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ej33ub" dmnElementRef="Association_1hkfpoj">
+        <di:waypoint x="1445" y="465" />
+        <di:waypoint x="1540" y="450" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0699aja" dmnElementRef="Decision_1n2y7hp">
+        <dc:Bounds height="80" width="180" x="700" y="560" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1jtltff" dmnElementRef="TextAnnotation_0y7xubd">
+        <dc:Bounds height="128" width="350" x="585" y="666" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0688le0" dmnElementRef="Association_0fafw24">
+        <di:waypoint x="810" y="666" />
+        <di:waypoint x="810" y="640" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1dxt8bc" dmnElementRef="TextAnnotation_10mwe8v">
+        <dc:Bounds height="140" width="300" x="1140" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1d3psog" dmnElementRef="TextAnnotation_0i8ofrs">
+        <dc:Bounds height="110" width="260" x="1160" y="345" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0p6lr6b" dmnElementRef="InformationRequirement_15nbj72">
+        <di:waypoint x="790" y="560" />
+        <di:waypoint x="540" y="510" />
+        <di:waypoint x="540" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1o4hznk" dmnElementRef="InformationRequirement_068l90x">
+        <di:waypoint x="240" y="560" />
+        <di:waypoint x="140" y="510" />
+        <di:waypoint x="140" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1k0zjom" dmnElementRef="InformationRequirement_1hi1ey0">
+        <di:waypoint x="240" y="560" />
+        <di:waypoint x="480" y="510" />
+        <di:waypoint x="480" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0poye0b" dmnElementRef="Decision_0ue7bow">
+        <dc:Bounds height="80" width="180" x="420" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1yulkh8" dmnElementRef="Decision_0tvo6s1">
+        <dc:Bounds height="80" width="180" x="240" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_05hv0tc" dmnElementRef="InformationRequirement_0atyle4">
+        <di:waypoint x="140" y="410" />
+        <di:waypoint x="300" y="340" />
+        <di:waypoint x="300" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0epi006" dmnElementRef="InformationRequirement_1coakyn">
+        <di:waypoint x="510" y="410" />
+        <di:waypoint x="360" y="340" />
+        <di:waypoint x="360" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1u90t3o" dmnElementRef="TextAnnotation_067esik">
+        <dc:Bounds height="260" width="380" x="690" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1m0q6xd" dmnElementRef="Association_1qcsv90">
+        <di:waypoint x="690" y="431" />
+        <di:waypoint x="600" y="437" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1xna796" dmnElementRef="Decision_0cch8fu">
+        <dc:Bounds height="80" width="180" x="1450" y="130" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0iydqpx" dmnElementRef="TextAnnotation_1xwoutj">
+        <dc:Bounds height="60" width="190" x="515" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0s6k03w" dmnElementRef="Association_0cincy8">
+        <di:waypoint x="510" y="338" />
+        <di:waypoint x="510" y="410" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1vxehwz" dmnElementRef="InputData_17zhwyd">
+        <dc:Bounds height="45" width="125" x="-133" y="427" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_11jc5nh" dmnElementRef="InformationRequirement_01hb35r">
+        <di:waypoint x="-8" y="450" />
+        <di:waypoint x="30" y="450" />
+        <di:waypoint x="50" y="450" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_097pi6z" dmnElementRef="InputData_0pvbzku">
+        <dc:Bounds height="45" width="125" x="267" y="457" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0exmqzv" dmnElementRef="InformationRequirement_1kefirb">
+        <di:waypoint x="392" y="480" />
+        <di:waypoint x="400" y="463" />
+        <di:waypoint x="420" y="463" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0yls91n" dmnElementRef="InputData_0cwogi1">
+        <dc:Bounds height="45" width="125" x="267" y="397" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0dvnvo9" dmnElementRef="InformationRequirement_0lltdko">
+        <di:waypoint x="392" y="420" />
+        <di:waypoint x="400" y="437" />
+        <di:waypoint x="420" y="437" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

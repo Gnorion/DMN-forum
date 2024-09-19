@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1geh6ho" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0r7lcue" name="Design Patterns">
+    <informationRequirement id="InformationRequirement_1ng5u0g">
+      <requiredDecision href="#Decision_1k6iwwo" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1pdgfsv">
+      <requiredDecision href="#Decision_07ny1qi" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_1k6iwwo" name="STATIC&#10;object with properties&#10;statically defined (s1)">
+    <variable id="InformationItem_1byaboc" name="s1" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1fq2zzb">
+      <requiredDecision href="#Decision_0yrh89l" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1ui8r18">
+      <requiredDecision href="#Decision_05ckx9a" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0q4oebu">
+      <text>{
+ v1: "v1",
+ v2: "v2",
+ v3: [1,2,3], 
+ v4: {x:1, y:[5,6]}
+}
+/* returns entire structure
+{
+  "v1": "v1",
+  "v2": "v2",
+  "v3": [1,2,3],
+  "v4": {"x": 1,"y": [5,6]
+  }
+}
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0suhceq" name="list of items">
+    <variable id="InformationItem_01ipqgd" name="list if items" />
+    <literalExpression id="LiteralExpression_1b1nks5">
+      <text>[1,2,3,4,5] // returns [1,2,3,4,5]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0yrh89l" name="projection v3">
+    <variable id="InformationItem_0yygurs" name="pv3" typeRef="any" />
+    <informationRequirement id="InformationRequirement_0d129ji">
+      <requiredDecision href="#Decision_0t8ty0n" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1kna5dn">
+      <text>{
+ v1: "v1",
+ v2: "v2",
+ v3: [1,2,3], 
+ v4: {x:1, y:[5,6]}
+}.v3               
+// just returns the v3 property
+// [1,2,3]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0t8ty0n" name="filtered projection v3">
+    <variable id="InformationItem_1vapbvv" name="fpv3" typeRef="any" />
+    <literalExpression id="LiteralExpression_0gidiyl">
+      <text>{
+ v1: "v1",
+ v2: "v2",
+ v3: [1,2,3], 
+ v4: {x:1, y:[5,6]}
+}.v3[&gt;1]                
+// just returns values of the v3 property &gt;1
+// [2,3]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1finip7" name="double projection .v4.y">
+    <variable id="InformationItem_1idi5w7" name="dp.v4.y" typeRef="any" />
+    <literalExpression id="LiteralExpression_0drvt99">
+      <text>{
+ v1: "v1",
+ v2: "v2",
+ v3: [1,2,3], 
+ v4: {x:1, y:[5,6]}
+}.v4.y //return the y property of the V4 property</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1en5fk4" name="double projection and filter v4">
+    <variable id="InformationItem_1q3a1pu" name="dpf" typeRef="any" />
+    <literalExpression id="LiteralExpression_1qokbiw">
+      <text>{
+ v1: "v1",
+ v2: "v2",
+ v3: [1,2,3], 
+ v4: {x:1, y:[5,6,7,8,9]}
+}.v4[x=1].y[1][&gt;7]
+// Notes  the y property of v4 is actually a nested list [[5,6,7,8,9]]
+// so we need to use y[1] to get the unnested list</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_05ckx9a" name="projection v4">
+    <variable id="InformationItem_01ozk65" name="pv4" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1ojxye6">
+      <requiredDecision href="#Decision_1finip7" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0px5a7e">
+      <requiredDecision href="#Decision_1en5fk4" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_07rp8e5">
+      <text>{
+ v1: "v1",
+ v2: "v2",
+ v3: [1,2,3], 
+ v4: {x:1, y:[5,6]}
+}.v4               
+// just returns the v4 property
+// {x:1, y:[5,6]}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_07ny1qi" name="DYNAMIC&#10;object with properties dynamically defined (d1)">
+    <variable id="InformationItem_1k57uaj" name="d1" typeRef="any" />
+    <literalExpression id="LiteralExpression_1t2s895">
+      <text>{
+ v1: "v1 " + string(today()),
+ v2: "v2 " + string(now()),
+ v3: for i in [1..6] return i,      // note [1..6] could be supplied from another expression or as input in the context
+ v4: {x:sum(v3[&gt;3]),                // return only the values of v3 &gt; 3
+      y:for j in v3[&gt;4] return j*j} // using only the values of v3&gt;4
+}
+/* returns
+{
+  "v1": "v1 2024-09-19T00:00:00",
+  "v2": "v2 2024-09-19T14:29:30.922",
+  "v3": [1,2,3,4,5,6],
+  "v4": {"x": 15,"y": [25,36]}
+}
+*/</text>
+    </literalExpression>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_19ga2dw" dmnElementRef="Decision_0r7lcue">
+        <dc:Bounds height="80" width="180" x="770" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_107qchj" dmnElementRef="Decision_1k6iwwo">
+        <dc:Bounds height="80" width="180" x="560" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_130uz7l" dmnElementRef="Decision_0suhceq">
+        <dc:Bounds height="80" width="180" x="190" y="450" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_08foibu" dmnElementRef="Decision_0yrh89l">
+        <dc:Bounds height="80" width="180" x="410" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03bme2f" dmnElementRef="Decision_0t8ty0n">
+        <dc:Bounds height="80" width="180" x="410" y="550" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03vgjkg" dmnElementRef="Decision_1finip7">
+        <dc:Bounds height="80" width="180" x="630" y="550" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0tdxzyd" dmnElementRef="Decision_1en5fk4">
+        <dc:Bounds height="80" width="180" x="820" y="550" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_15qgcmu" dmnElementRef="Decision_05ckx9a">
+        <dc:Bounds height="80" width="180" x="700" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0h4clle" dmnElementRef="InformationRequirement_1ojxye6">
+        <di:waypoint x="720" y="550" />
+        <di:waypoint x="760" y="490" />
+        <di:waypoint x="760" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0xyrczh" dmnElementRef="InformationRequirement_0px5a7e">
+        <di:waypoint x="910" y="550" />
+        <di:waypoint x="820" y="490" />
+        <di:waypoint x="820" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_04bvjuz" dmnElementRef="InformationRequirement_0d129ji">
+        <di:waypoint x="500" y="550" />
+        <di:waypoint x="500" y="490" />
+        <di:waypoint x="500" y="470" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_18xixc5" dmnElementRef="InformationRequirement_1fq2zzb">
+        <di:waypoint x="500" y="390" />
+        <di:waypoint x="620" y="310" />
+        <di:waypoint x="620" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0yqj2qr" dmnElementRef="InformationRequirement_1ui8r18">
+        <di:waypoint x="790" y="390" />
+        <di:waypoint x="680" y="310" />
+        <di:waypoint x="680" y="290" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0i36jri" dmnElementRef="Decision_07ny1qi">
+        <dc:Bounds height="80" width="180" x="990" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1frv91h" dmnElementRef="InformationRequirement_1ng5u0g">
+        <di:waypoint x="650" y="210" />
+        <di:waypoint x="830" y="180" />
+        <di:waypoint x="830" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1imka1o" dmnElementRef="InformationRequirement_1pdgfsv">
+        <di:waypoint x="1080" y="220" />
+        <di:waypoint x="890" y="180" />
+        <di:waypoint x="890" y="160" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

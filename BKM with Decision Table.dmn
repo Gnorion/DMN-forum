@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1dflyfa" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1dflyfa" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
   <decision id="decisionTable" name="BKM with Decision Table">
     <knowledgeRequirement id="KnowledgeRequirement_1yz80zo">
       <requiredKnowledge href="#_8xmTAIDNEee-MeWXoLgrYg" />
@@ -8,65 +8,57 @@
       <text>Discount(x, y)</text>
     </literalExpression>
   </decision>
-  <businessKnowledgeModel id="_8xmTAIDNEee-MeWXoLgrYg" name="Discount">
-    <variable id="InformationItem_0qb3fww" name="Discount" />
-    <encapsulatedLogic id="FunctionDefinition_0bxx0y6">
-      <formalParameter id="InformationItem_0gymln6" name="customer" />
-      <formalParameter id="InformationItem_1vtdk6b" name="orderSize" />
-      <decisionTable id="dt_discount">
-        <input id="input1" label="Customer">
-          <inputExpression id="inputExpression1" typeRef="string">
-            <text>customer</text>
-          </inputExpression>
-        </input>
-        <input id="InputClause_0948jsx" label="Order Size">
-          <inputExpression id="LiteralExpression_0541nfx" typeRef="integer">
-            <text>orderSize</text>
-          </inputExpression>
-        </input>
-        <output id="output1" label="Discount" name="discount" typeRef="double" />
-        <rule id="row-958866071-1">
-          <inputEntry id="UnaryTests_1j7evgw">
-            <text>"Business"</text>
-          </inputEntry>
-          <inputEntry id="UnaryTests_1jf21ih">
-            <text>&lt; 10</text>
-          </inputEntry>
-          <outputEntry id="LiteralExpression_104sjjb">
-            <text>0.1</text>
-          </outputEntry>
-        </rule>
-        <rule id="row-958866071-2">
-          <description></description>
-          <inputEntry id="UnaryTests_1nz4a49">
-            <text>"Business"</text>
-          </inputEntry>
-          <inputEntry id="UnaryTests_13nukij">
-            <text>&gt;= 10</text>
-          </inputEntry>
-          <outputEntry id="LiteralExpression_15ipzxo">
-            <text>0.15</text>
-          </outputEntry>
-        </rule>
-        <rule id="row-958866071-3">
-          <inputEntry id="UnaryTests_1d94e9a">
-            <text>"Private"</text>
-          </inputEntry>
-          <inputEntry id="UnaryTests_05iyfwy">
-            <text></text>
-          </inputEntry>
-          <outputEntry id="LiteralExpression_1dx9evc">
-            <text>0.05</text>
-          </outputEntry>
-        </rule>
-      </decisionTable>
+  <businessKnowledgeModel id="_8xmTAIDNEee-MeWXoLgrYg" name="function">
+    <variable id="InformationItem_0jbz9py" typeRef="number" />
+    <encapsulatedLogic id="FunctionDefinition_1mljiug">
+      <formalParameter name="a" typeRef="number" />
+      <formalParameter name="b" typeRef="number" />
+      <literalExpression id="LiteralExpression_075rncc">
+        <text>a+b</text>
+      </literalExpression>
     </encapsulatedLogic>
   </businessKnowledgeModel>
-    <dmndi:DMNDI>
+  <decision id="Decision_0misio2" name="test using function">
+    <knowledgeRequirement id="KnowledgeRequirement_17sov09">
+      <requiredKnowledge href="#_8xmTAIDNEee-MeWXoLgrYg" />
+    </knowledgeRequirement>
+    <decisionTable id="DecisionTable_18wxqni">
+      <input id="InputClause_1d2t4su" biodi:width="191.9921875">
+        <inputExpression id="LiteralExpression_0b2634z" typeRef="number">
+          <text>plus(1,2)</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_035pk0l" label="plus(5,6)">
+        <inputExpression id="LiteralExpression_103qjrz" typeRef="number">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0a9pp2t" label="result" typeRef="string" />
+      <rule id="DecisionRule_1wem8f4">
+        <inputEntry id="UnaryTests_0c5dfeq">
+          <text>&gt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0o8d5f7">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1hiz16n">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
     <dmndi:DMNDiagram>
-      <dmndi:DMNShape dmnElementRef="_8xmTAIDNEee-MeWXoLgrYg">
-        <dc:Bounds height="80" width="180" x="160" y="100" />
+      <dmndi:DMNShape id="DMNShape_0e4pe6q" dmnElementRef="_8xmTAIDNEee-MeWXoLgrYg">
+        <dc:Bounds height="80" width="180" x="500" y="80" />
       </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0dbwygm" dmnElementRef="Decision_0misio2">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0wo28cm" dmnElementRef="KnowledgeRequirement_17sov09">
+        <di:waypoint x="500" y="120" />
+        <di:waypoint x="340" y="120" />
+      </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
 </definitions>

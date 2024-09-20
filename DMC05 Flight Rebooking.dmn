@@ -107,6 +107,76 @@ inconvenienced passengers: find passengers on cancelled flights (flights[status=
   <inputData id="InputData_17zhwyd" name="flights" />
   <inputData id="InputData_0pvbzku" name="passengers" />
   <inputData id="InputData_0cwogi1" name="flights" />
+  <decision id="Decision_06k47f8" name="2 steps">
+    <variable id="InformationItem_1tppp7w" />
+    <literalExpression id="LiteralExpression_1sy0j6b">
+      <text>{
+  // STEP1 get a list of the cancelled flight numbers
+    cancelled: 
+    for flight in flights[status="cancelled"]                    // for every cancelled flight
+    return {flight    : flight.no,                               // flight number
+            from      : flight.from,                             // from
+            to        : flight.to,                               // to
+            dep       : flight.dep,                              // orginal departure time
+            arr       : flight.arr,                              // original arrival time
+            status    :"cancelled"                               // status        
+           }.flight,
+ //STEP2 get a list of the passengers on those cancelled flights
+    passengers: 
+    for p in passengers[list contains (cancelled,flight)]       // for each passenger on the cancelled flight
+    return  {name   : p.name,                                   // name
+             miles  : p.miles,                                  // miles
+             status : p.status                                  // status
+            }.name                                              // just the names
+}.passengers                                                    // just the names of the passengers</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_00t47ig" name="3 steps">
+    <variable id="InformationItem_093sm5c" />
+    <literalExpression id="LiteralExpression_0mjuq50">
+      <text>{
+  // STEP1 get a list of the cancelled flight numbers
+    cancelled: 
+    for flight in flights[status="cancelled"]                    // for every cancelled flight
+    return {flight    : flight.no,                               // flight number
+            from      : flight.from,                             // from
+            to        : flight.to,                               // to
+            dep       : flight.dep,                              // orginal departure time
+            arr       : flight.arr,                              // original arrival time
+            status    :"cancelled"                               // status        
+           }.flight,
+ //STEP2 get a list of cancelled reservations
+    reservations:
+  for res in reservations[list contains (cancelled,flight)]
+    return {name:res.name}.name,
+ //STEP3 get a list of the passengers on those cancelled reservations
+    passengers: 
+    for p in passengers[list contains (cancelled,flight)]       // for each passenger on the cancelled flight
+    return  {name   : p.name,                                   // name
+             miles  : p.miles,                                  // miles
+             status : p.status                                  // status
+            }                                              // just the names
+}//.passengers                                                    // just the names of the passengers</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0o804ov" name="find alternate flights">
+    <variable id="InformationItem_0ygc2bp" name="alternates" typeRef="list" />
+    <literalExpression id="LiteralExpression_0xb30vp">
+      <text>{
+  alternateflights:                                      // determine alternative flight list
+          for cancelled in flights[status="cancelled"],  // cancelled flights have status="cancelled"
+              alternate in flights[status="scheduled"]   // alternate flights have status="scheduled" 
+          return 
+            if alternate.from = cancelled.from and       // alternate leaves from the same place as the cancelled flight
+               alternate.to   = cancelled.to             // the alternate goes to the same places as the cancelled flight
+            then                                         // create a suitable message
+              { flight: alternate.no,
+                message: cancelled.from + "-&gt;" + cancelled.to + " " + cancelled.no + " alternate " + alternate.no + " departs " + alternate.dep}
+            else "none"                                  // do nothing when there is no match
+//}.alternateflights[item!="none"]                       // all the details of the alternate flight
+}.alternateflights.flight[item!=null]                    // just the flight numbers from the alternate flights</text>
+    </literalExpression>
+  </decision>
   <textAnnotation id="TextAnnotation_0phoxpy">
     <text>https://dmcommunity.org/challenge/challenge-oct-2016/</text>
   </textAnnotation>
@@ -216,134 +286,188 @@ inconvenienced passengers: find passengers on cancelled flights (flights[status=
     <sourceRef href="#TextAnnotation_1xwoutj" />
     <targetRef href="#Decision_0ue7bow" />
   </association>
+  <textAnnotation id="TextAnnotation_0t44nf8">
+    <text>get cancelled flights
+get cancelled passengers</text>
+  </textAnnotation>
+  <association id="Association_0ofn32y">
+    <sourceRef href="#TextAnnotation_0t44nf8" />
+    <targetRef href="#Decision_06k47f8" />
+  </association>
+  <textAnnotation id="TextAnnotation_1rgheli">
+    <text>get cancelled flights
+get cancelled reservations
+get cancelled passengers</text>
+  </textAnnotation>
+  <association id="Association_16n8byh">
+    <sourceRef href="#TextAnnotation_1rgheli" />
+    <targetRef href="#Decision_00t47ig" />
+  </association>
+  <textAnnotation id="TextAnnotation_017ot5g">
+    <text>get just the flight numbers of alternate flights</text>
+  </textAnnotation>
+  <association id="Association_0kcu0go">
+    <sourceRef href="#TextAnnotation_017ot5g" />
+    <targetRef href="#Decision_0o804ov" />
+  </association>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
       <dmndi:DMNShape id="DMNShape_1idcs1q" dmnElementRef="Decision_1p7fb88">
-        <dc:Bounds height="80" width="180" x="30" y="240" />
+        <dc:Bounds height="80" width="180" x="250" y="390" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0c6h81s" dmnElementRef="TextAnnotation_0phoxpy">
-        <dc:Bounds height="45" width="175" x="32" y="325" />
+        <dc:Bounds height="45" width="175" x="252" y="475" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1o314dk" dmnElementRef="Association_174dvk4">
-        <di:waypoint x="130" y="318" />
-        <di:waypoint x="130" y="320" />
+        <di:waypoint x="350" y="468" />
+        <di:waypoint x="350" y="470" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1beqx3x" dmnElementRef="Decision_0l7g9s0">
-        <dc:Bounds height="80" width="180" x="150" y="560" />
+        <dc:Bounds height="80" width="180" x="450" y="710" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0ajc7bp" dmnElementRef="TextAnnotation_1uw4wo7">
-        <dc:Bounds height="130" width="610" x="-65" y="665" />
+        <dc:Bounds height="130" width="610" x="155" y="815" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0k3frcs" dmnElementRef="Association_0tefd2k">
-        <di:waypoint x="211" y="665" />
-        <di:waypoint x="213" y="640" />
+        <di:waypoint x="431" y="815" />
+        <di:waypoint x="513" y="790" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_0pvqb3b" dmnElementRef="TextAnnotation_0c8f4fs">
-        <dc:Bounds height="140" width="680" x="1140" y="-70" />
+        <dc:Bounds height="140" width="680" x="1360" y="80" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1pl197l" dmnElementRef="Decision_1qk9coj">
-        <dc:Bounds height="80" width="180" x="1450" y="240" />
+        <dc:Bounds height="80" width="180" x="1670" y="390" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_06ssppw" dmnElementRef="Decision_1sjcfri">
-        <dc:Bounds height="80" width="180" x="50" y="410" />
+        <dc:Bounds height="80" width="180" x="270" y="560" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_12g7sss" dmnElementRef="Decision_1awxnc7">
-        <dc:Bounds height="80" width="180" x="1440" y="360" />
+        <dc:Bounds height="80" width="180" x="1660" y="510" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0zrds3x" dmnElementRef="TextAnnotation_01c0dzx">
-        <dc:Bounds height="110" width="260" x="1430" y="465" />
+        <dc:Bounds height="110" width="260" x="1710" y="615" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0ej33ub" dmnElementRef="Association_1hkfpoj">
-        <di:waypoint x="1445" y="465" />
-        <di:waypoint x="1540" y="450" />
+        <di:waypoint x="1725" y="615" />
+        <di:waypoint x="1760" y="600" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_0699aja" dmnElementRef="Decision_1n2y7hp">
-        <dc:Bounds height="80" width="180" x="700" y="560" />
+        <dc:Bounds height="80" width="180" x="780" y="700" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1jtltff" dmnElementRef="TextAnnotation_0y7xubd">
-        <dc:Bounds height="128" width="350" x="585" y="666" />
+        <dc:Bounds height="128" width="350" x="775" y="816" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0688le0" dmnElementRef="Association_0fafw24">
-        <di:waypoint x="810" y="666" />
-        <di:waypoint x="810" y="640" />
+        <di:waypoint x="1000" y="816" />
+        <di:waypoint x="890" y="780" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1dxt8bc" dmnElementRef="TextAnnotation_10mwe8v">
-        <dc:Bounds height="140" width="300" x="1140" y="90" />
+        <dc:Bounds height="140" width="300" x="1360" y="240" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1d3psog" dmnElementRef="TextAnnotation_0i8ofrs">
-        <dc:Bounds height="110" width="260" x="1160" y="345" />
+        <dc:Bounds height="110" width="260" x="1380" y="495" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0p6lr6b" dmnElementRef="InformationRequirement_15nbj72">
-        <di:waypoint x="790" y="560" />
-        <di:waypoint x="540" y="510" />
-        <di:waypoint x="540" y="490" />
+        <di:waypoint x="870" y="700" />
+        <di:waypoint x="760" y="660" />
+        <di:waypoint x="760" y="640" />
       </dmndi:DMNEdge>
       <dmndi:DMNEdge id="DMNEdge_1o4hznk" dmnElementRef="InformationRequirement_068l90x">
-        <di:waypoint x="240" y="560" />
-        <di:waypoint x="140" y="510" />
-        <di:waypoint x="140" y="490" />
+        <di:waypoint x="540" y="710" />
+        <di:waypoint x="390" y="660" />
+        <di:waypoint x="390" y="640" />
       </dmndi:DMNEdge>
       <dmndi:DMNEdge id="DMNEdge_1k0zjom" dmnElementRef="InformationRequirement_1hi1ey0">
-        <di:waypoint x="240" y="560" />
-        <di:waypoint x="480" y="510" />
-        <di:waypoint x="480" y="490" />
+        <di:waypoint x="540" y="710" />
+        <di:waypoint x="700" y="660" />
+        <di:waypoint x="700" y="640" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_0poye0b" dmnElementRef="Decision_0ue7bow">
-        <dc:Bounds height="80" width="180" x="420" y="410" />
+        <dc:Bounds height="80" width="180" x="640" y="560" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1yulkh8" dmnElementRef="Decision_0tvo6s1">
-        <dc:Bounds height="80" width="180" x="240" y="240" />
+        <dc:Bounds height="80" width="180" x="460" y="390" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_05hv0tc" dmnElementRef="InformationRequirement_0atyle4">
-        <di:waypoint x="140" y="410" />
-        <di:waypoint x="300" y="340" />
-        <di:waypoint x="300" y="320" />
+        <di:waypoint x="360" y="560" />
+        <di:waypoint x="520" y="490" />
+        <di:waypoint x="520" y="470" />
       </dmndi:DMNEdge>
       <dmndi:DMNEdge id="DMNEdge_0epi006" dmnElementRef="InformationRequirement_1coakyn">
-        <di:waypoint x="510" y="410" />
-        <di:waypoint x="360" y="340" />
-        <di:waypoint x="360" y="320" />
+        <di:waypoint x="730" y="560" />
+        <di:waypoint x="580" y="490" />
+        <di:waypoint x="580" y="470" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1u90t3o" dmnElementRef="TextAnnotation_067esik">
-        <dc:Bounds height="260" width="380" x="690" y="250" />
+        <dc:Bounds height="260" width="380" x="910" y="400" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1m0q6xd" dmnElementRef="Association_1qcsv90">
-        <di:waypoint x="690" y="431" />
-        <di:waypoint x="600" y="437" />
+        <di:waypoint x="910" y="581" />
+        <di:waypoint x="820" y="587" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1xna796" dmnElementRef="Decision_0cch8fu">
-        <dc:Bounds height="80" width="180" x="1450" y="130" />
+        <dc:Bounds height="80" width="180" x="1670" y="280" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0iydqpx" dmnElementRef="TextAnnotation_1xwoutj">
-        <dc:Bounds height="60" width="190" x="515" y="300" />
+        <dc:Bounds height="60" width="190" x="735" y="450" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0s6k03w" dmnElementRef="Association_0cincy8">
-        <di:waypoint x="510" y="338" />
-        <di:waypoint x="510" y="410" />
+        <di:waypoint x="730" y="488" />
+        <di:waypoint x="730" y="560" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1vxehwz" dmnElementRef="InputData_17zhwyd">
-        <dc:Bounds height="45" width="125" x="-133" y="427" />
+        <dc:Bounds height="45" width="125" x="207" y="697" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_11jc5nh" dmnElementRef="InformationRequirement_01hb35r">
-        <di:waypoint x="-8" y="450" />
-        <di:waypoint x="30" y="450" />
-        <di:waypoint x="50" y="450" />
+        <di:waypoint x="270" y="697" />
+        <di:waypoint x="330" y="660" />
+        <di:waypoint x="330" y="640" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_097pi6z" dmnElementRef="InputData_0pvbzku">
-        <dc:Bounds height="45" width="125" x="267" y="457" />
+        <dc:Bounds height="45" width="125" x="487" y="607" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0exmqzv" dmnElementRef="InformationRequirement_1kefirb">
-        <di:waypoint x="392" y="480" />
-        <di:waypoint x="400" y="463" />
-        <di:waypoint x="420" y="463" />
+        <di:waypoint x="612" y="630" />
+        <di:waypoint x="620" y="613" />
+        <di:waypoint x="640" y="613" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_0yls91n" dmnElementRef="InputData_0cwogi1">
-        <dc:Bounds height="45" width="125" x="267" y="397" />
+        <dc:Bounds height="45" width="125" x="487" y="547" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0dvnvo9" dmnElementRef="InformationRequirement_0lltdko">
-        <di:waypoint x="392" y="420" />
-        <di:waypoint x="400" y="437" />
-        <di:waypoint x="420" y="437" />
+        <di:waypoint x="612" y="570" />
+        <di:waypoint x="620" y="587" />
+        <di:waypoint x="640" y="587" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0cnhc8s" dmnElementRef="Decision_06k47f8">
+        <dc:Bounds height="80" width="180" x="1160" y="720" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16z3t56" dmnElementRef="TextAnnotation_0t44nf8">
+        <dc:Bounds height="80" width="150" x="1385" y="720" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_15bnjb9" dmnElementRef="Association_0ofn32y">
+        <di:waypoint x="1385" y="760" />
+        <di:waypoint x="1340" y="760" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0y7pgiy" dmnElementRef="TextAnnotation_1rgheli">
+        <dc:Bounds height="80" width="200" x="1380" y="830" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ll0ul0" dmnElementRef="Association_16n8byh">
+        <di:waypoint x="1380" y="860" />
+        <di:waypoint x="1340" y="860" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0xgylpa" dmnElementRef="Decision_00t47ig">
+        <dc:Bounds height="80" width="180" x="1160" y="820" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0j0fzvq" dmnElementRef="Decision_0o804ov">
+        <dc:Bounds height="80" width="180" x="1160" y="920" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_16pd8su" dmnElementRef="TextAnnotation_017ot5g">
+        <dc:Bounds height="80" width="100" x="1380" y="920" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1hc42w2" dmnElementRef="Association_0kcu0go">
+        <di:waypoint x="1380" y="960" />
+        <di:waypoint x="1340" y="960" />
       </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>

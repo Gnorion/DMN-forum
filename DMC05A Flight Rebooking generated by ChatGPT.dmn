@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="definitions" name="ReassignPassengers" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="FlightCancellationDecision" name="Is Flight Cancelled?">
+    <decisionTable id="flightCancellationTable" hitPolicy="FIRST">
+      <input id="inputFlightStatus" label="Flight Status">
+        <inputExpression id="inputExpressionFlightStatus" typeRef="string">
+          <text>flight.status</text>
+        </inputExpression>
+      </input>
+      <output id="outputFlightCancelled" label="Flight Cancelled?" typeRef="boolean" />
+      <rule id="rule1">
+        <description>Flight is cancelled</description>
+        <inputEntry id="inputEntry1">
+          <text>"cancelled"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry1">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule2">
+        <description>Flight is not cancelled</description>
+        <inputEntry id="inputEntry2">
+          <text>"scheduled"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry2">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="SeatAvailabilityDecision" name="Check Seat Availability">
+    <decisionTable id="seatAvailabilityTable" hitPolicy="FIRST">
+      <input id="inputFlightCapacity" label="Flight Capacity">
+        <inputExpression id="inputExpressionFlightCapacity" typeRef="integer">
+          <text>flight.capacity</text>
+        </inputExpression>
+      </input>
+      <output id="outputSeatsAvailable" label="Seats Available?" typeRef="boolean" />
+    </decisionTable>
+  </decision>
+  <decision id="PassengerPriorityDecision" name="Assign Passenger Priority">
+    <decisionTable id="passengerPriorityTable" hitPolicy="FIRST">
+      <input id="inputPassengerStatus" label="Passenger Status">
+        <inputExpression id="inputExpressionPassengerStatus" typeRef="string">
+          <text>passenger.status</text>
+        </inputExpression>
+      </input>
+      <input id="inputPassengerMiles" label="Passenger Miles">
+        <inputExpression id="inputExpressionPassengerMiles" typeRef="integer">
+          <text>passenger.miles</text>
+        </inputExpression>
+      </input>
+      <output id="outputPassengerPriority" label="Priority Level" typeRef="string" />
+      <rule id="rule3">
+        <description>Silver status</description>
+        <inputEntry id="inputEntry3-1">
+          <text>"silver"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry3-2">
+          <text>&gt; 100</text>
+        </inputEntry>
+        <outputEntry id="outputEntry3">
+          <text>"Medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule4">
+        <description>Bronze status</description>
+        <inputEntry id="inputEntry4-1">
+          <text>"bronze"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry4-2">
+          <text>&gt;= 0</text>
+        </inputEntry>
+        <outputEntry id="outputEntry4">
+          <text>"Low"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="ReassignPassengersDecision" name="Reassign Passengers">
+    <decisionTable id="reassignPassengersTable" hitPolicy="FIRST">
+      <input id="inputFlightCancelled" label="Flight Cancelled">
+        <inputExpression id="inputExpressionFlightCancelled" typeRef="boolean">
+          <text>FlightCancellationDecision</text>
+        </inputExpression>
+      </input>
+      <input id="inputSeatsAvailable" label="Seats Available">
+        <inputExpression id="inputExpressionSeatsAvailable" typeRef="boolean">
+          <text>SeatAvailabilityDecision</text>
+        </inputExpression>
+      </input>
+      <input id="inputPassengerPriority" label="Passenger Priority">
+        <inputExpression id="inputExpressionPassengerPriority" typeRef="string">
+          <text>PassengerPriorityDecision</text>
+        </inputExpression>
+      </input>
+      <output id="outputReassignedFlight" label="Reassigned Flight" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <decision id="Decision_17oko3n">
+    <variable id="InformationItem_00d4sdy" />
+    <literalExpression id="LiteralExpression_1heqjid">
+      <text>if flight.status = "cancelled" then 
+  if some flight in flights where flight.from = passenger.flight.from 
+      and flight.to = passenger.flight.to 
+      and flight.status = "scheduled" 
+      and flight.capacity &gt; 0 then
+    // Reassign based on priority
+    if passenger.status = "gold" and passenger.miles &gt; 100000 then
+      first flight in flights where flight.from = passenger.flight.from 
+        and flight.to = passenger.flight.to 
+        and flight.status = "scheduled" 
+        and flight.capacity &gt; 0
+    else if passenger.status = "silver" then
+      first flight in flights where flight.from = passenger.flight.from 
+        and flight.to = passenger.flight.to 
+        and flight.status = "scheduled" 
+        and flight.capacity &gt; 0
+    else if passenger.status = "bronze" then
+      first flight in flights where flight.from = passenger.flight.from 
+        and flight.to = passenger.flight.to 
+        and flight.status = "scheduled" 
+        and flight.capacity &gt; 0
+    else
+      // Fallback assignment: assign to alternate airport (LAX) if no same-destination flights available
+      first flight in flights where flight.from = passenger.flight.from 
+        and flight.to = "LAX" 
+        and flight.status = "scheduled" 
+        and flight.capacity &gt; 0
+  else 
+    null
+else 
+  null
+</text>
+    </literalExpression>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_00dya18">
+      <dmndi:DMNShape id="DMNShape_1gpc9r1" dmnElementRef="FlightCancellationDecision">
+        <dc:Bounds height="80" width="180" x="160" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0y97t5e" dmnElementRef="SeatAvailabilityDecision">
+        <dc:Bounds height="80" width="180" x="350" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1cen7p5" dmnElementRef="PassengerPriorityDecision">
+        <dc:Bounds height="80" width="180" x="540" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_012fl7z" dmnElementRef="ReassignPassengersDecision">
+        <dc:Bounds height="80" width="180" x="730" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0604olu" dmnElementRef="Decision_17oko3n">
+        <dc:Bounds height="80" width="180" x="400" y="280" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

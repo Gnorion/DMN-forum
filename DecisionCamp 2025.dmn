@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1cuj9c3" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_18slcse" name="DecisionCamp 2025" />
+  <decision id="Decision_13rvatc" name="The Model">
+    <informationRequirement id="InformationRequirement_18gizxz">
+      <requiredDecision href="#Decision_04yx8tp" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_19zop72">
+      <requiredDecision href="#Decision_0yaej21" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_101my2j">
+      <requiredDecision href="#Decision_0kcuawp" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_04yx8tp" name="Create the Model" />
+  <decision id="Decision_0yaej21" name="Check the Model">
+    <informationRequirement id="InformationRequirement_0bo0796">
+      <requiredDecision href="#Decision_1077ccl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1qrvcps">
+      <requiredDecision href="#Decision_1jmqiqo" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_089i3b6">
+      <requiredDecision href="#Decision_0i8o4df" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_0kcuawp" name="Test the Model" />
+  <decision id="Decision_1jmqiqo" name="Logic Checks">
+    <informationRequirement id="InformationRequirement_0oq3e7y">
+      <requiredDecision href="#Decision_08lsqqh" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1579833">
+      <requiredDecision href="#Decision_0sqz3nz" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0nk6foh">
+      <requiredDecision href="#Decision_1y9qb1t" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_1077ccl" name="Syntax Checks" />
+  <decision id="Decision_0i8o4df" name="Semantic Check" />
+  <decision id="Decision_0sqz3nz" name="Completeness Check" />
+  <decision id="Decision_08lsqqh" name="Consistency Checks" />
+  <decision id="Decision_1y9qb1t" name="Redundancy Checks" />
+  <decision id="Decision_0l6d2on" name="Rule Conflict Example">
+    <decisionTable id="DecisionTable_0ng2lq7">
+      <input id="InputClause_0wqfr7o" label="color" biodi:width="150">
+        <inputExpression id="LiteralExpression_09ydgkm" typeRef="string" />
+      </input>
+      <input id="InputClause_18fp634" label="size" biodi:width="150">
+        <inputExpression id="LiteralExpression_1dary3w" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1uianhz" label="shape" biodi:width="150">
+        <inputExpression id="LiteralExpression_0qfiomj" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0piqmkr" label="price" typeRef="string" biodi:width="150" />
+      <rule id="DecisionRule_0lxsc3u">
+        <inputEntry id="UnaryTests_0qr95nn">
+          <text>"red"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kc1rft">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1krunfc">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tyr1oa">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1snkgkb">
+        <inputEntry id="UnaryTests_1s9rn67">
+          <text>"green"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1n6snft">
+          <text>"small"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_01gqd8m">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1g66l3f">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u2atm4">
+        <inputEntry id="UnaryTests_1abktma">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14eo5lu">
+          <text>"small"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1jltw0h">
+          <text>"square"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1uiekne">
+          <text>15</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hnrzr5">
+        <inputEntry id="UnaryTests_0ofis4j">
+          <text>"blue"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17b6e8a">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1m9x6j9">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00bd260">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0f00oxq" name="Rule Completeness Example">
+    <decisionTable id="DecisionTable_15hrnaf">
+      <input id="InputClause_0726ngi" label="age">
+        <inputExpression id="LiteralExpression_02ubvdk" typeRef="string" />
+      </input>
+      <input id="InputClause_0tzr73v" label="income">
+        <inputExpression id="LiteralExpression_0kcictc" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_18at37f" label="benefits" typeRef="string" />
+      <rule id="DecisionRule_14ebx3c">
+        <inputEntry id="UnaryTests_1sxzdg2">
+          <text>(18..65]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hvbi4g">
+          <text>&lt;38000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ohedtn">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0xnzu3j">
+        <inputEntry id="UnaryTests_18qszbl">
+          <text>&lt;18</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0xfry7z">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0nmgham">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_1p4b7wm">
+    <text>Two rules produce contradictory results under the same conditions</text>
+  </textAnnotation>
+  <association id="Association_0w78s0q">
+    <sourceRef href="#TextAnnotation_1p4b7wm" />
+    <targetRef href="#Decision_08lsqqh" />
+  </association>
+  <textAnnotation id="TextAnnotation_08urgmg">
+    <text>Some combinations of conditions are not covered in the rules</text>
+  </textAnnotation>
+  <association id="Association_1cs3up6">
+    <sourceRef href="#TextAnnotation_08urgmg" />
+    <targetRef href="#Decision_0sqz3nz" />
+  </association>
+  <textAnnotation id="TextAnnotation_0p4a6ou">
+    <text>Two rules produce the same results under the same conditions</text>
+  </textAnnotation>
+  <association id="Association_17z4ops">
+    <sourceRef href="#TextAnnotation_0p4a6ou" />
+    <targetRef href="#Decision_1y9qb1t" />
+  </association>
+  <textAnnotation id="TextAnnotation_0jixz0a">
+    <text>C:\Users\mepar\Dropbox\Logiki\From Mike\DecisionCamp 2025</text>
+  </textAnnotation>
+  <association id="Association_02xvg9a">
+    <sourceRef href="#TextAnnotation_0jixz0a" />
+    <targetRef href="#Decision_18slcse" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1vgpfhc" dmnElementRef="Decision_18slcse">
+        <dc:Bounds height="80" width="180" x="180" y="120" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_12q0sfg" dmnElementRef="Decision_13rvatc">
+        <dc:Bounds height="80" width="180" x="570" y="140" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0br8p3f" dmnElementRef="Decision_04yx8tp">
+        <dc:Bounds height="80" width="180" x="370" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0epoyim" dmnElementRef="Decision_0yaej21">
+        <dc:Bounds height="80" width="180" x="570" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1n70jxd" dmnElementRef="Decision_0kcuawp">
+        <dc:Bounds height="80" width="180" x="770" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1q9mz0t" dmnElementRef="InformationRequirement_18gizxz">
+        <di:waypoint x="460" y="270" />
+        <di:waypoint x="615" y="240" />
+        <di:waypoint x="615" y="220" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ygxyet" dmnElementRef="InformationRequirement_19zop72">
+        <di:waypoint x="660" y="270" />
+        <di:waypoint x="660" y="240" />
+        <di:waypoint x="660" y="220" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0b3qe59" dmnElementRef="InformationRequirement_101my2j">
+        <di:waypoint x="860" y="270" />
+        <di:waypoint x="705" y="240" />
+        <di:waypoint x="705" y="220" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jqwoj6" dmnElementRef="Decision_1jmqiqo">
+        <dc:Bounds height="80" width="180" x="570" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_043nsm7" dmnElementRef="Decision_1077ccl">
+        <dc:Bounds height="80" width="180" x="370" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1jzmreu" dmnElementRef="Decision_0i8o4df">
+        <dc:Bounds height="80" width="180" x="770" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_04h2eu5" dmnElementRef="InformationRequirement_0bo0796">
+        <di:waypoint x="460" y="410" />
+        <di:waypoint x="615" y="370" />
+        <di:waypoint x="615" y="350" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0c2xm8f" dmnElementRef="InformationRequirement_1qrvcps">
+        <di:waypoint x="660" y="410" />
+        <di:waypoint x="660" y="370" />
+        <di:waypoint x="660" y="350" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0025kct" dmnElementRef="InformationRequirement_089i3b6">
+        <di:waypoint x="860" y="410" />
+        <di:waypoint x="705" y="370" />
+        <di:waypoint x="705" y="350" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_10i6j6f" dmnElementRef="Decision_0sqz3nz">
+        <dc:Bounds height="80" width="180" x="570" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_13z3h76" dmnElementRef="Decision_08lsqqh">
+        <dc:Bounds height="80" width="180" x="370" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_074ck86" dmnElementRef="Decision_1y9qb1t">
+        <dc:Bounds height="80" width="180" x="770" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_087hoac" dmnElementRef="InformationRequirement_0oq3e7y">
+        <di:waypoint x="460" y="540" />
+        <di:waypoint x="615" y="510" />
+        <di:waypoint x="615" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1w3z2w8" dmnElementRef="InformationRequirement_1579833">
+        <di:waypoint x="660" y="540" />
+        <di:waypoint x="660" y="510" />
+        <di:waypoint x="660" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1r7ihn8" dmnElementRef="InformationRequirement_0nk6foh">
+        <di:waypoint x="860" y="540" />
+        <di:waypoint x="705" y="510" />
+        <di:waypoint x="705" y="490" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0oj0495" dmnElementRef="TextAnnotation_1p4b7wm">
+        <dc:Bounds height="60" width="180" x="370" y="640" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0fstei2" dmnElementRef="Association_0w78s0q">
+        <di:waypoint x="436" y="640" />
+        <di:waypoint x="444" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0qb3gcx" dmnElementRef="TextAnnotation_08urgmg">
+        <dc:Bounds height="60" width="170" x="570" y="640" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1mpq1r2" dmnElementRef="Association_1cs3up6">
+        <di:waypoint x="636" y="640" />
+        <di:waypoint x="644" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1h77mw0" dmnElementRef="TextAnnotation_0p4a6ou">
+        <dc:Bounds height="60" width="170" x="770" y="640" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1fkh5kb" dmnElementRef="Association_17z4ops">
+        <di:waypoint x="836" y="640" />
+        <di:waypoint x="844" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1nu4fua" dmnElementRef="TextAnnotation_0jixz0a">
+        <dc:Bounds height="80" width="180" x="180" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0bn1tht" dmnElementRef="Association_02xvg9a">
+        <di:waypoint x="246" y="220" />
+        <di:waypoint x="254" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_14qviee" dmnElementRef="Decision_0l6d2on">
+        <dc:Bounds height="80" width="180" x="1020" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1hxp3dw" dmnElementRef="Decision_0f00oxq">
+        <dc:Bounds height="80" width="180" x="1020" y="320" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

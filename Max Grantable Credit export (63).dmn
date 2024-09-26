@@ -1,0 +1,205 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="Calculate Max Grantable Credit" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <decision id="Decision_0jq7413" name="Calculate Credit History Key Figures">
+    <variable id="InformationItem_05i5foa" name="key_figures" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1qofo2y">
+      <requiredInput href="#InputData_15cv9le" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0eypkaq">
+      <requiredInput href="#InputData_1idpnhe" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_03tdrvy">
+      <requiredDecision href="#Decision_1dm2nr4" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0xfw9c5">
+      <requiredDecision href="#Decision_04avnxu" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_12rbake">
+      <text>{
+  avg_score   : mean(credit_history[type=credit_type].score),
+  avg_granted : mean(credit_history[type=credit_type].granted)
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_03kvw1v" name="Calculate Max Grantable Credit">
+    <informationRequirement id="InformationRequirement_0aqdyxn">
+      <requiredDecision href="#Decision_0jq7413" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0jmoe63">
+      <requiredInput href="#InputData_0vl1t1a" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0lz3498">
+      <requiredDecision href="#Decision_1ahgo3n" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1dsq3c8">
+      <input id="InputClause_1j2k9tq" label="credit_score" biodi:width="545">
+        <inputExpression id="LiteralExpression_0gskvbh" typeRef="string" />
+      </input>
+      <output id="OutputClause_0kmwryt" label="maximum" typeRef="string" biodi:width="299" />
+      <rule id="DecisionRule_0ritmbc">
+        <inputEntry id="UnaryTests_1aizvv6">
+          <text>&lt; keyFigures.avg_score*0.8</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1i0no5o">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u3pezz">
+        <inputEntry id="UnaryTests_1levmay">
+          <text>[keyFigures.avg_score*0.8..keyFigures.avg_score]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0cnpb77">
+          <text>key_figures.granted</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0l09fep">
+        <inputEntry id="UnaryTests_0ccgezk">
+          <text>&gt;keyFigures.avg_score</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0u17bzp">
+          <text>key_figures.granted*1.5</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1idpnhe" name="credit_history" />
+  <inputData id="InputData_15cv9le" name="credit_type" />
+  <inputData id="InputData_0vl1t1a" name="credit_score" />
+  <decision id="Decision_1dm2nr4" name="define credit history">
+    <variable id="InformationItem_1j7xgwo" name="credit_history" typeRef="any" />
+    <literalExpression id="LiteralExpression_10ah9w8">
+      <text>[
+  {score:500, type:"A",granted:100},
+  {score:600, type:"A",granted:100},
+  {score:700, type:"A",granted:100},
+  {score:500, type:"B",granted:100},
+  {score:500, type:"C",granted:100}
+]
+
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_04avnxu" name="define credit type">
+    <variable id="InformationItem_0i4rtvm" name="credit_type" typeRef="string" />
+    <literalExpression id="LiteralExpression_1eg3aq8">
+      <text>"A"</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1ahgo3n" name="define credit score">
+    <variable id="InformationItem_15xvklz" name="credit_score" typeRef="number" />
+    <literalExpression id="LiteralExpression_12m6wmi">
+      <text>650</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_1xzwqtc">
+    <text>{"credit_type":"A"}</text>
+  </textAnnotation>
+  <association id="Association_0wff2rr">
+    <sourceRef href="#TextAnnotation_1xzwqtc" />
+    <targetRef href="#InputData_15cv9le" />
+  </association>
+  <textAnnotation id="TextAnnotation_11jwkut">
+    <text>[
+  {score:500, type:"A",granted:100},
+  {score:600, type:"A",granted:100},
+  {score:700, type:"A",granted:100},
+  {score:500, type:"B",granted:100},
+  {score:500, type:"C",granted:100}
+]</text>
+  </textAnnotation>
+  <association id="Association_01ygwhm">
+    <sourceRef href="#TextAnnotation_11jwkut" />
+    <targetRef href="#Decision_1dm2nr4" />
+  </association>
+  <textAnnotation id="TextAnnotation_0w20o1x">
+    <text>650</text>
+  </textAnnotation>
+  <association id="Association_1vv7m9q">
+    <sourceRef href="#TextAnnotation_0w20o1x" />
+    <targetRef href="#Decision_1ahgo3n" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_03rhkr5" dmnElementRef="Decision_0jq7413">
+        <dc:Bounds height="80" width="180" x="490" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_17l3l6s" dmnElementRef="Decision_03kvw1v">
+        <dc:Bounds height="80" width="180" x="490" y="130" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0xohebh" dmnElementRef="InformationRequirement_0aqdyxn">
+        <di:waypoint x="580" y="260" />
+        <di:waypoint x="580" y="230" />
+        <di:waypoint x="580" y="210" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_18kiokd" dmnElementRef="InputData_1idpnhe">
+        <dc:Bounds height="45" width="125" x="427" y="378" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1lqtqz1" dmnElementRef="InputData_15cv9le">
+        <dc:Bounds height="45" width="125" x="627" y="378" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1nlzdi2" dmnElementRef="InputData_0vl1t1a">
+        <dc:Bounds height="45" width="125" x="737" y="147" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0h4ryjt" dmnElementRef="InformationRequirement_0jmoe63">
+        <di:waypoint x="737" y="170" />
+        <di:waypoint x="690" y="170" />
+        <di:waypoint x="670" y="170" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_18w4kk1" dmnElementRef="InformationRequirement_1qofo2y">
+        <di:waypoint x="690" y="378" />
+        <di:waypoint x="610" y="360" />
+        <di:waypoint x="610" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ggoj2m" dmnElementRef="InformationRequirement_0eypkaq">
+        <di:waypoint x="490" y="378" />
+        <di:waypoint x="550" y="360" />
+        <di:waypoint x="550" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0tuuoqy" dmnElementRef="Decision_1dm2nr4">
+        <dc:Bounds height="80" width="180" x="210" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nqwtqn" dmnElementRef="InformationRequirement_03tdrvy">
+        <di:waypoint x="390" y="300" />
+        <di:waypoint x="470" y="300" />
+        <di:waypoint x="490" y="300" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1hf5g5f" dmnElementRef="TextAnnotation_1xzwqtc">
+        <dc:Bounds height="40" width="128" x="666" y="440" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_17ld4e6" dmnElementRef="Association_0wff2rr">
+        <di:waypoint x="707" y="440" />
+        <di:waypoint x="705" y="423" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1av84nm" dmnElementRef="TextAnnotation_11jwkut">
+        <dc:Bounds height="115" width="240" x="150" y="365" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1eiaz1f" dmnElementRef="Association_01ygwhm">
+        <di:waypoint x="263" y="365" />
+        <di:waypoint x="277" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0jr91qd" dmnElementRef="Decision_04avnxu">
+        <dc:Bounds height="80" width="180" x="730" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_15s9nvc" dmnElementRef="InformationRequirement_0xfw9c5">
+        <di:waypoint x="730" y="300" />
+        <di:waypoint x="690" y="300" />
+        <di:waypoint x="670" y="300" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1d24lrh" dmnElementRef="InformationRequirement_0lz3498">
+        <di:waypoint x="390" y="170" />
+        <di:waypoint x="470" y="170" />
+        <di:waypoint x="490" y="170" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1jpf7kn" dmnElementRef="Decision_1ahgo3n">
+        <dc:Bounds height="80" width="180" x="210" y="130" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_100n10x" dmnElementRef="TextAnnotation_0w20o1x">
+        <dc:Bounds height="40" width="100" x="60" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_02jb8dk" dmnElementRef="Association_1vv7m9q">
+        <di:waypoint x="160" y="185" />
+        <di:waypoint x="210" y="179" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

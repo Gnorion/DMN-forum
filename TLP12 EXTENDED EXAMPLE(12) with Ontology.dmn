@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="TLP_0ih6z3g" name="TLP3_Insurance" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="Decision_1rr7vyf" name="determine pricing tier">
+    <informationRequirement id="InformationRequirement_0newhr9">
+      <requiredDecision href="#Decision_05l3anv" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_18jlujs">
+      <requiredDecision href="#Decision_0hkm422" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0zuz6v5">
+      <requiredDecision href="#Decision_1yb489s" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ilpx0r" biodi:annotationsWidth="400">
+      <input id="InputClause_0sg32oa" label="customer risk" biodi:width="155">
+        <inputExpression id="LiteralExpression_1qsx8dd" typeRef="string" />
+        <inputValues id="UnaryTests_104d208">
+          <text>"average","excellent","poor"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_1jkwnrl" label="property risk" biodi:width="150">
+        <inputExpression id="LiteralExpression_1aj2pwz" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_04bk6po">
+          <text>"high","medium","low"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_19r0jed" label="coverage risk" biodi:width="150">
+        <inputExpression id="LiteralExpression_10eyom8" typeRef="string">
+          <text></text>
+        </inputExpression>
+        <inputValues id="UnaryTests_0qlr3ir">
+          <text>"high","medium","low"</text>
+        </inputValues>
+      </input>
+      <output id="OutputClause_0njy3eb" label="overall risk" typeRef="string" biodi:width="162">
+        <outputValues id="UnaryTests_1r20rhm">
+          <text>"A","B","C","Refer","Reject"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_00do1x4">
+        <description>1 Average customers with medium or low risks for property and coverage get pricing tier B</description>
+        <inputEntry id="UnaryTests_1ccy2m5">
+          <text>"average"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0yj7rab">
+          <text>"medium","low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_08omayc">
+          <text>"medium","low"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1s3gfg7">
+          <text>"B"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1x2zlnk">
+        <description>2 Average customers with one high risk (property) get pricing tier C </description>
+        <inputEntry id="UnaryTests_0nrb3pz">
+          <text>"average"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0pmfezx">
+          <text>"high"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bflxw5">
+          <text>"medium","low"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_071wmf6">
+          <text>"C"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0gun54e">
+        <description>3 Average customers with two high risks get referred to an agent</description>
+        <inputEntry id="UnaryTests_0tyx87i">
+          <text>"average"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1icjt2l">
+          <text>"high"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nkcbna">
+          <text>"high"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0k0tnul">
+          <text>"Refer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hwaytr">
+        <description>4 Average customers with one high risk (coverage) get pricing tier C</description>
+        <inputEntry id="UnaryTests_094hcdz">
+          <text>"average"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0zn3rnm">
+          <text>"medium","low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1x08zar">
+          <text>"high"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04ajxqp">
+          <text>"C"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1o73w7h">
+        <description>5 Excellent customers get pricing tier A</description>
+        <inputEntry id="UnaryTests_0nq2cw1">
+          <text>"excellent"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bnh547">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0i2enyx">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wcugm6">
+          <text>"A"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_10608w2">
+        <description>6 Poor customers are rejected</description>
+        <inputEntry id="UnaryTests_01zp0jl">
+          <text>"poor"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06v86mf">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kfjfco">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1d61kg4">
+          <text>"Reject"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_05l3anv" name="determine customer risk (missing rule)">
+    <informationRequirement id="InformationRequirement_1yi3m17">
+      <requiredInput href="#InputData_11xeves" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0wr89ss">
+      <requiredInput href="#InputData_094xj1t" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1gbf0kd">
+      <requiredDecision href="#Decision_070pnre" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_19yo8p3">
+      <requiredDecision href="#Decision_0fsaazy" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1d0f90a" biodi:annotationsWidth="400">
+      <input id="InputClause_0vq78tm" label="bankruptcies" biodi:width="150">
+        <inputExpression id="LiteralExpression_16s1j67" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0zex9dp" label="years in business" biodi:width="158">
+        <inputExpression id="LiteralExpression_0tqcmjm" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0pudqi2" label="years at current address">
+        <inputExpression id="LiteralExpression_0o48f71" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_136brfd" label="credit score">
+        <inputExpression id="LiteralExpression_00a20jj" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1a5v77x" label="customer risk" typeRef="string" biodi:width="150" />
+      <rule id="DecisionRule_0xeqv10">
+        <description>1 Customers with more than one bankruptcy are considered poor</description>
+        <inputEntry id="UnaryTests_0kotixt">
+          <text>&gt;1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1i2bb0r">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a7sw2o">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1bybmud">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0q10eq0">
+          <text>"poor"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0x3aq1t">
+        <description>2 Customers with one bankruptcy and 5 or more years at the current address are considered average</description>
+        <inputEntry id="UnaryTests_01gmp5m">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1cowv71">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1a5q4fj">
+          <text>&gt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00o66oe">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1o42rzw">
+          <text>"average"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_12pldqd">
+        <description>3 Customers with one bankruptcy with 5 or more years in business are considered average</description>
+        <inputEntry id="UnaryTests_1daxj6e">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1h7lkv1">
+          <text>&gt;=5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0p6o66f">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0s7srdi">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kz25ev">
+          <text>"average"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_125nwow">
+        <description>4 Customers with one bankruptcy with less than 5 years in business and less than 5 years at the current address are considered poor risk</description>
+        <inputEntry id="UnaryTests_15g9jxq">
+          <text>1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0p1f92y">
+          <text>&lt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1x7l7i0">
+          <text>&lt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wqw2qo">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1e5k3te">
+          <text>"poor"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0251e4w">
+        <description>5 Customers with no bankruptcies are considered excellent</description>
+        <inputEntry id="UnaryTests_0jaoabt">
+          <text>&lt;1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1owch9v">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03m1u48">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0spgdl0">
+          <text>&gt;800</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1u8beai">
+          <text>"excellent"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1j2fla3">
+        <inputEntry id="UnaryTests_07q4jkp">
+          <text>&lt;1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1h66u7f">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1c47093">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_03qxv5v">
+          <text>[600..800]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_168fx6s">
+          <text>"average"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ffh2ow">
+        <inputEntry id="UnaryTests_0s29kwl">
+          <text>&lt;1</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0j1tc40">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_048sbhb">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_17hegcq">
+          <text>&lt;600</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1uh1kyn">
+          <text>"poor"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0hkm422" name="determine property risk">
+    <informationRequirement id="InformationRequirement_1080spk">
+      <requiredInput href="#InputData_0g3z2wl" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1ylf25o">
+      <requiredInput href="#InputData_09vlxe8" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0aiejjc">
+      <requiredDecision href="#Decision_1ygqcoa" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_03942x0">
+      <requiredDecision href="#Decision_1q19p6n" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0jia7ea">
+      <input id="InputClause_0i4dg7f" label="construction" biodi:width="150">
+        <inputExpression id="LiteralExpression_037njck" typeRef="string" />
+        <inputValues id="UnaryTests_0v0b23h">
+          <text>"straw","sticks","brick"</text>
+        </inputValues>
+      </input>
+      <input id="InputClause_1qnqsr1" label="value" biodi:width="150">
+        <inputExpression id="LiteralExpression_1rge2gk" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0oduk2l" label="age" biodi:width="150">
+        <inputExpression id="LiteralExpression_0pnexaw" typeRef="integer">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0daqswa" label="prior losses" biodi:width="150">
+        <inputExpression id="LiteralExpression_0prbdbh" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1qp3cxs" label="property risk" typeRef="string" biodi:width="150" />
+      <rule id="DecisionRule_0qv8jfc">
+        <description>P1 Brick houses under 5 years old with low prior losses are low risk</description>
+        <inputEntry id="UnaryTests_0vaf31z">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0u9on20">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kyfq70">
+          <text>&lt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kexgh7">
+          <text>"low"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_121v8p3">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1y1dc0c">
+        <description>P2 Old low value Brick houses with low prior losses are low risk</description>
+        <inputEntry id="UnaryTests_1odukzb">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fwy85p">
+          <text>"low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y96n3u">
+          <text>&gt;15</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1j1l2ln">
+          <text>"low"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ghhq09">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0shzsa0">
+        <description>P3 Old High value Brick houses with low prior losses are medium risk</description>
+        <inputEntry id="UnaryTests_1bl34i5">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hej662">
+          <text>"high"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04fvf4f">
+          <text>&gt;15</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_16qcliz">
+          <text>"low"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_01116xo">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0tncwuu">
+        <description>P4 New Brick houses with high prior losses are low risk</description>
+        <inputEntry id="UnaryTests_1gn1lbx">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mf8ya4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1w6if9m">
+          <text>&lt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00psfk1">
+          <text>"high"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08s88w3">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_03r0i1u">
+        <description>P5 Medium age(5-15)  Brick houses with high prior losses are med risk</description>
+        <inputEntry id="UnaryTests_113yzql">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0mzs6h6">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0n5pkgo">
+          <text>[5..15]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_062co5p">
+          <text>"high"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17r6vim">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0el7qsv">
+        <description>P5 Medium age(5-15)  Brick houses with low prior losses are low risk</description>
+        <inputEntry id="UnaryTests_0q1cg4s">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1mipdh6">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_02afn0p">
+          <text>[5..15]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04atyex">
+          <text>"low"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08u3hej">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0u36e4r">
+        <description>P6 Old (&gt;15) low value Brick houses with high prior losses are med risk</description>
+        <inputEntry id="UnaryTests_0uo1up7">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1b8e5m7">
+          <text>"low"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ngaryi">
+          <text>&gt;15</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0cn477k">
+          <text>"high"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1acgo20">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1m8789c">
+        <description>P7 Old (&gt;15)  high value (&gt;1000000)  Brick houses with high prior losses (&gt;2000) are high risk</description>
+        <inputEntry id="UnaryTests_08qx920">
+          <text>"brick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y68l9x">
+          <text>"high"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0kkm4ye">
+          <text>&gt;15</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_04ngojc">
+          <text>"high"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1o3ayp0">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_10le1ar">
+        <description>P8 Stick houses under 5 years old are medium risk</description>
+        <inputEntry id="UnaryTests_1w4o0c3">
+          <text>"stick"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1q91nuu">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13mj3lf">
+          <text>&lt;5</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_00v66pf">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mc34ik">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0t9ewz8">
+        <description>P9 Stick houses 5-15 or more years old are high risk because the sticks get brittle</description>
+        <inputEntry id="UnaryTests_049afd2">
+          <text>"sticks"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0849dgq">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1f3hzz3">
+          <text>[5..15]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_092kjv2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tl6fq2">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_164ca5n">
+        <description>P9 Stick houses 15 or more years old are high risk because the sticks get brittle</description>
+        <inputEntry id="UnaryTests_14pcu1r">
+          <text>"sticks"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0wx3yk3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1gzyugs">
+          <text>&gt;15</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0edz1jv">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_08bd265">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0c84loc">
+        <description>P10 Straw houses are always high risk because the wolf can easily blow them down</description>
+        <inputEntry id="UnaryTests_1ca6o6l">
+          <text>"straw"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06caugj">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1x7y3za">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1k89q35">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05tkei1">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1yb489s" name="determine coverage risk">
+    <informationRequirement id="InformationRequirement_0r5z5r5">
+      <requiredInput href="#InputData_14expd7" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1gninhy">
+      <requiredInput href="#InputData_11g9haf" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1wziqau">
+      <input id="InputClause_0p5vr4v" label="peril">
+        <inputExpression id="LiteralExpression_0bzio8c" typeRef="string" />
+      </input>
+      <input id="InputClause_1eqziao" label="type">
+        <inputExpression id="LiteralExpression_00xprmm" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1jjm8vl" label="coverage risk" typeRef="string" />
+      <rule id="DecisionRule_0otyveu">
+        <description>1 Content insurance for wolf attack is low risk; wolves rarely damage or steal the contents of the property</description>
+        <inputEntry id="UnaryTests_1bti3jw">
+          <text>"wolf attack"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0juf3ol">
+          <text>"content"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0cut69b">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_182sezc">
+        <description>2 Medical insurance for wolf attack is high risk; usually its the little pig that gets eaten</description>
+        <inputEntry id="UnaryTests_17qd6lq">
+          <text>"wolf attack"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bsk658">
+          <text>"medical"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ji5v2u">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0mm7h1v">
+        <description>3 Medical insurance for wind peril is medium</description>
+        <inputEntry id="UnaryTests_1bbk9kh">
+          <text>"wind"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05ar8mo">
+          <text>"medical"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nqp6c4">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0bfopsi">
+        <description>4 Content insurance is medium risk for the peril of wind (Especially for straw houses - though that is dealt with by the property rules)</description>
+        <inputEntry id="UnaryTests_0xacja2">
+          <text>"wind"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11bmq7p">
+          <text>"content"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1jtwwfx">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_128gyd1">
+        <description>conflicting rule</description>
+        <inputEntry id="UnaryTests_09p54zi">
+          <text>"wind"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y5batu">
+          <text>"medical"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1klblym">
+          <text>"mediun"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_11xeves" name="years at current address" />
+  <inputData id="InputData_094xj1t" name="years in business" />
+  <inputData id="InputData_0g3z2wl" name="age" />
+  <inputData id="InputData_09vlxe8" name="construction" />
+  <inputData id="InputData_14expd7" name="peril" />
+  <inputData id="InputData_11g9haf" name="type" />
+  <decision id="Decision_1deejfv" name="settings">
+    <decisionTable id="DecisionTable_177m0is">
+      <input id="InputClause_1v9j34m" label="x">
+        <inputExpression id="LiteralExpression_0jzhgo8" typeRef="string" />
+      </input>
+      <output id="OutputClause_1aii610" label="string handling" typeRef="string" />
+      <output id="OutputClause_1udf3uk" label="similarity threshold" typeRef="string" />
+      <output id="OutputClause_1i8qfmh" label="test case limit" typeRef="string" />
+      <output id="OutputClause_1qscak3" label="missing rules limit" typeRef="string" />
+      <rule id="DecisionRule_0sn5fk1">
+        <inputEntry id="UnaryTests_060a2or">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1w8e53v">
+          <text>none</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1hhykcu">
+          <text>70.00</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1xd4vau">
+          <text>100</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_13f4oav">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1d4wynl" name="constraints">
+    <decisionTable id="DecisionTable_0bvysm4">
+      <input id="InputClause_0jk6pzp" label="construction" biodi:width="231">
+        <inputExpression id="LiteralExpression_09p2ssg" typeRef="string" />
+      </input>
+      <output id="OutputClause_0zdt6b3" label="warn" typeRef="string" />
+      <rule id="DecisionRule_0bzcirk">
+        <inputEntry id="UnaryTests_1i8x6yv">
+          <text>"brick","sticks","straw"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fanfli">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1u5avo9" name="SSN" />
+  <decision id="Decision_070pnre" name="Get Bankruptcies">
+    <informationRequirement id="InformationRequirement_10abft1">
+      <requiredInput href="#InputData_1u5avo9" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_13l8pld">
+      <input id="InputClause_0w8o7hm" label="SSN">
+        <inputExpression id="LiteralExpression_1dvu2dh" typeRef="string" />
+      </input>
+      <output id="OutputClause_1ldtzzi" label="bankruptcies" typeRef="string" />
+      <rule id="DecisionRule_0f1bw5m">
+        <inputEntry id="UnaryTests_0wbwolq">
+          <text>"000-00-0000"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ykju0w">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_011s5ys">
+        <inputEntry id="UnaryTests_08oup58">
+          <text>"111-11-1111"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_096bq0y">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hofmzr">
+        <inputEntry id="UnaryTests_00yv6a8">
+          <text>"222-22-2222"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rw5cf6">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0fsaazy" name="Get Credit Score">
+    <informationRequirement id="InformationRequirement_1l3t74d">
+      <requiredInput href="#InputData_1u5avo9" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1iqgulu">
+      <input id="InputClause_1i898lu" label="SSN">
+        <inputExpression id="LiteralExpression_1sag9f8" typeRef="string" />
+      </input>
+      <output id="OutputClause_1ofij34" label="credit score" typeRef="string" />
+      <rule id="DecisionRule_1d6h6hl">
+        <inputEntry id="UnaryTests_1gidp60">
+          <text>"000-00-0000"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1r7wf28">
+          <text>500</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_07g1g99">
+        <inputEntry id="UnaryTests_12z9ek0">
+          <text>"111-11-1111"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_125swc9">
+          <text>700</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1s61clr">
+        <inputEntry id="UnaryTests_1st3zol">
+          <text>"222-22-2222"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1nihtpr">
+          <text>900</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1g58q30" name="Zillow">
+    <informationRequirement id="InformationRequirement_0g3hmt4">
+      <requiredInput href="#InputData_056xp0b" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0m9xdeq">
+      <input id="InputClause_003sl24" label="address">
+        <inputExpression id="LiteralExpression_1b3bjuj" typeRef="string" />
+      </input>
+      <output id="OutputClause_08u3wnp" label="zillow value" typeRef="string" />
+      <rule id="DecisionRule_01gp4ha">
+        <inputEntry id="UnaryTests_1qiezo4">
+          <text>"60000 E st"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1wqrdd2">
+          <text>600000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0hk45kq">
+        <inputEntry id="UnaryTests_1ew1a01">
+          <text>"150000 E st"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1xvrxe0">
+          <text>150000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0y2nah1">
+        <inputEntry id="UnaryTests_1ed558j">
+          <text>"1500000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0ml3bis">
+          <text>1500000</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0coekm5" name="Home Inspection">
+    <informationRequirement id="InformationRequirement_1heefhr">
+      <requiredInput href="#InputData_056xp0b" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0emyr8j">
+      <input id="InputClause_19aj8qd" label="address">
+        <inputExpression id="LiteralExpression_0xj25zn" typeRef="string" />
+      </input>
+      <output id="OutputClause_0sltjwq" label="inspection value" typeRef="string" />
+      <rule id="DecisionRule_1d53994">
+        <inputEntry id="UnaryTests_1r6i4n1">
+          <text>"60000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12ds5rl">
+          <text>60000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01nqd5d">
+        <inputEntry id="UnaryTests_1lbgfi1">
+          <text>"150000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mc5umo">
+          <text>150000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_19es5cb">
+        <inputEntry id="UnaryTests_0ualny8">
+          <text>"1500000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1cj8ojb">
+          <text>1500000</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0vd6xqm" name="Tax Valuation">
+    <informationRequirement id="InformationRequirement_1f2bs6u">
+      <requiredInput href="#InputData_056xp0b" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ml1kue">
+      <input id="InputClause_0qemwv9" label="address">
+        <inputExpression id="LiteralExpression_1fc6otl" typeRef="string" />
+      </input>
+      <output id="OutputClause_0e1mcfg" label="tax value" typeRef="string" />
+      <rule id="DecisionRule_0su38oe">
+        <inputEntry id="UnaryTests_1bcaekh">
+          <text>"60000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0loeiu4">
+          <text>60000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0trkriv">
+        <inputEntry id="UnaryTests_0ro9ysl">
+          <text>"150000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1t6t48a">
+          <text>150000</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0435gte">
+        <inputEntry id="UnaryTests_027tlfn">
+          <text>"1500000 E St"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1mkn9ph">
+          <text>1500000</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0yuuhl1" name="property valuation expression">
+    <variable id="InformationItem_0b6yx8j" name="value dollars" typeRef="integer" />
+    <informationRequirement id="InformationRequirement_1td5yot">
+      <requiredDecision href="#Decision_0vd6xqm" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_099lcua">
+      <requiredDecision href="#Decision_0coekm5" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_033m7te">
+      <requiredDecision href="#Decision_1g58q30" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_12aw3dv">
+      <text>mean(zillow value, tax value, inspection value)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1q19p6n" name="classify value">
+    <informationRequirement id="InformationRequirement_12vyuj1">
+      <requiredDecision href="#Decision_0yuuhl1" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0fps0cw">
+      <requiredDecision href="#Decision_1urgr77" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1wkmuep">
+      <input id="InputClause_1b9s7qt" label="value dollars">
+        <inputExpression id="LiteralExpression_0952d1p" typeRef="integer" />
+      </input>
+      <output id="OutputClause_1q0dowe" label="value" typeRef="string">
+        <outputValues id="UnaryTests_0mi374i">
+          <text>"high","medium","low"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_1f8syeu">
+        <inputEntry id="UnaryTests_1a10xtk">
+          <text>&lt;100000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_14547k5">
+          <text>"low"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02frlbz">
+        <inputEntry id="UnaryTests_1d2nkvp">
+          <text>[100000..1000000]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1hbbko4">
+          <text>"medium"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_11g9hr8">
+        <inputEntry id="UnaryTests_0gr498i">
+          <text>&gt;1000000</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0lxyzp8">
+          <text>"high"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_056xp0b" name="address" />
+  <decision id="Decision_1urgr77" name="property valuation table">
+    <informationRequirement id="InformationRequirement_1o5gcaj">
+      <requiredDecision href="#Decision_1g58q30" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1q04sox">
+      <requiredDecision href="#Decision_0coekm5" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0ualx62">
+      <requiredDecision href="#Decision_0vd6xqm" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1954sij">
+      <input id="InputClause_16x8198" label="zillow value">
+        <inputExpression id="LiteralExpression_1il0ec0" typeRef="string" />
+      </input>
+      <input id="InputClause_096g94s" label="tax value">
+        <inputExpression id="LiteralExpression_0tifzcu" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_10xh7al" label="inspection value">
+        <inputExpression id="LiteralExpression_10tcnnn" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_08gh56s" label="value dollars" typeRef="string" />
+      <rule id="DecisionRule_15riivz">
+        <inputEntry id="UnaryTests_0hqjg2d">
+          <text>&gt;0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14u985n">
+          <text>&gt;0</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0i32dlg">
+          <text>&gt;0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ryogeg">
+          <text>mean(zillow value,tax value,inspection value)</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1rasn89" name="entity CUSTOMER">
+    <informationRequirement id="InformationRequirement_0o8tf9x">
+      <requiredDecision href="#Decision_1kf7pbi" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_15yi147">
+      <requiredDecision href="#Decision_1guyef5" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0rpau8b">
+      <input id="InputClause_01v8scc" label="CUSTOMER">
+        <inputExpression id="LiteralExpression_0t0seqq" typeRef="string" />
+      </input>
+      <output id="OutputClause_1ty2xcp" label="customer.name" typeRef="string" />
+      <output id="OutputClause_14ai34p" label="customer.years_in_business" typeRef="string" />
+      <output id="OutputClause_1ntibox" label="customer.years_at_current_address" typeRef="string" />
+      <output id="OutputClause_1r9q5vc" label="customer.credit_score" typeRef="string" />
+      <output id="OutputClause_0zqrunv" label="customer.bankruptcies" typeRef="string" />
+      <output id="OutputClause_0ayx6nz" label="customer.properties" typeRef="string" />
+      <output id="OutputClause_14sjm0h" label="customer.risk" typeRef="string" />
+      <rule id="DecisionRule_0irbkfi">
+        <inputEntry id="UnaryTests_0xkvnea">
+          <text>data type</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1afuxir">
+          <text>string</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0lx6jls">
+          <text>integer</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1six464">
+          <text>integer</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0pzqcco">
+          <text>integer</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_18a1w6n">
+          <text>integer</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ynulp7">
+          <text>list</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1sqxdlb">
+          <text>string</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1iy87mo">
+        <inputEntry id="UnaryTests_1pu5a6i">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0sf8erj">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0f4gspu">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_10m0pzi">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0sffx3c">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0n69xpa">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1y51lip">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1mzmgsz">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1j0memc" name="entity POLICY">
+    <informationRequirement id="InformationRequirement_12wqhjd">
+      <requiredDecision href="#Decision_1kf7pbi" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_118nt2d">
+      <input id="InputClause_06281co" label="POLICY">
+        <inputExpression id="LiteralExpression_168lvj0" typeRef="string" />
+      </input>
+      <output id="OutputClause_1uam4pr" label="number" typeRef="string" />
+      <rule id="DecisionRule_0qnnyz2">
+        <inputEntry id="UnaryTests_1wtaogy">
+          <text>data type</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1k0nkr5">
+          <text>string</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1d88kv6" name="entity PROPERTY">
+    <informationRequirement id="InformationRequirement_13vei8t">
+      <requiredDecision href="#Decision_1guyef5" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0vg0yrf">
+      <requiredDecision href="#Decision_1ebb7qe" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_17modm5">
+      <input id="InputClause_1kfo1p0" label="PROPERTY">
+        <inputExpression id="LiteralExpression_0gp4jr2" typeRef="string" />
+      </input>
+      <output id="OutputClause_0j11ner" label="property.construction" typeRef="string" />
+      <output id="OutputClause_1josecd" label="property.age" typeRef="string" />
+      <output id="OutputClause_1dy1gcb" label="property.risk" typeRef="string" />
+      <rule id="DecisionRule_10hubgq">
+        <inputEntry id="UnaryTests_05aqkpz">
+          <text>data type</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yet674">
+          <text>string</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0nls1iy">
+          <text>integer</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ff4ncc">
+          <text>string</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0bymnv6" name="entity COVERAGE">
+    <informationRequirement id="InformationRequirement_0wbdg8t">
+      <requiredDecision href="#Decision_1ebb7qe" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1z11lnv">
+      <input id="InputClause_04pj6or" label="COVERAGE">
+        <inputExpression id="LiteralExpression_13k8zm5" typeRef="string">
+          <text>data type</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_09by4q4" label="coverage.peril" typeRef="string" />
+      <output id="OutputClause_02ct16c" label="coverage.type" typeRef="string" />
+      <output id="OutputClause_1gy1x8i" label="coverage.risk" typeRef="string" />
+      <rule id="DecisionRule_1lfwoti">
+        <inputEntry id="UnaryTests_0tmubo6">
+          <text>data type</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1luq0wo">
+          <text>string</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0w7uvn7">
+          <text>string</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_05polpg">
+          <text>string</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1kf7pbi" name="association CUSTOMER-&#62;POLICY">
+    <decisionTable id="DecisionTable_1xf4a43">
+      <input id="InputClause_1yj5fra" label="CUSTOMER-&#62;POLICY">
+        <inputExpression id="LiteralExpression_11ew2ef" typeRef="string" />
+      </input>
+      <output id="OutputClause_1kcfapa" label="CUSTOMER" typeRef="string" />
+      <output id="OutputClause_0pq2erl" label="POLICY" typeRef="string" />
+      <rule id="DecisionRule_0f6ylev">
+        <inputEntry id="UnaryTests_1qjy5am">
+          <text>rolename</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0yel76b">
+          <text>owndePolicies</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_03tkkgd">
+          <text>policyOwner</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jne2mb">
+        <inputEntry id="UnaryTests_1gsnetq">
+          <text>cardinality</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qzo6hr">
+          <text>many</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1lxadjr">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1guyef5" name="association CUSTOMER-&#62;PROPERTY">
+    <decisionTable id="DecisionTable_1n7ospb">
+      <input id="InputClause_0uxael7" label="CUSTOMER-&#62;PROPERTY">
+        <inputExpression id="LiteralExpression_1vz9i9z" typeRef="string" />
+      </input>
+      <output id="OutputClause_04nahm5" label="CUSTOMER" typeRef="string" />
+      <output id="OutputClause_1wjdb0r" label="PROPERTY" typeRef="string" />
+      <rule id="DecisionRule_0yequu4">
+        <inputEntry id="UnaryTests_12v6i88">
+          <text>rolename</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ovbiji">
+          <text>properties</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0av15y1">
+          <text>owner</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_161hcg6">
+        <inputEntry id="UnaryTests_1rc8wrg">
+          <text>cardinality</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07d6cn0">
+          <text>many</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0q0pzw8">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1ebb7qe" name="association PROPERTY-&#62;COVERAGE">
+    <decisionTable id="DecisionTable_1m0ruui">
+      <input id="InputClause_1p4je8i" label="PROPERTY-&#62;COVERAGE">
+        <inputExpression id="LiteralExpression_0ex2pu5" typeRef="string" />
+      </input>
+      <output id="OutputClause_0uotcwz" label="PROPERTY" typeRef="string" />
+      <output id="OutputClause_077ltv8" label="COVERAGE" typeRef="string" />
+      <rule id="DecisionRule_1a2pixi">
+        <inputEntry id="UnaryTests_1g6y1os">
+          <text>rolename</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0dxm691">
+          <text>coverages</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0ygbxl2">
+          <text>property</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0rrilsp">
+        <inputEntry id="UnaryTests_1xm0vtl">
+          <text>cadinality</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_13ob6y8">
+          <text>many</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0dnj1xl">
+          <text>1</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_021zbra">
+    <text>Customer Risk Rule Statements
+1 Customers with one bankruptcy with less than 5 years in business and less than 5 years at the current address are considered poor risk
+2 Customers with no bankruptcies are considered excellent
+3 Customers with one bankruptcy with less than 5 years at the current address are considered average
+4 Customers with one bankruptcy with 5 or more years in business are considered average
+5 Customers with more than one bankruptcy are considered poor</text>
+  </textAnnotation>
+  <association id="Association_1p0gouy">
+    <sourceRef href="#TextAnnotation_021zbra" />
+    <targetRef href="#Decision_05l3anv" />
+  </association>
+  <textAnnotation id="TextAnnotation_1izqtf6">
+    <text>Property Risk Rule Statements
+P6 Old (&gt;15)low value Brick houses with high prior losses are med risk
+P4 New Brick houses with high prior losses are low risk
+P3 Old High value Brick houses with low prior losses are med risk
+P9 Stick houses 5 or more years old are high risk because the sticks get brittle
+P5 Medium age(&gt;=5) Brick houses with high prior losses are med risk
+P7 Old (&gt;15) high value (&gt;1000000) Brick houses with high prior losses (&gt;2000) are high risk
+P1 Brick houses under 15 years old with low prior losses are low risk
+P8 Stick houses under 5 years old are medium risk
+P2 Old low value Brick houses with low prior losses are low risk
+P10 Straw houses are always high risk because the wolf can easily blow them down</text>
+  </textAnnotation>
+  <association id="Association_1jb9esl">
+    <sourceRef href="#TextAnnotation_1izqtf6" />
+    <targetRef href="#Decision_0hkm422" />
+  </association>
+  <textAnnotation id="TextAnnotation_025rab2">
+    <text>Coverage Risk Rule Statements
+Content insurance for wolf attack is low risk; wolves rarely damage or steal the contents of the property
+Medical insurance for wolf attack is high risk; usually its the little pig that gets eaten
+Medical insurance for wind peril is medium
+Content insurance is medium risk for the peril of wind;</text>
+  </textAnnotation>
+  <association id="Association_1ge1mmy">
+    <sourceRef href="#TextAnnotation_025rab2" />
+    <targetRef href="#Decision_1yb489s" />
+  </association>
+  <textAnnotation id="TextAnnotation_1hhl1gn">
+    <text>Pricing Tier Rule Statements
+Average customers with medium or low risks for property and coverage get pricing tier B
+Average customers with one high risk get pricing tier C (property risk)
+Average customers with two high risks get referred to an agent
+Average customers with one high risk get pricing tier C (coverage risk)
+Excellent customers get pricing tier A
+Poor customers are rejected</text>
+  </textAnnotation>
+  <association id="Association_0382zgm">
+    <sourceRef href="#TextAnnotation_1hhl1gn" />
+    <targetRef href="#Decision_1rr7vyf" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNEdge id="DMNEdge_17tshlt" dmnElementRef="InformationRequirement_0newhr9">
+        <di:waypoint x="1060" y="320" />
+        <di:waypoint x="1455" y="210" />
+        <di:waypoint x="1455" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0gl2ihb" dmnElementRef="Decision_1rr7vyf">
+        <dc:Bounds height="80" width="180" x="1410" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_17w5fpe" dmnElementRef="Decision_05l3anv">
+        <dc:Bounds height="80" width="180" x="970" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_13k1ton" dmnElementRef="InformationRequirement_18jlujs">
+        <di:waypoint x="1810" y="290" />
+        <di:waypoint x="1545" y="210" />
+        <di:waypoint x="1545" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0573p82" dmnElementRef="InformationRequirement_0zuz6v5">
+        <di:waypoint x="1480" y="290" />
+        <di:waypoint x="1500" y="210" />
+        <di:waypoint x="1500" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_113gxxw" dmnElementRef="Decision_0hkm422">
+        <dc:Bounds height="80" width="180" x="1720" y="290" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ehtvkj" dmnElementRef="Decision_1yb489s">
+        <dc:Bounds height="80" width="180" x="1390" y="290" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0a4n1pz" dmnElementRef="InputData_11xeves">
+        <dc:Bounds height="45" width="125" x="757" y="307" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1b9v5sa" dmnElementRef="InformationRequirement_1yi3m17">
+        <di:waypoint x="882" y="330" />
+        <di:waypoint x="950" y="347" />
+        <di:waypoint x="970" y="347" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1a1h9yr" dmnElementRef="InputData_094xj1t">
+        <dc:Bounds height="45" width="125" x="757" y="367" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1vrti0r" dmnElementRef="InformationRequirement_0wr89ss">
+        <di:waypoint x="882" y="390" />
+        <di:waypoint x="950" y="373" />
+        <di:waypoint x="970" y="373" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1u4u9gr" dmnElementRef="InputData_0g3z2wl">
+        <dc:Bounds height="45" width="125" x="1947" y="337" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0cxelej" dmnElementRef="InformationRequirement_1080spk">
+        <di:waypoint x="1947" y="360" />
+        <di:waypoint x="1920" y="343" />
+        <di:waypoint x="1900" y="343" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01db94u" dmnElementRef="InputData_09vlxe8">
+        <dc:Bounds height="45" width="125" x="1947" y="277" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_17lzbkh" dmnElementRef="InformationRequirement_1ylf25o">
+        <di:waypoint x="1947" y="300" />
+        <di:waypoint x="1920" y="317" />
+        <di:waypoint x="1900" y="317" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0nn28p3" dmnElementRef="InputData_14expd7">
+        <dc:Bounds height="45" width="125" x="1297" y="407" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0d76hjr" dmnElementRef="InformationRequirement_0r5z5r5">
+        <di:waypoint x="1360" y="407" />
+        <di:waypoint x="1450" y="390" />
+        <di:waypoint x="1450" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_15jv7hp" dmnElementRef="InputData_11g9haf">
+        <dc:Bounds height="45" width="125" x="1507" y="407" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0woav48" dmnElementRef="InformationRequirement_1gninhy">
+        <di:waypoint x="1570" y="407" />
+        <di:waypoint x="1510" y="390" />
+        <di:waypoint x="1510" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0atn8em" dmnElementRef="TextAnnotation_021zbra">
+        <dc:Bounds height="180" width="320" x="840" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1d7dnjl" dmnElementRef="Association_1p0gouy">
+        <di:waypoint x="928" y="260" />
+        <di:waypoint x="974" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0hfq051" dmnElementRef="TextAnnotation_1izqtf6">
+        <dc:Bounds height="195" width="444" x="2088" y="432" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_045ku1v" dmnElementRef="Association_1jb9esl">
+        <di:waypoint x="2088" y="518" />
+        <di:waypoint x="1900" y="369" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0507zlx" dmnElementRef="TextAnnotation_025rab2">
+        <dc:Bounds height="120" width="382" x="1069" y="680" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1b7hu6c" dmnElementRef="Association_1ge1mmy">
+        <di:waypoint x="1360" y="680" />
+        <di:waypoint x="1473" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1d1x4pu" dmnElementRef="TextAnnotation_1hhl1gn">
+        <dc:Bounds height="120" width="400" x="1630" y="90" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1yrhrvy" dmnElementRef="Association_0382zgm">
+        <di:waypoint x="1630" y="150" />
+        <di:waypoint x="1590" y="150" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_06ovnb9" dmnElementRef="Decision_1deejfv">
+        <dc:Bounds height="80" width="180" x="2130" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1boeezk" dmnElementRef="Decision_1d4wynl">
+        <dc:Bounds height="80" width="180" x="2130" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rawb7q">
+        <dc:Bounds height="80" width="180" x="990" y="440" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1tdntuy" dmnElementRef="InformationRequirement_0aiejjc">
+        <di:waypoint x="1080" y="440" />
+        <di:waypoint x="1080" y="380" />
+        <di:waypoint x="1080" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1k0tgzc" dmnElementRef="InputData_1u5avo9">
+        <dc:Bounds height="45" width="125" x="987" y="617" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1q2vkk2" dmnElementRef="InformationRequirement_10abft1">
+        <di:waypoint x="1050" y="617" />
+        <di:waypoint x="950" y="580" />
+        <di:waypoint x="950" y="560" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1hcvpzx" dmnElementRef="InformationRequirement_1gbf0kd">
+        <di:waypoint x="950" y="480" />
+        <di:waypoint x="1030" y="420" />
+        <di:waypoint x="1030" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ei17gw" dmnElementRef="InformationRequirement_1l3t74d">
+        <di:waypoint x="1050" y="617" />
+        <di:waypoint x="1150" y="580" />
+        <di:waypoint x="1150" y="560" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1aisbdb" dmnElementRef="InformationRequirement_19yo8p3">
+        <di:waypoint x="1150" y="480" />
+        <di:waypoint x="1090" y="420" />
+        <di:waypoint x="1090" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0j1vbxs" dmnElementRef="Decision_070pnre">
+        <dc:Bounds height="80" width="180" x="860" y="480" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1s6pm7t" dmnElementRef="Decision_0fsaazy">
+        <dc:Bounds height="80" width="180" x="1060" y="480" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_17dbwl3" dmnElementRef="InformationRequirement_1td5yot">
+        <di:waypoint x="2030" y="710" />
+        <di:waypoint x="1995" y="640" />
+        <di:waypoint x="1995" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1jzkk56" dmnElementRef="InformationRequirement_099lcua">
+        <di:waypoint x="1810" y="710" />
+        <di:waypoint x="1950" y="640" />
+        <di:waypoint x="1950" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0gux8ob" dmnElementRef="InformationRequirement_033m7te">
+        <di:waypoint x="1580" y="710" />
+        <di:waypoint x="1905" y="640" />
+        <di:waypoint x="1905" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1haztmz" dmnElementRef="Decision_1g58q30">
+        <dc:Bounds height="80" width="180" x="1490" y="710" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rri27f" dmnElementRef="Decision_0coekm5">
+        <dc:Bounds height="80" width="180" x="1720" y="710" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1v1mr8w" dmnElementRef="Decision_0vd6xqm">
+        <dc:Bounds height="80" width="180" x="1940" y="710" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0o8nj3i" dmnElementRef="Decision_0yuuhl1">
+        <dc:Bounds height="80" width="180" x="1860" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_09yspuu" dmnElementRef="InformationRequirement_03942x0">
+        <di:waypoint x="1810" y="420" />
+        <di:waypoint x="1810" y="390" />
+        <di:waypoint x="1810" y="370" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1lmct33" dmnElementRef="InformationRequirement_12vyuj1">
+        <di:waypoint x="1950" y="540" />
+        <di:waypoint x="1840" y="520" />
+        <di:waypoint x="1840" y="500" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_045dwg7" dmnElementRef="Decision_1q19p6n">
+        <dc:Bounds height="80" width="180" x="1720" y="420" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0cqr7cr" dmnElementRef="InputData_056xp0b">
+        <dc:Bounds height="45" width="125" x="1747" y="837" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06hixvv" dmnElementRef="InformationRequirement_0g3hmt4">
+        <di:waypoint x="1810" y="837" />
+        <di:waypoint x="1580" y="810" />
+        <di:waypoint x="1580" y="790" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0jsp4qr" dmnElementRef="InformationRequirement_1heefhr">
+        <di:waypoint x="1810" y="837" />
+        <di:waypoint x="1810" y="810" />
+        <di:waypoint x="1810" y="790" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1jdp4p4" dmnElementRef="InformationRequirement_1f2bs6u">
+        <di:waypoint x="1810" y="837" />
+        <di:waypoint x="2030" y="810" />
+        <di:waypoint x="2030" y="790" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1yfukao" dmnElementRef="Decision_1urgr77">
+        <dc:Bounds height="80" width="180" x="1490" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_171h4rb" dmnElementRef="InformationRequirement_1o5gcaj">
+        <di:waypoint x="1580" y="710" />
+        <di:waypoint x="1535" y="640" />
+        <di:waypoint x="1535" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1ji0k4x" dmnElementRef="InformationRequirement_1q04sox">
+        <di:waypoint x="1810" y="710" />
+        <di:waypoint x="1580" y="640" />
+        <di:waypoint x="1580" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_11uxkjd" dmnElementRef="InformationRequirement_0ualx62">
+        <di:waypoint x="2030" y="710" />
+        <di:waypoint x="1625" y="640" />
+        <di:waypoint x="1625" y="620" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1p5wu52" dmnElementRef="InformationRequirement_0fps0cw">
+        <di:waypoint x="1580" y="540" />
+        <di:waypoint x="1780" y="520" />
+        <di:waypoint x="1780" y="500" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0flhmtc" dmnElementRef="Decision_1rasn89">
+        <dc:Bounds height="80" width="180" x="470" y="590" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0sdvcfi" dmnElementRef="InformationRequirement_12wqhjd">
+        <di:waypoint x="340" y="570" />
+        <di:waypoint x="450" y="530" />
+        <di:waypoint x="470" y="530" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1oxn7r3" dmnElementRef="InformationRequirement_0o8tf9x">
+        <di:waypoint x="340" y="570" />
+        <di:waypoint x="450" y="617" />
+        <di:waypoint x="470" y="617" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1wassdy" dmnElementRef="InformationRequirement_15yi147">
+        <di:waypoint x="340" y="680" />
+        <di:waypoint x="450" y="643" />
+        <di:waypoint x="470" y="643" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0zsksfa" dmnElementRef="InformationRequirement_13vei8t">
+        <di:waypoint x="340" y="680" />
+        <di:waypoint x="450" y="714" />
+        <di:waypoint x="470" y="714" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1iognun" dmnElementRef="InformationRequirement_0vg0yrf">
+        <di:waypoint x="340" y="790" />
+        <di:waypoint x="450" y="740" />
+        <di:waypoint x="470" y="740" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1wvek1u" dmnElementRef="InformationRequirement_0wbdg8t">
+        <di:waypoint x="340" y="790" />
+        <di:waypoint x="450" y="830" />
+        <di:waypoint x="470" y="830" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01sr5vd" dmnElementRef="Decision_1j0memc">
+        <dc:Bounds height="80" width="180" x="470" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0uuwfv6" dmnElementRef="Decision_1d88kv6">
+        <dc:Bounds height="80" width="180" x="470" y="687" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_00e75tk" dmnElementRef="Decision_0bymnv6">
+        <dc:Bounds height="80" width="180" x="470" y="790" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0itskgy" dmnElementRef="Decision_1kf7pbi">
+        <dc:Bounds height="80" width="180" x="160" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1oyosp0" dmnElementRef="Decision_1guyef5">
+        <dc:Bounds height="80" width="180" x="160" y="640" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0qxvrs6" dmnElementRef="Decision_1ebb7qe">
+        <dc:Bounds height="80" width="180" x="160" y="750" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

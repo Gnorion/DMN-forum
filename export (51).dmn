@@ -1,124 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1hg8dut" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
-  <decision id="Decision_08jzns4" name="Einstein (Aion Solution)">
-    <variable id="InformationItem_0bx6cxw" />
-    <literalExpression id="LiteralExpression_1m4o0ik">
-      <text>//1. The Brit lives in the red house.
-//2. The Swede keeps dogs as pets.
-//3. The Dane drinks tea.
-//4. The greenhouse is on the immediate left of the white house.
-//5. The owner of the greenhouse drinks coffee.
-//6. The person who smokes Pall Mall rears birds.
-//7. The owner of the yellow house smokes Dunhill.
-//8. The man living in the center house drinks milk.
-//9. The Norwegian lives in the first house.
-//10. The man who smokes Blends lives next to the one who keeps cats.
-//11. The man who keeps the horse lives next to the man who smokes Dunhill.
-//12. The man who smokes Blue Master drinks beer.
-//13. The German smokes Prince.
-//14. The Norwegian lives next to the blue house.
-//15. The man who smokes Blends has a neighbor who drinks water.
-/*
-var beer,coffee,milk,tea,water                 is &amp;DIGIT
-var bird,cat,dog,fish,horse                    is &amp;DIGIT
-var pallmall,prince,dunhill,blend,bluemaster   is &amp;DIGIT
-var swede,dane,german,brit,norwegian           is &amp;DIGIT
-var blue,red,white,yellow,green                is &amp;DIGIT
-
-for DIGIT,norwegian breakif solved
-/*9*/ if norwegian.house = 1 then // CONSTRAINT the norwegian lives in house 1
-  for DIGIT,blue breakif solved
-/*14*/   if (norwegian.house = blue.house+1 or norwegian.house=blue.house-1) then   // the norwegian is to the immediate left or right of the blue house (so blue must be 2)
-    for DIGIT,milk breakif solved
-/*8*/if milk.house = 3 then  // CONSTRAINT house 3 drinks milk
-      for DIGIT,brit breakif solved
-       if brit.house&lt;&gt;norwegian.house then  // brit and norwegina are in different houses
-        for DIGIT,red breakif solved
-/*1*/    if brit.house = red.house and red.house&lt;&gt;blue.house then // CONSTRAINT brit lives in the red house
-          for DIGIT,swede breakif solved
-           if swede.house&lt;&gt;norwegian.house and swede.house&lt;&gt;brit.house then  // the swede lives in a different house from the brit and the norwegian
-            for DIGIT,dog breakif solved
-/*2*/        if swede.house = dog.house then // the swede owns the dog
-              for DIGIT,green breakif solved
-               if green.house&lt;&gt;blue.house and green.house&lt;&gt;red.house and red.house&lt;&gt;blue.house then // the green, blue and red houses are different
-                for DIGIT,coffee breakif solved
-/*5*/             if green.house = coffee.house and coffee.house&lt;&gt;milk.house then  //The owner of the greenhouse drinks coffee.                                                                                                                                           // the green house drinks coffee
-                  for DIGIT,white breakif solved
-/*4*/              if white.house =  green.house+1 and
-                      white.house&lt;&gt;red.house and white.house&lt;&gt;blue.house and white.house&lt;&gt;red.house  then  // green house is to the left of the white house
-                    for DIGIT,pallmall
-/*6*/                for DIGIT,bird breakif solved
-                      if bird.house = pallmall.house and bird.house&lt;&gt;dog.house  then  // the bird owner smokes pallmall
-                       for DIGIT,yellow breakif solved
-                        if yellow.house&lt;&gt;white.house and yellow.house&lt;&gt;green.house and yellow.house&lt;&gt;red.house and yellow.house&lt;&gt;blue.house then
-                         for DIGIT,dunhill breakif solved
-/*7*/                     if yellow.house = dunhill.house then  // the dunhill smoker lives in the yellow house
-                           for DIGIT,bluemaster breakif solved
-                            if bluemaster.house&lt;&gt;pallmall.house and bluemaster.house&lt;&gt;dunhill.house and bluemaster.house&lt;&gt;pallmall.house then  // smokers are in different houses
-                             for DIGIT,beer breakif solved
-/*12*/                        if beer.house = bluemaster.house and // beer drinker smokes bluemaster
-                                 bluemaster.house&lt;&gt;dunhill.house and beer.house&lt;&gt;coffee.house and beer.house&lt;&gt;milk.house then
-                               for DIGIT,german breakif solved
-                                if german.house&lt;&gt;norwegian.house and german.house&lt;&gt;brit.house and german.house&lt;&gt;swede.house then // german lives somewhere different from the others
-                                 for DIGIT,prince breakif solved
-/*13*/                               if prince.house = german.house and prince.house&lt;&gt;bluemaster.house and prince.house&lt;&gt;dunhill.house and prince.house&lt;&gt;pallmall.house  then // german smokes prince
-                                   for DIGIT,blend breakif solved
-                                    if blend.house&lt;&gt;prince.house and blend.house&lt;&gt;bluemaster.house and blend.house&lt;&gt;dunhill.house and blend.house&lt;&gt;pallmall.house then // smokers in different houses
-                                     for DIGIT,water breakif solved
-                                      if water.house&lt;&gt;milk.house and water.house&lt;&gt;coffee.house and water.house&lt;&gt;beer.house and
-                                         (blend.house = water.house+1 or blend.house=water.house-1) then //the water drinker lives nesxt to the blend smoker
-                                        for DIGIT,cat breakif solved
-/*10*/                                   if (blend.house = cat.house+1 or blend.house=cat.house-1) and cat.house&lt;&gt;dog.house and cat.house&lt;&gt;bird.house  then // the blend smoker lives next to the cat owner
-                                          for DIGIT,horse breakif solved
-/*11*/                                     if (horse.house=dunhill.house+1 or horse.house=dunhill.house-1) and // the horse owner is next to the dunhill smoker
-                                              horse.house&lt;&gt;dog.house and horse.house&lt;&gt;cat.house and horse.house&lt;&gt;bird.house  then
-                                           for DIGIT,tea breakif solved
-                                            if tea.house&lt;&gt;milk.house and tea.house&lt;&gt;water.house and tea.house&lt;&gt;coffee.house and tea.house&lt;&gt;beer.house then  // different drinks in different houses
-                                             for DIGIT,dane breakif solved
-/*3*/                                         if dane.house = tea.house and
-                                                  dane.house &lt;&gt; norwegian.house and dane.house &lt;&gt; brit.house  and dane.house &lt;&gt;swede.house and dane.house &lt;&gt;german.house then   // the dane drinks tea
-                                               for DIGIT,fish breakif solved
-                                                 if fish.house&lt;&gt;cat.house and fish.house&lt;&gt;dog.house and fish.house&lt;&gt;bird.house and fish.house&lt;&gt;horse.house then// pets in different houses
-                                                     messagebox(
-                                                    "fish: "        &amp; format(fish.house)        &amp; CHAR_EOL &amp;
-                                                    "dog: "         &amp; format(dog.house)         &amp; CHAR_EOL &amp;
-                                                    "horse: "       &amp; format(horse.house)       &amp; CHAR_EOL &amp;
-                                                    "cat: "         &amp; format(cat.house)         &amp; CHAR_EOL &amp;
-                                                    "Bird: "        &amp; format(bird.house)        &amp; CHAR_EOL &amp;
-                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
-                                                    "Blend: "       &amp; format(blend.house)       &amp; CHAR_EOL &amp;
-                                                    "Prince: "      &amp; format(prince.house)      &amp; CHAR_EOL &amp;
-                                                    "Bluemaster: "  &amp; format(bluemaster.house)  &amp; CHAR_EOL &amp;
-                                                    "Dunhill: "     &amp; format(dunhill.house)     &amp; CHAR_EOL &amp;
-                                                    "Pallmall: "    &amp; format(pallmall.house)    &amp; CHAR_EOL &amp;
-                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
-                                                    "tea: "         &amp; format(tea.house)         &amp; CHAR_EOL &amp;
-                                                    "water: "       &amp; format(water.house)       &amp; CHAR_EOL &amp;
-                                                    "Beer: "        &amp; format(beer.house)        &amp; CHAR_EOL &amp;
-                                                    "coffee: "      &amp; format(coffee.house)      &amp; CHAR_EOL &amp;
-                                                    "milk: "        &amp; format(milk.house)        &amp; CHAR_EOL &amp;
-                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
-                                                    "White: "       &amp; format(white.house)       &amp; CHAR_EOL &amp;
-                                                    "green: "       &amp; format(green.house)       &amp; CHAR_EOL &amp;
-                                                    "yellow: "      &amp; format(yellow.house)      &amp; CHAR_EOL &amp;
-                                                    "Blue: "        &amp; format(blue.house)        &amp; CHAR_EOL &amp;
-                                                    "Red: "         &amp; format(red.house)         &amp; CHAR_EOL &amp;
-                                                    "-----------------------"                   &amp; CHAR_EOL &amp;
-                                                    "german: "      &amp; format(german.house)      &amp; CHAR_EOL &amp;
-                                                    "swede: "       &amp; format(swede.house)       &amp; CHAR_EOL &amp;
-                                                    "Brit: "        &amp; format(brit.house)        &amp; CHAR_EOL &amp;
-                                                    "dane: "        &amp; format(dane.house)        &amp; CHAR_EOL &amp;
-                                                    "norwegian: "   &amp; format(norwegian.house)   &amp; CHAR_EOL
-                                                 )
-                                                 //solved=true
-                                               end
-
-
-end end end end end end end end end end end end end end end end end end end end end end end end end
-end end end end end end end end end end end end end end end end end end end end end end end
-*/</text>
-    </literalExpression>
-  </decision>
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1hg8dut" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
   <decision id="Decision_103rr8h" name="small">
     <variable id="InformationItem_1ai29v2" />
     <literalExpression id="LiteralExpression_0mjd6mj">
@@ -335,19 +216,23 @@ end end end end end end end end end end end end end end end end end end end end 
     <sourceRef href="#TextAnnotation_0ry3sx9" />
     <targetRef href="#Decision_0sfta6p" />
   </association>
+  <textAnnotation id="TextAnnotation_1vto2v5">
+    <text>Executes</text>
+  </textAnnotation>
+  <association id="Association_10ovedk">
+    <sourceRef href="#Decision_039w6mz" />
+    <targetRef href="#TextAnnotation_1vto2v5" />
+  </association>
   <dmndi:DMNDI>
     <dmndi:DMNDiagram>
-      <dmndi:DMNShape id="DMNShape_0qss2mg" dmnElementRef="Decision_08jzns4">
-        <dc:Bounds height="80" width="180" x="510" y="720" />
-      </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_1l7ukft" dmnElementRef="Decision_103rr8h">
-        <dc:Bounds height="80" width="180" x="510" y="640" />
+        <dc:Bounds height="80" width="180" x="760" y="410" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0eiehvt" dmnElementRef="Decision_0eu2rsl">
-        <dc:Bounds height="80" width="180" x="330" y="720" />
+        <dc:Bounds height="80" width="180" x="580" y="490" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0rovjj0" dmnElementRef="Decision_1uhorts">
-        <dc:Bounds height="80" width="180" x="330" y="640" />
+        <dc:Bounds height="80" width="180" x="580" y="410" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_0bvufiy" dmnElementRef="Decision_0sfta6p">
         <dc:Bounds height="80" width="180" x="340" y="200" />
@@ -363,17 +248,17 @@ end end end end end end end end end end end end end end end end end end end end 
         <dc:Bounds height="80" width="180" x="340" y="80" />
       </dmndi:DMNShape>
       <dmndi:DMNShape id="DMNShape_08px3pe" dmnElementRef="TextAnnotation_0s04j6a">
-        <dc:Bounds height="30" width="100" x="460" y="595" />
+        <dc:Bounds height="30" width="100" x="710" y="365" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_1a02avm" dmnElementRef="Association_1sezg1y">
-        <di:waypoint x="500" y="625" />
-        <di:waypoint x="510" y="640" />
+        <di:waypoint x="750" y="395" />
+        <di:waypoint x="760" y="410" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1vxovsj" dmnElementRef="TextAnnotation_1atd2xd">
-        <dc:Bounds height="60" width="160" x="360" y="310" />
+        <dc:Bounds height="60" width="160" x="400" y="310" />
       </dmndi:DMNShape>
       <dmndi:DMNEdge id="DMNEdge_0hdf69s" dmnElementRef="Association_0gvj48x">
-        <di:waypoint x="417" y="310" />
+        <di:waypoint x="457" y="310" />
         <di:waypoint x="423" y="280" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_0ymadpf" dmnElementRef="TextAnnotation_0ry3sx9">
@@ -384,8 +269,15 @@ end end end end end end end end end end end end end end end end end end end end 
         <di:waypoint x="340" y="246" />
       </dmndi:DMNEdge>
       <dmndi:DMNShape id="DMNShape_1tij6u0" dmnElementRef="Decision_1vkt6s1">
-        <dc:Bounds height="80" width="180" x="690" y="640" />
+        <dc:Bounds height="80" width="180" x="760" y="490" />
       </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0vmg8fl" dmnElementRef="TextAnnotation_1vto2v5">
+        <dc:Bounds height="30" width="100" x="380" y="-35" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0hst02d" dmnElementRef="Association_10ovedk">
+        <di:waypoint x="425" y="80" />
+        <di:waypoint x="413" y="-5" />
+      </dmndi:DMNEdge>
     </dmndi:DMNDiagram>
   </dmndi:DMNDI>
 </definitions>

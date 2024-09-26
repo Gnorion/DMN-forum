@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="definitions_0rtkbhw" name="definitions" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="decision_1n82y3d" name="DT1Group">
+    <decisionTable id="decisionTable_1xo6otk">
+      <input id="input1" label="age">
+        <inputExpression id="inputExpression1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0jhn4f2" label="color">
+        <inputExpression id="LiteralExpression_0bmhib2" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="output1" label="group" name="" typeRef="string" />
+      <rule id="DecisionRule_1sb94o4">
+        <inputEntry id="UnaryTests_13zi4oi">
+          <text>[&lt;60,[10..20],(30..50)]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0lbwwg0">
+          <text>'red'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_137yhkv">
+          <text>'A1'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nw7phx">
+        <inputEntry id="UnaryTests_0q1fsz4">
+          <text>&gt;60</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_18jxlpx">
+          <text>'yellow'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0e8xdta">
+          <text>'B1'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0fssypo">
+        <inputEntry id="UnaryTests_1ki5qji">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0uhfh7d">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0rh2fck">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0sfnqws" name="DT2Eligibility">
+    <informationRequirement id="InformationRequirement_1pj3wa3">
+      <requiredDecision href="#decision_1n82y3d" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0wu827g">
+      <input id="InputClause_0anrhny" label="group">
+        <inputExpression id="LiteralExpression_01yevg1" typeRef="string" />
+      </input>
+      <input id="InputClause_186l2pn" label="anything">
+        <inputExpression id="LiteralExpression_136vcsp" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1wu1euv" label="group">
+        <inputExpression id="LiteralExpression_1n1eoyc" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_084ma8k" label="result" name="&#39;eligible&#39;" typeRef="string" />
+      <output id="OutputClause_110x223" label="result" typeRef="string" />
+      <rule id="DecisionRule_08iz5cw">
+        <inputEntry id="UnaryTests_0k29aw9">
+          <text>'A1'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13mz69m">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0s2swts">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1q70b5k">
+          <text>'eligible'</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1g24dvl">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1szai15">
+        <inputEntry id="UnaryTests_0g1uok7">
+          <text>'Z1'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gj9qfl">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1ucskhu">
+          <text>'X1'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0tax7fd">
+          <text>'ineligible'</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0q6bsah">
+          <text>'eligible'</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_13k7fvi">
+        <inputEntry id="UnaryTests_0zhknhg">
+          <text>'A1'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v5o6zg">
+          <text>'anything'</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1p50jgx">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00na5ek">
+          <text>'eligible'</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1cq42ue">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0rua2sk" name="constraints on color">
+    <decisionTable id="DecisionTable_1wlicb9">
+      <input id="InputClause_0dlafjy" label="color">
+        <inputExpression id="LiteralExpression_0qn0asu" typeRef="string" />
+      </input>
+      <output id="OutputClause_0st6lpp" label="warn" typeRef="string" />
+      <rule id="DecisionRule_1149h9h">
+        <inputEntry id="UnaryTests_0dvusvn">
+          <text>'red','green','blue'</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06ltw06">
+          <text>x</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0aeeqbv">
+      <dmndi:DMNShape id="DMNShape_1tcjh3d" dmnElementRef="decision_1n82y3d">
+        <dc:Bounds height="80" width="180" x="190" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1akk8qe" dmnElementRef="InformationRequirement_1pj3wa3">
+        <di:waypoint x="280" y="210" />
+        <di:waypoint x="280" y="180" />
+        <di:waypoint x="280" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_05lzz0d" dmnElementRef="Decision_0sfnqws">
+        <dc:Bounds height="80" width="180" x="190" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0fybtzg" dmnElementRef="Decision_0rua2sk">
+        <dc:Bounds height="80" width="180" x="420" y="210" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

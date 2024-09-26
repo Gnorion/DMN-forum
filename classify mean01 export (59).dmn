@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0ded2i4" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_0e25hgc" name="Classify Mean">
+    <informationRequirement id="InformationRequirement_0yxakea">
+      <requiredDecision href="#Decision_1yixn5v" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_043caxb">
+      <input id="Input_1" label="theMean">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" label="result" typeRef="string" />
+      <rule id="DecisionRule_04ujtzc">
+        <inputEntry id="UnaryTests_1f0plz3">
+          <text>&lt;0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0itgwq1">
+          <text>"less than zero"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1mfx330">
+        <inputEntry id="UnaryTests_1l7kndo">
+          <text>0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_06k4n8f">
+          <text>"zero"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1k434dm">
+        <inputEntry id="UnaryTests_0cr3fz3">
+          <text>&gt;0</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1db844w">
+          <text>"greater than zero"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1yixn5v" name="Compute Mean">
+    <variable id="InformationItem_02lj5o3" name="theMean" typeRef="number" />
+    <informationRequirement id="InformationRequirement_14ocsxz">
+      <requiredInput href="#InputData_03ovq7s" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1gnkfu6">
+      <requiredDecision href="#Decision_1dszo0t" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0y7x1o0">
+      <text>mean(numbers)</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_03ovq7s" name="numbers" />
+  <decision id="Decision_1d50xcx" name="status">
+    <variable id="InformationItem_04idbxj" name="status" typeRef="any" />
+    <literalExpression id="LiteralExpression_0ptui5b">
+      <text>{
+  syntax:"ok",
+  validation:"ok",
+  execution:"ok"
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1dszo0t" name="define some numbers">
+    <variable id="InformationItem_0q74d1k" name="numbers" typeRef="list" />
+    <literalExpression id="LiteralExpression_02zo175">
+      <text>[1,2,3,7,8,9]
+</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_101i8rl">
+    <text>{
+"numbers":[1,2,3,7,8,9]
+}</text>
+  </textAnnotation>
+  <association id="Association_1qlzcr3">
+    <sourceRef href="#TextAnnotation_101i8rl" />
+    <targetRef href="#InputData_03ovq7s" />
+  </association>
+  <textAnnotation id="TextAnnotation_08sllkh">
+    <text>some built in numbers
+:[1,2,3,7,8,9</text>
+  </textAnnotation>
+  <association id="Association_03wke0y">
+    <sourceRef href="#TextAnnotation_08sllkh" />
+    <targetRef href="#Decision_1dszo0t" />
+  </association>
+  <textAnnotation id="TextAnnotation_1pxlrxh">
+    <text>SELF TEST ACTUAL RESULTS
+2024-09-24T23:46:56.719Z evaluating literal expression define some numbers
+2024-09-24T23:46:56.724Z { "numbers": [ 1, 2, 3, 7, 8, 9 ] }
+2024-09-24T23:46:56.724Z evaluating literal expression Compute Mean
+2024-09-24T23:46:56.726Z { "numbers": [ 1, 2, 3, 7, 8, 9 ], "theMean": 5 }
+2024-09-24T23:46:56.726Z evaluating table Classify Mean
+2024-09-24T23:46:56.727Z evaluating rule 1
+2024-09-24T23:46:56.727Z conditions : &lt;0 | actions : "less than zero" | matched : false
+2024-09-24T23:46:56.728Z evaluating rule 2
+2024-09-24T23:46:56.728Z conditions : 0 | actions : "zero" | matched : false
+2024-09-24T23:46:56.728Z evaluating rule 3
+2024-09-24T23:46:56.728Z conditions : &gt;0 | actions : "greater than zero" | matched : true
+2024-09-24T23:46:56.728Z { "numbers": [ 1, 2, 3, 7, 8, 9 ], "theMean": 5, "result": "greater than zero" }</text>
+  </textAnnotation>
+  <association id="Association_113448g">
+    <sourceRef href="#TextAnnotation_1pxlrxh" />
+    <targetRef href="#Decision_0e25hgc" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_0e25hgc">
+        <dc:Bounds height="80" width="180" x="160" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ewhvrv" dmnElementRef="Decision_1yixn5v">
+        <dc:Bounds height="80" width="180" x="160" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0snzw72" dmnElementRef="InputData_03ovq7s">
+        <dc:Bounds height="45" width="125" x="187" y="348" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1c4gmm8" dmnElementRef="InformationRequirement_14ocsxz">
+        <di:waypoint x="250" y="348" />
+        <di:waypoint x="250" y="320" />
+        <di:waypoint x="250" y="300" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1kn6e0r" dmnElementRef="InformationRequirement_0yxakea">
+        <di:waypoint x="250" y="220" />
+        <di:waypoint x="250" y="200" />
+        <di:waypoint x="250" y="180" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_06tju5o" dmnElementRef="Decision_1d50xcx">
+        <dc:Bounds height="80" width="180" x="-80" y="100" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_01qzm6d" dmnElementRef="TextAnnotation_101i8rl">
+        <dc:Bounds height="80" width="140" x="430" y="340" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_05iy9z8" dmnElementRef="Association_1qlzcr3">
+        <di:waypoint x="430" y="383" />
+        <di:waypoint x="312" y="368" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1ykob8t" dmnElementRef="Decision_1dszo0t">
+        <dc:Bounds height="80" width="180" x="430" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1uhkk51" dmnElementRef="TextAnnotation_08sllkh">
+        <dc:Bounds height="80" width="100" x="660" y="220" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0fh9t2f" dmnElementRef="Association_03wke0y">
+        <di:waypoint x="660" y="260" />
+        <di:waypoint x="610" y="260" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1d8iofb" dmnElementRef="InformationRequirement_1gnkfu6">
+        <di:waypoint x="430" y="260" />
+        <di:waypoint x="360" y="260" />
+        <di:waypoint x="340" y="260" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0er668t" dmnElementRef="TextAnnotation_1pxlrxh">
+        <dc:Bounds height="200" width="610" x="410" y="-20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1xme6k3" dmnElementRef="Association_113448g">
+        <di:waypoint x="410" y="41" />
+        <di:waypoint x="315" y="100" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

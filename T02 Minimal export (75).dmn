@@ -1,0 +1,202 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="TLP_0ih6z3g" name="T02 minimal" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <decision id="Decision_0s5ymtc" name="determine eligibility based on age">
+    <informationRequirement id="InformationRequirement_0y1uzxi">
+      <requiredInput href="#InputData_1o1ata2" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0uhg75z">
+      <requiredDecision href="#Decision_0a107xb" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0gu7xz6">
+      <input id="InputClause_00jegbn">
+        <inputExpression id="LiteralExpression_1tq5eb4" typeRef="string">
+          <text>age</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0ksh4vl" name="eligible" typeRef="string" />
+      <output id="OutputClause_0tnc27i" name="rule" typeRef="string" />
+      <rule id="DecisionRule_092kwqy">
+        <inputEntry id="UnaryTests_1bd6pl3">
+          <text>[18..65]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0eiitvf">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1s8s2pt">
+          <text>"R1"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1etgo2j">
+        <inputEntry id="UnaryTests_1lsw6e8">
+          <text>&lt;18</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1you5rx">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0iu1etf">
+          <text>"R2"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01fcy7f">
+        <inputEntry id="UnaryTests_13msiop">
+          <text>&gt;65</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0f6dzhu">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1siotqg">
+          <text>"R3"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_1o1ata2" name="age" />
+  <decision id="Decision_0a107xb" name="select test data based on N">
+    <informationRequirement id="InformationRequirement_0kv3xih">
+      <requiredInput href="#InputData_0sm4rh0" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1qafwdx">
+      <input id="InputClause_1snf0fd">
+        <inputExpression id="LiteralExpression_051nxko" typeRef="number">
+          <text>N</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0zlrs34" name="age" typeRef="number" biodi:width="191.9921875" />
+      <output id="OutputClause_1j5j3hu" name="message" typeRef="string" />
+      <rule id="DecisionRule_1xteo4e">
+        <inputEntry id="UnaryTests_0gb0kyl">
+          <text>1</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1brvx23">
+          <text>5</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_06flknc">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1sngdwm">
+        <inputEntry id="UnaryTests_1biiig7">
+          <text>2</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1t3kgjw">
+          <text>25</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1kcs0mp">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0jtzff6">
+        <inputEntry id="UnaryTests_03ro4xr">
+          <text>3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0q2d5xh">
+          <text>76</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0y6uim7">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0flo8ab">
+        <inputEntry id="UnaryTests_0ogdtvs">
+          <text>&gt;3</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0myy9dh">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0njbu0k">
+          <text>"invalid test case"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0sm4rh0" name="N" />
+  <textAnnotation id="TextAnnotation_0eou6zw">
+    <text>N is the test case number e.g.
+{"N":2}</text>
+  </textAnnotation>
+  <association id="Association_00lrsaz">
+    <sourceRef href="#TextAnnotation_0eou6zw" />
+    <targetRef href="#InputData_0sm4rh0" />
+  </association>
+  <textAnnotation id="TextAnnotation_0537fg8">
+    <text>the actual age e.g.
+{"age":26}</text>
+  </textAnnotation>
+  <association id="Association_04vfrg1">
+    <sourceRef href="#TextAnnotation_0537fg8" />
+    <targetRef href="#InputData_1o1ata2" />
+  </association>
+  <textAnnotation id="TextAnnotation_1yfl94q">
+    <text>selects a built in test case based on N</text>
+  </textAnnotation>
+  <association id="Association_1yl9kpv">
+    <sourceRef href="#TextAnnotation_1yfl94q" />
+    <targetRef href="#Decision_0a107xb" />
+  </association>
+  <textAnnotation id="TextAnnotation_0r9mxat">
+    <text>you can input an age or a test case number</text>
+  </textAnnotation>
+  <association id="Association_04dqtk8">
+    <sourceRef href="#TextAnnotation_0r9mxat" />
+    <targetRef href="#Decision_0s5ymtc" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_0m5cweq" dmnElementRef="Decision_0s5ymtc">
+        <dc:Bounds height="80" width="180" x="880" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0l9e40w" dmnElementRef="InputData_1o1ata2">
+        <dc:Bounds height="45" width="125" x="657" y="87" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lb1lkq" dmnElementRef="InformationRequirement_0y1uzxi">
+        <di:waypoint x="782" y="110" />
+        <di:waypoint x="860" y="110" />
+        <di:waypoint x="880" y="110" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0v8av13" dmnElementRef="Decision_0a107xb">
+        <dc:Bounds height="80" width="180" x="880" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1av9rqc" dmnElementRef="InputData_0sm4rh0">
+        <dc:Bounds height="45" width="125" x="908" y="308" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0heo0c3" dmnElementRef="InformationRequirement_0kv3xih">
+        <di:waypoint x="971" y="308" />
+        <di:waypoint x="970" y="290" />
+        <di:waypoint x="970" y="270" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1aheob7" dmnElementRef="TextAnnotation_0eou6zw">
+        <dc:Bounds height="49" width="300" x="1090" y="306" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0mtu131" dmnElementRef="Association_00lrsaz">
+        <di:waypoint x="1090" y="330" />
+        <di:waypoint x="1033" y="331" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_093ezwr" dmnElementRef="TextAnnotation_0537fg8">
+        <dc:Bounds height="55" width="112" x="670" y="175" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_02ohon7" dmnElementRef="Association_04vfrg1">
+        <di:waypoint x="720" y="175" />
+        <di:waypoint x="720" y="132" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_13n7qz8" dmnElementRef="InformationRequirement_0uhg75z">
+        <di:waypoint x="970" y="190" />
+        <di:waypoint x="970" y="170" />
+        <di:waypoint x="970" y="150" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_05gqhfj" dmnElementRef="TextAnnotation_1yfl94q">
+        <dc:Bounds height="80" width="100" x="1090" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0b8ucu5" dmnElementRef="Association_1yl9kpv">
+        <di:waypoint x="1090" y="230" />
+        <di:waypoint x="1060" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_13k6mz0" dmnElementRef="TextAnnotation_0r9mxat">
+        <dc:Bounds height="80" width="100" x="1090" y="70" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1g1md46" dmnElementRef="Association_04dqtk8">
+        <di:waypoint x="1090" y="110" />
+        <di:waypoint x="1060" y="110" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

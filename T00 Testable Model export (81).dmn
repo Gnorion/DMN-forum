@@ -1,0 +1,163 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="T00 Testable Model" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <decision id="Decision_1ic9d40" name="Business Rules">
+    <informationRequirement id="InformationRequirement_1q1dws9">
+      <requiredDecision href="#Decision_1g0nrjn" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_093jj0e">
+      <input id="InputClause_0y2nu24">
+        <inputExpression id="LiteralExpression_14dfvgx" typeRef="string" />
+      </input>
+      <output id="OutputClause_1e5ftjt" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1g0nrjn" name="Test Cases" />
+  <decision id="Decision_0xgyhq1" name="Results Checker">
+    <informationRequirement id="InformationRequirement_01hkqtq">
+      <requiredDecision href="#Decision_1ic9d40" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_17kyfc1" name="get number of test cases" />
+  <decision id="Decision_0qk29o7" name="General Structure of a Self-Testable Model" />
+  <textAnnotation id="TextAnnotation_0abr43u">
+    <text>Create logic to compare the actual results with expected results</text>
+  </textAnnotation>
+  <association id="Association_069af7g">
+    <sourceRef href="#TextAnnotation_0abr43u" />
+    <targetRef href="#Decision_0xgyhq1" />
+  </association>
+  <textAnnotation id="TextAnnotation_1pe4zxx">
+    <text>Returns a number that indicates how many test cases there are</text>
+  </textAnnotation>
+  <association id="Association_1o9jehx">
+    <sourceRef href="#TextAnnotation_1pe4zxx" />
+    <targetRef href="#Decision_17kyfc1" />
+  </association>
+  <textAnnotation id="TextAnnotation_1qr5moe">
+    <text>Decision table or expression that selects a test case based on a test number</text>
+  </textAnnotation>
+  <association id="Association_0hbt5kl">
+    <sourceRef href="#TextAnnotation_1qr5moe" />
+    <targetRef href="#Decision_1g0nrjn" />
+  </association>
+  <textAnnotation id="TextAnnotation_0rgy3if">
+    <text>Apply the business rules to the test case</text>
+  </textAnnotation>
+  <association id="Association_1y0qi52">
+    <sourceRef href="#TextAnnotation_0rgy3if" />
+    <targetRef href="#Decision_1ic9d40" />
+  </association>
+  <textAnnotation id="TextAnnotation_1il6vw0">
+    <text>This is the component that will be invoked by the test case handler which will send a test case number</text>
+  </textAnnotation>
+  <association id="Association_0sqv6pd">
+    <sourceRef href="#TextAnnotation_1il6vw0" />
+    <targetRef href="#Decision_0xgyhq1" />
+  </association>
+  <textAnnotation id="TextAnnotation_0e2aogw">
+    <text>Standard business rule component. This is what the production environment would invoke</text>
+  </textAnnotation>
+  <association id="Association_1ivcp9n">
+    <sourceRef href="#TextAnnotation_0e2aogw" />
+    <targetRef href="#Decision_1ic9d40" />
+  </association>
+  <textAnnotation id="TextAnnotation_1ykbcav">
+    <text>This is how the test case handler finds out how many test case it can run</text>
+  </textAnnotation>
+  <association id="Association_100te94">
+    <sourceRef href="#TextAnnotation_1ykbcav" />
+    <targetRef href="#Decision_17kyfc1" />
+  </association>
+  <textAnnotation id="TextAnnotation_1hdis1e">
+    <text>You can get sample test cases by using the Validator</text>
+  </textAnnotation>
+  <association id="Association_05cy7uv">
+    <sourceRef href="#TextAnnotation_1hdis1e" />
+    <targetRef href="#Decision_1g0nrjn" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_0r7mpnj" dmnElementRef="Decision_1ic9d40">
+        <dc:Bounds height="80" width="180" x="710" y="10" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03pub95" dmnElementRef="Decision_1g0nrjn">
+        <dc:Bounds height="80" width="180" x="710" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ggq755" dmnElementRef="Decision_0xgyhq1">
+        <dc:Bounds height="80" width="180" x="710" y="-120" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_06ae4gv" dmnElementRef="InformationRequirement_1q1dws9">
+        <di:waypoint x="800" y="150" />
+        <di:waypoint x="800" y="110" />
+        <di:waypoint x="800" y="90" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0eaynbc" dmnElementRef="InformationRequirement_01hkqtq">
+        <di:waypoint x="800" y="10" />
+        <di:waypoint x="800" y="-20" />
+        <di:waypoint x="800" y="-40" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0sim4cq" dmnElementRef="Decision_17kyfc1">
+        <dc:Bounds height="80" width="180" x="710" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1381uyn" dmnElementRef="TextAnnotation_0abr43u">
+        <dc:Bounds height="80" width="100" x="960" y="-120" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1xa4elt" dmnElementRef="Association_069af7g">
+        <di:waypoint x="960" y="-80" />
+        <di:waypoint x="890" y="-80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0qlk5xy" dmnElementRef="TextAnnotation_1pe4zxx">
+        <dc:Bounds height="80" width="100" x="960" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0fpace3" dmnElementRef="Association_1o9jehx">
+        <di:waypoint x="960" y="320" />
+        <di:waypoint x="890" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1fkc3sy" dmnElementRef="TextAnnotation_1qr5moe">
+        <dc:Bounds height="80" width="120" x="960" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0oedocq" dmnElementRef="Association_0hbt5kl">
+        <di:waypoint x="960" y="190" />
+        <di:waypoint x="890" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1bh5xfb" dmnElementRef="TextAnnotation_0rgy3if">
+        <dc:Bounds height="80" width="100" x="960" y="10" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qa9uwt" dmnElementRef="Association_1y0qi52">
+        <di:waypoint x="960" y="50" />
+        <di:waypoint x="890" y="50" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0hhfbvo" dmnElementRef="TextAnnotation_1il6vw0">
+        <dc:Bounds height="85" width="150" x="488" y="-123" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qg0vs9" dmnElementRef="Association_0sqv6pd">
+        <di:waypoint x="638" y="-82" />
+        <di:waypoint x="710" y="-80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_03k7fjd" dmnElementRef="TextAnnotation_0e2aogw">
+        <dc:Bounds height="80" width="145" x="490" y="10" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1h5759h" dmnElementRef="Association_1ivcp9n">
+        <di:waypoint x="635" y="50" />
+        <di:waypoint x="710" y="50" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_08urobr" dmnElementRef="TextAnnotation_1ykbcav">
+        <dc:Bounds height="80" width="130" x="490" y="280" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0rr2fdu" dmnElementRef="Association_100te94">
+        <di:waypoint x="620" y="320" />
+        <di:waypoint x="710" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1i2aqaz" dmnElementRef="TextAnnotation_1hdis1e">
+        <dc:Bounds height="80" width="100" x="490" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_08zkbjx" dmnElementRef="Association_05cy7uv">
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="710" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1qvc9jq" dmnElementRef="Decision_0qk29o7">
+        <dc:Bounds height="80" width="180" x="710" y="-260" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

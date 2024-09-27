@@ -1,0 +1,70 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="T00 Test Case Handler" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <decision id="Decision_05v66wp" name="run test cases">
+    <variable id="InformationItem_1ge7tr7" name="results" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1cu38pg">
+      <requiredInput href="#InputData_19zwg3x" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_01uyb2j">
+      <text>for d in decisions return                                                        // for every decision in the list of decisions
+  {N      : invokeDecision(d.endpoint,d.name,"get number of test cases",{}),     // invoke the decision to find out how manmy test cases it contains
+  results : for i in 1..N                                                        // for each test case
+             return invokeDecision(decision.endpoint,decision.name,{"N":i})}     // invoKe the decision passing the number of the test case to execute</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1qvdtgq" name="GENERIC TEST CASE HANDLER" />
+  <inputData id="InputData_19zwg3x" name="decisions" />
+  <textAnnotation id="TextAnnotation_148wlr5">
+    <text>LIST OF DECISION TO BE TESTED
+[
+  {name:"decision A",endpoint:"http:/xyz.com"},
+  {name:"decision B",endpoint:"other"}
+]</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_1sfnva7">
+    <text>for every decision in the list of decisions
+    invoke the decision to find out how many test cases it contains
+    for each test case
+             invoke the decision passing the number of the test case to execute</text>
+  </textAnnotation>
+  <association id="Association_1gxzbpz">
+    <sourceRef href="#TextAnnotation_1sfnva7" />
+    <targetRef href="#Decision_05v66wp" />
+  </association>
+  <association id="Association_0sp0x2v">
+    <sourceRef href="#InputData_19zwg3x" />
+    <targetRef href="#TextAnnotation_148wlr5" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_197ti43" dmnElementRef="Decision_05v66wp">
+        <dc:Bounds height="80" width="180" x="740" y="-20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0x1tb4y" dmnElementRef="TextAnnotation_148wlr5">
+        <dc:Bounds height="90" width="380" x="970" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1wsdzlz" dmnElementRef="TextAnnotation_1sfnva7">
+        <dc:Bounds height="80" width="410" x="970" y="-20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1bqc2tu" dmnElementRef="Association_1gxzbpz">
+        <di:waypoint x="970" y="20" />
+        <di:waypoint x="920" y="20" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0n5nweo" dmnElementRef="Decision_1qvdtgq">
+        <dc:Bounds height="80" width="180" x="740" y="-140" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0y1c7jb" dmnElementRef="InputData_19zwg3x">
+        <dc:Bounds height="45" width="125" x="767" y="132" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lqnq0d" dmnElementRef="InformationRequirement_1cu38pg">
+        <di:waypoint x="830" y="132" />
+        <di:waypoint x="830" y="80" />
+        <di:waypoint x="830" y="60" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ecbw1u" dmnElementRef="Association_0sp0x2v">
+        <di:waypoint x="892" y="153" />
+        <di:waypoint x="970" y="151" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

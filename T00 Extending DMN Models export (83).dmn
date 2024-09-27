@@ -1,0 +1,176 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="T00 Extending DMN Models" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <businessKnowledgeModel id="BusinessKnowledgeModel_1tgfece" name="import someone else&#39;s decision model" />
+  <decision id="Decision_18g8w9a" name="some functionality that I wrote using FEEL, java, js, python etc" />
+  <decision id="Decision_0kft304" name="invoke some functionality that someone else wrote using a REST API" />
+  <decision id="Decision_0asvhs5" name="My Decision">
+    <knowledgeRequirement id="KnowledgeRequirement_05rmsjb">
+      <requiredKnowledge href="#BusinessKnowledgeModel_1tgfece" />
+    </knowledgeRequirement>
+    <decisionTable id="DecisionTable_09zcjbz">
+      <input id="InputClause_100ye8f">
+        <inputExpression id="LiteralExpression_1rz0gdz" typeRef="string" />
+      </input>
+      <output id="OutputClause_1anre6h" typeRef="string" />
+    </decisionTable>
+  </decision>
+  <decision id="Decision_198tznx" name="use the invoke() FEEL function">
+    <variable id="InformationItem_17xrv8n" name="results" typeRef="any" />
+    <literalExpression id="LiteralExpression_13oqrcc">
+      <text>invoke(
+    "http://namespace_of_model",
+    "my model name",
+    "my decision name",
+    { a:1, b:2 }
+)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0djo1r6" name="make REST call using Ruby">
+    <variable id="InformationItem_03twr6z" name="results" typeRef="any" />
+    <literalExpression id="LiteralExpression_1m5854k">
+      <text>{}
+/*
+require 'net/http'
+puts Net::HTTP.get(URI('https://jsonplaceholder.typicode.com/posts/1'))
+*/
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_13zhju4" name="make REST call using python">
+    <variable id="InformationItem_0rdn5v3" name="results" />
+    <literalExpression id="LiteralExpression_09ccwes">
+      <text>{}
+/*
+import requests
+url = "https://jsonplaceholder.typicode.com/posts/1" # The URL of the API endpoint
+response = requests.get(url)                         # Send a GET request to the API
+if response.status_code == 200:                      # Check if the request was successful (status code 200)
+    data = response.json()
+    print(data)                                      # Print the JSON response from the API
+else:
+    print(f"Failed to retrieve data: {response.status_code}")
+*/</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0wywmjb" name="make REST call using Haskell">
+    <variable id="InformationItem_1qsscla" name="results" />
+    <literalExpression id="LiteralExpression_05z5fub">
+      <text>{}
+/*
+{-# LANGUAGE OverloadedStrings #-}
+
+import Network.HTTP.Simple
+
+main :: IO ()
+main = httpLBS "https://jsonplaceholder.typicode.com/posts/1" &gt;&gt;= print . getResponseBody
+*/
+</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0scvoq5">
+    <text>The REST API could be anything, including another deployed DMN model</text>
+  </textAnnotation>
+  <association id="Association_0bp51wn">
+    <sourceRef href="#TextAnnotation_0scvoq5" />
+    <targetRef href="#Decision_0kft304" />
+  </association>
+  <textAnnotation id="TextAnnotation_01f2gi0">
+    <text>Anything you can do in the language you select for the expression</text>
+  </textAnnotation>
+  <association id="Association_0lwbe5m">
+    <sourceRef href="#TextAnnotation_01f2gi0" />
+    <targetRef href="#Decision_18g8w9a" />
+  </association>
+  <textAnnotation id="TextAnnotation_08od3ds">
+    <text>Any existing DMN model</text>
+  </textAnnotation>
+  <association id="Association_11b1der">
+    <sourceRef href="#TextAnnotation_08od3ds" />
+    <targetRef href="#BusinessKnowledgeModel_1tgfece" />
+  </association>
+  <textAnnotation id="TextAnnotation_0p7js9p">
+    <text>RESULTS
+{
+  "userId": 1,
+  "id": 1,
+  "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+  "body": "quia et suscipit\nsuscipit..."
+}</text>
+  </textAnnotation>
+  <association id="Association_0pnjr7n">
+    <sourceRef href="#TextAnnotation_0p7js9p" />
+    <targetRef href="#Decision_0djo1r6" />
+  </association>
+  <association id="Association_0ik6uj5">
+    <sourceRef href="#Decision_13zhju4" />
+    <targetRef href="#TextAnnotation_0p7js9p" />
+  </association>
+  <textAnnotation id="TextAnnotation_0iqp2ij" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_0ck4omx" dmnElementRef="BusinessKnowledgeModel_1tgfece">
+        <dc:Bounds height="46" width="135" x="783" y="137" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nmwokz" dmnElementRef="KnowledgeRequirement_05rmsjb">
+        <di:waypoint x="783" y="160" />
+        <di:waypoint x="680" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0xkenlv" dmnElementRef="Decision_18g8w9a">
+        <dc:Bounds height="80" width="180" x="550" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1qsh5rl" dmnElementRef="Decision_0kft304">
+        <dc:Bounds height="80" width="180" x="350" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1eup00p" dmnElementRef="Decision_0asvhs5">
+        <dc:Bounds height="80" width="180" x="500" y="130" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ylp4wz" dmnElementRef="TextAnnotation_0scvoq5">
+        <dc:Bounds height="80" width="180" x="350" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1galnlc" dmnElementRef="Association_0bp51wn">
+        <di:waypoint x="428" y="400" />
+        <di:waypoint x="432" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0s22k5e" dmnElementRef="TextAnnotation_01f2gi0">
+        <dc:Bounds height="80" width="180" x="690" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1j7bcga" dmnElementRef="Association_0lwbe5m">
+        <di:waypoint x="756" y="400" />
+        <di:waypoint x="624" y="380" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0q2k20h" dmnElementRef="TextAnnotation_08od3ds">
+        <dc:Bounds height="40" width="100" x="801" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0uvvibe" dmnElementRef="Association_11b1der">
+        <di:waypoint x="851" y="210" />
+        <di:waypoint x="851" y="183" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0c8uyeb" dmnElementRef="Decision_198tznx">
+        <dc:Bounds height="80" width="180" x="990" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_10n7a87" dmnElementRef="Decision_0djo1r6">
+        <dc:Bounds height="80" width="180" x="990" y="400" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0zw6g00" dmnElementRef="Decision_13zhju4">
+        <dc:Bounds height="80" width="180" x="990" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1t9qqvq" dmnElementRef="TextAnnotation_0p7js9p">
+        <dc:Bounds height="130" width="440" x="1250" y="425" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1o1gp83" dmnElementRef="Association_0pnjr7n">
+        <di:waypoint x="1250" y="480" />
+        <di:waypoint x="1170" y="461" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0qh2eb5" dmnElementRef="Association_0ik6uj5">
+        <di:waypoint x="1170" y="530" />
+        <di:waypoint x="1250" y="478" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1etpehf" dmnElementRef="Decision_0wywmjb">
+        <dc:Bounds height="80" width="180" x="990" y="590" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1096981" dmnElementRef="TextAnnotation_0iqp2ij">
+        <dc:Bounds height="80" width="100" x="1170" y="460" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

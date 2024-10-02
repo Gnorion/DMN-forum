@@ -1,0 +1,283 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1hg8dut" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_103rr8h" name="small">
+    <variable id="InformationItem_1ai29v2" />
+    <literalExpression id="LiteralExpression_0mjd6mj">
+      <text>{solve: function(DIGITS)
+  for norwegian in DIGITS
+     return if norwegian = 1 then // CONSTRAINT the norwegian lives in house 1
+          for blue in DIGITS 
+            return if norwegian = blue+1 or norwegian=blue-1 then   // the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+            for milk in DIGITS
+             return if milk.house = 3 then  // CONSTRAINT house 3 drinks milk
+                 {norwegian : norwegian,
+                  blue      : blue,
+                  milk      : milk
+                 } 
+             else{}else{}else{},
+ solution: solve([1,2,3])                            
+}.solution</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0eu2rsl" name="Einstein Working&#10;(not complete - stack overflow)">
+    <variable id="InformationItem_0awwmjo" />
+    <literalExpression id="LiteralExpression_0hajait">
+      <text>{solve: function(HOUSES)
+  for norwegian in [1], blue in HOUSES, milk in [3], brit in HOUSES, red in HOUSES, swede in HOUSES, dog in HOUSES, green in HOUSES, coffee in HOUSES, white in HOUSES
+     return if norwegian = 1 then                                   // CONSTRAINT the norwegian lives in house 1
+            if norwegian = blue+1 or norwegian=blue-1 then          // CONSTRAINT the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+            if milk = 3 then                                        // CONSTRAINT house 3 drinks milk
+            if brit != norwegian then                               // CONSTRAINT brit and norwegian are in different houses
+            if brit = red and red != blue then                      // CONSTRAINT brit lives in the red house
+            if swede!=norwegian and swede!=brit then                // CONSTRAINT the swede lives in a different house from the brit and the norwegian
+            if swede = dog then                                     // CONSTRAINT the swede owns the dog
+            if green!=blue and green!=red and red!=blue then        // CONSTRAINT the green, blue and red houses are different
+            if green = coffee and coffee!=milk then                 // CONSTRAINT The owner of the green house drinks coffee.
+            if white = green+1 and                                  // CONSTRAINT green house is to the left of the white house
+               white!= red and white!=blue and white!=red  then     // different houses are different colors
+                {solved    : true,
+                 norwegian : norwegian,
+                 blue      : blue,
+                 milk      : milk,
+                 brit      : brit,
+                 red       : red,
+                 swede     : swede,
+                 dog       : dog,
+                 green     : green,
+                 white     : white
+                } 
+             else{} else{} else{} else{} else{} else{} else{} else{} else{} else{},
+ solution: solve([1,2,3,4,5])                            
+}.solution[solved=true]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1uhorts" name="Einstein with filters">
+    <variable id="InformationItem_18vy3c2" />
+    <literalExpression id="LiteralExpression_18pplco">
+      <text>{solve: function(HOUSES)
+  for norwegian in [1],                                                                   // CONSTRAINT the norwegian lives in house 1
+      blue      in HOUSES[blue=norwegian+1 or blue=norwegian-1],                          // CONSTRAINT the norwegian is to the immediate left or right of the blue house (so blue must be 2)
+      milk      in [3],                                                                   // CONSTRAINT house 3 drinks milk
+      brit      in HOUSES[brit != norwegian],                                             // CONSTRAINT brit and norwegian are in different houses
+      red       in HOUSES [brit = red and red != blue],                                   // CONSTRAINT brit lives in the red house
+      swede     in HOUSES[swede!=norwegian and swede!=brit],                              // CONSTRAINT the swede lives in a different house from the brit and the norwegian
+      dog       in HOUSES[swede = dog],                                                   // CONSTRAINT the swede owns the dog
+      green     in HOUSES[green!=blue and green!=red and red!=blue],                      // CONSTRAINT the green, blue and red houses are different
+      coffee    in HOUSES[green = coffee and coffee!=milk],                               // CONSTRAINT The owner of the green house drinks coffee
+      white     in HOUSES[white = green+1 and white!= red and white!=blue and white!=red] // CONSTRAINT green house is to the left of the white house
+     return                     
+                {solved    : true,
+                 norwegian : norwegian,
+                 blue      : blue,
+                 milk      : milk,
+                 brit      : brit,
+                 red       : red,
+                 swede     : swede,
+                 dog       : dog,
+                 green     : green,
+                 white     : white
+                } ,
+ solution: solve([1,2,3,4,5])                            
+}.solution[solved=true]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0sfta6p" name="Einstein&#10;optimized">
+    <variable id="InformationItem_1yxp7st" />
+    <literalExpression id="LiteralExpression_0swygts">
+      <text>{solve: function(HOUSES)
+  for norwegian in HOUSES return if norwegian=1                                                                         then // 9. the norwegian lives in house 1
+  for blue      in HOUSES return if blue=norwegian+1 or blue=norwegian-1                                                then // 14. blue house is next to the norwegian
+  for milk      in HOUSES return if milk=3                                                                              then // 8. milk drinker is in the middle house
+  for brit      in HOUSES return if brit!=norwegian                                                                     then // brit and norwegian are in different houses
+  for red       in HOUSES return if brit = red and red!=blue                                                            then // 1. brit is in the red house
+  for swede     in HOUSES return if swede!=norwegian and swede!=brit                                                    then // swede lives in a different house from norwegian and brit                             
+  for dog       in HOUSES return if swede = dog                                                                         then // 2. swede owns a dog                                                  
+  for green     in HOUSES return if green!=blue and green!=red                                                          then // red, green and blue houses are different                      
+  for coffee    in HOUSES return if green = coffee and coffee!=milk                                                     then // 5. coffee drinker is in the green house                              
+  for white     in HOUSES return if white = green+1 and white!= red and white!=blue                                     then // 4. white house is to the right of the green house
+  for bird      in HOUSES return if bird!=dog                                                                           then // bird and dog live in different houses
+  for pallmall  in HOUSES return if bird = pallmall                                                                     then // 6. pallmall smoker owns the bird
+  for yellow    in HOUSES return if yellow!=white and yellow!=green and yellow!=red and yellow!=blue                    then // yellow is not white, green, red or blue
+  for dunhill   in HOUSES return if yellow = dunhill and dunhill!=pallmall                                              then // 7. dunhill smoker is in the yellow house
+  for bluemast  in HOUSES return if bluemast!=pallmall and bluemast!=dunhill                                            then // dunhill, bluemast and pallmall are different houses
+  for beer      in HOUSES return if beer = bluemast and beer!=milk and beer!=coffee                                     then //12. beer drinker smokes bluemast
+  for german    in HOUSES return if german!=norwegian and german!=brit and german!=swede                                then // german lives in a different hose from norwegian, brit and swede
+  for prince    in HOUSES return if prince = german and prince!=bluemast and prince!=dunhill and prince!=pallmall       then // 13. german smokes prince
+  for blend     in HOUSES return if blend!=prince and blend!=bluemast and blend!=dunhill and blend!=pallmall            then // each house has a different smoke.
+  for water     in HOUSES return if (blend=water+1 or bland=water-1) and water!=milk and water!=coffee and water!=beer  then // 15. blend neighbor drinks water. water, milk, cofee and beer are different houses
+  for cat       in HOUSES return if (blend = cat+1 or blend=cat-1) and cat!=dog and cat!=bird                           then // 10. cat is next to the blend smoker
+  for horse     in HOUSES return if (horse=dunhill+1 or horse=dunhill-1) and horse!=dog and horse!=cat and horse!=bird  then // 11. horse is next to the dunhill smoker
+  for tea       in HOUSES return if tea!=milk and tea!=water and tea!=coffee and tea!=beer                              then // tea, milk, coffee and beer are different
+  for dane      in HOUSES return if dane=tea and dane!=norwegian and dane!=brit and dane!=swede and dane!=german        then // 3. dane drinks tea
+  for fish      in HOUSES return if fish!=cat and fish!=dog and fish!=bird and fish!=horse                              then // pets are all in different houses
+     {solved    : true,
+      norwegian : norwegian, brit   : brit,     swede    : swede,     german : german, dane   : dane,
+      blue      : blue,      green  : green,    red      : red,       yellow : yellow, white  : white,   
+      pallmall  : pallmall,  dunhill: dunhill,  bluemast : bluemast,  prince : prince, blend  : blend,
+      beer      : beer,      water  : water,    tea      : tea,       milk   : milk,   coffee : coffee,
+      dog       : dog,       bird   : bird,     cat      : cat,       horse  : horse,  fish   : fish
+                
+    } else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{}else{},
+ solution: solve([1,2,3,4,5])                           
+}.solution//[solved=true]</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_039w6mz" name="Einstein Problem" />
+  <decision id="Decision_1vkt6s1" name="brief filters">
+    <variable id="InformationItem_1uj18c5" />
+    <literalExpression id="LiteralExpression_1tos9yg">
+      <text>{
+  HOUSES : [1,2,3,4,5],
+  norwegian: for norwegian in HOUSES[item=1]                                     return norwegian,
+  blue     : for blue      in HOUSES[item=norwegian[1]+1 or item=norwegian[1]-1] return blue,
+  milk     : for milk      in HOUSES[item=3]                                     return milk,
+  brit     : for brit      in HOUSES[item!=norwegian[1]]                         return brit,
+  red      : for red       in HOUSES[item=brit[1] and item!=blue[1]]             return red
+}
+/*
+{
+  "HOUSES": [    1,    2,    3,    4,    5  ],
+  "norwegian": [    1  ],
+  "blue": [    2  ],
+  "milk": [    3  ],
+  "brit": [    2,    3,    4,    5  ],  
+  "red": []
+}
+*/</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0g5l49t">
+    <text>1. The Brit lives in the red house.
+2. The Swede keeps dogs as pets.
+3. The Dane drinks tea.
+4. The greenhouse is on the immediate left of the white house.
+5. The owner of the greenhouse drinks coffee.
+6. The person who smokes Pall Mall rears birds.
+7. The owner of the yellow house smokes Dunhill.
+8. The man living in the center house drinks milk.
+9. The Norwegian lives in the first house.
+10. The man who smokes Blends lives next to the one who keeps cats.
+11. The man who keeps the horse lives next to the man who smokes Dunhill.
+12. The man who smokes Blue Master drinks beer.
+13. The German smokes Prince.
+14. The Norwegian lives next to the blue house.
+15. The man who smokes Blends has a neighbor who drinks water.</text>
+  </textAnnotation>
+  <association id="Association_0v7129y">
+    <sourceRef href="#TextAnnotation_0g5l49t" />
+    <targetRef href="#Decision_039w6mz" />
+  </association>
+  <textAnnotation id="TextAnnotation_0s04j6a">
+    <text>VARIATIONS</text>
+  </textAnnotation>
+  <association id="Association_1sezg1y">
+    <sourceRef href="#TextAnnotation_0s04j6a" />
+    <targetRef href="#Decision_1uhorts" />
+  </association>
+  <textAnnotation id="TextAnnotation_1atd2xd">
+    <text>still need to extract the result from the nested structure</text>
+  </textAnnotation>
+  <association id="Association_0gvj48x">
+    <sourceRef href="#TextAnnotation_1atd2xd" />
+    <targetRef href="#Decision_0sfta6p" />
+  </association>
+  <textAnnotation id="TextAnnotation_0ry3sx9">
+    <text>SOLUTION
+{
+  "solved": true,
+  "norwegian": 1,
+  "brit": 3,
+  "swede": 5,
+  "german": 4,
+  "dane": 2,
+  "blue": 2,
+  "green": 4,
+  "red": 3,
+  "yellow": 1,
+  "white": 5,
+  "pallmall": 3,
+  "dunhill": 1,
+  "bluemast": 5,
+  "prince": 4,
+  "blend": 2,
+  "beer": 5,
+  "water": 1,
+  "tea": 2,
+  "milk": 3,
+  "coffee": 4,
+  "dog": 5,
+  "bird": 3,
+  "cat": 1,
+  "horse": 2,
+  "fish": 4
+}</text>
+  </textAnnotation>
+  <association id="Association_1btyuab">
+    <sourceRef href="#TextAnnotation_0ry3sx9" />
+    <targetRef href="#Decision_0sfta6p" />
+  </association>
+  <textAnnotation id="TextAnnotation_1vto2v5">
+    <text>Executes</text>
+  </textAnnotation>
+  <association id="Association_10ovedk">
+    <sourceRef href="#Decision_039w6mz" />
+    <targetRef href="#TextAnnotation_1vto2v5" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_1l7ukft" dmnElementRef="Decision_103rr8h">
+        <dc:Bounds height="80" width="180" x="760" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0eiehvt" dmnElementRef="Decision_0eu2rsl">
+        <dc:Bounds height="80" width="180" x="580" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rovjj0" dmnElementRef="Decision_1uhorts">
+        <dc:Bounds height="80" width="180" x="580" y="410" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0bvufiy" dmnElementRef="Decision_0sfta6p">
+        <dc:Bounds height="80" width="180" x="340" y="200" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1cljwwc" dmnElementRef="TextAnnotation_0g5l49t">
+        <dc:Bounds height="240" width="430" x="595" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ctugkt" dmnElementRef="Association_0v7129y">
+        <di:waypoint x="590" y="130" />
+        <di:waypoint x="520" y="130" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1v05ua2" dmnElementRef="Decision_039w6mz">
+        <dc:Bounds height="80" width="180" x="340" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_08px3pe" dmnElementRef="TextAnnotation_0s04j6a">
+        <dc:Bounds height="30" width="100" x="710" y="365" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1a02avm" dmnElementRef="Association_1sezg1y">
+        <di:waypoint x="750" y="395" />
+        <di:waypoint x="760" y="410" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1vxovsj" dmnElementRef="TextAnnotation_1atd2xd">
+        <dc:Bounds height="60" width="160" x="400" y="310" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0hdf69s" dmnElementRef="Association_0gvj48x">
+        <di:waypoint x="457" y="310" />
+        <di:waypoint x="423" y="280" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0ymadpf" dmnElementRef="TextAnnotation_0ry3sx9">
+        <dc:Bounds height="440" width="125" x="157" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1hdmidj" dmnElementRef="Association_1btyuab">
+        <di:waypoint x="282" y="249" />
+        <di:waypoint x="340" y="246" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1tij6u0" dmnElementRef="Decision_1vkt6s1">
+        <dc:Bounds height="80" width="180" x="760" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0vmg8fl" dmnElementRef="TextAnnotation_1vto2v5">
+        <dc:Bounds height="30" width="100" x="380" y="-35" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0hst02d" dmnElementRef="Association_10ovedk">
+        <di:waypoint x="425" y="80" />
+        <di:waypoint x="413" y="-5" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,214 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="VV00 Generic Validator Structure" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <decision id="Decision_0qsxszz" name="Validate a Decision Model">
+    <informationRequirement id="InformationRequirement_0bzbqzl">
+      <requiredDecision href="#Decision_02ie6bp" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1qzw9in">
+      <requiredDecision href="#Decision_1a6h1ko" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_0khjy1l" name="check the DRD">
+    <informationRequirement id="InformationRequirement_1a9borf">
+      <requiredDecision href="#Decision_0f4s9lv" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1jckq7x">
+      <requiredDecision href="#Decision_08fzydi" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_08fzydi" name="check for dependencies that have no arrows" />
+  <decision id="Decision_0f4s9lv" name="check for arrows that have no real dependency" />
+  <decision id="Decision_0a2ahzc" name="check the expressions">
+    <informationRequirement id="InformationRequirement_1s7gjx0">
+      <requiredDecision href="#Decision_1b3tc6i" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_1b3tc6i" name="check multiple expressions setting the same variable" />
+  <decision id="Decision_02ie6bp" name="DMN model">
+    <informationRequirement id="InformationRequirement_1x8aygc">
+      <requiredDecision href="#Decision_0a2ahzc" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_08o7qce">
+      <requiredDecision href="#Decision_0khjy1l" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_1a6h1ko" name="Any Model">
+    <informationRequirement id="InformationRequirement_0m7jky1">
+      <requiredDecision href="#Decision_1to0bzm" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_14tiod6">
+      <requiredDecision href="#Decision_1fndhkk" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0fu8bpj">
+      <requiredDecision href="#Decision_09xlbz9" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_1ryclqt" name="check for rule conflicts" />
+  <decision id="Decision_1b19ywn" name="check for missing rules" />
+  <decision id="Decision_1ix31m2" name="check for redundant rule" />
+  <decision id="Decision_09ngc9q" name="check for undeclared inputs" />
+  <decision id="Decision_0rzaeqn" name="check for unsourced variables" />
+  <decision id="Decision_1to0bzm" name="logic checks">
+    <informationRequirement id="InformationRequirement_1x9zr3f">
+      <requiredDecision href="#Decision_1ryclqt" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1fiwdrw">
+      <requiredDecision href="#Decision_1b19ywn" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_16l7171">
+      <requiredDecision href="#Decision_1ix31m2" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_09xlbz9" name="check for dependency disconnects" />
+  <decision id="Decision_1fndhkk" name="check inputs">
+    <informationRequirement id="InformationRequirement_1heuchc">
+      <requiredDecision href="#Decision_0rzaeqn" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_01crql2">
+      <requiredDecision href="#Decision_09ngc9q" />
+    </informationRequirement>
+  </decision>
+  <decision id="Decision_05j0v3t" name="self contradictory conditions" />
+  <decision id="Decision_1cbt9yv" name="self contradictory actions" />
+  <decision id="Decision_1e925ej" name="conflicts between rules in the same table" />
+  <decision id="Decision_05jqm6k" name="conflicts between rules in different tables" />
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_0wskvtm" dmnElementRef="Decision_0qsxszz">
+        <dc:Bounds height="80" width="180" x="880" y="-160" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_067cdzc" dmnElementRef="Decision_0khjy1l">
+        <dc:Bounds height="80" width="180" x="240" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1717hun" dmnElementRef="Decision_08fzydi">
+        <dc:Bounds height="80" width="180" x="130" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0l4u99x" dmnElementRef="Decision_0f4s9lv">
+        <dc:Bounds height="80" width="180" x="340" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0mgidxy" dmnElementRef="InformationRequirement_1a9borf">
+        <di:waypoint x="430" y="300" />
+        <di:waypoint x="360" y="250" />
+        <di:waypoint x="360" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0xfs4sw" dmnElementRef="InformationRequirement_1jckq7x">
+        <di:waypoint x="220" y="300" />
+        <di:waypoint x="300" y="250" />
+        <di:waypoint x="300" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01u8vu2" dmnElementRef="Decision_0a2ahzc">
+        <dc:Bounds height="80" width="180" x="580" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1xwvh0b" dmnElementRef="Decision_1b3tc6i">
+        <dc:Bounds height="80" width="180" x="580" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_08lahoi" dmnElementRef="InformationRequirement_1s7gjx0">
+        <di:waypoint x="670" y="300" />
+        <di:waypoint x="670" y="250" />
+        <di:waypoint x="670" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1fopwcf" dmnElementRef="Decision_02ie6bp">
+        <dc:Bounds height="80" width="180" x="400" y="10" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0gg9ich" dmnElementRef="InformationRequirement_1x8aygc">
+        <di:waypoint x="670" y="150" />
+        <di:waypoint x="520" y="110" />
+        <di:waypoint x="520" y="90" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0d6y1xo" dmnElementRef="InformationRequirement_08o7qce">
+        <di:waypoint x="330" y="150" />
+        <di:waypoint x="460" y="110" />
+        <di:waypoint x="460" y="90" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0cok3sk" dmnElementRef="Decision_1a6h1ko">
+        <dc:Bounds height="80" width="180" x="1535" y="0" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0ofczbi" dmnElementRef="InformationRequirement_0bzbqzl">
+        <di:waypoint x="490" y="10" />
+        <di:waypoint x="940" y="-60" />
+        <di:waypoint x="940" y="-80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1s0vnzb" dmnElementRef="InformationRequirement_1qzw9in">
+        <di:waypoint x="1625" y="0" />
+        <di:waypoint x="1000" y="-60" />
+        <di:waypoint x="1000" y="-80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_19alron" dmnElementRef="Decision_1ryclqt">
+        <dc:Bounds height="80" width="180" x="805" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1goyct1" dmnElementRef="Decision_1b19ywn">
+        <dc:Bounds height="80" width="180" x="1015" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0mrnbyv" dmnElementRef="Decision_1ix31m2">
+        <dc:Bounds height="80" width="180" x="1225" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_14el609" dmnElementRef="Decision_09ngc9q">
+        <dc:Bounds height="80" width="180" x="1425" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0eghc3j" dmnElementRef="Decision_0rzaeqn">
+        <dc:Bounds height="80" width="180" x="1635" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0vu0r0j" dmnElementRef="Decision_1to0bzm">
+        <dc:Bounds height="80" width="180" x="1015" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1fi6zju" dmnElementRef="InformationRequirement_1x9zr3f">
+        <di:waypoint x="895" y="300" />
+        <di:waypoint x="1060" y="250" />
+        <di:waypoint x="1060" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0zqcw3l" dmnElementRef="InformationRequirement_1fiwdrw">
+        <di:waypoint x="1105" y="300" />
+        <di:waypoint x="1105" y="250" />
+        <di:waypoint x="1105" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0udrqlg" dmnElementRef="InformationRequirement_16l7171">
+        <di:waypoint x="1315" y="300" />
+        <di:waypoint x="1150" y="250" />
+        <di:waypoint x="1150" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0jvs6q3" dmnElementRef="InformationRequirement_0m7jky1">
+        <di:waypoint x="1105" y="150" />
+        <di:waypoint x="1580" y="100" />
+        <di:waypoint x="1580" y="80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0h48sul" dmnElementRef="Decision_09xlbz9">
+        <dc:Bounds height="80" width="180" x="1845" y="300" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_13o06mz" dmnElementRef="Decision_1fndhkk">
+        <dc:Bounds height="80" width="180" x="1535" y="150" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0mcdydj" dmnElementRef="InformationRequirement_1heuchc">
+        <di:waypoint x="1725" y="300" />
+        <di:waypoint x="1655" y="250" />
+        <di:waypoint x="1655" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1k0z0ln" dmnElementRef="InformationRequirement_01crql2">
+        <di:waypoint x="1515" y="300" />
+        <di:waypoint x="1595" y="250" />
+        <di:waypoint x="1595" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1gbd9ks" dmnElementRef="InformationRequirement_14tiod6">
+        <di:waypoint x="1625" y="150" />
+        <di:waypoint x="1625" y="100" />
+        <di:waypoint x="1625" y="80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_10sjxvo" dmnElementRef="InformationRequirement_0fu8bpj">
+        <di:waypoint x="1935" y="300" />
+        <di:waypoint x="1670" y="100" />
+        <di:waypoint x="1670" y="80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0ct2dms" dmnElementRef="Decision_05j0v3t">
+        <dc:Bounds height="80" width="180" x="580" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03n3vxm" dmnElementRef="Decision_1cbt9yv">
+        <dc:Bounds height="80" width="180" x="580" y="540" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1of52w2" dmnElementRef="Decision_1e925ej">
+        <dc:Bounds height="80" width="180" x="760" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1w9z9ra" dmnElementRef="Decision_05jqm6k">
+        <dc:Bounds height="80" width="180" x="760" y="540" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,156 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="ITER01 Iteration over Tables Using an Expression" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <decision id="Decision_0km87zw" name="getPrice">
+    <decisionTable id="DecisionTable_0nhezrq">
+      <input id="InputClause_00feov2">
+        <inputExpression id="LiteralExpression_1dskrgh" typeRef="string">
+          <text>toy.color</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1ap3hgq" name="toy.price" typeRef="string" />
+      <rule id="DecisionRule_02wx9xw">
+        <inputEntry id="UnaryTests_04cv3q7">
+          <text>"red"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0if8sge">
+          <text>10</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1d7yxlf">
+        <inputEntry id="UnaryTests_0ij9oxl">
+          <text>"green"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1gd53cw">
+          <text>15</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0uqeyrk">
+        <inputEntry id="UnaryTests_0k2tft9">
+          <text>"blue"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1v3zm99">
+          <text>20</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1h9gdj7" name="get toy prices">
+    <variable id="InformationItem_071lcav" name="toys" typeRef="any" />
+    <informationRequirement id="InformationRequirement_1j1pf3l">
+      <requiredDecision href="#Decision_1atuihx" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_15hstq4">
+      <text>{ // DEFINE A FUNCTION GETPRICE TO DETERMINE THE PRICE OF A TOY                           // this really should be a decision table)
+  getPrice: function(toy)                                                                 // determine the proce of a single toy
+      if toy.color = "red"   and toy.size = "large" and toy.shape = "square"  then 1 else 
+      if toy.color = "red"   and toy.size = "small" and toy.shape = "oval"    then 2 else
+      if toy.color = "green" and toy.shape = "oval"                           then 3 else
+      if toy.color = "green" and toy.size = "small"                           then 4 else
+      if toy.color = "blue"                                                   then 5 else
+      if toy.size = "tiny" and toy.shape = "square"                           then 6 
+  else 0,
+  
+  // DEFINE A FUNCTION TO ITERATE OVER ALL THE TOYS TO FIND THE PROCE OF EACH ONE
+  getAllPrices: function(toys) for toy in toys return getPrice(toy),                      // for every toy in the collection of toys invoke the getPrice function
+ 
+  //INVOKE THE FUNCTION GETPRICE FOR EACH TOY  
+  prices: getAllPrices(toys)
+ }</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1atuihx" name="define all possible toys">
+    <variable id="InformationItem_067yyf5" name="toys" typeRef="any" />
+    <literalExpression id="LiteralExpression_0jp7sai">
+      <text>[
+{ color: "red", size: "small", shape: "round" },
+{ color: "red", size: "medium", shape: "round" },
+{ color: "red", size: "large", shape: "round" },
+{ color: "red", size: "small", shape: "square" },
+{ color: "red", size: "medium", shape: "square" },
+{ color: "red", size: "large", shape: "square" },
+{ color: "red", size: "small", shape: "oval" },
+{ color: "red", size: "medium", shape: "oval" },
+{ color: "red", size: "large", shape: "oval" },
+{ color: "green", size: "small", shape: "round" },
+{ color: "green", size: "medium", shape: "round" },
+{ color: "green", size: "large", shape: "round" },
+{ color: "green", size: "small", shape: "square" },
+{ color: "green", size: "medium", shape: "square" },
+{ color: "green", size: "large", shape: "square" },
+{ color: "green", size: "small", shape: "oval" },
+{ color: "green", size: "medium", shape: "oval" },
+{ color: "green", size: "large", shape: "oval" },
+{ color: "blue", size: "small", shape: "round" },
+{ color: "blue", size: "medium", shape: "round" },
+{ color: "blue", size: "large", shape: "round" },
+{ color: "blue", size: "small", shape: "square" },
+{ color: "blue", size: "medium", shape: "square" },
+{ color: "blue", size: "large", shape: "square" },
+{ color: "blue", size: "small", shape: "oval" },
+{ color: "blue", size: "medium", shape: "oval" },
+{ color: "blue", size: "large", shape: "oval" }
+]</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0qytcpi">
+    <text>ALL POSSIBLE TOYS
+"toys": [
+{ "color": "red", "size": "small", "shape": "round" },
+{ "color": "red", "size": "medium", "shape": "round" },
+{ "color": "red", "size": "large", "shape": "round" },
+ { "color": "red", "size": "small", "shape": "square" },
+{ "color": "red", "size": "medium", "shape": "square" },
+{ "color": "red", "size": "large", "shape": "square" },
+{ "color": "red", "size": "small", "shape": "oval" },
+{ "color": "red", "size": "medium", "shape": "oval" },
+{ "color": "red", "size": "large", "shape": "oval" },
+{ "color": "green", "size": "small", "shape": "round" },
+{ "color": "green", "size": "medium", "shape": "round" },
+{ "color": "green", "size": "large", "shape": "round" },
+{ "color": "green", "size": "small", "shape": "square" },
+{ "color": "green", "size": "medium", "shape": "square" },
+{ "color": "green", "size": "large", "shape": "square" },
+{ "color": "green", "size": "small", "shape": "oval" },
+{ "color": "green", "size": "medium", "shape": "oval" },
+{ "color": "green", "size": "large", "shape": "oval" },
+{ "color": "blue", "size": "small", "shape": "round" },
+{ "color": "blue", "size": "medium", "shape": "round" },
+{ "color": "blue", "size": "large", "shape": "round" },
+{ "color": "blue", "size": "small", "shape": "square" },
+{ "color": "blue", "size": "medium", "shape": "square" },
+{ "color": "blue", "size": "large", "shape": "square" },
+{ "color": "blue", "size": "small", "shape": "oval" },
+{ "color": "blue", "size": "medium", "shape": "oval" },
+{ "color": "blue", "size": "large", "shape": "oval" }
+ ]</text>
+  </textAnnotation>
+  <association id="Association_0d29zdy">
+    <sourceRef href="#TextAnnotation_0qytcpi" />
+    <targetRef href="#Decision_1h9gdj7" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_0wyl0yi" dmnElementRef="Decision_0km87zw">
+        <dc:Bounds height="80" width="180" x="440" y="590" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1gxgzkr" dmnElementRef="Decision_1h9gdj7">
+        <dc:Bounds height="80" width="180" x="680" y="430" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1jxdhnw" dmnElementRef="TextAnnotation_0qytcpi">
+        <dc:Bounds height="465" width="480" x="930" y="255" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0na41xe" dmnElementRef="Association_0d29zdy">
+        <di:waypoint x="930" y="337" />
+        <di:waypoint x="818" y="430" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0i6tlqe" dmnElementRef="Decision_1atuihx">
+        <dc:Bounds height="80" width="180" x="680" y="590" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1ugswdi" dmnElementRef="InformationRequirement_1j1pf3l">
+        <di:waypoint x="770" y="590" />
+        <di:waypoint x="770" y="530" />
+        <di:waypoint x="770" y="510" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

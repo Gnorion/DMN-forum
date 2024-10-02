@@ -1,0 +1,325 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0stpzkp" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_1snlxv0" name="check scalar product results">
+    <informationRequirement id="InformationRequirement_144czo0">
+      <requiredDecision href="#Decision_09ohp4q" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1ksqrst">
+      <input id="Input_1">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>AB</text>
+        </inputExpression>
+      </input>
+      <output id="Output_1" name="ABresult" typeRef="string" />
+      <rule id="DecisionRule_0axr9bx">
+        <inputEntry id="UnaryTests_0tzon1q">
+          <text>182</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19bi3cw">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_1jy8fks" name="Define Vectors A and B">
+    <variable id="InformationItem_1ffaiqp" name="vectors" typeRef="any" />
+    <literalExpression id="LiteralExpression_079x69p">
+      <text>{
+A: [1,2,3,4,5,6],
+B: [2,4,6,8,10,12]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_09ohp4q" name="scalar product AB=A.B">
+    <variable id="InformationItem_0e28me2" name="AB" typeRef="vector" />
+    <informationRequirement id="InformationRequirement_1xukeg4">
+      <requiredDecision href="#Decision_1jy8fks" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1y6r4zk">
+      <text>{
+  sproduct: function(A,B) sum(for col in 1..count(A) return A[col]*B[col]),
+  
+  p: sproduct(vectors.A,vectors.B)
+}.p</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_15toajb" name="vector cross products">
+    <variable id="InformationItem_1xxthp8" name="products" typeRef="any" />
+    <informationRequirement id="InformationRequirement_14qlkyv">
+      <requiredDecision href="#Decision_168oz7z" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1udz7gh">
+      <text>{ next     : function(i) if i=3 then 1 else i+1,
+  vproduct : function(V1,V2)
+  if count(V1) = 3 and count(V2) = 3 then
+  for i in 1..3 return
+          (V1[next(i)] * V2[next(next(i))]) - (V1[next(next(i))] * V2[next(i)])
+  else null,
+
+
+products:
+ {
+ V1xV2: vproduct(vectors.V1,vectors.V2),
+ V2xV3: vproduct(vectors.V2,vectors.V3),
+ V3xV1: vproduct(vectors.V3,vectors.V1)
+ }
+
+}.products</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_168oz7z" name="define V1 and V2">
+    <variable id="InformationItem_021ddji" name="vectors" typeRef="any" />
+    <literalExpression id="LiteralExpression_02s5uxl">
+      <text>{
+ V1:[1,2,3], 
+ V2:[3,5,7],
+ V3:[3,6,9]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0xfcxse" name="check vector product results">
+    <informationRequirement id="InformationRequirement_1ea1tnx">
+      <requiredDecision href="#Decision_15toajb" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0ypuxca">
+      <input id="InputClause_1ydrce7">
+        <inputExpression id="LiteralExpression_1in4bla" typeRef="string">
+          <text>products.V1xV2</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1xb8gbt">
+        <inputExpression id="LiteralExpression_0ikjyuz" typeRef="string">
+          <text>products.V2xV3</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1vtstpc">
+        <inputExpression id="LiteralExpression_05qgpt1" typeRef="string">
+          <text>products.V3xV1</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1jbst8r" name="V1V2result" typeRef="string" />
+      <rule id="DecisionRule_0wmnhw0">
+        <inputEntry id="UnaryTests_1s4i4st">
+          <text>[-1,2,-1]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_05jlhqu">
+          <text>[3, -6, 3]</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0otqbxn">
+          <text>[0,0,0]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0k0s6eg">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_11mqrph" name="check all results">
+    <informationRequirement id="InformationRequirement_18mh39v">
+      <requiredDecision href="#Decision_0xfcxse" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_14bznbn">
+      <requiredDecision href="#Decision_1snlxv0" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0mff4y7">
+      <input id="InputClause_02unv4f">
+        <inputExpression id="LiteralExpression_14bwuv0" typeRef="string">
+          <text>ABresult</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0acm5au">
+        <inputExpression id="LiteralExpression_0lxscr0" typeRef="string">
+          <text>V1V2result</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_11jh6yu" name="result" typeRef="string" />
+      <rule id="DecisionRule_0kosioq">
+        <inputEntry id="UnaryTests_02gql7w">
+          <text>"PASS"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0eui63t">
+          <text>"PASS"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_07pm5ye">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_09v751g">
+    <text>{
+A: [1,2,3,4,5,6],
+B: [2,4,6,8,10,12]
+}</text>
+  </textAnnotation>
+  <association id="Association_0zfjz9k">
+    <sourceRef href="#TextAnnotation_09v751g" />
+    <targetRef href="#Decision_1jy8fks" />
+  </association>
+  <textAnnotation id="TextAnnotation_11j0ehy">
+    <text>{
+ V1:[1,2,3], 
+ V2:[4,5,6],
+ V3:[7,8,9]
+}</text>
+  </textAnnotation>
+  <association id="Association_0har6zk">
+    <sourceRef href="#TextAnnotation_11j0ehy" />
+    <targetRef href="#Decision_168oz7z" />
+  </association>
+  <textAnnotation id="TextAnnotation_1nwpprh">
+    <text>To find the vector products (cross products) of the given vectors, we can use the determinant of a 3x3 matrix where the first row consists of the standard basis vectors (i, j, k), and the next two rows are the vectors being crossed.
+
+Given vectors:
+V1 = [1, 2, 3]
+V2 = [3, 5, 7]
+V3 = [3, 6, 9]
+
+Let's calculate each cross product:
+
+V1 x V2
+V1 x V2 = |i j k |
+|1 2 3 |
+|3 5 7 |
+
+= i(27 - 35) - j(17 - 33) + k(15 - 23)
+= i(14 - 15) - j(7 - 9) + k(5 - 6)
+= i(-1) - j(-2) + k(-1)
+= [-1, 2, -1]
+
+V2 x V3
+V2 x V3 = |i j k |
+|3 5 7 |
+|3 6 9 |
+
+= i(59 - 67) - j(39 - 73) + k(36 - 53)
+= i(45 - 42) - j(27 - 21) + k(18 - 15)
+= i(3) - j(6) + k(3)
+= [3, -6, 3]
+
+V3 x V1
+V3 x V1 = |i j k |
+|3 6 9 |
+|1 2 3 |
+
+= i(63 - 92) - j(33 - 91) + k(32 - 61)
+= i(18 - 18) - j(9 - 9) + k(6 - 6)
+= i(0) - j(0) + k(0)
+= [0, 0, 0]
+
+So the cross products are:
+V1 x V2 = [-1, 2, -1]
+V2 x V3 = [3, -6, 3]
+V3 x V1 = [0, 0, 0]</text>
+  </textAnnotation>
+  <association id="Association_12f6k9w">
+    <sourceRef href="#TextAnnotation_1nwpprh" />
+    <targetRef href="#Decision_0xfcxse" />
+  </association>
+  <textAnnotation id="TextAnnotation_02r4iwc">
+    <text>V1 x V2 = [-1, 2, -1]
+V2 x V3 = [3, -6, 3]
+V3 x V1 = [0, 0, 0]</text>
+  </textAnnotation>
+  <association id="Association_1h3bku6">
+    <sourceRef href="#TextAnnotation_02r4iwc" />
+    <targetRef href="#Decision_0xfcxse" />
+  </association>
+  <textAnnotation id="TextAnnotation_0yw3hl7">
+    <text>182</text>
+  </textAnnotation>
+  <association id="Association_1o1vbi8">
+    <sourceRef href="#TextAnnotation_0yw3hl7" />
+    <targetRef href="#Decision_09ohp4q" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="Decision_1snlxv0">
+        <dc:Bounds height="80" width="180" x="160" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_02y5hmc" dmnElementRef="Decision_1jy8fks">
+        <dc:Bounds height="80" width="180" x="160" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1i93334" dmnElementRef="TextAnnotation_09v751g">
+        <dc:Bounds height="68" width="120" x="380" y="466" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0sikeyx" dmnElementRef="Decision_09ohp4q">
+        <dc:Bounds height="80" width="180" x="160" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1436y2o" dmnElementRef="Decision_15toajb">
+        <dc:Bounds height="80" width="180" x="560" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_014th34" dmnElementRef="InformationRequirement_1xukeg4">
+        <di:waypoint x="250" y="460" />
+        <di:waypoint x="250" y="420" />
+        <di:waypoint x="250" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0xdhq18" dmnElementRef="Association_0zfjz9k">
+        <di:waypoint x="380" y="485" />
+        <di:waypoint x="340" y="476" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0bsoo2j" dmnElementRef="InformationRequirement_144czo0">
+        <di:waypoint x="250" y="320" />
+        <di:waypoint x="250" y="290" />
+        <di:waypoint x="250" y="270" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0o9iuqn" dmnElementRef="Decision_168oz7z">
+        <dc:Bounds height="80" width="180" x="560" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1ld1zhg" dmnElementRef="TextAnnotation_11j0ehy">
+        <dc:Bounds height="80" width="100" x="770" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0sudzht" dmnElementRef="Association_0har6zk">
+        <di:waypoint x="770" y="500" />
+        <di:waypoint x="740" y="500" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_08gyia1" dmnElementRef="InformationRequirement_14qlkyv">
+        <di:waypoint x="650" y="460" />
+        <di:waypoint x="650" y="420" />
+        <di:waypoint x="650" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0z4bhmo" dmnElementRef="Decision_0xfcxse">
+        <dc:Bounds height="80" width="180" x="560" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1qcdno7" dmnElementRef="InformationRequirement_1ea1tnx">
+        <di:waypoint x="650" y="320" />
+        <di:waypoint x="650" y="290" />
+        <di:waypoint x="650" y="270" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0td2okg" dmnElementRef="TextAnnotation_1nwpprh">
+        <dc:Bounds height="790" width="610" x="985" y="-15" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1iuhabi" dmnElementRef="Association_12f6k9w">
+        <di:waypoint x="985" y="45" />
+        <di:waypoint x="740" y="193" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_050un9u" dmnElementRef="TextAnnotation_02r4iwc">
+        <dc:Bounds height="80" width="180" x="800" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0m727a5" dmnElementRef="Association_1h3bku6">
+        <di:waypoint x="800" y="230" />
+        <di:waypoint x="740" y="230" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0va2ji2" dmnElementRef="Decision_11mqrph">
+        <dc:Bounds height="80" width="180" x="360" y="0" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_07wr6z4" dmnElementRef="InformationRequirement_18mh39v">
+        <di:waypoint x="650" y="190" />
+        <di:waypoint x="480" y="100" />
+        <di:waypoint x="480" y="80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1r7nmmz" dmnElementRef="InformationRequirement_14bznbn">
+        <di:waypoint x="250" y="190" />
+        <di:waypoint x="420" y="100" />
+        <di:waypoint x="420" y="80" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_09kfm2y" dmnElementRef="TextAnnotation_0yw3hl7">
+        <dc:Bounds height="30" width="60" x="30" y="345" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0qhbw46" dmnElementRef="Association_1o1vbi8">
+        <di:waypoint x="90" y="360" />
+        <di:waypoint x="160" y="360" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

@@ -1,0 +1,251 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="TLP_0ih6z3g" name="Credit Scoring" namespace="http://camunda.org/schema/1.0/dmn" exporter="dmn-js (https://demo.bpmn.io/dmn)" exporterVersion="12.1.0">
+  <inputData id="InputData_1heerya" name="SSN" />
+  <decision id="Decision_1b2o48i" name="Credit Scoring Executable Model" />
+  <decision id="Decision_1fpbpn8" name="get Experian Score">
+    <variable id="InformationItem_1i9rvva" name="experian" typeRef="number" />
+    <informationRequirement id="InformationRequirement_04ug0rh">
+      <requiredInput href="#InputData_1heerya" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1ludj1q">
+      <text>
+if SSN = "000-00-0000" then 500 else
+if SSN ="111-11-1111"  then 600 else
+if SSN ="222-22-2222"  then 700 else 800
+  </text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_07tjip9" name="get Transunion Score">
+    <variable id="InformationItem_0bckin2" name="transunion" typeRef="number" />
+    <informationRequirement id="InformationRequirement_0p7bvi6">
+      <requiredInput href="#InputData_1heerya" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_07ts6lw">
+      <text>
+if SSN = "000-00-0000" then 550 else
+if SSN ="111-11-1111"  then 650 else
+if SSN ="222-22-2222"  then 800 else 850</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0xmpotj" name="get Equifax Score">
+    <variable id="InformationItem_1u7hnmy" name="equifax" typeRef="number" />
+    <informationRequirement id="InformationRequirement_049d3i1">
+      <requiredInput href="#InputData_1heerya" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1sedy28">
+      <text>
+if SSN = "000-00-0000" then 575 else
+if SSN ="111-11-1111"  then 675 else
+if SSN ="222-22-2222"  then 850 else 875</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_15p378i" name="get average of Experian, Equifax and Transunion Scores">
+    <variable id="InformationItem_0b0ol4i" name="average score" typeRef="number" />
+    <informationRequirement id="InformationRequirement_05s35iz">
+      <requiredDecision href="#Decision_1fpbpn8" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_02gvo1u">
+      <requiredDecision href="#Decision_07tjip9" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1lzamwk">
+      <requiredDecision href="#Decision_0xmpotj" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_16ol8ya">
+      <text>mean(experian,transunion,equifax)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_174g54e" name="determine credit rating (good,bad)">
+    <informationRequirement id="InformationRequirement_1i5ref6">
+      <requiredDecision href="#Decision_15p378i" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1vqv7w6">
+      <input id="InputClause_1n0ez1h">
+        <inputExpression id="LiteralExpression_1qofy1m" typeRef="string">
+          <text>average score</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0wumyef" name="rating" typeRef="string" />
+      <rule id="DecisionRule_0otxqdd">
+        <inputEntry id="UnaryTests_0pc2u54">
+          <text>&lt;600</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1c8zst3">
+          <text>"poor"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1wya3s7">
+        <inputEntry id="UnaryTests_1e4bmbd">
+          <text>[600..750]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_05oo094">
+          <text>"average"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02zxigr">
+        <inputEntry id="UnaryTests_0r95yfc">
+          <text>&gt;750</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_00ccadb">
+          <text>"excellent"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0fjstjr" name="self test">
+    <informationRequirement id="InformationRequirement_1b3lgta">
+      <requiredDecision href="#Decision_174g54e" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_10do5aa">
+      <input id="InputClause_0jgjizn">
+        <inputExpression id="LiteralExpression_0thgv73" typeRef="string">
+          <text>SSN</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0kub93e">
+        <inputExpression id="LiteralExpression_1om7vo3" typeRef="string">
+          <text>rating</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1iqestl" label="result" typeRef="string" />
+      <rule id="DecisionRule_0pio3mx">
+        <inputEntry id="UnaryTests_0dltl98">
+          <text>"000-00-0000"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vnzqo8">
+          <text>"poor"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1593wtm">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_02ro1bt">
+        <inputEntry id="UnaryTests_0p3j9sp">
+          <text>"111-11-1111"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1rsf9pl">
+          <text>"average"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_166v979">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0rny87c">
+        <inputEntry id="UnaryTests_0bcnt6e">
+          <text>"222-22-2222"</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1lizt8g">
+          <text>"excellent"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0r79355">
+          <text>"PASS"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_1od6772">
+    <text>RESULT for { "SSN": "000-00-0000"}
+
+{ "SSN": "000-00-0000",
+"experian": 500,
+"transunion": 550,
+"equifax": 575,
+"average score": 541.6666666666666,
+"rating": "poor" }</text>
+  </textAnnotation>
+  <association id="Association_1bsot19">
+    <sourceRef href="#TextAnnotation_1od6772" />
+    <targetRef href="#InputData_1heerya" />
+  </association>
+  <textAnnotation id="TextAnnotation_1cf96ap">
+    <text>"000-00-0000"
+"111-11-1111"
+"222-22-2222"
+other</text>
+  </textAnnotation>
+  <association id="Association_082yrmt">
+    <sourceRef href="#TextAnnotation_1cf96ap" />
+    <targetRef href="#InputData_1heerya" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0dapmsv">
+      <dmndi:DMNShape id="DMNShape_0jeopal" dmnElementRef="InputData_1heerya">
+        <dc:Bounds height="45" width="125" x="658" y="548" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0i8l482" dmnElementRef="InformationRequirement_049d3i1">
+        <di:waypoint x="721" y="548" />
+        <di:waypoint x="960" y="480" />
+        <di:waypoint x="960" y="460" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_109o9t7" dmnElementRef="InformationRequirement_0p7bvi6">
+        <di:waypoint x="721" y="548" />
+        <di:waypoint x="720" y="480" />
+        <di:waypoint x="720" y="460" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1g1uxj8" dmnElementRef="InformationRequirement_04ug0rh">
+        <di:waypoint x="721" y="548" />
+        <di:waypoint x="480" y="480" />
+        <di:waypoint x="480" y="460" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_044bilv" dmnElementRef="InformationRequirement_05s35iz">
+        <di:waypoint x="480" y="380" />
+        <di:waypoint x="675" y="340" />
+        <di:waypoint x="675" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1s877l2" dmnElementRef="InformationRequirement_02gvo1u">
+        <di:waypoint x="720" y="380" />
+        <di:waypoint x="720" y="340" />
+        <di:waypoint x="720" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0ncdwgo" dmnElementRef="InformationRequirement_1lzamwk">
+        <di:waypoint x="960" y="380" />
+        <di:waypoint x="765" y="340" />
+        <di:waypoint x="765" y="320" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0auch1d" dmnElementRef="InformationRequirement_1i5ref6">
+        <di:waypoint x="720" y="240" />
+        <di:waypoint x="720" y="210" />
+        <di:waypoint x="720" y="190" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1vv3yvq" dmnElementRef="Decision_1b2o48i">
+        <dc:Bounds height="80" width="180" x="370" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0gi5sso" dmnElementRef="Decision_1fpbpn8">
+        <dc:Bounds height="80" width="180" x="390" y="380" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1fkifwe" dmnElementRef="Decision_07tjip9">
+        <dc:Bounds height="80" width="180" x="630" y="380" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_037jg7o" dmnElementRef="Decision_0xmpotj">
+        <dc:Bounds height="80" width="180" x="870" y="380" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_05plyqz" dmnElementRef="Decision_15p378i">
+        <dc:Bounds height="80" width="180" x="630" y="240" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1le4oxt" dmnElementRef="Decision_174g54e">
+        <dc:Bounds height="80" width="180" x="630" y="110" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rq6v7e" dmnElementRef="TextAnnotation_1od6772">
+        <dc:Bounds height="140" width="260" x="910" y="520" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1b8ifey" dmnElementRef="Association_1bsot19">
+        <di:waypoint x="910" y="562" />
+        <di:waypoint x="783" y="568" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_18goomj" dmnElementRef="TextAnnotation_1cf96ap">
+        <dc:Bounds height="79" width="170" x="400" y="531" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1dfuy9t" dmnElementRef="Association_082yrmt">
+        <di:waypoint x="570" y="571" />
+        <di:waypoint x="658" y="571" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0mlmhk4" dmnElementRef="InformationRequirement_1b3lgta">
+        <di:waypoint x="720" y="110" />
+        <di:waypoint x="721" y="90" />
+        <di:waypoint x="721" y="70" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01toadu" dmnElementRef="Decision_0fjstjr">
+        <dc:Bounds height="80" width="180" x="631" y="-10" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

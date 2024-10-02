@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_1osc6vb" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <businessKnowledgeModel id="BusinessKnowledgeModel_0o9beb0" name="matrix multiply">
+    <variable id="InformationItem_0i61nrn" typeRef="Any" />
+    <encapsulatedLogic id="FunctionDefinition_1ci3e1a">
+      <formalParameter name="X" typeRef="Any" />
+      <formalParameter name="Y" typeRef="Any" />
+      <literalExpression id="LiteralExpression_05su1t5">
+        <text>for i in 1..count(X)                        // for each row in X
+    return for j in 1..count(Y[1])          // for each column in Y
+           return sum(for k in 1..count(Y)  // sum for each col in X, row in Y
+              return  X[i][k]*Y[k][j])      // product 
+
+</text>
+      </literalExpression>
+    </encapsulatedLogic>
+  </businessKnowledgeModel>
+  <decision id="Decision_1b4c3v3" name="multiply two matrices">
+    <variable id="InformationItem_0rxlei3" name="result" typeRef="any" />
+    <knowledgeRequirement id="KnowledgeRequirement_1iidhxj">
+      <requiredKnowledge href="#BusinessKnowledgeModel_0o9beb0" />
+    </knowledgeRequirement>
+    <literalExpression id="LiteralExpression_0g703bg">
+      <text>{mm:matrix multiply(X,Y)}</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_0ufzgb2">
+    <text>"X":[[1,2,3],
+       [4,5,6]],
+ "Y":[[7,8],
+        [9,10],
+       [11,12]]</text>
+  </textAnnotation>
+  <association id="Association_1upgtnx">
+    <sourceRef href="#TextAnnotation_0ufzgb2" />
+    <targetRef href="#Decision_1b4c3v3" />
+  </association>
+  <textAnnotation id="TextAnnotation_0g4u466">
+    <text>"XY":
+[
+[58,64],
+[139,154]
+]</text>
+  </textAnnotation>
+  <association id="Association_04w92lv">
+    <sourceRef href="#TextAnnotation_0g4u466" />
+    <targetRef href="#Decision_1b4c3v3" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_045qmhs" dmnElementRef="BusinessKnowledgeModel_0o9beb0">
+        <dc:Bounds height="46" width="135" x="343" y="227" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0rz6s38" dmnElementRef="KnowledgeRequirement_1iidhxj">
+        <di:waypoint x="411" y="227" />
+        <di:waypoint x="410" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1v1gmtv" dmnElementRef="Decision_1b4c3v3">
+        <dc:Bounds height="80" width="180" x="321" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0gzxj2m" dmnElementRef="TextAnnotation_0ufzgb2">
+        <dc:Bounds height="80" width="100" x="550" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1183xff" dmnElementRef="Association_1upgtnx">
+        <di:waypoint x="550" y="120" />
+        <di:waypoint x="501" y="120" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1fgzhqr" dmnElementRef="TextAnnotation_0g4u466">
+        <dc:Bounds height="80" width="100" x="160" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_086w1h3" dmnElementRef="Association_04w92lv">
+        <di:waypoint x="260" y="120" />
+        <di:waypoint x="321" y="120" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

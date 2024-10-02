@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:feel="http://www.omg.org/spec/FEEL/20140401" id="Definitions_1x1pslp" name="Good Decision Table Challenge Jan 2016" namespace="methodandstyle/dmchallenge" exporter="methodandstyle" exporterVersion="1.0" xsi:schemaLocation="http://www.omg.org/spec/DMN/20151101/dmn.xsd dmn.xsd">
+  <inputData id="i_Age" name="Age">
+    <variable id="InformationItem_0alz91p" name="Age" typeRef="feel:number" />
+  </inputData>
+  <inputData id="i_YearsOfService" name="Years of service">
+    <variable id="InformationItem_0ilh5d1" name="YearsOfService" typeRef="feel:number" />
+  </inputData>
+  <decision id="d_TotalDays" name="Total Days">
+    <variable id="InformationItem_1fcgilo" name="Total Days" typeRef="feel:number" />
+    <informationRequirement id="InformationRequirement_1vy63j7">
+      <requiredDecision href="#d_BaseDays" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_00wi0uh">
+      <requiredDecision href="#d_Extra5Days" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0dd5nzk">
+      <requiredDecision href="#d_Extra3Days" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1t7l1p5">
+      <requiredDecision href="#d_Extra2Days" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_0gi68mq">
+      <text>Base Days + (if Extra 5 Days then 5 else 0) + (if Extra 3 Days then 3 else 0) + (if Extra 2 Days and not(Extra 5 Days) then 2 else 0)</text>
+    </literalExpression>
+  </decision>
+  <decision id="d_BaseDays" name="Base Days">
+    <variable id="InformationItem_1obuud2" name="Base Days" typeRef="feel:number" />
+    <literalExpression id="LiteralExpression_1lq2fsx">
+      <text>22</text>
+    </literalExpression>
+  </decision>
+  <decision id="d_Extra5Days" name="Extra 5 Days">
+    <variable id="InformationItem_180cy82" name="Extra 5 Days" typeRef="feel:boolean" />
+    <informationRequirement id="InformationRequirement_0qqlzbo">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_00rzief">
+      <requiredInput href="#i_YearsOfService" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0afqkhk" hitPolicy="ANY">
+      <input id="InputClause_1fyauig">
+        <inputExpression id="LiteralExpression_0ygxon4">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_15ok5c7">
+        <inputExpression id="LiteralExpression_015obom">
+          <text>Years of Service</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0fg9nie">
+        <outputValues id="UnaryTests_1tq0w8d">
+          <text>false, true</text>
+        </outputValues>
+        <defaultOutputEntry id="LiteralExpression_0kh5xfr">
+          <text>false</text>
+        </defaultOutputEntry>
+      </output>
+      <rule id="DecisionRule_19r0d6a">
+        <inputEntry id="UnaryTests_0w4ougc">
+          <text>&lt;18, &gt;=60</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0rru74d">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qqn2z6">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0oy1ooo">
+        <inputEntry id="UnaryTests_1y3dpou">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_06n6q3o">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1b9vyzw">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="d_Extra3Days" name="Extra 3 Days">
+    <variable id="InformationItem_04mf85u" name="Extra 3 Days" typeRef="feel:boolean" />
+    <informationRequirement id="InformationRequirement_122jynx">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1j5d76c">
+      <requiredInput href="#i_YearsOfService" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_00r3tv2" hitPolicy="ANY">
+      <input id="InputClause_17he1hg">
+        <inputExpression id="LiteralExpression_0e9v4j0">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0ipm41i">
+        <inputExpression id="LiteralExpression_0829vu7">
+          <text>Years of Service</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1bxw8tl">
+        <outputValues id="UnaryTests_0l9iowr">
+          <text>false, true</text>
+        </outputValues>
+        <defaultOutputEntry id="LiteralExpression_0we67f8">
+          <text>false</text>
+        </defaultOutputEntry>
+      </output>
+      <rule id="DecisionRule_1t9ho4q">
+        <inputEntry id="UnaryTests_002mxny">
+          <text>&gt;=60</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0jhig96">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_15h66hl">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_14pf4z8">
+        <inputEntry id="UnaryTests_1lxki7h">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x0p5mu">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1k7j9rn">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="d_Extra2Days" name="Extra 2 Days">
+    <variable id="InformationItem_1ahozqa" name="Extra 2 Days" typeRef="feel:boolean" />
+    <informationRequirement id="InformationRequirement_0k1a0qm">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_15kykj9">
+      <requiredInput href="#i_YearsOfService" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0c5lh62" hitPolicy="ANY">
+      <input id="InputClause_1252k7b">
+        <inputExpression id="LiteralExpression_036swz4">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1b16l9v">
+        <inputExpression id="LiteralExpression_1p567ou">
+          <text>Years of Service</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0zl9m3g">
+        <outputValues id="UnaryTests_040q2zo">
+          <text>false, true</text>
+        </outputValues>
+        <defaultOutputEntry id="LiteralExpression_1re5boo">
+          <text>false</text>
+        </defaultOutputEntry>
+      </output>
+      <rule id="DecisionRule_1cz4xjz">
+        <inputEntry id="UnaryTests_101mjx9">
+          <text>&gt;=45</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0o8zzmn">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_03qr6pp">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0zyvmz4">
+        <inputEntry id="UnaryTests_18dkxzh">
+          <text>-</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07e6a4u">
+          <text>[15..30]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1yxwfs5">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

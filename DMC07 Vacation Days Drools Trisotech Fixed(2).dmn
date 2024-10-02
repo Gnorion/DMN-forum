@@ -1,0 +1,467 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:camunda="http://camunda.org/schema/1.0/dmn" id="_0020_vacation_days" name="0020-vacation-days" namespace="http://www.camunda.org/schema/1.0/dmn">
+  <inputData id="i_Age" name="Age">
+    <variable id="InformationItem_19kgwgn" name="Age" typeRef="number" />
+  </inputData>
+  <inputData id="i_Years_of_Service" name="Years of Service">
+    <variable id="InformationItem_1qu6lis" name="Years of Service" typeRef="number" />
+  </inputData>
+  <decision id="d_Total_Vacation_Days" name="Total Vacation Days">
+    <variable id="InformationItem_1o4dyhk" name="Total Vacation Days" typeRef="number" />
+    <informationRequirement id="InformationRequirement_0crvptb">
+      <requiredDecision href="#d_Base_Vacation_Days" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_10xdguk">
+      <requiredDecision href="#d_Extra_days_case_1" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1hu9xgt">
+      <requiredDecision href="#d_Extra_days_case_2" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1ovdzg7">
+      <requiredDecision href="#d_Extra_days_case_3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_04bdyvg">
+      <requiredDecision href="#d_Base_Vacation_Days" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0f8acas">
+      <requiredDecision href="#d_Extra_days_case_3" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_198zigh">
+      <requiredDecision href="#d_Extra_days_case_2" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_114gal4">
+      <requiredDecision href="#d_Extra_days_case_1" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_1vomvkt">
+      <text>Base Vacation Days +
+	              max( Extra days case 1, Extra days case 3 ) +
+	              Extra days case 2</text>
+    </literalExpression>
+  </decision>
+  <decision id="d_Extra_days_case_1" name="Extra days case 1">
+    <variable id="InformationItem_1qzi28d" name="Extra days case 1" typeRef="number" />
+    <informationRequirement id="InformationRequirement_0ysxl4f">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_01fx8qg">
+      <requiredInput href="#i_Years_of_Service" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0hz5ff7" hitPolicy="COLLECT" aggregation="MAX">
+      <input id="d_Extra_days_case_1_dt_i_age" label="Age">
+        <inputExpression id="LiteralExpression_1oh6awt" typeRef="number">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="d_Extra_days_case_1_dt_i_years" label="Years of Service">
+        <inputExpression id="LiteralExpression_00ommpt" typeRef="number">
+          <text>Years of Service</text>
+        </inputExpression>
+      </input>
+      <output id="d_Extra_days_case_1_dt_o" label="Extra days" />
+      <rule id="d_Extra_days_case_1_dt_r1">
+        <inputEntry id="d_Extra_days_case_1_dt_r1_i1">
+          <text>&lt;18,&gt;=60</text>
+        </inputEntry>
+        <inputEntry id="d_Extra_days_case_1_dt_r1_i2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="d_Extra_days_case_1_dt_r1_o1">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="d_Extra_days_case_1_dt_r2">
+        <inputEntry id="d_Extra_days_case_1_dt_r2_i1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="d_Extra_days_case_1_dt_r2_i2">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="d_Extra_days_case_1_dt_r2_o1">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="d_Extra_days_case_2" name="Extra days case 2">
+    <variable id="InformationItem_0cn2duh" name="Extra days case 2" typeRef="number" />
+    <informationRequirement id="InformationRequirement_11d3uco">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_17wlav3">
+      <requiredInput href="#i_Years_of_Service" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0q5qfo5" hitPolicy="COLLECT" aggregation="MAX">
+      <input id="d_Extra_days_case_2_dt_i_age" label="Age">
+        <inputExpression id="LiteralExpression_0er0bvt" typeRef="number">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="d_Extra_days_case_2_dt_i_years" label="Years of Service">
+        <inputExpression id="LiteralExpression_01i22tk" typeRef="number">
+          <text>Years of Service</text>
+        </inputExpression>
+      </input>
+      <output id="d_Extra_days_case_2_dt_o" label="Extra days" />
+      <rule id="d_Extra_days_case_2_dt_r1">
+        <inputEntry id="d_Extra_days_case_2_dt_r1_i1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="d_Extra_days_case_2_dt_r1_i2">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="d_Extra_days_case_2_dt_r1_o1">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="d_Extra_days_case_2_dt_r2">
+        <inputEntry id="d_Extra_days_case_2_dt_r2_i1">
+          <text>&gt;=60</text>
+        </inputEntry>
+        <inputEntry id="d_Extra_days_case_2_dt_r2_i2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="d_Extra_days_case_2_dt_r2_o1">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="d_Extra_days_case_3" name="Extra days case 3">
+    <variable id="InformationItem_18y6r95" name="Extra days case 3" typeRef="number" />
+    <informationRequirement id="InformationRequirement_1iq0tls">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0t47kxx">
+      <requiredInput href="#i_Years_of_Service" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_06azixk" hitPolicy="COLLECT" aggregation="MAX">
+      <input id="d_Extra_days_case_3_dt_i_age" label="Age">
+        <inputExpression id="LiteralExpression_0utbtp0" typeRef="number">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="d_Extra_days_case_3_dt_i_years" label="Years of Service">
+        <inputExpression id="LiteralExpression_1g7u732" typeRef="number">
+          <text>Years of Service</text>
+        </inputExpression>
+      </input>
+      <output id="d_Extra_days_case_3_dt_o" label="Extra days" />
+      <rule id="d_Extra_days_case_3_dt_r1">
+        <inputEntry id="d_Extra_days_case_3_dt_r1_i1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="d_Extra_days_case_3_dt_r1_i2">
+          <text>[15..30)</text>
+        </inputEntry>
+        <outputEntry id="d_Extra_days_case_3_dt_r1_o1">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="d_Extra_days_case_3_dt_r2">
+        <inputEntry id="d_Extra_days_case_3_dt_r2_i1">
+          <text>&gt;=45</text>
+        </inputEntry>
+        <inputEntry id="d_Extra_days_case_3_dt_r2_i2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="d_Extra_days_case_3_dt_r2_o1">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="d_Base_Vacation_Days" name="Base Vacation Days">
+    <variable id="InformationItem_1uplibx" name="Base Vacation Days" typeRef="number" />
+    <literalExpression id="LiteralExpression_0gy45l4">
+      <text>22</text>
+    </literalExpression>
+  </decision>
+  <inputData id="InputData_1jvyrs4" name="Age" />
+  <inputData id="InputData_0avr8po" name="Years of Service" />
+  <decision id="Decision_00y28l6" name="settings">
+    <decisionTable id="DecisionTable_1cra1zx">
+      <input id="InputClause_1e53nbx" label="x">
+        <inputExpression id="LiteralExpression_1jvnss7" typeRef="string" />
+      </input>
+      <output id="OutputClause_1sfh7zh" label="test cases limit" typeRef="string" />
+      <rule id="DecisionRule_0esy6nz">
+        <inputEntry id="UnaryTests_0our8u9">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_17uvrv1">
+          <text>100</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0cpmeob" name="new table 1">
+    <decisionTable id="DecisionTable_1f3r6iu">
+      <input id="InputClause_1j7mrh7" label="Age">
+        <inputExpression id="LiteralExpression_0rrbxh9" typeRef="string" />
+      </input>
+      <input id="InputClause_16b86zj" label="Years of Service">
+        <inputExpression id="LiteralExpression_0l2ub50" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_0z797nf" label="Extra Days 1" typeRef="string" />
+      <rule id="DecisionRule_1suh0qp">
+        <inputEntry id="UnaryTests_1olpuy8">
+          <text>&lt;18</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1me7k0s">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1b4f8qw">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1tv7es2">
+        <inputEntry id="UnaryTests_1c2ek9n">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0nvh06k">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1ad194u">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_18wd6iz">
+        <inputEntry id="UnaryTests_00c3fim">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hvunvt">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0urg1xp">
+          <text>5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0obbvtp">
+        <inputEntry id="UnaryTests_1umuztc">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0vuva8o">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1pfbx1a">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_09ttbfk" name="DMC07 Vacation Days" />
+  <decision id="Decision_1s68x2u" name="new table 2">
+    <decisionTable id="DecisionTable_02omo82">
+      <input id="InputClause_0nmlenn" label="Age">
+        <inputExpression id="LiteralExpression_08be97x" typeRef="string" />
+      </input>
+      <input id="InputClause_02xmf6b" label="Years of Service">
+        <inputExpression id="LiteralExpression_1hob9fo" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_00n0i6v" label="Extra Days 2" typeRef="string" />
+      <rule id="DecisionRule_1ctlzvd">
+        <inputEntry id="UnaryTests_09q843o">
+          <text>&gt;=60</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0q71stb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1aa7klg">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1e4pdtv">
+        <inputEntry id="UnaryTests_0uw10sn">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1v30i92">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0soy32a">
+          <text>3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hiujiv">
+        <inputEntry id="UnaryTests_1orszyl">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_13juq0n">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1fnulyq">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0wsieg4" name="new table 3">
+    <decisionTable id="DecisionTable_1f7klw6">
+      <input id="InputClause_0srr85n" label="Age">
+        <inputExpression id="LiteralExpression_14etwx2" typeRef="string" />
+      </input>
+      <input id="InputClause_11uu68x" label="Years of Service">
+        <inputExpression id="LiteralExpression_0y83ygr" typeRef="string">
+          <text></text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_1qsth0f" label="Extra Days 3" typeRef="string" />
+      <rule id="DecisionRule_1n1d0sn">
+        <inputEntry id="UnaryTests_0gulm48">
+          <text>&gt;=45</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0n5g76c">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_19gw42a">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1ofs5pc">
+        <inputEntry id="UnaryTests_09r7pwy">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0hem473">
+          <text>[15..30)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tmkk5i">
+          <text>2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1n5wpbw">
+        <inputEntry id="UnaryTests_1tt5t4u">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0bgbjlb">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_11322k1">
+          <text>0</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="Decision_0c74vda" name="new total">
+    <variable id="InformationItem_1ob257l" name="total" />
+    <informationRequirement id="InformationRequirement_0eyojkg">
+      <requiredDecision href="#d_Base_Vacation_Days" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0sniw8v">
+      <requiredDecision href="#Decision_0wsieg4" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0n0bhel">
+      <requiredDecision href="#Decision_1s68x2u" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1uxklku">
+      <requiredDecision href="#Decision_0cpmeob" />
+    </informationRequirement>
+    <literalExpression id="LiteralExpression_15s1kd4">
+      <text>Base Vacation Days +
+	              max(Extra Days 1, Extra Days 3 ) +
+	              Extra Days 2</text>
+    </literalExpression>
+  </decision>
+  <textAnnotation id="TextAnnotation_1lz98j3">
+    <text>{
+"Age":35,
+"Years of Service":24
+}</text>
+  </textAnnotation>
+  <association id="Association_1wo9ygb">
+    <sourceRef href="#TextAnnotation_1lz98j3" />
+    <targetRef href="#d_Total_Vacation_Days" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0wbofaw">
+      <dmndi:DMNShape id="DMNShape_17n4z9a" dmnElementRef="d_Total_Vacation_Days">
+        <dc:Bounds height="80" width="180" x="560" y="20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0bypz7l" dmnElementRef="d_Extra_days_case_1">
+        <dc:Bounds height="80" width="180" x="230" y="180" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0yb72mc" dmnElementRef="d_Extra_days_case_2">
+        <dc:Bounds height="80" width="180" x="420" y="180" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1yv99ea" dmnElementRef="d_Extra_days_case_3">
+        <dc:Bounds height="80" width="180" x="614" y="180" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0psoj1g" dmnElementRef="d_Base_Vacation_Days">
+        <dc:Bounds height="80" width="180" x="870" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xny6mp" dmnElementRef="TextAnnotation_1lz98j3">
+        <dc:Bounds height="80" width="210" x="860" y="20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_12c7ceu" dmnElementRef="Association_1wo9ygb">
+        <di:waypoint x="860" y="60" />
+        <di:waypoint x="740" y="60" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1u2d7s6" dmnElementRef="InformationRequirement_04bdyvg">
+        <di:waypoint x="960" y="320" />
+        <di:waypoint x="704" y="120" />
+        <di:waypoint x="704" y="100" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1lfjh8d" dmnElementRef="InformationRequirement_0f8acas">
+        <di:waypoint x="704" y="180" />
+        <di:waypoint x="668" y="120" />
+        <di:waypoint x="668" y="100" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1d6mf0a" dmnElementRef="InformationRequirement_198zigh">
+        <di:waypoint x="510" y="180" />
+        <di:waypoint x="632" y="120" />
+        <di:waypoint x="632" y="100" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0o54mvv" dmnElementRef="InformationRequirement_114gal4">
+        <di:waypoint x="320" y="180" />
+        <di:waypoint x="596" y="120" />
+        <di:waypoint x="596" y="100" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_04wt25s" dmnElementRef="InputData_1jvyrs4">
+        <dc:Bounds height="45" width="125" x="387" y="587" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1uabdnu" dmnElementRef="InputData_0avr8po">
+        <dc:Bounds height="45" width="125" x="727" y="587" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0ve205w" dmnElementRef="Decision_00y28l6">
+        <dc:Bounds height="80" width="180" x="1360" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1691jd0" dmnElementRef="Decision_0cpmeob">
+        <dc:Bounds height="80" width="180" x="360" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1uez18s" dmnElementRef="Decision_09ttbfk">
+        <dc:Bounds height="80" width="180" x="240" y="20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1npi1mf" dmnElementRef="Decision_1s68x2u">
+        <dc:Bounds height="80" width="180" x="600" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0xf810u" dmnElementRef="Decision_0wsieg4">
+        <dc:Bounds height="80" width="180" x="840" y="460" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0af6er8" dmnElementRef="Decision_0c74vda">
+        <dc:Bounds height="80" width="180" x="578" y="320" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0b1ozmy" dmnElementRef="InformationRequirement_0eyojkg">
+        <di:waypoint x="870" y="360" />
+        <di:waypoint x="778" y="360" />
+        <di:waypoint x="758" y="360" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_0096iul" dmnElementRef="InformationRequirement_0sniw8v">
+        <di:waypoint x="930" y="460" />
+        <di:waypoint x="713" y="420" />
+        <di:waypoint x="713" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_04p4j2m" dmnElementRef="InformationRequirement_0n0bhel">
+        <di:waypoint x="690" y="460" />
+        <di:waypoint x="668" y="420" />
+        <di:waypoint x="668" y="400" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1y62i2f" dmnElementRef="InformationRequirement_1uxklku">
+        <di:waypoint x="450" y="460" />
+        <di:waypoint x="623" y="420" />
+        <di:waypoint x="623" y="400" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

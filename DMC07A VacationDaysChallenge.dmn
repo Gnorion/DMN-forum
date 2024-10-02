@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:feel="http://www.omg.org/spec/FEEL/20140401" id="Definitions_04xrjwm" name="DMChallenge" namespace="methodandstyle/dmchallenge" exporter="methodandstyle" exporterVersion="1.0" xsi:schemaLocation="http://www.omg.org/spec/DMN/20151101/dmn.xsd dmn.xsd">
+  <inputData id="i_Age" name="Age">
+    <variable id="InformationItem_0mzcg35" name="Age" typeRef="feel:number" />
+  </inputData>
+  <inputData id="i_YearsOfService" name="YearsOfService">
+    <variable id="InformationItem_1akezl8" name="YearsOfService" typeRef="feel:number" />
+  </inputData>
+  <decision id="d_VacationDays" name="VacationDays">
+    <variable id="InformationItem_168p5ve" name="VacationDays" typeRef="feel:number" />
+    <informationRequirement id="InformationRequirement_1b83f7d">
+      <requiredInput href="#i_Age" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_099n2e6">
+      <requiredInput href="#i_YearsOfService" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1qxln0d">
+      <input id="InputClause_09e9585">
+        <inputExpression id="LiteralExpression_1xxhrr2">
+          <text>Age</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1yrtsfm">
+        <inputExpression id="LiteralExpression_1ymh8n4">
+          <text>YearsOfService</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_19l32yg" name="VacationDays" />
+      <rule id="DecisionRule_1m3ey2k">
+        <inputEntry id="UnaryTests_1jq3q9h">
+          <text>&lt;18</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kgr9pr">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02m4jxk">
+          <text>22+5</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1hroe37">
+        <inputEntry id="UnaryTests_05xye9j">
+          <text>[18..45)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gwarwv">
+          <text>&lt;15</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1tpi9b5">
+          <text>22</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01di2ru">
+        <inputEntry id="UnaryTests_07ulycw">
+          <text>[18..45)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_196lsu3">
+          <text>[15..30)</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1x2chz6">
+          <text>22+2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0qh2ir6">
+        <inputEntry id="UnaryTests_1m1vug2">
+          <text>[18..45)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dqldnh">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1lre5qd">
+          <text>22+5+3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1thjpl8">
+        <inputEntry id="UnaryTests_0z8xgoz">
+          <text>[45..60)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1kbhntf">
+          <text>&lt;30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1e44azg">
+          <text>22+2</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1go7y7x">
+        <inputEntry id="UnaryTests_0n3xnyh">
+          <text>[45..60)</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0x5rga6">
+          <text>&gt;=30</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0s81sj1">
+          <text>22+5+3</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1yttieo">
+        <inputEntry id="UnaryTests_1fe96eb">
+          <text>&gt;=60</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0gabfkf">
+          <text>-</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0zjzfyn">
+          <text>22+5+3</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

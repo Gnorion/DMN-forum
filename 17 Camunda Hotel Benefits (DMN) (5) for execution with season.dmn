@@ -1,0 +1,450 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_0x68xvq" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="determineBenefits" name="Determine benefits">
+    <informationRequirement id="InformationRequirement_0hgnwds">
+      <requiredDecision href="#determineVIP" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_16nd95w">
+      <requiredInput href="#InputData_10usz98" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_0xk3kih">
+      <input id="InputClause_1lshd2n" biodi:width="150">
+        <inputExpression id="LiteralExpression_0sr8v14" typeRef="boolean">
+          <text>vipAccess</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1jwtg46" biodi:width="153">
+        <inputExpression id="LiteralExpression_06j9z73" typeRef="string">
+          <text>clubMembership</text>
+        </inputExpression>
+        <inputValues id="UnaryTests_1b92wyu">
+          <text>"Gold","Silver","Bronze"</text>
+        </inputValues>
+      </input>
+      <output id="Output_1" name="roomUpgrade" typeRef="boolean" biodi:width="150" />
+      <output id="OutputClause_0w5k00m" name="freeDrinks" typeRef="integer" biodi:width="150" />
+      <output id="OutputClause_0mmv7j3" name="breakfast" typeRef="string" biodi:width="150">
+        <outputValues id="UnaryTests_0om071b">
+          <text>"Continental","Western","None"</text>
+        </outputValues>
+      </output>
+      <rule id="DecisionRule_12rp5b2">
+        <inputEntry id="UnaryTests_0y09ejv">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1jptgt3">
+          <text>"Bronze"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_12a8c6z">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ki71lj">
+          <text>1</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1dceov5">
+          <text>"Western"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_010331k">
+        <inputEntry id="UnaryTests_0hbaba7">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0fup4kk">
+          <text>"Bronze"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_02xoexa">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1jt7pd2">
+          <text>0</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_043q5he">
+          <text>"None"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0kjbf1e">
+        <inputEntry id="UnaryTests_0a0t0qc">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0236n8t">
+          <text>"Silver"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0cdjpol">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1psoupx">
+          <text>2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1ni8o1c">
+          <text>"Western"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1g89f32">
+        <inputEntry id="UnaryTests_0z7eu8m">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0s65oaf">
+          <text>"Silver"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0kixb1x">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1g0dvgc">
+          <text>2</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_01eeaqz">
+          <text>"Western"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0h9hz05">
+        <inputEntry id="UnaryTests_04yroev">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1y1wy1e">
+          <text>"Gold"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0fnhy11">
+          <text>true</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_1t71xmq">
+          <text>4</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0b0wjwg">
+          <text>"Continental"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1dbhmuc">
+        <inputEntry id="UnaryTests_0759ize">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1odtnst">
+          <text>other</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1gef61q">
+          <text>false</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0zm6pik">
+          <text>0</text>
+        </outputEntry>
+        <outputEntry id="LiteralExpression_0unwkgk">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="determineVIP" name="Determine VIP access">
+    <informationRequirement id="InformationRequirement_17fvwlo">
+      <requiredInput href="#InputData_0k57nfc" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_1ycukvc">
+      <requiredInput href="#InputData_10lqyrz" />
+    </informationRequirement>
+    <informationRequirement id="InformationRequirement_0kz5ojg">
+      <requiredDecision href="#Decision_1i38ms4" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1ppgdod" hitPolicy="FIRST">
+      <input id="InputClause_1spa4de" biodi:width="246">
+        <inputExpression id="LiteralExpression_1xppfxu" typeRef="boolean" expressionLanguage="feel">
+          <text>hotelCreditCard</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_0br9ewn">
+        <inputExpression id="LiteralExpression_0rc5o4v" typeRef="integer">
+          <text>yearsWithMembership</text>
+        </inputExpression>
+      </input>
+      <input id="InputClause_1h3wt3z">
+        <inputExpression id="LiteralExpression_1yj340j" typeRef="string">
+          <text>season</text>
+        </inputExpression>
+      </input>
+      <output id="OutputClause_00fwkli" name="vipAccess" typeRef="boolean" biodi:width="191" />
+      <rule id="DecisionRule_009b2lu">
+        <inputEntry id="UnaryTests_0px28cw">
+          <text>true</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1vql5q0">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_07aywrt">
+          <text>["autumn","spring"]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1s7la4b">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0yenlrd">
+        <inputEntry id="UnaryTests_1x9ekef">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_1xyhlfz">
+          <text>&gt;=10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_14vc0lk">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_09chovk">
+          <text>true</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0l8r656">
+        <inputEntry id="UnaryTests_0ctvrg6">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0ipz8kk">
+          <text>&lt;10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_11l2utk">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_017jwel">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0nziva6">
+        <inputEntry id="UnaryTests_1cja5vm">
+          <text>false</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0v46arg">
+          <text>&lt;10</text>
+        </inputEntry>
+        <inputEntry id="UnaryTests_0dd3r2o">
+          <text>["winter","spring"]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1gzmybt">
+          <text>false</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0k57nfc" name="hotelCreditCard" />
+  <inputData id="InputData_10usz98" name="clubMembership" />
+  <inputData id="InputData_10lqyrz" name="yearsWithMembership" />
+  <decision id="Decision_1i38ms4" name="Determine Season">
+    <informationRequirement id="InformationRequirement_0hzjc75">
+      <requiredInput href="#InputData_0gz64eu" />
+    </informationRequirement>
+    <decisionTable id="DecisionTable_1cx0e9v">
+      <input id="InputClause_12iohca" label="month">
+        <inputExpression id="LiteralExpression_0in9xmy" typeRef="string" />
+      </input>
+      <output id="OutputClause_0p513oy" label="season" typeRef="string" />
+      <rule id="DecisionRule_0vex0mb">
+        <inputEntry id="UnaryTests_0xz7coh">
+          <text>["Jan","Feb","Mar"]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0paox4u">
+          <text>"Winter"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1eoxdis">
+        <inputEntry id="UnaryTests_19vtaag">
+          <text>["Apr","May","Jun"]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_11ewj2l">
+          <text>"Spring"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0ltiztx">
+        <inputEntry id="UnaryTests_0mct9z4">
+          <text>["Jul","Aug","Sep"]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0xm66jn">
+          <text>"Summer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1buhodt">
+        <inputEntry id="UnaryTests_0twqe17">
+          <text>["Oct","Nov","Dec"]</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1eixu95">
+          <text>"Autumn"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_01pc7dv">
+        <inputEntry id="UnaryTests_0m952km">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1qqleer">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <inputData id="InputData_0gz64eu" name="month" />
+  <decision id="Decision_047axnb" name="settings test cases=500">
+    <decisionTable id="DecisionTable_1mlm0gz">
+      <input id="InputClause_0uexv20" label="x">
+        <inputExpression id="LiteralExpression_02g13dw" typeRef="string" />
+      </input>
+      <output id="OutputClause_15ziflr" label="test cases limit" typeRef="string" />
+      <rule id="DecisionRule_0nmd8r8">
+        <inputEntry id="UnaryTests_0felm96">
+          <text>x</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1x22iag">
+          <text>50</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <textAnnotation id="TextAnnotation_026heuf">
+    <text>{
+"month":"Mar",
+"hotelCreditCard":true,
+"yearswithMembership":4,
+"clubMembership":"Gold"
+}</text>
+  </textAnnotation>
+  <association id="Association_1l0aa9p">
+    <sourceRef href="#TextAnnotation_026heuf" />
+    <targetRef href="#determineBenefits" />
+  </association>
+  <textAnnotation id="TextAnnotation_1x77egj">
+    <text>{ "month": "Mar",
+"hotelCreditCard": true,
+"yearswithMemebership": 4,
+"clubMembership": "Gold",
+"season": "Winter",
+"roomUpgrade": true,
+"freeDrinks": 4,
+"breakfast": "Continental" }</text>
+  </textAnnotation>
+  <association id="Association_0ksaday">
+    <sourceRef href="#TextAnnotation_1x77egj" />
+    <targetRef href="#determineBenefits" />
+  </association>
+  <textAnnotation id="TextAnnotation_1ra56cj">
+    <text>{
+     "testid": "Test1",
+     "decision": "TLP",
+     "clubMembership": "Bronze",
+     "hotelCreditCard": "true",
+     "yearsWithMembership": 10,
+     "month": "Jan"
+    },
+    {
+     "testid": "Test2",
+     "decision": "TLP",
+     "clubMembership": "Bronze",
+     "hotelCreditCard": "true",
+     "yearsWithMembership": 10,
+     "month": "Feb"
+    },
+    {
+     "testid": "Test3",
+     "decision": "TLP",
+     "clubMembership": "Bronze",
+     "hotelCreditCard": "true",
+     "yearsWithMembership": 10,
+     "month": "Mar"
+    },
+    {
+     "testid": "Test4",
+     "decision": "TLP",
+     "clubMembership": "Bronze",
+     "hotelCreditCard": "true",
+     "yearsWithMembership": 10,
+     "month": "Apr"
+    },
+    {
+     "testid": "Test5",
+     "decision": "TLP",
+     "clubMembership": "Bronze",
+     "hotelCreditCard": "true",
+     "yearsWithMembership": 10,
+     "month": "May"
+    },
+    {
+     "testid": "Test6",
+     "decision": "TLP",
+     "clubMembership": "Bronze",
+     "hotelCreditCard": "true",
+     "yearsWithMembership": 10,
+     "month": "Jun"
+    }</text>
+  </textAnnotation>
+  <association id="Association_0j55wsy">
+    <sourceRef href="#TextAnnotation_1ra56cj" />
+    <targetRef href="#Decision_047axnb" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape dmnElementRef="determineBenefits">
+        <dc:Bounds height="80" width="180" x="400" y="120" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1jy4902" dmnElementRef="determineVIP">
+        <dc:Bounds height="80" width="180" x="260" y="260" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0tkpfv2" dmnElementRef="InputData_0k57nfc">
+        <dc:Bounds height="45" width="125" x="87" y="407" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0se3w3z" dmnElementRef="InformationRequirement_17fvwlo">
+        <di:waypoint x="150" y="407" />
+        <di:waypoint x="305" y="360" />
+        <di:waypoint x="305" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNEdge id="DMNEdge_1t8llxc" dmnElementRef="InformationRequirement_0hgnwds">
+        <di:waypoint x="350" y="260" />
+        <di:waypoint x="460" y="220" />
+        <di:waypoint x="460" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1p4qusv" dmnElementRef="InputData_10usz98">
+        <dc:Bounds height="45" width="125" x="517" y="267" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_111zese" dmnElementRef="InformationRequirement_16nd95w">
+        <di:waypoint x="580" y="267" />
+        <di:waypoint x="520" y="220" />
+        <di:waypoint x="520" y="200" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0kk4vje" dmnElementRef="InputData_10lqyrz">
+        <dc:Bounds height="45" width="125" x="477" y="397" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0906us1" dmnElementRef="InformationRequirement_1ycukvc">
+        <di:waypoint x="540" y="397" />
+        <di:waypoint x="395" y="360" />
+        <di:waypoint x="395" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0udbc5d" dmnElementRef="Decision_1i38ms4">
+        <dc:Bounds height="80" width="180" x="260" y="420" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0cm2qk3" dmnElementRef="InformationRequirement_0kz5ojg">
+        <di:waypoint x="350" y="420" />
+        <di:waypoint x="350" y="360" />
+        <di:waypoint x="350" y="340" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1pjkvsi" dmnElementRef="InputData_0gz64eu">
+        <dc:Bounds height="45" width="125" x="287" y="547" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_01w073f" dmnElementRef="InformationRequirement_0hzjc75">
+        <di:waypoint x="350" y="547" />
+        <di:waypoint x="350" y="520" />
+        <di:waypoint x="350" y="500" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0ahngam" dmnElementRef="TextAnnotation_026heuf">
+        <dc:Bounds height="120" width="170" x="715" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1bqhq1u" dmnElementRef="Association_1l0aa9p">
+        <di:waypoint x="715" y="230" />
+        <di:waypoint x="580" y="160" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0bahm57" dmnElementRef="TextAnnotation_1x77egj">
+        <dc:Bounds height="140" width="180" x="720" y="40" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0cl0ctv" dmnElementRef="Association_0ksaday">
+        <di:waypoint x="720" y="98" />
+        <di:waypoint x="580" y="128" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_01bf5pv" dmnElementRef="Decision_047axnb">
+        <dc:Bounds height="80" width="180" x="730" y="390" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_08la648" dmnElementRef="TextAnnotation_1ra56cj">
+        <dc:Bounds height="670" width="340" x="1130" y="60" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1nqrj2l" dmnElementRef="Association_0j55wsy">
+        <di:waypoint x="1130" y="175" />
+        <di:waypoint x="847" y="390" />
+      </dmndi:DMNEdge>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

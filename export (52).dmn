@@ -1,0 +1,271 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0sdmu03" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <decision id="Decision_09mk3dk" name="arithmetic functions">
+    <variable id="InformationItem_0b1ph18" name="sumsAndSquares" typeRef="list" />
+    <literalExpression id="LiteralExpression_1jwaf75">
+      <text>{
+  // function definitions
+  add: function(a,b) a+b ,
+  square:function(a) a*a,
+  // function invocations
+  sums: for i in [1..3] return for j in [4..6] return add(i,j),
+  squares: for i in [1..4] return square(i)
+}
+</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0j52vh4" name="matrix functions">
+    <variable id="InformationItem_0zc3v5m" name="result" typeRef="any" />
+    <literalExpression id="LiteralExpression_1j4iis0">
+      <text>{// DEFINE SOME FUNCTIONS
+transpose  : function(X)   
+  for row in 1..count(X)                    // for each row in X
+      return for col in 1..count(X[1])      // for each column in X
+             return  X[col][row],           // switch row and column
+
+addMatrices: function(X,Y)                  // dimensions must be the same
+  for row in 1..count(X)                    // for each row in X      
+    return for col in 1..count(X[1])        // for each column in X
+       return  X[row][col] + Y[row][col],   // add corresponding elements
+  
+multiplyMatrices: function (X,Y)            // size cols(X) = size rows(Y)
+  for i in 1..count(X)                      // for each row in X
+    return for j in 1..count(Y[1])          // for each column in Y
+           return sum(for k in 1..count(Y)  // sum for each col in X, row in Y
+              return  X[i][k]*Y[k][j]),     // product 
+  
+// INVOKE THE FUNCTIONS DEFINED ABOVE  
+ M: {tM1:transpose(M1),
+     tM2:transpose(M2),
+     M1andM2: addMatrices(M1,M2),
+     tM1plusttM2: addMatrices(transpose(M1),transpose(M2)),
+     M1M2: multiplyMatrices(M1,M2),
+     M2M1: multiplyMatrices(M2,M1)
+    }
+}.M  // return just the results (ignore all the extra stuff)</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0cyqy3j" name="FUN01 User Defined Functions" />
+  <decision id="Decision_1q4vjtf" name="matrix results">
+    <variable id="InformationItem_176vi5i" />
+    <literalExpression id="LiteralExpression_1s47qvs">
+      <text>{
+  "transpose"  : {    "parameterNames": [ "X" ]  },
+  "addMatrices": {    "parameterNames": [ "X", "Y" ]  },
+  "tM1": [
+    [      1,      1,      0    ],
+    [      0,      1,      1    ],
+    [      0,      0,      0    ]
+  ],
+  "tM2": [    
+    [      1,      2,      3    ],
+    [      1,      4,      6    ],
+    [      1,      6,      9    ]
+  ],
+  "M1andM2": [
+    [      2,      1,      1    ],
+    [      3,      5,      6    ],
+    [      3,      7,      9    ]
+  ],
+  "tM1andtM2": [
+    [      2,      3,      3    ],
+    [      1,      5,      7    ],
+    [      1,      6,      9    ]
+  ]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_1eg08a1" name="arithmetic results">
+    <variable id="InformationItem_1jfugyh" />
+    <literalExpression id="LiteralExpression_1cprf9l">
+      <text>{
+  "add" : {"parameterNames": ["a","b"]},
+  "square" : {"parameterNames": ["a"]},
+  "sums" : [[5,6,7],[6,7,8],[7,8,9]],
+  "squares" : [1,4,9,16]
+}</text>
+    </literalExpression>
+  </decision>
+  <decision id="Decision_0e0xw0s" name="Add, Transpose, Multiply Matrices" />
+  <textAnnotation id="TextAnnotation_15hppi7">
+    <text>{
+  // function definitions
+  add: function(a,b) a+b ,
+  square:function(a) a*a,
+
+  // function invocations
+  sums: for i in [1..3] return for j in [4..6] return add(i,j),
+  squares: for i in [1..4] return square(i)
+}</text>
+  </textAnnotation>
+  <association id="Association_1m32smy">
+    <sourceRef href="#TextAnnotation_15hppi7" />
+    <targetRef href="#Decision_09mk3dk" />
+  </association>
+  <textAnnotation id="TextAnnotation_0ob8354">
+    <text>OUTPUT
+{
+  "add" : {"parameterNames": ["a","b"]},
+  "square" : {"parameterNames": ["a"]},
+  "sums" : [[5,6,7],[6,7,8],[7,8,9]],
+  "squares" : [1,4,9,16]
+}</text>
+  </textAnnotation>
+  <association id="Association_1bxm8gn">
+    <sourceRef href="#TextAnnotation_0ob8354" />
+    <targetRef href="#Decision_09mk3dk" />
+  </association>
+  <textAnnotation id="TextAnnotation_1nv2wio">
+    <text>M1*M2 
+[
+  [ 1, 1, 1],
+  [ 3, 5, 7],
+  [ 2. 4. 6]
+]</text>
+  </textAnnotation>
+  <association id="Association_0qecc8j">
+    <sourceRef href="#TextAnnotation_1nv2wio" />
+    <targetRef href="#Decision_0j52vh4" />
+  </association>
+  <textAnnotation id="TextAnnotation_1hg9ekj">
+    <text>INPUT CONTEXT
+{"M1":
+[
+  [ 1, 0, 0 ],
+  [ 1, 1, 0 ],
+  [ 0, 1, 0 ]
+ ],
+"M2":
+[
+  [ 1, 1, 1 ],
+  [ 3, 5, 7 ],
+  [ 3, 6, 9 ]
+  ]
+}</text>
+  </textAnnotation>
+  <association id="Association_1mnfadd">
+    <sourceRef href="#TextAnnotation_1hg9ekj" />
+    <targetRef href="#Decision_0j52vh4" />
+  </association>
+  <textAnnotation id="TextAnnotation_1gudnjm">
+    <text>"tM1plustM2":
+[
+    [  2,  3,  3  ],
+    [  1,  5,  7  ],
+    [  1,  6,  9  ]
+  ]</text>
+  </textAnnotation>
+  <association id="Association_01f07m7">
+    <sourceRef href="#TextAnnotation_1gudnjm" />
+    <targetRef href="#Decision_0j52vh4" />
+  </association>
+  <textAnnotation id="TextAnnotation_1mskx5m">
+    <text>{
+transpose : function(X) for row in 1..count(X) return for col in 1..count(X[1]) return X[col][row],
+addMatrices: function(X,Y) for row in 1..count(X) return for col in 1..count(X[1]) return X[row][col] + Y[row][col],
+
+  tM1:transpose(M1),
+  tM2:transpose(M2),
+  M1andM2: addMatrices(M1,M2),
+  tM1plustM2: addMatrices(transpose(M1),transpose(M2))
+}</text>
+  </textAnnotation>
+  <textAnnotation id="TextAnnotation_0343k3f">
+    <text>M2*M1
+[
+  [ 2,   2, 0 ],
+  [ 8, 12, 0 ],
+  [ 9, 15, 0 ]
+]</text>
+  </textAnnotation>
+  <association id="Association_0pg2mee">
+    <sourceRef href="#TextAnnotation_0343k3f" />
+    <targetRef href="#Decision_0j52vh4" />
+  </association>
+  <textAnnotation id="TextAnnotation_185gc4k">
+    <text>M1+M2
+[
+  [  2, 1, 1  ],
+  [ 4,  6, 7  ],
+  [ 3,  7, 9  ]
+ ]</text>
+  </textAnnotation>
+  <association id="Association_1uxwg9y">
+    <sourceRef href="#TextAnnotation_185gc4k" />
+    <targetRef href="#Decision_0j52vh4" />
+  </association>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram>
+      <dmndi:DMNShape id="DMNShape_0k6m4s3" dmnElementRef="Decision_09mk3dk">
+        <dc:Bounds height="80" width="180" x="460" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_08p4llf" dmnElementRef="TextAnnotation_15hppi7">
+        <dc:Bounds height="140" width="380" x="780" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1lfitr2" dmnElementRef="Association_1m32smy">
+        <di:waypoint x="780" y="250" />
+        <di:waypoint x="640" y="250" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1imc02e" dmnElementRef="TextAnnotation_0ob8354">
+        <dc:Bounds height="110" width="220" x="190" y="210" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_1w4mikn" dmnElementRef="Association_1bxm8gn">
+        <di:waypoint x="410" y="250" />
+        <di:waypoint x="460" y="250" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0jqtvqp" dmnElementRef="Decision_0j52vh4">
+        <dc:Bounds height="80" width="180" x="330" y="490" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_03znp3w" dmnElementRef="TextAnnotation_1nv2wio">
+        <dc:Bounds height="100" width="90" x="160" y="530" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0t47y5r" dmnElementRef="Association_0qecc8j">
+        <di:waypoint x="250" y="570" />
+        <di:waypoint x="330" y="550" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1s2rgi6" dmnElementRef="TextAnnotation_1hg9ekj">
+        <dc:Bounds height="210" width="135" x="582" y="445" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0r7no1h" dmnElementRef="Association_1mnfadd">
+        <di:waypoint x="580" y="530" />
+        <di:waypoint x="510" y="530" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_08appes" dmnElementRef="TextAnnotation_1gudnjm">
+        <dc:Bounds height="108" width="105" x="167" y="396" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0bgypgo" dmnElementRef="Association_01f07m7">
+        <di:waypoint x="272" y="494" />
+        <di:waypoint x="330" y="530" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0h8cxss" dmnElementRef="TextAnnotation_1mskx5m">
+        <dc:Bounds height="149" width="600" x="780" y="385" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0p380b0" dmnElementRef="Decision_0cyqy3j">
+        <dc:Bounds height="80" width="180" x="170" y="80" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_19ti9k5" dmnElementRef="Decision_1q4vjtf">
+        <dc:Bounds height="80" width="180" x="1160" y="140" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0z1mrp8" dmnElementRef="Decision_1eg08a1">
+        <dc:Bounds height="80" width="180" x="1160" y="250" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0opvlm6" dmnElementRef="TextAnnotation_0343k3f">
+        <dc:Bounds height="100" width="120" x="220" y="660" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0poor0v" dmnElementRef="Association_0pg2mee">
+        <di:waypoint x="289" y="660" />
+        <di:waypoint x="370" y="570" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_0n2p8cq" dmnElementRef="TextAnnotation_185gc4k">
+        <dc:Bounds height="100" width="100" x="370" y="670" />
+      </dmndi:DMNShape>
+      <dmndi:DMNEdge id="DMNEdge_0zoe0cc" dmnElementRef="Association_1uxwg9y">
+        <di:waypoint x="413" y="670" />
+        <di:waypoint x="410" y="570" />
+      </dmndi:DMNEdge>
+      <dmndi:DMNShape id="DMNShape_1aoxhfj" dmnElementRef="Decision_0e0xw0s">
+        <dc:Bounds height="80" width="180" x="330" y="380" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

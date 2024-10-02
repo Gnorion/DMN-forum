@@ -1,0 +1,916 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" id="TLP_0ih6z3g" name="TLP_Insurance" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0">
+  <decision id="DetermineHumidity" name="Determine Humidity">
+    <decisionTable id="decisionTable_1">
+      <input id="input_1" label="its_hot">
+        <inputExpression id="inputExpression_1" typeRef="string">
+          <text>its_hot</text>
+        </inputExpression>
+      </input>
+      <input id="input_2" label="it_is_wet">
+        <inputExpression id="inputExpression_2" typeRef="string">
+          <text>it_is_wet</text>
+        </inputExpression>
+      </input>
+      <output id="output_1" label="its_humid" typeRef="string" />
+      <rule id="rule_1">
+        <inputEntry id="inputEntry_1_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_1_2">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_1_1">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_2">
+        <inputEntry id="inputEntry_2_1">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_2_2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_2_1">
+          <text>"no"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_3">
+        <inputEntry id="inputEntry_3_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_3_2">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_3_1">
+          <text>"no"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="DetermineSeason" name="Determine Season">
+    <decisionTable id="decisionTable_2">
+      <input id="input_3" label="month">
+        <inputExpression id="inputExpression_3" typeRef="string">
+          <text>month</text>
+        </inputExpression>
+      </input>
+      <output id="output_2" label="season" typeRef="string" />
+      <rule id="rule_4">
+        <inputEntry id="inputEntry_4_1">
+          <text>"June"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_4_1">
+          <text>"summer"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1cion2e">
+        <inputEntry id="UnaryTests_1wrhhi5">
+          <text>"July"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_04lfb0b">
+          <text>summer</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0o6antf">
+        <inputEntry id="UnaryTests_014jqrx">
+          <text>"August"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_0eca0ln">
+          <text>summer</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_5">
+        <inputEntry id="inputEntry_5_1">
+          <text>"Dec"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_5_1">
+          <text>"winter"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_1k4haik">
+        <inputEntry id="UnaryTests_1cvknfy">
+          <text>"Jan"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dpesxo">
+          <text>"winter"</text>
+        </outputEntry>
+      </rule>
+      <rule id="DecisionRule_0xtw7ym">
+        <inputEntry id="UnaryTests_00ngt7c">
+          <text>"Feb"</text>
+        </inputEntry>
+        <outputEntry id="LiteralExpression_1dmv2sy">
+          <text>"winter"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="DetermineIfItIsRaining" name="Determine if it is raining">
+    <decisionTable id="decisionTable_3">
+      <input id="input_4" label="drops_of_water_falling">
+        <inputExpression id="inputExpression_4" typeRef="string">
+          <text>drops_of_water_falling</text>
+        </inputExpression>
+      </input>
+      <input id="input_5" label="its_cold">
+        <inputExpression id="inputExpression_5" typeRef="string">
+          <text>its_cold</text>
+        </inputExpression>
+      </input>
+      <input id="input_6" label="its_freezing">
+        <inputExpression id="inputExpression_6" typeRef="string">
+          <text>its_freezing</text>
+        </inputExpression>
+      </input>
+      <output id="output_3" label="it_is_raining" typeRef="string" />
+      <output id="output_4" label="it_is_wet" typeRef="string" />
+      <output id="output_5" label="it_is_snowing" typeRef="string" />
+      <rule id="rule_6">
+        <inputEntry id="inputEntry_6_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_6_2">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_6_3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_6_1">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_6_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_6_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_7">
+        <inputEntry id="inputEntry_7_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_7_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_7_3">
+          <text>yes</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_7_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_7_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_7_3">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_8">
+        <inputEntry id="inputEntry_8_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_8_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_8_3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_8_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_8_2">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_8_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_9">
+        <inputEntry id="inputEntry_9_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_9_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_9_3">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_9_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_9_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_9_3">
+          <text>"no"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="DetermineIfItMightRain" name="Determine if it might rain">
+    <decisionTable id="decisionTable_4">
+      <input id="input_7" label="weatherman_says_sunny">
+        <inputExpression id="inputExpression_7" typeRef="string">
+          <text>weatherman_says_sunny</text>
+        </inputExpression>
+      </input>
+      <input id="input_8" label="dark_clouds_in_the_sky">
+        <inputExpression id="inputExpression_8" typeRef="string">
+          <text>dark_clouds_in_the_sky</text>
+        </inputExpression>
+      </input>
+      <input id="input_9" label="red_sky_this_morning">
+        <inputExpression id="inputExpression_9" typeRef="string">
+          <text>red_sky_this_morning</text>
+        </inputExpression>
+      </input>
+      <output id="output_6" label="it_may_rain" typeRef="string" />
+      <rule id="rule_10">
+        <inputEntry id="inputEntry_10_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_10_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_10_3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_10_1">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_11">
+        <inputEntry id="inputEntry_11_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_11_2">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_11_3">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_11_1">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_12">
+        <inputEntry id="inputEntry_12_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_12_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_12_3">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_12_1">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_13">
+        <inputEntry id="inputEntry_13_1">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_13_2">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_13_3">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_13_1">
+          <text>"no"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="DetermineIfItsHotOrColdBasedOnLocation" name="Determine if its hot or cold based on location">
+    <decisionTable id="decisionTable_5">
+      <input id="input_10" label="location">
+        <inputExpression id="inputExpression_10" typeRef="string">
+          <text>location</text>
+        </inputExpression>
+      </input>
+      <input id="input_11" label="season">
+        <inputExpression id="inputExpression_11" typeRef="string">
+          <text>season</text>
+        </inputExpression>
+      </input>
+      <output id="output_7" label="its_hot" typeRef="string" />
+      <output id="output_8" label="its_cold" typeRef="string" />
+      <output id="output_9" label="its_freezing" typeRef="string" />
+      <rule id="rule_14">
+        <inputEntry id="inputEntry_14_1">
+          <text>"Dallas"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_14_2">
+          <text>"summer"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_14_1">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_14_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_14_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_15">
+        <inputEntry id="inputEntry_15_1">
+          <text>"Dallas"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_15_2">
+          <text>"winter"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_15_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_15_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_15_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_16">
+        <inputEntry id="inputEntry_16_1">
+          <text>"Alaska"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_16_2">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_16_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_16_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_16_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_17">
+        <inputEntry id="inputEntry_17_1">
+          <text>"Alaska"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_17_2">
+          <text>"winter"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_17_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_17_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_17_3">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="DetermineIfItsHotOrColdBasedOnTemperature" name="Determine if its hot or cold based on temperature">
+    <decisionTable id="decisionTable_6">
+      <input id="input_12" label="temperature">
+        <inputExpression id="inputExpression_12" typeRef="number">
+          <text>temperature</text>
+        </inputExpression>
+      </input>
+      <output id="output_10" label="its_hot" typeRef="string" />
+      <output id="output_11" label="its_cold" typeRef="string" />
+      <output id="output_12" label="its_freezing" typeRef="string" />
+      <rule id="rule_18">
+        <inputEntry id="inputEntry_18_1">
+          <text>&gt; 100</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_18_1">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_18_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_18_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_19">
+        <inputEntry id="inputEntry_19_1">
+          <text>&lt; 50</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_19_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_19_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_19_3">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_20">
+        <inputEntry id="inputEntry_20_1">
+          <text>&lt; 32</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_20_1">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_20_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_20_3">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="ShouldIGoOut" name="Should I go out">
+    <decisionTable id="decisionTable_7">
+      <input id="input_13" label="it_may_rain">
+        <inputExpression id="inputExpression_13" typeRef="string">
+          <text>it_may_rain</text>
+        </inputExpression>
+      </input>
+      <input id="input_14" label="it_is_raining">
+        <inputExpression id="inputExpression_14" typeRef="string">
+          <text>it_is_raining</text>
+        </inputExpression>
+      </input>
+      <input id="input_15" label="it_is_snowing">
+        <inputExpression id="inputExpression_15" typeRef="string">
+          <text>it_is_snowing</text>
+        </inputExpression>
+      </input>
+      <input id="input_16" label="its_hot">
+        <inputExpression id="inputExpression_16" typeRef="string">
+          <text>its_hot</text>
+        </inputExpression>
+      </input>
+      <input id="input_17" label="its_cold">
+        <inputExpression id="inputExpression_17" typeRef="string">
+          <text>its_cold</text>
+        </inputExpression>
+      </input>
+      <input id="input_18" label="its_humid">
+        <inputExpression id="inputExpression_18" typeRef="string">
+          <text>its_humid</text>
+        </inputExpression>
+      </input>
+      <output id="output_13" label="go_out" typeRef="string" />
+      <output id="output_14" label="take_an_umbrella" typeRef="string" />
+      <output id="output_15" label="take_a_warm_coat" typeRef="string" />
+      <output id="output_16" label="take_gloves" typeRef="string" />
+      <output id="output_17" label="take_sunscreen" typeRef="string" />
+      <rule id="rule_21">
+        <inputEntry id="inputEntry_21_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_21_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_21_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_21_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_21_5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_21_6">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_21_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_21_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_21_3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_21_4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_21_5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_22">
+        <inputEntry id="inputEntry_22_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_22_2">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_22_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_22_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_22_5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_22_6">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_22_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_22_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_22_3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_22_4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_22_5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_23">
+        <inputEntry id="inputEntry_23_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_23_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_23_3">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_23_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_23_5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_23_6">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_23_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_23_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_23_3">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_23_4">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_23_5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_24">
+        <inputEntry id="inputEntry_24_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_24_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_24_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_24_4">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_24_5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_24_6">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_24_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_24_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_24_3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_24_4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_24_5">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_25">
+        <inputEntry id="inputEntry_25_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_25_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_25_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_25_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_25_5">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_25_6">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_25_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_25_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_25_3">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_25_4">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_25_5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_26">
+        <inputEntry id="inputEntry_26_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_26_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_26_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_26_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_26_5">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_26_6">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_26_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_26_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_26_3">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_26_4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_26_5">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_27">
+        <inputEntry id="inputEntry_27_1">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_27_2">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_27_3">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_27_4">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_27_5">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_27_6">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_27_1">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_27_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_27_3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_27_4">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_27_5">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <decision id="ShouldIExercise" name="Should I exercise">
+    <decisionTable id="decisionTable_8">
+      <input id="input_19" label="I_fell_yesterday">
+        <inputExpression id="inputExpression_19" typeRef="string">
+          <text>I_fell_yesterday</text>
+        </inputExpression>
+      </input>
+      <input id="input_20" label="My_ankle_hurts">
+        <inputExpression id="inputExpression_20" typeRef="string">
+          <text>My_ankle_hurts</text>
+        </inputExpression>
+      </input>
+      <input id="input_21" label="I_have_a_cold">
+        <inputExpression id="inputExpression_21" typeRef="string">
+          <text>I_have_a_cold</text>
+        </inputExpression>
+      </input>
+      <input id="input_22" label="I_fell_last_week">
+        <inputExpression id="inputExpression_22" typeRef="string">
+          <text>I_fell_last_week</text>
+        </inputExpression>
+      </input>
+      <input id="input_23" label="I_have_a_work_deadline">
+        <inputExpression id="inputExpression_23" typeRef="string">
+          <text>I_have_a_work_deadline</text>
+        </inputExpression>
+      </input>
+      <output id="output_18" label="do_exercise" typeRef="string" />
+      <output id="output_19" label="do_light_exercise" typeRef="string" />
+      <output id="output_20" label="rest" typeRef="string" />
+      <output id="output_21" label="exercise_tomorrow" typeRef="string" />
+      <rule id="rule_28">
+        <inputEntry id="inputEntry_28_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_28_2">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_28_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_28_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_28_5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_28_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_28_2">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_28_3">
+          <text>yes</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_28_4">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_29">
+        <inputEntry id="inputEntry_29_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_29_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_29_3">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_29_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_29_5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_29_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_29_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_29_3">
+          <text>yes</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_29_4">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_30">
+        <inputEntry id="inputEntry_30_1">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_30_2">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_30_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_30_4">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_30_5">
+          <text></text>
+        </inputEntry>
+        <outputEntry id="outputEntry_30_1">
+          <text>"no"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_30_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_30_3">
+          <text>yes</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_30_4">
+          <text>"yes"</text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_31">
+        <inputEntry id="inputEntry_31_1">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_31_2">
+          <text>"yes"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_31_3">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_31_4">
+          <text></text>
+        </inputEntry>
+        <inputEntry id="inputEntry_31_5">
+          <text>"yes"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_31_1">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_31_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_31_3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_31_4">
+          <text></text>
+        </outputEntry>
+      </rule>
+      <rule id="rule_32">
+        <inputEntry id="inputEntry_32_1">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_32_2">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_32_3">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_32_4">
+          <text>"no"</text>
+        </inputEntry>
+        <inputEntry id="inputEntry_32_5">
+          <text>"no"</text>
+        </inputEntry>
+        <outputEntry id="outputEntry_32_1">
+          <text>"yes"</text>
+        </outputEntry>
+        <outputEntry id="outputEntry_32_2">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_32_3">
+          <text></text>
+        </outputEntry>
+        <outputEntry id="outputEntry_32_4">
+          <text></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+  <dmndi:DMNDI>
+    <dmndi:DMNDiagram id="DMNDiagram_0x8jeg4">
+      <dmndi:DMNShape id="DMNShape_0k9gneo" dmnElementRef="DetermineHumidity">
+        <dc:Bounds height="80" width="180" x="240" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1gd3gxi" dmnElementRef="DetermineSeason">
+        <dc:Bounds height="80" width="180" x="240" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_072hbo9" dmnElementRef="DetermineIfItIsRaining">
+        <dc:Bounds height="80" width="180" x="420" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0eda5wb" dmnElementRef="DetermineIfItMightRain">
+        <dc:Bounds height="80" width="180" x="600" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_07larsz" dmnElementRef="DetermineIfItsHotOrColdBasedOnLocation">
+        <dc:Bounds height="80" width="180" x="780" y="190" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_00m5doe" dmnElementRef="DetermineIfItsHotOrColdBasedOnTemperature">
+        <dc:Bounds height="80" width="180" x="420" y="270" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_1m5741p" dmnElementRef="ShouldIGoOut">
+        <dc:Bounds height="80" width="180" x="470" y="-20" />
+      </dmndi:DMNShape>
+      <dmndi:DMNShape id="DMNShape_0rlfo5e" dmnElementRef="ShouldIExercise">
+        <dc:Bounds height="80" width="180" x="780" y="270" />
+      </dmndi:DMNShape>
+    </dmndi:DMNDiagram>
+  </dmndi:DMNDI>
+</definitions>

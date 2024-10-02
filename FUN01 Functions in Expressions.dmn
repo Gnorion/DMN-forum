@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0sdmu03" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DMN/20180521/DI/" id="Definitions_0sdmu03" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.27.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
   <decision id="Decision_09mk3dk" name="arithmetic functions">
     <variable id="InformationItem_0b1ph18" name="sumsAndSquares" typeRef="list" />
     <literalExpression id="LiteralExpression_1jwaf75">
@@ -19,19 +19,26 @@
     <literalExpression id="LiteralExpression_1j4iis0">
       <text>{
 transpose  : function(X)   
-  for row in 1..count(X) 
-      return for col in 1..count(X[1])
-             return  X[col][row],
+  for row in 1..count(X)                    // for each row in X
+      return for col in 1..count(X[1])      // for each column in X
+             return  X[col][row],           // switch row and column
   
-addMatrices: function(X,Y) 
-  for row in 1..count(X) 
-  return for col in 1..count(X[1]) 
-        return  X[row][col] + Y[row][col],
+addMatrices: function(X,Y)                  // dimensions must be the same
+  for row in 1..count(X)                    // for each row in X      
+    return for col in 1..count(X[1])        // for each column in X
+       return  X[row][col] + Y[row][col],   // add corresponding elements
+  
+multiplyMatrices: function (X,Y)
+  for i in 1..count(X)                      // for each row in X
+    return for j in 1..count(Y[1])          // for each column in Y
+           return sum(for k in 1..count(Y)  // sum for each col in X, row in Y
+              return  X[i][k]*Y[k][j]),     // product 
   
   tM1:transpose(M1),
   tM2:transpose(M2),
   M1andM2: addMatrices(M1,M2),
-  tM1plustM2: addMatrices(transpose(M1),transpose(M2))
+  tM1plustM2: addMatrices(transpose(M1),transpose(M2)),
+  M3: multiplyMatrices(M1,M2)
 }</text>
     </literalExpression>
   </decision>
